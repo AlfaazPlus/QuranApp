@@ -24,7 +24,7 @@ import com.quranapp.android.db.entities.user.ReadHistoryEntity
         CollectionEntity::class,
         CollectionItemEntity::class,
     ],
-    version = 3,
+    version = 4,
 )
 @ColumnTypeConverters(DbConverters::class)
 @DaoReturnTypeConverters(PagingSourceDaoReturnTypeConverter::class)
@@ -96,6 +96,74 @@ abstract class UserDatabase : RoomDatabase() {
                     """
                     CREATE INDEX IF NOT EXISTS `index_user_collection_items_collection_id`
                     ON `user_collection_items` (`collection_id`)
+                    """.trimIndent()
+                )
+            }
+        }
+
+        val MIGRATION_3_4 = object : Migration(3, 4) {
+            override suspend fun migrate(connection: SQLiteConnection) {
+                connection.execSQL(
+                    """
+                    DELETE FROM user_bookmarks
+                    WHERE id NOT IN (
+                        SELECT MIN(id) FROM user_bookmarks
+                        GROUP BY chapter_no, from_verse_no, to_verse_no
+                    )
+                    """.trimIndent()
+                )
+                connection.execSQL(
+                    "ALTER TABLE user_bookmarks ADD COLUMN stable_id TEXT NOT NULL DEFAULT ''"
+                )
+                connection.execSQL(
+                    "ALTER TABLE user_bookmarks ADD COLUMN updated_at INTEGER"
+                )
+                connection.execSQL(
+                    "ALTER TABLE user_bookmarks ADD COLUMN legacy_created_at_text TEXT"
+                )
+                connection.execSQL(
+                    """
+                    UPDATE user_bookmarks
+                    SET stable_id = lower(hex(randomblob(4))) || '-' ||
+                        lower(hex(randomblob(2))) || '-4' ||
+                        substr(lower(hex(randomblob(2))), 2) || '-' ||
+                        substr('89ab', 1 + (abs(random()) % 4), 1) ||
+                        substr(lower(hex(randomblob(2))), 2) || '-' ||
+                        lower(hex(randomblob(6)))
+                    WHERE stable_id = ''
+                    """.trimIndent()
+                )
+                connection.execSQL(
+                    """
+                    CREATE UNIQUE INDEX IF NOT EXISTS `index_user_bookmarks_stable_id`
+                    ON `user_bookmarks` (`stable_id`)
+                    """.trimIndent()
+                )
+                connection.execSQL(
+                    """
+                    CREATE UNIQUE INDEX IF NOT EXISTS `index_user_bookmarks_chapter_no_from_verse_no_to_verse_no`
+                    ON `user_bookmarks` (`chapter_no`, `from_verse_no`, `to_verse_no`)
+                    """.trimIndent()
+                )
+                connection.execSQL(
+                    "ALTER TABLE user_collections ADD COLUMN stable_id TEXT NOT NULL DEFAULT ''"
+                )
+                connection.execSQL(
+                    """
+                    UPDATE user_collections
+                    SET stable_id = lower(hex(randomblob(4))) || '-' ||
+                        lower(hex(randomblob(2))) || '-4' ||
+                        substr(lower(hex(randomblob(2))), 2) || '-' ||
+                        substr('89ab', 1 + (abs(random()) % 4), 1) ||
+                        substr(lower(hex(randomblob(2))), 2) || '-' ||
+                        lower(hex(randomblob(6)))
+                    WHERE stable_id = ''
+                    """.trimIndent()
+                )
+                connection.execSQL(
+                    """
+                    CREATE UNIQUE INDEX IF NOT EXISTS `index_user_collections_stable_id`
+                    ON `user_collections` (`stable_id`)
                     """.trimIndent()
                 )
             }

@@ -271,6 +271,21 @@
     <string name="titleExportData">Ekspor &amp; Impor</string>
     <string name="labelImport">Impor</string>
     <string name="msgExportSuccess">Sukses mengekspor</string>
+    <string name="autoBackup">Cadangan otomatis</string>
+    <string name="autoBackupDetails">Markah, koleksi, dan pengaturan disimpan ke file yang Anda pilih. File itu diperbarui sekitar sekali sehari.</string>
+    <string name="labelBackupFile">File</string>
+    <string name="labelBackupSchedule">Seberapa sering</string>
+    <string name="autoBackupSchedule">Sekitar sekali sehari</string>
+    <string name="autoBackupNoFile">Belum ada file dipilih</string>
+    <string name="viewFile">Lihat file</string>
+    <string name="changeFile">Ganti file</string>
+    <string name="autoBackupOpenFailed">File tidak bisa dibuka</string>
+    <string name="autoBackupSaved">Cadangan tersimpan</string>
+    <string name="autoBackupFailed">Cadangan tidak bisa disimpan</string>
+    <string name="importSummary">Impor selesai. %1$d ditambahkan, %2$d diperbarui, %3$d tidak berubah, %4$d dilewati, %5$d bentrok, dan %6$d pengaturan tidak didukung.</string>
+    <string name="backupFailed">Cadangan ini tidak bisa dibaca.</string>
+    <string name="backupUnsupportedVersion">Cadangan ini dari versi aplikasi yang lebih baru.</string>
+    <string name="backupTooLarge">File cadangan ini terlalu besar untuk dibuka.</string>
     <string name="msgExtractingFonts">Mengekstrak font</string>
     <string name="warnImportSettings">Mengimpor pengaturan akan mengganti pengaturan Anda saat ini.</string>
     <string name="labelExportSelected">Ekspor yang dipilih (%1$d)</string>
@@ -284,7 +299,6 @@
     <string name="msgImportCollections">Menggabungkan koleksi bernama sama dan mempertahankan ayat serta catatan yang ada</string>
     <string name="labelSelectFile">Pilih file</string>
     <string name="titleConfirmImport">Impor yang dipilih?</string>
-    <string name="msgImportCollectionsSuccess">Koleksi berhasil diimpor</string>
     <string name="strLabelDownloaded">Terunduh</string>
     <string name="strTitleDeleteTafsir">Hapus Tafsir?</string>
     <string name="strMsgDeleteTafsir" formatted="false">Apakah Anda yakin ingin menghapus \"%s\"? Pilihan ini akan menghapus data tafsir yang diunduh dari perangkat Anda.</string>

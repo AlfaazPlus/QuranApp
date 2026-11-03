@@ -1,0 +1,269 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schema.alfaazplus.com/quran/backup-v2.schema.json",
+  "title": "QuranApp backup V2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "formatVersion", "exportedAt", "data"],
+  "properties": {
+    "$schema": {
+      "const": "https://schema.alfaazplus.com/quran/backup-v2.schema.json"
+    },
+    "formatVersion": {
+      "const": 2
+    },
+    "exportedAt": {
+      "$ref": "#/$defs/dateTime"
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "bookmarks": {
+          "type": "array",
+          "maxItems": 20000,
+          "items": { "$ref": "#/$defs/bookmark" }
+        },
+        "settings": { "$ref": "#/$defs/settings" },
+        "collections": {
+          "type": "array",
+          "maxItems": 2000,
+          "items": { "$ref": "#/$defs/collection" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "uuid": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "dateTime": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "(?:[zZ]|[+-][0-9]{2}:[0-9]{2})$"
+    },
+    "bookmark": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "chapterNumber", "startVerseNumber", "endVerseNumber"],
+      "properties": {
+        "id": { "$ref": "#/$defs/uuid" },
+        "chapterNumber": { "type": "integer", "minimum": 1 },
+        "startVerseNumber": { "type": "integer", "minimum": 1 },
+        "endVerseNumber": { "type": "integer", "minimum": 1 },
+        "note": { "type": "string", "maxLength": 20000 },
+        "createdAt": { "$ref": "#/$defs/dateTime" },
+        "updatedAt": { "$ref": "#/$defs/dateTime" },
+        "legacyCreatedAtText": { "type": "string", "maxLength": 100 }
+      }
+    },
+    "collection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "items"],
+      "properties": {
+        "id": { "$ref": "#/$defs/uuid" },
+        "name": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "description": { "type": "string", "maxLength": 20000 },
+        "iconKey": { "type": "string", "maxLength": 100 },
+        "color": { "type": "string", "maxLength": 50 },
+        "sortIndex": { "type": "integer" },
+        "createdAt": { "$ref": "#/$defs/dateTime" },
+        "updatedAt": { "$ref": "#/$defs/dateTime" },
+        "items": {
+          "type": "array",
+          "maxItems": 20000,
+          "items": { "$ref": "#/$defs/collectionItem" }
+        }
+      }
+    },
+    "collectionItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["chapterNumber", "verseNumber", "position"],
+      "properties": {
+        "chapterNumber": { "type": "integer", "minimum": 1 },
+        "verseNumber": { "type": "integer", "minimum": 1 },
+        "note": { "type": "string", "maxLength": 20000 },
+        "position": { "type": "integer", "minimum": 0 },
+        "addedAt": { "$ref": "#/$defs/dateTime" }
+      }
+    },
+    "settings": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "app": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "locale": { "type": "string", "minLength": 1 },
+            "numeralSystemId": {
+              "type": "string",
+              "enum": ["latn", "arab", "arabext"]
+            }
+          }
+        },
+        "appearance": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "themeId": {
+              "type": "string",
+              "enum": ["app.theme.default", "app.theme.light", "app.theme.dark"]
+            }
+          }
+        },
+        "reminders": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "dailyVerse": {
+              "type": "object",
+              "additionalProperties": true,
+              "properties": {
+                "enabled": { "type": "boolean" }
+              }
+            }
+          }
+        },
+        "downloads": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "sourceId": {
+              "type": "string",
+              "enum": ["alfaazplus", "github", "jsdelivr"]
+            }
+          }
+        },
+        "reader": { "$ref": "#/$defs/readerSettings" },
+        "audio": { "$ref": "#/$defs/audioSettings" }
+      }
+    },
+    "readerSettings": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "autoScroll": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "speed": { "type": "number", "minimum": 1, "maximum": 10 }
+          }
+        },
+        "display": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "styleId": {
+              "type": "string",
+              "enum": ["mode_vbv", "mode_reading", "mode_translation"]
+            },
+            "keepScreenOn": { "type": "boolean" },
+            "layoutId": {
+              "type": "string",
+              "enum": ["page", "flow"]
+            }
+          }
+        },
+        "text": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "arabic": {
+              "type": "object",
+              "additionalProperties": true,
+              "properties": {
+                "enabled": { "type": "boolean" },
+                "scale": { "type": "number", "minimum": 0.5, "maximum": 2 }
+              }
+            },
+            "tafsir": {
+              "type": "object",
+              "additionalProperties": true,
+              "properties": {
+                "scale": { "type": "number", "minimum": 0.5, "maximum": 2 }
+              }
+            },
+            "translation": {
+              "type": "object",
+              "additionalProperties": true,
+              "properties": {
+                "scale": { "type": "number", "minimum": 0.5, "maximum": 2 }
+              }
+            },
+            "scriptId": { "type": "string", "minLength": 1 },
+            "scriptVariantId": {
+              "type": "string",
+              "enum": ["", "indopak_16", "indopak_15"]
+            }
+          }
+        },
+        "wordByWord": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "sourceId": { "type": "string", "minLength": 1 },
+            "showTranslation": { "type": "boolean" },
+            "showTransliteration": { "type": "boolean" },
+            "tooltipTranslation": { "type": "boolean" },
+            "tooltipTransliteration": { "type": "boolean" },
+            "recitation": { "type": "boolean" },
+            "scale": { "type": "number", "minimum": 0.5, "maximum": 2 }
+          }
+        },
+        "content": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "tafsirId": { "type": "string", "minLength": 1 },
+            "translationIds": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
+    "audioSettings": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "playback": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "speed": { "type": "number", "minimum": 0.1, "maximum": 3 },
+            "mode": {
+              "type": "string",
+              "enum": ["only_quran", "only_translation", "both"]
+            },
+            "endBehaviour": {
+              "type": "string",
+              "enum": ["stop_playback", "next_chapter", "repeat_chapter"]
+            },
+            "repeatCount": { "type": "integer", "minimum": 0, "maximum": 9 },
+            "verseGroupSize": { "type": "integer", "minimum": 1, "maximum": 10 }
+          }
+        },
+        "recitation": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "reciterId": { "type": "string", "minLength": 1 }
+          }
+        },
+        "translation": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "voiceId": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    }
+  }
+}

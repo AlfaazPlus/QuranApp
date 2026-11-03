@@ -7,6 +7,12 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.room3.withWriteTransaction
 import com.quranapp.android.R
+import com.quranapp.android.backup.BackupBookmark
+import com.quranapp.android.backup.BackupCollection
+import com.quranapp.android.backup.BackupCollectionItem
+import com.quranapp.android.backup.BookmarkChange
+import com.quranapp.android.backup.MergeCounts
+import com.quranapp.android.backup.bookmarkChange
 import com.quranapp.android.components.bookmark.CollectionExportModel
 import com.quranapp.android.db.UserDatabase
 import com.quranapp.android.db.entities.user.BookmarkEntity
@@ -17,8 +23,11 @@ import com.quranapp.android.db.entities.user.ReadHistoryEntity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.mapLatest
+import com.quranapp.android.utils.univ.DateUtils
 import kotlinx.coroutines.runBlocking
+import java.time.Instant
 import java.util.Date
+import java.util.UUID
 
 class UserRepository(
     private val context: Context,
@@ -46,11 +55,14 @@ class UserRepository(
             return
         }
 
+        val now = Date()
         val entity = BookmarkEntity(
             chapterNo = chapterNo,
             fromVerseNo = verseRange.first,
             toVerseNo = verseRange.last,
-            note = note
+            note = note,
+            dateTime = now,
+            updatedAt = now,
         )
 
         val rowId = bookmarkDao.insert(entity)
@@ -80,7 +92,7 @@ class UserRepository(
         note: String?,
     ) {
         val existing = bookmarkDao.getBookmark(chapterNo, fromVerse, toVerse) ?: return
-        bookmarkDao.updateBookmark(existing.copy(note = note))
+        bookmarkDao.updateBookmark(existing.copy(note = note, updatedAt = Date()))
     }
 
     suspend fun removeFromBookmark(
@@ -290,98 +302,280 @@ class UserRepository(
         }
     }
 
-    suspend fun importCollections(collections: List<CollectionExportModel>) {
-        database.withWriteTransaction {
-            for (incoming in collections) {
-                val name = incoming.name.trim()
-                if (name.isEmpty()) continue
+    suspend fun getCollectionsForBackup(): List<BackupCollection> {
+        return collectionDao.getAll().map { collection ->
+            val items = collectionDao.getItems(collection.id)
+            BackupCollection(
+                id = collection.stableId,
+                name = collection.name,
+                description = collection.description,
+                iconKey = collection.icon_key,
+                color = collection.color,
+                sortIndex = collection.sortIndex,
+                createdAt = Instant.ofEpochMilli(collection.createdAt.time),
+                updatedAt = Instant.ofEpochMilli(collection.updatedAt.time),
+                timestampsTrusted = true,
+                items = items.mapIndexed { index, item ->
+                    BackupCollectionItem(
+                        chapterNumber = item.chapterNo,
+                        verseNumber = item.verseNo,
+                        note = item.note,
+                        position = index,
+                        addedAt = Instant.ofEpochMilli(item.addedAt.time),
+                    )
+                },
+            )
+        }
+    }
 
-                val existing = collectionDao.getByName(name)
-                val collectionId = if (existing == null) {
-                    collectionDao.createCollection(
-                        CollectionEntity(
-                            name = name,
-                            description = incoming.description?.trim()?.ifBlank { null },
-                            icon_key = incoming.iconKey?.trim()?.ifBlank { null },
-                            color = incoming.color?.trim()?.ifBlank { null },
-                            createdAt = incoming.createdAt,
-                            updatedAt = incoming.updatedAt,
+    suspend fun applyBackup(
+        bookmarks: List<BackupBookmark>?,
+        collections: List<BackupCollection>?,
+    ): MergeCounts {
+        return database.withWriteTransaction {
+            val bookmarkCounts = bookmarks?.let { mergeBookmarks(it) } ?: MergeCounts()
+            val collectionCounts = collections?.let { mergeCollections(it) } ?: MergeCounts()
+            bookmarkCounts + collectionCounts
+        }
+    }
+
+    private suspend fun mergeBookmarks(bookmarks: List<BackupBookmark>): MergeCounts {
+        var counts = MergeCounts()
+        for (incoming in bookmarks) {
+            if (
+                incoming.chapterNumber < 1 ||
+                incoming.startVerseNumber < 1 ||
+                incoming.endVerseNumber < incoming.startVerseNumber
+            ) {
+                counts = counts.copy(skipped = counts.skipped + 1)
+                continue
+            }
+            val note = cleanNote(incoming.note)
+            val byId = incoming.id?.takeIf { it.isNotBlank() }?.let { bookmarkDao.getByStableId(it) }
+            val byRange = bookmarkDao.getBookmark(
+                incoming.chapterNumber,
+                incoming.startVerseNumber,
+                incoming.endVerseNumber,
+            )
+            val local = byId ?: byRange
+            if (local == null) {
+                bookmarkDao.insertNew(
+                    BookmarkEntity(
+                        chapterNo = incoming.chapterNumber,
+                        fromVerseNo = incoming.startVerseNumber,
+                        toVerseNo = incoming.endVerseNumber,
+                        note = note,
+                        dateTime = incoming.createdAt?.toDate() ?: legacyDate(incoming.legacyCreatedAtText),
+                        stableId = incoming.id?.takeIf { it.isNotBlank() } ?: UUID.randomUUID().toString(),
+                        updatedAt = incoming.updatedAt?.toDate(),
+                        legacyCreatedAtText = incoming.legacyCreatedAtText,
+                    )
+                )
+                counts = counts.copy(inserted = counts.inserted + 1)
+                continue
+            }
+            val same = local.chapterNo == incoming.chapterNumber &&
+                local.fromVerseNo == incoming.startVerseNumber &&
+                local.toVerseNo == incoming.endVerseNumber &&
+                cleanNote(local.note) == note
+            val rangeOwner = byRange
+            val blocked = rangeOwner != null && rangeOwner.id != local.id
+            val change = if (blocked) {
+                BookmarkChange.CONFLICT
+            } else {
+                bookmarkChange(
+                    localUpdatedAt = local.updatedAt?.let { Instant.ofEpochMilli(it.time) },
+                    incomingUpdatedAt = incoming.updatedAt,
+                    sameContent = same,
+                )
+            }
+            when (change) {
+                BookmarkChange.UNCHANGED -> counts = counts.copy(unchanged = counts.unchanged + 1)
+                BookmarkChange.CONFLICT -> counts = counts.copy(conflicts = counts.conflicts + 1)
+                BookmarkChange.UPDATE -> {
+                    bookmarkDao.updateBookmark(
+                        local.copy(
+                            chapterNo = incoming.chapterNumber,
+                            fromVerseNo = incoming.startVerseNumber,
+                            toVerseNo = incoming.endVerseNumber,
+                            note = note,
+                            updatedAt = incoming.updatedAt?.toDate(),
+                            legacyCreatedAtText = incoming.legacyCreatedAtText ?: local.legacyCreatedAtText,
                         )
                     )
-                } else {
-                    existing.id
-                }
-
-                var changed = existing == null
-                if (existing != null) {
-                    val description = mergeText(existing.description, incoming.description)
-                    val icon = preferExisting(existing.icon_key, incoming.iconKey)
-                    val color = preferExisting(existing.color, incoming.color)
-                    if (
-                        description != existing.description ||
-                        icon != existing.icon_key ||
-                        color != existing.color
-                    ) {
-                        collectionDao.updateCollection(
-                            existing.copy(
-                                description = description,
-                                icon_key = icon,
-                                color = color,
-                            )
-                        )
-                        changed = true
-                    }
-                }
-
-                val items = collectionDao.getItems(collectionId)
-                    .associateBy { it.chapterNo to it.verseNo }
-                    .toMutableMap()
-                var maxSort = collectionDao.maxItemSort(collectionId) ?: -1
-
-                for (verse in incoming.verses) {
-                    val key = verse.chapterNo to verse.verseNo
-                    val item = items[key]
-                    if (item == null) {
-                        maxSort += 1
-                        val rowId = collectionDao.insertItem(
-                            CollectionItemEntity(
-                                collectionId = collectionId,
-                                chapterNo = verse.chapterNo,
-                                verseNo = verse.verseNo,
-                                note = verse.note?.trim()?.ifBlank { null },
-                                sortIndex = maxSort,
-                                addedAt = verse.addedAt,
-                            )
-                        )
-                        if (rowId != -1L) {
-                            items[key] = CollectionItemEntity(
-                                id = rowId,
-                                collectionId = collectionId,
-                                chapterNo = verse.chapterNo,
-                                verseNo = verse.verseNo,
-                                note = verse.note?.trim()?.ifBlank { null },
-                                sortIndex = maxSort,
-                                addedAt = verse.addedAt,
-                            )
-                            changed = true
-                        }
-                    } else {
-                        val note = mergeText(item.note, verse.note)
-                        if (note != item.note) {
-                            val updated = item.copy(note = note)
-                            collectionDao.updateItem(updated)
-                            items[key] = updated
-                            changed = true
-                        }
-                    }
-                }
-
-                if (changed) {
-                    collectionDao.touch(collectionId, System.currentTimeMillis())
+                    counts = counts.copy(updated = counts.updated + 1)
                 }
             }
         }
+        return counts
     }
+
+    private suspend fun mergeCollections(collections: List<BackupCollection>): MergeCounts {
+        var counts = MergeCounts()
+        for (incoming in collections) {
+            val name = incoming.name.trim()
+            if (name.isEmpty()) {
+                counts = counts.copy(skipped = counts.skipped + 1)
+                continue
+            }
+            val byId = incoming.id?.takeIf { it.isNotBlank() }?.let { collectionDao.getByStableId(it) }
+            val local = byId ?: collectionDao.getByName(name)
+            if (local == null) {
+                val createdAt = incoming.createdAt?.toDate() ?: Date()
+                val collectionId = collectionDao.createCollection(
+                    CollectionEntity(
+                        name = name,
+                        description = cleanNote(incoming.description),
+                        icon_key = cleanNote(incoming.iconKey),
+                        color = cleanNote(incoming.color),
+                        sortIndex = incoming.sortIndex,
+                        createdAt = createdAt,
+                        updatedAt = incoming.updatedAt?.toDate() ?: createdAt,
+                        stableId = incoming.id?.takeIf { it.isNotBlank() } ?: UUID.randomUUID().toString(),
+                    )
+                )
+                insertCollectionItems(collectionId, incoming.items)
+                counts = counts.copy(inserted = counts.inserted + 1)
+                continue
+            }
+
+            val incomingMillis = incoming.updatedAt?.toEpochMilli()
+            val localMillis = local.updatedAt.time
+            val newer = incoming.timestampsTrusted && incomingMillis != null && incomingMillis > localMillis
+            val older = incoming.timestampsTrusted && incomingMillis != null && incomingMillis < localMillis
+            val sameTime = incoming.timestampsTrusted && incomingMillis != null && incomingMillis == localMillis
+            var changed = false
+            var conflict = false
+            if (newer) {
+                val updated = local.copy(
+                    name = name,
+                    description = cleanNote(incoming.description),
+                    icon_key = cleanNote(incoming.iconKey),
+                    color = cleanNote(incoming.color),
+                    sortIndex = incoming.sortIndex ?: local.sortIndex,
+                    updatedAt = Date(checkNotNull(incomingMillis)),
+                )
+                if (updated != local) {
+                    collectionDao.updateCollection(updated)
+                    changed = true
+                }
+            } else if (!older && !sameTime) {
+                val description = mergeText(local.description, incoming.description)
+                val icon = preferExisting(local.icon_key, incoming.iconKey)
+                val color = preferExisting(local.color, incoming.color)
+                if (description != local.description || icon != local.icon_key || color != local.color) {
+                    collectionDao.updateCollection(
+                        local.copy(description = description, icon_key = icon, color = color)
+                    )
+                    changed = true
+                }
+            } else if (sameTime && collectionContentDiffers(local, incoming)) {
+                conflict = true
+            }
+
+            val itemResult = mergeCollectionItems(
+                collectionId = local.id,
+                items = incoming.items,
+                replaceNotes = newer,
+                mergeNotes = !incoming.timestampsTrusted,
+            )
+            changed = changed || itemResult.changed
+            conflict = conflict || itemResult.conflicts > 0
+            if (changed && !newer) {
+                collectionDao.touch(local.id, System.currentTimeMillis())
+            }
+            counts = when {
+                conflict && !changed -> counts.copy(conflicts = counts.conflicts + 1)
+                changed && conflict -> counts.copy(
+                    updated = counts.updated + 1,
+                    conflicts = counts.conflicts + 1,
+                )
+                changed -> counts.copy(updated = counts.updated + 1)
+                conflict -> counts.copy(conflicts = counts.conflicts + 1)
+                else -> counts.copy(unchanged = counts.unchanged + 1)
+            }
+        }
+        return counts
+    }
+
+    private suspend fun insertCollectionItems(
+        collectionId: Long,
+        items: List<BackupCollectionItem>,
+    ) {
+        items.forEachIndexed { index, item ->
+            collectionDao.insertItem(
+                CollectionItemEntity(
+                    collectionId = collectionId,
+                    chapterNo = item.chapterNumber,
+                    verseNo = item.verseNumber,
+                    note = cleanNote(item.note),
+                    sortIndex = item.position.takeIf { it >= 0 } ?: index,
+                    addedAt = item.addedAt?.toDate() ?: Date(),
+                )
+            )
+        }
+    }
+
+    private suspend fun mergeCollectionItems(
+        collectionId: Long,
+        items: List<BackupCollectionItem>,
+        replaceNotes: Boolean,
+        mergeNotes: Boolean,
+    ): ItemMerge {
+        val existing = collectionDao.getItems(collectionId).associateBy { it.chapterNo to it.verseNo }.toMutableMap()
+        var maxSort = collectionDao.maxItemSort(collectionId) ?: -1
+        var changed = false
+        var conflicts = 0
+        for (item in items) {
+            val key = item.chapterNumber to item.verseNumber
+            val local = existing[key]
+            val note = cleanNote(item.note)
+            if (local == null) {
+                maxSort += 1
+                val rowId = collectionDao.insertItem(
+                    CollectionItemEntity(
+                        collectionId = collectionId,
+                        chapterNo = item.chapterNumber,
+                        verseNo = item.verseNumber,
+                        note = note,
+                        sortIndex = maxSort,
+                        addedAt = item.addedAt?.toDate() ?: Date(),
+                    )
+                )
+                if (rowId != -1L) changed = true
+            } else if (replaceNotes && cleanNote(local.note) != note) {
+                collectionDao.updateItem(local.copy(note = note))
+                changed = true
+            } else if (mergeNotes) {
+                val merged = mergeText(local.note, note)
+                if (merged != local.note) {
+                    collectionDao.updateItem(local.copy(note = merged))
+                    changed = true
+                }
+            } else if (cleanNote(local.note) != note && note != null) {
+                conflicts += 1
+            }
+        }
+        return ItemMerge(changed, conflicts)
+    }
+
+    private fun collectionContentDiffers(local: CollectionEntity, incoming: BackupCollection): Boolean {
+        return local.name != incoming.name.trim() ||
+            cleanNote(local.description) != cleanNote(incoming.description) ||
+            cleanNote(local.icon_key) != cleanNote(incoming.iconKey) ||
+            cleanNote(local.color) != cleanNote(incoming.color)
+    }
+
+    private fun Instant.toDate() = Date(toEpochMilli())
+
+    private fun legacyDate(value: String?): Date {
+        if (value.isNullOrBlank()) return Date()
+        return DateUtils.toDate(value, DateUtils.DATETIME_FORMAT_SYSTEM) ?: Date()
+    }
+
+    private fun cleanNote(value: String?) = value?.trim()?.ifBlank { null }
+
+    private data class ItemMerge(val changed: Boolean, val conflicts: Int)
 
     private fun preferExisting(local: String?, incoming: String?): String? {
         if (!local.isNullOrBlank()) return local

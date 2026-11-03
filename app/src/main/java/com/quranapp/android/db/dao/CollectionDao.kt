@@ -38,6 +38,9 @@ interface CollectionDao {
     )
     suspend fun getByName(name: String): CollectionEntity?
 
+    @Query("SELECT * FROM user_collections WHERE stable_id = :stableId LIMIT 1")
+    suspend fun getByStableId(stableId: String): CollectionEntity?
+
     @Query(
         """
         SELECT * FROM user_collection_items

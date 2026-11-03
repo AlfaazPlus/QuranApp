@@ -277,6 +277,10 @@ object ReaderPreferences {
         return DataStoreManager.observe(KEY_ARABIC_TEXT_ENABLED)
     }
 
+    suspend fun getKeepScreenOn(): Boolean {
+        return DataStoreManager.readFirst(KEY_KEEP_SCREEN_ON)
+    }
+
     suspend fun setKeepScreenOn(enabled: Boolean) {
         DataStoreManager.write(KEY_KEEP_SCREEN_ON, enabled)
     }

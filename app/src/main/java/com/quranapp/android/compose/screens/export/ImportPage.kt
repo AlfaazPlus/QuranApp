@@ -1,5 +1,10 @@
 package com.quranapp.android.compose.screens.export
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,26 +25,46 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
-import com.quranapp.android.activities.ExportKeys
+import com.quranapp.android.backup.importBackup
+import com.quranapp.android.backup.readImportFileName
+import com.quranapp.android.backup.ExportKeys
 import com.quranapp.android.compose.components.common.AlertCard
 import com.quranapp.android.compose.components.common.AlertType
 import com.quranapp.android.compose.components.dialogs.AlertDialog
 import com.quranapp.android.compose.components.dialogs.AlertDialogAction
 import com.quranapp.android.compose.components.dialogs.AlertDialogActionStyle
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
+private val uriSaver = Saver<Uri?, String>(
+    save = { it?.toString().orEmpty() },
+    restore = { saved -> saved.takeIf { it.isNotEmpty() }?.let(Uri::parse) },
+)
 
 @Composable
-fun ImportPage(
-    fileName: String?,
-    onPickFile: () -> Unit,
-    onImport: (scopes: Map<String, Boolean>) -> Unit,
-) {
+fun ImportPage() {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    var importUri by rememberSaveable(stateSaver = uriSaver) { mutableStateOf(null) }
+    var fileName by rememberSaveable { mutableStateOf<String?>(null) }
+    val importLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode != Activity.RESULT_OK) return@rememberLauncherForActivityResult
+        val uri = result.data?.data ?: return@rememberLauncherForActivityResult
+        importUri = uri
+        fileName = readImportFileName(context, uri)
+    }
     var selectedItems by rememberSaveable(stateSaver = exportSelectionSaver) {
         mutableStateOf(setOf<String>())
     }
@@ -54,7 +79,18 @@ fun ImportPage(
     ) {
         Spacer(modifier = Modifier.height(20.dp))
         OutlinedButton(
-            onClick = onPickFile,
+            onClick = {
+                importLauncher.launch(
+                    Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                        addCategory(Intent.CATEGORY_OPENABLE)
+                        type = "*/*"
+                        putExtra(
+                            Intent.EXTRA_MIME_TYPES,
+                            arrayOf("application/json", "application/gzip", "application/x-gzip"),
+                        )
+                    },
+                )
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(52.dp),
@@ -119,8 +155,13 @@ fun ImportPage(
                     text = stringResource(R.string.labelImport),
                     style = AlertDialogActionStyle.Primary,
                     onClick = {
-                        confirmImport = false
-                        onImport(selectedScopes(selectedItems))
+                        val uri = importUri
+                        if (uri != null) {
+                            confirmImport = false
+                            scope.launch(Dispatchers.IO) {
+                                importBackup(context, uri, selectedScopes(selectedItems))
+                            }
+                        }
                     },
                 ),
             ),

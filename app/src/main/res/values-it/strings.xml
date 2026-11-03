@@ -270,7 +270,6 @@
     <string name="msgImportCollections">Unisce le raccolte con lo stesso nome e mantiene versetti e note già presenti</string>
     <string name="labelSelectFile">Scegli file</string>
     <string name="titleConfirmImport">Importare gli elementi selezionati?</string>
-    <string name="msgImportCollectionsSuccess">Raccolte importate</string>
     <string name="strLabelDownloaded">Scaricato</string>
     <string name="strTitleDeleteTafsir">Rimuovere tafsir?</string>
     <string name="strMsgDeleteTafsir" formatted="false">Sei sicuro che vuoi rimuovere \"%s\"? Questo rimuoverà i dati del tafsir scaricato dal tuo dispositivo.</string>
@@ -357,6 +356,21 @@
     <string name="strMsgSearchHistoryDeleteAll">Toda la cronologia delle ricerche verrà rimossa.</string>
     <string name="titleResourceDownloadSource">Fonte di download delle risorse</string>
     <string name="msgExportSuccess">Esportato con successo</string>
+    <string name="autoBackup">Backup automatico</string>
+    <string name="autoBackupDetails">Segnalibri, raccolte e impostazioni vengono salvati in un file che scegli tu. Quel file viene aggiornato circa una volta al giorno.</string>
+    <string name="labelBackupFile">File</string>
+    <string name="labelBackupSchedule">Frequenza</string>
+    <string name="autoBackupSchedule">Circa una volta al giorno</string>
+    <string name="autoBackupNoFile">Nessun file scelto</string>
+    <string name="viewFile">Vedi file</string>
+    <string name="changeFile">Cambia file</string>
+    <string name="autoBackupOpenFailed">Impossibile aprire il file</string>
+    <string name="autoBackupSaved">Backup salvato</string>
+    <string name="autoBackupFailed">Impossibile salvare il backup</string>
+    <string name="importSummary">Importazione completata. %1$d aggiunti, %2$d aggiornati, %3$d invariati, %4$d ignorati, %5$d in conflitto e %6$d impostazioni non supportate.</string>
+    <string name="backupFailed">Impossibile leggere questo backup.</string>
+    <string name="backupUnsupportedVersion">Questo backup proviene da una versione più recente dell\'app.</string>
+    <string name="backupTooLarge">Questo file di backup è troppo grande per essere aperto.</string>
     <string name="desc_votd_widget">Ricevi un nuovo versetto ogni giorno</string>
     <string name="autoScroll">Scorrimento automatico</string>
     <string name="startAutoScroll">Avvia scorrimento automatico</string>

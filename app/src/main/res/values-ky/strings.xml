@@ -181,6 +181,21 @@
     <string name="labelExport">Экспорт</string>
     <string name="labelImport">Импорт</string>
     <string name="msgExportSuccess">Ийгиликтүү экспорттолду</string>
+    <string name="autoBackup">Автоматтык көчүрмө</string>
+    <string name="autoBackupDetails">Кыстармалар, жыйнактар жана жөндөөлөр сиз тандаган файлга сакталат. Ал файл болжол менен күнүнө бир жолу жаңыланат.</string>
+    <string name="labelBackupFile">Файл</string>
+    <string name="labelBackupSchedule">Канчалык көп</string>
+    <string name="autoBackupSchedule">Болжол менен күнүнө бир жолу</string>
+    <string name="autoBackupNoFile">Файл тандала элек</string>
+    <string name="viewFile">Файлды көрүү</string>
+    <string name="changeFile">Файлды алмаштыруу</string>
+    <string name="autoBackupOpenFailed">Файл ачылган жок</string>
+    <string name="autoBackupSaved">Көчүрмө сакталды</string>
+    <string name="autoBackupFailed">Көчүрмө сакталган жок</string>
+    <string name="importSummary">Импорт бүттү. %1$d кошулду, %2$d жаңыланды, %3$d өзгөрбөдү, %4$d өткөрүлүп жиберилди, %5$d карама-каршылык жана %6$d жөндөө колдоого алынбайт.</string>
+    <string name="backupFailed">Бул көчүрмө окулган жок.</string>
+    <string name="backupUnsupportedVersion">Бул көчүрмө колдонмонун жаңыраак версиясынан.</string>
+    <string name="backupTooLarge">Бул көчүрмө файлы ачууга өтө чоң.</string>
     <string name="desc_votd_widget">Күндүн аятын күн сайын алыңыз</string>
     <string name="autoScroll">Авто жылдыруу</string>
     <string name="startAutoScroll">Авто жылдырууну баштоо</string>
@@ -298,7 +313,6 @@
     <string name="msgImportCollections">Бирдей аталыштагы жыйнактарды бириктирет жана мурунку аяттар менен эскертмелерди калтырат</string>
     <string name="labelSelectFile">Файл тандоо</string>
     <string name="titleConfirmImport">Тандалгандарды импорттойсузбу?</string>
-    <string name="msgImportCollectionsSuccess">Жыйнактар импорттолду</string>
     <string name="strTitleDeleteTafsir">Тафсирди өчүрүү керекпи?</string>
     <string name="strMsgDeleteTafsir" formatted="false">Сиз чын эле \"%s\" тафсирин өчүрүүнү каалайсызбы? Бул сиздин түзмөгүңүзгө жүктөлгөн тафсир маалыматтарын жок кылат.</string>
     <string name="strTitleMajorSins">Курандагы чоң күнөөлөр</string>

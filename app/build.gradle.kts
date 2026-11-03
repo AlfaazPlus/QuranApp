@@ -107,6 +107,10 @@ android {
         }
     }
 
+    sourceSets.named("main") {
+        assets.srcDir(rootProject.file("backup"))
+    }
+
     compileOptions {
         // Flag to enable support for the new language APIs
         isCoreLibraryDesugaringEnabled = true
@@ -185,6 +189,7 @@ dependencies {
 
     implementation(libs.commons.lang)
     implementation(libs.commons.compress)
+    implementation("com.github.erosb:json-sKema:0.32.0")
     implementation(libs.workManager)
     implementation(libs.dataStore)
 

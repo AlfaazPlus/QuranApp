@@ -19,6 +19,9 @@ interface BookmarkDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(bookmarks: List<BookmarkEntity>)
 
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    suspend fun insertNew(bookmark: BookmarkEntity): Long
+
     // ---------- UPDATE ----------
     @Update
     suspend fun updateBookmark(item: BookmarkEntity): Int
@@ -88,6 +91,9 @@ interface BookmarkDao {
         fromVerse: Int,
         toVerse: Int
     ): BookmarkEntity?
+
+    @Query("SELECT * FROM user_bookmarks WHERE stable_id = :stableId LIMIT 1")
+    suspend fun getByStableId(stableId: String): BookmarkEntity?
 
     @Query("SELECT * FROM  user_bookmarks ORDER BY id DESC")
     fun getBookmarksFlow(): Flow<List<BookmarkEntity>>

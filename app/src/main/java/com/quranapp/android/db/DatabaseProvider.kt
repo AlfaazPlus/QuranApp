@@ -50,7 +50,11 @@ object DatabaseProvider {
                 UserDatabase::class.java,
                 "user_db"
             )
-                .addMigrations(UserDatabase.MIGRATION_1_2, UserDatabase.MIGRATION_2_3)
+                .addMigrations(
+                    UserDatabase.MIGRATION_1_2,
+                    UserDatabase.MIGRATION_2_3,
+                    UserDatabase.MIGRATION_3_4,
+                )
                 .fallbackToDestructiveMigration(false)
                 .build()
                 .also { userDatabase = it }
