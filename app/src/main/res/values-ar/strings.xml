@@ -275,7 +275,6 @@
     <string name="labelImport">استيراد</string>
     <string name="msgExportSuccess">تم التصدير بنجاح</string>
     <string name="labelExport">تصدير</string>
-    <string name="msgExportImportBookmarks">قم بتصدير أو استيراد إشاراتك المرجعية مع الملاحظات.</string>
     <string name="desc_votd_widget">احصل على آية جديدة كل يوم</string>
     <string name="autoScroll">التمرير التلقائي</string>
     <string name="startAutoScroll">بدء التمرير التلقائي</string>
@@ -284,15 +283,24 @@
     <string name="strTitleDeleteTafsir">حذف التفسير؟</string>
     <string name="strMsgDeleteTafsir" formatted="false">هل أنت متأكد أنك تريد حذف \"%s\"؟ سيؤدي هذا إلى إزالة بيانات التفسير التي تم تنزيلها من جهازك.</string>
     <string name="strTitleMajorSins">الخطايا الكبرى في القرآن الكريم</string>
-    <string name="labelImportExportEverything">استيراد/تصدير كل شيء</string>
-    <string name="labelImportExportSettings">إعدادات الاستيراد/التصدير</string>
-    <string name="warnImportSettings">تحذير: سيؤدي استيراد الإعدادات إلى إلغاء إعداداتك الحالية.</string>
+    <string name="warnImportSettings">استيراد الإعدادات يستبدل إعداداتك الحالية.</string>
+    <string name="labelExportSelected">تصدير المحدد (%1$d)</string>
+    <string name="labelImportSelected">استيراد المحدد (%1$d)</string>
+    <string name="labelCollections">المجموعات</string>
+    <string name="msgExportSettings">تفضيلات المظهر والقارئ والتلاوة</string>
+    <string name="msgImportSettings">يستبدل تفضيلات المظهر والقارئ والتلاوة</string>
+    <string name="msgExportBookmarks">إشاراتك المرجعية وملاحظاتها</string>
+    <string name="msgImportBookmarks">يضيف الإشارات المرجعية وملاحظاتها</string>
+    <string name="msgExportCollections">مجموعاتك والآيات والملاحظات</string>
+    <string name="msgImportCollections">يدمج المجموعات ذات الاسم نفسه ويبقي الآيات والملاحظات الحالية</string>
+    <string name="labelSelectFile">اختيار ملف</string>
+    <string name="titleConfirmImport">استيراد العناصر المحددة؟</string>
+    <string name="msgImportCollectionsSuccess">تم استيراد المجموعات</string>
     <string name="titleCancelDownload">إلغاء التنزيل؟</string>
     <string name="yesCancelDownload">نعم إلغاء</string>
     <string name="noContinueDownload">لا، استمر</string>
     <string name="readingTafsirMultiVerses">قراءة التفسير لآيات متعددة:</string>
     <string name="strLabelDownloaded">تحميل</string>
-    <string name="labelImportExportBookmarks">استيراد/تصدير الإشارات المرجعية</string>
     <string name="clear">مسح</string>
     <string name="strLabelAll">الكل</string>
     <string name="strLabelPrevious">السابق</string>

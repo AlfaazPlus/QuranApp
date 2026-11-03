@@ -7,6 +7,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.room3.withWriteTransaction
 import com.quranapp.android.R
+import com.quranapp.android.components.bookmark.CollectionExportModel
 import com.quranapp.android.db.UserDatabase
 import com.quranapp.android.db.entities.user.BookmarkEntity
 import com.quranapp.android.db.entities.user.CollectionEntity
@@ -278,6 +279,122 @@ class UserRepository(
 
     suspend fun deleteCollection(id: Long) {
         collectionDao.deleteCollection(id)
+    }
+
+    suspend fun getCollectionsForExport(): List<CollectionExportModel> {
+        return collectionDao.getAll().map { collection ->
+            CollectionExportModel.fromEntities(
+                collection,
+                collectionDao.getItems(collection.id),
+            )
+        }
+    }
+
+    suspend fun importCollections(collections: List<CollectionExportModel>) {
+        database.withWriteTransaction {
+            for (incoming in collections) {
+                val name = incoming.name.trim()
+                if (name.isEmpty()) continue
+
+                val existing = collectionDao.getByName(name)
+                val collectionId = if (existing == null) {
+                    collectionDao.createCollection(
+                        CollectionEntity(
+                            name = name,
+                            description = incoming.description?.trim()?.ifBlank { null },
+                            icon_key = incoming.iconKey?.trim()?.ifBlank { null },
+                            color = incoming.color?.trim()?.ifBlank { null },
+                            createdAt = incoming.createdAt,
+                            updatedAt = incoming.updatedAt,
+                        )
+                    )
+                } else {
+                    existing.id
+                }
+
+                var changed = existing == null
+                if (existing != null) {
+                    val description = mergeText(existing.description, incoming.description)
+                    val icon = preferExisting(existing.icon_key, incoming.iconKey)
+                    val color = preferExisting(existing.color, incoming.color)
+                    if (
+                        description != existing.description ||
+                        icon != existing.icon_key ||
+                        color != existing.color
+                    ) {
+                        collectionDao.updateCollection(
+                            existing.copy(
+                                description = description,
+                                icon_key = icon,
+                                color = color,
+                            )
+                        )
+                        changed = true
+                    }
+                }
+
+                val items = collectionDao.getItems(collectionId)
+                    .associateBy { it.chapterNo to it.verseNo }
+                    .toMutableMap()
+                var maxSort = collectionDao.maxItemSort(collectionId) ?: -1
+
+                for (verse in incoming.verses) {
+                    val key = verse.chapterNo to verse.verseNo
+                    val item = items[key]
+                    if (item == null) {
+                        maxSort += 1
+                        val rowId = collectionDao.insertItem(
+                            CollectionItemEntity(
+                                collectionId = collectionId,
+                                chapterNo = verse.chapterNo,
+                                verseNo = verse.verseNo,
+                                note = verse.note?.trim()?.ifBlank { null },
+                                sortIndex = maxSort,
+                                addedAt = verse.addedAt,
+                            )
+                        )
+                        if (rowId != -1L) {
+                            items[key] = CollectionItemEntity(
+                                id = rowId,
+                                collectionId = collectionId,
+                                chapterNo = verse.chapterNo,
+                                verseNo = verse.verseNo,
+                                note = verse.note?.trim()?.ifBlank { null },
+                                sortIndex = maxSort,
+                                addedAt = verse.addedAt,
+                            )
+                            changed = true
+                        }
+                    } else {
+                        val note = mergeText(item.note, verse.note)
+                        if (note != item.note) {
+                            val updated = item.copy(note = note)
+                            collectionDao.updateItem(updated)
+                            items[key] = updated
+                            changed = true
+                        }
+                    }
+                }
+
+                if (changed) {
+                    collectionDao.touch(collectionId, System.currentTimeMillis())
+                }
+            }
+        }
+    }
+
+    private fun preferExisting(local: String?, incoming: String?): String? {
+        if (!local.isNullOrBlank()) return local
+        return incoming?.trim()?.ifBlank { null }
+    }
+
+    private fun mergeText(local: String?, incoming: String?): String? {
+        if (local.isNullOrBlank() && incoming.isNullOrBlank()) return null
+        if (local.isNullOrBlank()) return incoming!!.trim()
+        if (incoming.isNullOrBlank()) return local
+        val incomingTrimmed = incoming.trim()
+        if (local.contains(incomingTrimmed)) return local
+        return local.trimEnd() + "\n\n" + incomingTrimmed
     }
 
 

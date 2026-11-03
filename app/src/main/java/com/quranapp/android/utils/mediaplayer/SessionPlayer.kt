@@ -64,6 +64,8 @@ class SessionPlayer(
 
     override fun getCurrentMediaItemIndex(): Int = 0
 
+    override fun getCurrentPeriodIndex(): Int = 0
+
     override fun getCurrentMediaItem(): MediaItem? {
         val realItem = exoPlayer.currentMediaItem ?: return null
         val currentVerse = service.state.value.currentVerse
@@ -104,12 +106,8 @@ class SessionPlayer(
     override fun hasPreviousMediaItem(): Boolean = false
 
     override fun getCurrentTimeline(): Timeline {
+        val currentMediaItem = getCurrentMediaItem() ?: return Timeline.EMPTY
         val durationMs = getDuration()
-        val currentMediaItem = getCurrentMediaItem()
-
-        if (durationMs <= 0 || currentMediaItem == null) {
-            return super.getCurrentTimeline()
-        }
 
         if (durationMs == cachedTimelineDuration && currentMediaItem === cachedSessionMediaItem && cachedTimeline != null) {
             return cachedTimeline!!

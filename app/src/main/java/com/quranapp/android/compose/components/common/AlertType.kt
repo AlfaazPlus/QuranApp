@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.Surface
@@ -17,13 +18,20 @@ import com.quranapp.android.compose.theme.alpha
 
 sealed class AlertType {
     data object Info : AlertType()
+    data object Warning : AlertType()
     data object Error : AlertType()
 }
+
+private val WarningContainerLight = Color(0xFFFFDF9E)
+private val OnWarningContainerLight = Color(0xFF261A00)
+private val WarningContainerDark = Color(0xFF5C4300)
+private val OnWarningContainerDark = Color(0xFFFFDF9E)
 
 @Composable
 private fun getBackgroundColorForAlertType(type: AlertType): Color {
     return when (type) {
         AlertType.Info -> colorScheme.surface
+        AlertType.Warning -> if (isSystemInDarkTheme()) WarningContainerDark else WarningContainerLight
         AlertType.Error -> colorScheme.errorContainer
     }
 }
@@ -32,6 +40,7 @@ private fun getBackgroundColorForAlertType(type: AlertType): Color {
 private fun getColorForAlertType(type: AlertType): Color {
     return when (type) {
         AlertType.Info -> colorScheme.onSurface
+        AlertType.Warning -> if (isSystemInDarkTheme()) OnWarningContainerDark else OnWarningContainerLight
         AlertType.Error -> colorScheme.onErrorContainer
     }
 }

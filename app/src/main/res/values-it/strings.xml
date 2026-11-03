@@ -258,10 +258,19 @@
     <string name="titleArabicTextToggle">Mostra il testo arabo del verso</string>
     <string name="labelExport">Esporta</string>
     <string name="labelImport">Importa</string>
-    <string name="labelImportExportEverything">Importa/Esporta Tutto</string>
-    <string name="labelImportExportBookmarks">Importa/Esporta I segnalibri</string>
-    <string name="labelImportExportSettings">Improta/Esporta le impostazioni</string>
-    <string name="warnImportSettings">ATTENZIONE: l\'importazione delle impostazioni sovrascriverà quelle attuali.</string>
+    <string name="warnImportSettings">Importare le impostazioni sostituisce quelle che usi ora.</string>
+    <string name="labelExportSelected">Esporta selezionati (%1$d)</string>
+    <string name="labelImportSelected">Importa selezionati (%1$d)</string>
+    <string name="labelCollections">Raccolte</string>
+    <string name="msgExportSettings">Tema, lettura e recitazione</string>
+    <string name="msgImportSettings">Sostituisce tema, lettura e recitazione</string>
+    <string name="msgExportBookmarks">I tuoi segnalibri e le relative note</string>
+    <string name="msgImportBookmarks">Aggiunge segnalibri e note</string>
+    <string name="msgExportCollections">Le tue raccolte, i versetti e le note</string>
+    <string name="msgImportCollections">Unisce le raccolte con lo stesso nome e mantiene versetti e note già presenti</string>
+    <string name="labelSelectFile">Scegli file</string>
+    <string name="titleConfirmImport">Importare gli elementi selezionati?</string>
+    <string name="msgImportCollectionsSuccess">Raccolte importate</string>
     <string name="strLabelDownloaded">Scaricato</string>
     <string name="strTitleDeleteTafsir">Rimuovere tafsir?</string>
     <string name="strMsgDeleteTafsir" formatted="false">Sei sicuro che vuoi rimuovere \"%s\"? Questo rimuoverà i dati del tafsir scaricato dal tuo dispositivo.</string>
@@ -347,7 +356,6 @@
     <string name="favourites">Preferiti</string>
     <string name="strMsgSearchHistoryDeleteAll">Toda la cronologia delle ricerche verrà rimossa.</string>
     <string name="titleResourceDownloadSource">Fonte di download delle risorse</string>
-    <string name="msgExportImportBookmarks">Esporta o importa i tuoi segnalibri insieme alle note.</string>
     <string name="msgExportSuccess">Esportato con successo</string>
     <string name="desc_votd_widget">Ricevi un nuovo versetto ogni giorno</string>
     <string name="autoScroll">Scorrimento automatico</string>

@@ -264,7 +264,6 @@
     <string name="titleKeepScreenOnWhileReading">Biarkan layar tetap menyala saat membaca</string>
     <string name="msgKeepScreenOnWhileReading">Mencegah layar mati selama pembaca terbuka. Matikan untuk menghemat baterai.</string>
     <string name="autoScrollSpeed">Atur kecepatan</string>
-    <string name="msgExportImportBookmarks">Ekspor atau Impor bookmark dengan catatan.</string>
     <string name="startAutoScroll">Mulai gulir otomatis</string>
     <string name="autoScroll">Menggulir otomatis</string>
     <string name="desc_votd_widget">Dapatkan ayat baru setiap hari</string>
@@ -273,10 +272,19 @@
     <string name="labelImport">Impor</string>
     <string name="msgExportSuccess">Sukses mengekspor</string>
     <string name="msgExtractingFonts">Mengekstrak font</string>
-    <string name="labelImportExportEverything">Impor/Ekspor Semuanya</string>
-    <string name="labelImportExportBookmarks">Impor/Ekspor Bookmark</string>
-    <string name="labelImportExportSettings">Impor/Ekspor Pengaturan</string>
-    <string name="warnImportSettings">PERINGATAN: Mengimpor pengaturan akan menggantikan pengaturan Anda saat ini.</string>
+    <string name="warnImportSettings">Mengimpor pengaturan akan mengganti pengaturan Anda saat ini.</string>
+    <string name="labelExportSelected">Ekspor yang dipilih (%1$d)</string>
+    <string name="labelImportSelected">Impor yang dipilih (%1$d)</string>
+    <string name="labelCollections">Koleksi</string>
+    <string name="msgExportSettings">Tema, pembaca, dan tilawah</string>
+    <string name="msgImportSettings">Mengganti tema, pembaca, dan tilawah Anda</string>
+    <string name="msgExportBookmarks">Bookmark dan catatannya</string>
+    <string name="msgImportBookmarks">Menambahkan bookmark dan catatannya</string>
+    <string name="msgExportCollections">Koleksi, ayat, dan catatan Anda</string>
+    <string name="msgImportCollections">Menggabungkan koleksi bernama sama dan mempertahankan ayat serta catatan yang ada</string>
+    <string name="labelSelectFile">Pilih file</string>
+    <string name="titleConfirmImport">Impor yang dipilih?</string>
+    <string name="msgImportCollectionsSuccess">Koleksi berhasil diimpor</string>
     <string name="strLabelDownloaded">Terunduh</string>
     <string name="strTitleDeleteTafsir">Hapus Tafsir?</string>
     <string name="strMsgDeleteTafsir" formatted="false">Apakah Anda yakin ingin menghapus \"%s\"? Pilihan ini akan menghapus data tafsir yang diunduh dari perangkat Anda.</string>

@@ -7,10 +7,14 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.provider.OpenableColumns
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import com.quranapp.android.R
 import com.quranapp.android.activities.base.BaseActivity
 import com.quranapp.android.api.JsonHelper
@@ -20,10 +24,11 @@ import com.quranapp.android.api.safeJsonArray
 import com.quranapp.android.api.safeJsonObject
 import com.quranapp.android.api.safeString
 import com.quranapp.android.components.bookmark.BookmarkModel
+import com.quranapp.android.components.bookmark.CollectionExportModel
 import com.quranapp.android.compose.components.player.dialogs.AudioEndBehaviour
 import com.quranapp.android.compose.components.player.dialogs.AudioOption
 import com.quranapp.android.compose.components.reader.ReaderMode
-import com.quranapp.android.compose.screens.ExportImportScreen
+import com.quranapp.android.compose.screens.export.ExportImportScreen
 import com.quranapp.android.compose.theme.QuranAppTheme
 import com.quranapp.android.compose.utils.preferences.AppPreferences
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
@@ -51,7 +56,7 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 
 class ActivityExportImport : BaseActivity() {
-    private val userRepository = DatabaseProvider.getUserRepository(this)
+    private val userRepository by lazy { DatabaseProvider.getUserRepository(this) }
     private val exportLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -67,11 +72,14 @@ class ActivityExportImport : BaseActivity() {
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             result.data?.data?.let { uri ->
-                importData(uri)
+                importUri = uri
+                importFileName = readImportFileName(uri)
             }
         }
     }
 
+    private var importUri by mutableStateOf<Uri?>(null)
+    private var importFileName by mutableStateOf<String?>(null)
     private var importScopes = mapOf<String, Boolean>()
     private var importFailuresMap = mutableMapOf<String, String>()
 
@@ -85,9 +93,12 @@ class ActivityExportImport : BaseActivity() {
         setContent {
             QuranAppTheme {
                 ExportImportScreen(
-                    importCallback = { scopes ->
+                    importFileName = importFileName,
+                    onPickImportFile = { launchImportFilePicker() },
+                    onImport = { scopes ->
+                        val uri = importUri ?: return@ExportImportScreen
                         importScopes = scopes
-                        launchImportFilePicker()
+                        importData(uri)
                     },
                     exportCallback = { scopes ->
                         CoroutineScope(Dispatchers.IO).launch {
@@ -101,6 +112,17 @@ class ActivityExportImport : BaseActivity() {
                 )
             }
         }
+    }
+
+    private fun readImportFileName(uri: Uri): String {
+        contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)
+            ?.use { cursor ->
+                if (cursor.moveToFirst()) {
+                    val name = cursor.getString(0)
+                    if (!name.isNullOrBlank()) return name
+                }
+            }
+        return uri.lastPathSegment ?: "backup.json"
     }
 
     private fun launchImportFilePicker() {
@@ -140,6 +162,18 @@ class ActivityExportImport : BaseActivity() {
 
             withContext(Dispatchers.Main) {
                 if (
+                    importScopes.get(ExportKeys.COLLECTIONS) == true &&
+                    jsonObject.safeJsonArray(ExportKeys.COLLECTIONS) != null &&
+                    importFailuresMap[ExportKeys.COLLECTIONS] == null
+                ) {
+                    MessageUtils.showRemovableToast(
+                        this@ActivityExportImport,
+                        R.string.msgImportCollectionsSuccess,
+                        Toast.LENGTH_LONG
+                    )
+                }
+
+                if (
                     importScopes.get(ExportKeys.SETTINGS) == true &&
                     jsonObject.safeJsonObject(ExportKeys.SETTINGS) != null
                 ) {
@@ -159,7 +193,14 @@ class ActivityExportImport : BaseActivity() {
                     importFailuresMap[ExportKeys.BOOKMARKS] = error
                 }
             }
+        }
 
+        if (scopes.get(ExportKeys.COLLECTIONS) == true) {
+            jsonObject.safeJsonArray(ExportKeys.COLLECTIONS)?.let { collections ->
+                importCollections(collections) { error ->
+                    importFailuresMap[ExportKeys.COLLECTIONS] = error
+                }
+            }
         }
 
         if (scopes.get(ExportKeys.SETTINGS) == true) {
@@ -184,6 +225,29 @@ class ActivityExportImport : BaseActivity() {
             }
         }
 
+    }
+
+    private suspend fun importCollections(
+        jsonArray: JsonArray,
+        failureCallback: (String) -> Unit
+    ) {
+        try {
+            val quranRepository = DatabaseProvider.getQuranRepository(this)
+            val collections = CollectionExportModel.fromJson(jsonArray).map { collection ->
+                collection.copy(
+                    verses = collection.verses.filter { verse ->
+                        quranRepository.isVerseValid4Chapter(verse.chapterNo, verse.verseNo)
+                    }
+                )
+            }
+            userRepository.importCollections(collections)
+        } catch (e: Exception) {
+            failureCallback(e.message ?: "Unknown error")
+            withContext(Dispatchers.Main) {
+                Logger.d(e)
+                Log.saveError(e, "importCollections")
+            }
+        }
     }
 
     private suspend fun importSettings(jsonObject: JsonObject) {
@@ -295,6 +359,13 @@ class ActivityExportImport : BaseActivity() {
             }
         }
 
+        if (scopes.get(ExportKeys.COLLECTIONS) == true) {
+            val collections = prepareCollectionsForExport()
+            if (collections != null) {
+                obj.put(ExportKeys.COLLECTIONS, collections)
+            }
+        }
+
         // settings
         if (scopes.get(ExportKeys.SETTINGS) == true) {
             val settings = prepareSettingsForExport()
@@ -316,6 +387,12 @@ class ActivityExportImport : BaseActivity() {
         }
 
         return BookmarkModel.toJson(bookmarks.map { BookmarkModel.fromEntity(it) })
+    }
+
+    private suspend fun prepareCollectionsForExport(): JSONArray? {
+        val collections = userRepository.getCollectionsForExport()
+        if (collections.isEmpty()) return null
+        return CollectionExportModel.toJson(collections)
     }
 
     private suspend fun prepareSettingsForExport(): JSONObject {
@@ -403,6 +480,7 @@ class ExportKeys {
     companion object {
         const val VERSION = "version"
         const val BOOKMARKS = "bookmarks"
+        const val COLLECTIONS = "collections"
         const val SETTINGS = "settings"
 
         // item keys

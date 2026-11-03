@@ -25,6 +25,28 @@ interface CollectionDao {
     @Query("SELECT * FROM user_collections WHERE id = :id")
     suspend fun getCollection(id: Long): CollectionEntity?
 
+    @Query("SELECT * FROM user_collections ORDER BY updated_at DESC, id DESC")
+    suspend fun getAll(): List<CollectionEntity>
+
+    @Query(
+        """
+        SELECT * FROM user_collections
+        WHERE TRIM(name) = :name COLLATE NOCASE
+        ORDER BY id ASC
+        LIMIT 1
+        """
+    )
+    suspend fun getByName(name: String): CollectionEntity?
+
+    @Query(
+        """
+        SELECT * FROM user_collection_items
+        WHERE collection_id = :collectionId
+        ORDER BY added_at ASC, id ASC
+        """
+    )
+    suspend fun getItems(collectionId: Long): List<CollectionItemEntity>
+
     @Query(
         """
         SELECT user_collections.*,

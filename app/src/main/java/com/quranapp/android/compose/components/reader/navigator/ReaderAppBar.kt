@@ -822,12 +822,16 @@ private fun ReadingLayoutSwitch(modifier: Modifier = Modifier) {
     val layout = ReaderPreferences.observeReadingLayout()
     val scope = rememberCoroutineScope()
 
+    val outerRadius = 12.dp
+    val padding = 3.dp
+    val innerRadius = (outerRadius - padding).coerceAtLeast(0.dp)
+
     Row(
         modifier = modifier
-            .clip(RoundedCornerShape(999.dp))
+            .clip(RoundedCornerShape(outerRadius))
             .background(colorScheme.background)
-            .padding(3.dp),
-        horizontalArrangement = Arrangement.spacedBy(2.dp),
+            .padding(padding),
+        horizontalArrangement = Arrangement.spacedBy(padding),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         ReadingLayout.entries.forEach { option ->
@@ -845,7 +849,7 @@ private fun ReadingLayoutSwitch(modifier: Modifier = Modifier) {
             SimpleTooltip(label) {
                 Box(
                     modifier = Modifier
-                        .clip(RoundedCornerShape(999.dp))
+                        .clip(RoundedCornerShape(innerRadius))
                         .background(
                             if (selected) colorScheme.surface else Color.Transparent,
                         )
@@ -858,7 +862,7 @@ private fun ReadingLayoutSwitch(modifier: Modifier = Modifier) {
                                 }
                             },
                         )
-                        .padding(horizontal = 14.dp, vertical = 6.dp),
+                        .padding(6.dp),
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
