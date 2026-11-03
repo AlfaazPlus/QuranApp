@@ -16,6 +16,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.ModalBottomSheetProperties
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -40,6 +41,7 @@ fun BottomSheetBare(
         )
     },
     sheetGesturesEnabled: Boolean = true,
+    dismissible: Boolean = true,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState(true)
@@ -53,7 +55,11 @@ fun BottomSheetBare(
         contentColor = colorScheme.onSurface,
         dragHandle = if (sheetGesturesEnabled) dragHandle else null,
         contentWindowInsets = contentWindowInsets,
-        sheetGesturesEnabled = sheetGesturesEnabled
+        sheetGesturesEnabled = sheetGesturesEnabled,
+        properties = ModalBottomSheetProperties(
+            shouldDismissOnBackPress = dismissible,
+            shouldDismissOnClickOutside = dismissible,
+        ),
     ) {
         header?.invoke()
         content()
@@ -76,6 +82,7 @@ fun BottomSheet(
         )
     },
     sheetGesturesEnabled: Boolean = true,
+    dismissible: Boolean = true,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val dh = if (sheetGesturesEnabled) dragHandle else null
@@ -88,6 +95,7 @@ fun BottomSheet(
         },
         contentWindowInsets = contentWindowInsets,
         sheetGesturesEnabled = sheetGesturesEnabled,
+        dismissible = dismissible,
         content = content,
     )
 }

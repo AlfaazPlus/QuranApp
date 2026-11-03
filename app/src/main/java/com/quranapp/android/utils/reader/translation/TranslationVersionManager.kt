@@ -78,7 +78,7 @@ class TranslationVersionManager private constructor(context: Context) {
                     val downloaded = factory.getDownloadedTranslationBooksInfo()
 
                     for ((slug, bookInfo) in downloaded) {
-                        if (TranslUtils.isPrebuilt(slug)) {
+                        if (TranslUtils.isPrebuilt(slug) || bookInfo.downloadPath.isBlank()) {
                             continue
                         }
 

@@ -67,6 +67,16 @@
     <string name="strTitleAboutSurah">സൂറത്തിനെ കുറിച്ച്</string>
     <string name="strTitleTranslations">വിവർത്തനങ്ങൾ</string>
     <string name="strTitleDownloadTranslations">ഡൗൺലോഡ്</string>
+    <string name="labelFormatGuide">ഫോർമാറ്റ് ഗൈഡ്</string>
+    <string name="labelBook">പുസ്തകം</string>
+    <string name="labelAuthor">രചയിതാവ്</string>
+    <string name="labelDisplayName">ചെറിയ പേര്</string>
+    <string name="labelLanguage">ഭാഷ</string>
+    <string name="translationImported">വിവർത്തനം ചേർത്തു</string>
+    <string name="importTranslationReplace">ഈ വിവർത്തനം ഇതിനകം ഉണ്ട്. അത് മാറ്റിസ്ഥാപിക്കും.</string>
+    <string name="importDetailsInvalid">പുസ്തക വിവരങ്ങൾ ഫോർമാറ്റ് ഗൈഡുമായി ഒത്തുനോക്കുക</string>
+    <string name="importInvalid">ഈ ഫയൽ ആവശ്യമായ ഫോർമാറ്റുമായി പൊരുത്തപ്പെടുന്നില്ല</string>
+    <string name="importReserved">ഈ പുസ്തകപ്പേര് നിലവിലുള്ള ഒരു ബിൽറ്റ്-ഇൻ വിവർത്തനത്തിലുണ്ട്</string>
     <string name="strTitleSelectReciter">റിസൈറ്റർ തിരഞ്ഞെടുക്കുക</string>
     <string name="strTitleBookmarkDeleteThis">ഈ ബുക്ക്‌മാർക്ക് നീക്കം ചെയ്യണോ?</string>
     <string name="strTitleBookmarkDeleteAll">എല്ലാ ബുക്ക്‌മാർക്കുകളും നീക്കം ചെയ്യണോ?</string>

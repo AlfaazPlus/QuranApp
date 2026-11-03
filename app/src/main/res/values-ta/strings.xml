@@ -95,6 +95,16 @@
     <string name="strTitleAboutSurah">சூராவைப் பற்றி</string>
     <string name="strTitleTranslations">மொழிபெயர்ப்புகள்</string>
     <string name="strTitleDownloadTranslations">பதிவிறக்கம்</string>
+    <string name="labelFormatGuide">வடிவ வழிகாட்டி</string>
+    <string name="labelBook">புத்தகம்</string>
+    <string name="labelAuthor">ஆசிரியர்</string>
+    <string name="labelDisplayName">குறுகிய பெயர்</string>
+    <string name="labelLanguage">மொழி</string>
+    <string name="translationImported">மொழிபெயர்ப்பு சேர்க்கப்பட்டது</string>
+    <string name="importTranslationReplace">இந்த மொழிபெயர்ப்பு ஏற்கனவே உள்ளது. அது மாற்றப்படும்.</string>
+    <string name="importDetailsInvalid">புத்தக விவரங்களை வடிவ வழிகாட்டியுடன் சரிபார்க்கவும்</string>
+    <string name="importInvalid">இந்தக் கோப்பு தேவையான வடிவத்துடன் பொருந்தவில்லை</string>
+    <string name="importReserved">இந்தப் புத்தகப் பெயர் ஏற்கனவே உள்ளமைந்த மொழிபெயர்ப்பில் உள்ளது</string>
     <string name="strTitleRecitations">பாராயணங்கள்</string>
     <string name="strTitleSelectReciter">ரிப்பிட்டரைத் தேர்ந்தெடுக்கவும்</string>
     <string name="downloadRecitations">பாராய்ப்புகளைப் பதிவிறக்கவும்</string>

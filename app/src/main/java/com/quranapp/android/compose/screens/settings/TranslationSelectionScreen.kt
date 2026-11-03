@@ -44,7 +44,10 @@ import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -60,13 +63,22 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.peacedesign.android.utils.ColorUtils
 import com.quranapp.android.R
+import com.quranapp.android.api.DocPage
 import com.quranapp.android.components.transls.TranslModel
 import com.quranapp.android.components.transls.TranslationGroupModel
 import com.quranapp.android.compose.components.common.AppBar
 import com.quranapp.android.compose.components.common.ErrorMessageCard
 import com.quranapp.android.compose.components.common.IconButton
+import com.quranapp.android.compose.components.dialogs.SimpleTooltip
+import com.quranapp.android.compose.components.importing.ContentImportSheet
+import com.quranapp.android.compose.components.importing.TranslationImportDetails
+import com.quranapp.android.compose.components.importing.translationImportFields
 import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.utils.reader.TranslUtils
+import com.quranapp.android.utils.reader.importing.ImportFieldId
+import com.quranapp.android.utils.reader.translation.CustomTranslationImporter
+import com.quranapp.android.utils.reader.translation.toTranslationManifest
+import com.quranapp.android.utils.reader.translation.translationSlug
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.utils.univ.StringUtils
 import com.quranapp.android.viewModels.TranslationEvent
@@ -77,6 +89,7 @@ import java.util.regex.Pattern
 fun TranslationSelectionScreen() {
     val viewModel = viewModel<TranslationViewModel>()
     val uiState by viewModel.uiState.collectAsState()
+    var importSheetOpen by rememberSaveable { mutableStateOf(false) }
 
     val visibleGroups = remember(uiState.translationGroups, uiState.searchQuery) {
         if (uiState.searchQuery.isBlank()) {
@@ -113,6 +126,15 @@ fun TranslationSelectionScreen() {
                     viewModel.onEvent(TranslationEvent.Search(it))
                 },
                 actions = {
+                    val importLabel = stringResource(R.string.labelImport)
+                    SimpleTooltip(text = importLabel) {
+                        IconButton(
+                            painter = painterResource(R.drawable.ic_upload),
+                            contentDescription = importLabel,
+                        ) {
+                            importSheetOpen = true
+                        }
+                    }
                     IconButton(
                         painterResource(R.drawable.dr_icon_refresh)
                     ) {
@@ -145,6 +167,33 @@ fun TranslationSelectionScreen() {
             }
         }
     }
+
+    val importFields = remember { translationImportFields() }
+    val existingSlugs = remember(uiState.translationGroups) {
+        uiState.translationGroups
+            .flatMap { group -> group.translations.map { it.bookInfo.slug } }
+            .toSet()
+    }
+    ContentImportSheet(
+        isOpen = importSheetOpen,
+        onDismiss = { importSheetOpen = false },
+        title = stringResource(R.string.labelImport),
+        fields = importFields,
+        doc = DocPage.CUSTOM_TRANSLATION,
+        successMessage = stringResource(R.string.translationImported),
+        onImported = { viewModel.onEvent(TranslationEvent.RefreshQuiet) },
+        details = { TranslationImportDetails(it, existingSlugs) },
+        canSubmit = { values ->
+            translationSlug(
+                values[ImportFieldId.LANG_CODE].orEmpty(),
+                values[ImportFieldId.BOOK].orEmpty(),
+            ) != null
+        },
+        buildManifest = { _, values -> values.toTranslationManifest() },
+        onImport = { context, manifest, uri ->
+            CustomTranslationImporter.import(context, manifest, uri)
+        },
+    )
 }
 
 @Composable
@@ -464,6 +513,7 @@ private fun TranslationRow(
         }
     }
 }
+
 
 @Composable
 private fun DownloadTranslationsButton() {

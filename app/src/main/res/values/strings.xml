@@ -116,6 +116,16 @@
     <string name="strTitleAboutSurah">About Surah</string>
     <string name="strTitleTranslations">Translations</string>
     <string name="strTitleDownloadTranslations">Download</string>
+    <string name="labelFormatGuide">Format guide</string>
+    <string name="labelBook">Book</string>
+    <string name="labelAuthor">Author</string>
+    <string name="labelDisplayName">Short name</string>
+    <string name="labelLanguage">Language</string>
+    <string name="translationImported">Translation added</string>
+    <string name="importTranslationReplace">This translation already exists and will be replaced.</string>
+    <string name="importDetailsInvalid">Check the book details against the format guide</string>
+    <string name="importInvalid">This file does not match the required format</string>
+    <string name="importReserved">This book name is already used by a built-in translation</string>
     <string name="strTitleRecitations">Recitations</string>
     <string name="strTitleSelectReciter">Select Reciter</string>
     <string name="strMsgReciterDownloadHint">Download recitation audio for offline listening and smoother playback.</string>

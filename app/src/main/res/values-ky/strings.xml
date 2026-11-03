@@ -69,6 +69,16 @@
     <string name="strTitleAboutSurah">Сүрө тууралуу</string>
     <string name="strTitleTranslations">Котормолор</string>
     <string name="strTitleDownloadTranslations">Жүктөө</string>
+    <string name="labelFormatGuide">Формат боюнча колдонмо</string>
+    <string name="labelBook">Китеп</string>
+    <string name="labelAuthor">Автор</string>
+    <string name="labelDisplayName">Кыска ат</string>
+    <string name="labelLanguage">Тил</string>
+    <string name="translationImported">Котормо кошулду</string>
+    <string name="importTranslationReplace">Бул котормо мурунтан бар жана алмаштырылат.</string>
+    <string name="importDetailsInvalid">Китептин маалыматын формат боюнча колдонмо менен текшериңиз</string>
+    <string name="importInvalid">Бул файл керектүү форматка туура келбейт</string>
+    <string name="importReserved">Бул китептин аты орнотулган котормодо колдонулуп жатат</string>
     <string name="strTitleRecitations">Куран окуу</string>
     <string name="strTitleSelectReciter">Куран окуучуну тандаңыз</string>
     <string name="recitationBulkEnqueueNotifText">%1$s — %3$d ичинен %2$d кезекке коюлду</string>

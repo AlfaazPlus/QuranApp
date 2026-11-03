@@ -81,6 +81,16 @@
     <string name="strTitleAboutSurah">關於本章</string>
     <string name="strTitleTranslations">翻譯</string>
     <string name="strTitleDownloadTranslations">下載</string>
+    <string name="labelFormatGuide">格式說明</string>
+    <string name="labelBook">書名</string>
+    <string name="labelAuthor">作者</string>
+    <string name="labelDisplayName">簡稱</string>
+    <string name="labelLanguage">語言</string>
+    <string name="translationImported">已新增譯文</string>
+    <string name="importTranslationReplace">此譯文已存在，匯入後將取代它。</string>
+    <string name="importDetailsInvalid">請對照格式說明檢查書籍資訊</string>
+    <string name="importInvalid">此檔案不符合所需格式</string>
+    <string name="importReserved">這個書名已被內建譯文使用</string>
     <string name="strTitleRecitations">朗誦</string>
     <string name="strTitleSelectReciter">選擇朗誦者</string>
     <string name="downloadRecitations">下載朗誦</string>

@@ -5,6 +5,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
@@ -25,6 +26,7 @@ fun TextInput(
     minLines: Int = 1,
     bgColor: Color = colorScheme.background,
     enabled: Boolean = true,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
 ) {
     OutlinedTextField(
         modifier = modifier.fillMaxWidth(),
@@ -32,11 +34,13 @@ fun TextInput(
         onValueChange = onValueChange,
         maxLines = maxLines,
         minLines = minLines,
+        singleLine = maxLines == 1,
         label = inputLabel(label),
         placeholder = inputPlaceholder(placeholder),
         shape = inputShape(),
         colors = inputColors(bgColor),
         enabled = enabled,
+        keyboardOptions = keyboardOptions,
     )
 }
 
@@ -51,6 +55,7 @@ fun TextInput(
     minLines: Int = 1,
     bgColor: Color = colorScheme.background,
     enabled: Boolean = true,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
 ) {
     OutlinedTextField(
         modifier = modifier.fillMaxWidth(),
@@ -58,11 +63,13 @@ fun TextInput(
         onValueChange = onValueChange,
         maxLines = maxLines,
         minLines = minLines,
+        singleLine = maxLines == 1,
         label = inputLabel(label),
         placeholder = inputPlaceholder(placeholder),
         shape = inputShape(),
         colors = inputColors(bgColor),
         enabled = enabled,
+        keyboardOptions = keyboardOptions,
     )
 }
 

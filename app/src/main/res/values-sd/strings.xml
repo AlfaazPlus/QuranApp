@@ -76,6 +76,16 @@
     <string name="strTitleAboutSurah">سورت جي باري ۾</string>
     <string name="strTitleTranslations">ترجما</string>
     <string name="strTitleDownloadTranslations">ڊائون لوڊ</string>
+    <string name="labelFormatGuide">فارميٽ جي رهنمائي</string>
+    <string name="labelBook">ڪتاب</string>
+    <string name="labelAuthor">ليکڪ</string>
+    <string name="labelDisplayName">مختصر نالو</string>
+    <string name="labelLanguage">ٻولي</string>
+    <string name="translationImported">ترجمو شامل ٿي ويو</string>
+    <string name="importTranslationReplace">هي ترجمو اڳ ۾ موجود آهي ۽ مٽجي ويندو.</string>
+    <string name="importDetailsInvalid">ڪتاب جي تفصيل کي فارميٽ جي رهنمائي سان ملايو</string>
+    <string name="importInvalid">هي فائل گهربل فارميٽ سان نه ٿي ملي</string>
+    <string name="importReserved">ڪتاب جو هي نالو اڳ ۾ ئي بلٽ اِن ترجمي ۾ استعمال ٿيل آهي</string>
     <string name="strTitleRecitations">تلاوتون</string>
     <string name="strTitleSelectReciter">تلاوت ڪندڙ چونڊيو</string>
     <string name="audioOption">آواز لاءِ آپشن</string>

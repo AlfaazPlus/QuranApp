@@ -141,6 +141,16 @@
     <string name="strTitleSuccess">Logrado</string>
     <string name="strTitleMenu">Menú</string>
     <string name="strTitleDownloadTranslations">Descargar</string>
+    <string name="labelFormatGuide">Guía de formato</string>
+    <string name="labelBook">Libro</string>
+    <string name="labelAuthor">Autor</string>
+    <string name="labelDisplayName">Nombre corto</string>
+    <string name="labelLanguage">Idioma</string>
+    <string name="translationImported">Traducción añadida</string>
+    <string name="importTranslationReplace">Esta traducción ya existe y se reemplazará.</string>
+    <string name="importDetailsInvalid">Revisa los datos del libro con la guía de formato</string>
+    <string name="importInvalid">Este archivo no coincide con el formato requerido</string>
+    <string name="importReserved">Este título ya lo usa una traducción incluida</string>
     <string name="strTitleProphets">Profetas</string>
     <string name="strTitleFailed">Fallido</string>
     <string name="strTitleTranslations">Traducciones</string>

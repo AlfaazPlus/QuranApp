@@ -92,6 +92,16 @@
     <string name="strTitleAboutSurah">A proposito di Sura</string>
     <string name="strTitleTranslations">Traduzioni</string>
     <string name="strTitleDownloadTranslations">Scaricamento</string>
+    <string name="labelFormatGuide">Guida al formato</string>
+    <string name="labelBook">Libro</string>
+    <string name="labelAuthor">Autore</string>
+    <string name="labelDisplayName">Nome breve</string>
+    <string name="labelLanguage">Lingua</string>
+    <string name="translationImported">Traduzione aggiunta</string>
+    <string name="importTranslationReplace">Questa traduzione esiste già e verrà sostituita.</string>
+    <string name="importDetailsInvalid">Controlla i dati del libro nella guida al formato</string>
+    <string name="importInvalid">Questo file non corrisponde al formato richiesto</string>
+    <string name="importReserved">Questo titolo è già usato da una traduzione inclusa</string>
     <string name="strTitleSelectReciter">Seleziona Recitatore</string>
     <string name="strTitleBookmarkDeleteThis">Rimuovere questo segnalibro\?</string>
     <string name="strTitleTranslDelete">Elimina traduzione\?</string>

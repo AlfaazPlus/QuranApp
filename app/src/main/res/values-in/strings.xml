@@ -62,6 +62,16 @@
     <string name="strTitleAboutSurah">Tentang Surah</string>
     <string name="strTitleTranslations">Terjemahan</string>
     <string name="strTitleDownloadTranslations">Unduh</string>
+    <string name="labelFormatGuide">Panduan format</string>
+    <string name="labelBook">Buku</string>
+    <string name="labelAuthor">Penulis</string>
+    <string name="labelDisplayName">Nama singkat</string>
+    <string name="labelLanguage">Bahasa</string>
+    <string name="translationImported">Terjemahan ditambahkan</string>
+    <string name="importTranslationReplace">Terjemahan ini sudah ada dan akan diganti.</string>
+    <string name="importDetailsInvalid">Periksa detail buku sesuai panduan format</string>
+    <string name="importInvalid">File ini tidak sesuai format yang diperlukan</string>
+    <string name="importReserved">Nama buku ini sudah dipakai terjemahan bawaan</string>
     <string name="strTitleSelectReciter">Pilih Pembaca</string>
     <string name="strTitleBookmarkDeleteThis">Hapus bookmark ini\?</string>
     <string name="strTitleBookmarkDeleteAll">Hapus semua bookmark\?</string>

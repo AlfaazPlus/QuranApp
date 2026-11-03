@@ -75,6 +75,16 @@
     <string name="strTitleAboutSurah">सूरह की जानकारी</string>
     <string name="strTitleTranslations">अनुवाद</string>
     <string name="strTitleDownloadTranslations">डाउनलोड</string>
+    <string name="labelFormatGuide">फ़ॉर्मैट गाइड</string>
+    <string name="labelBook">किताब</string>
+    <string name="labelAuthor">लेखक</string>
+    <string name="labelDisplayName">छोटा नाम</string>
+    <string name="labelLanguage">भाषा</string>
+    <string name="translationImported">अनुवाद जोड़ दिया गया</string>
+    <string name="importTranslationReplace">यह अनुवाद पहले से है और बदल दिया जाएगा।</string>
+    <string name="importDetailsInvalid">किताब की जानकारी फ़ॉर्मैट गाइड से मिलाएँ</string>
+    <string name="importInvalid">यह फ़ाइल ज़रूरी फ़ॉर्मैट से मेल नहीं खाती</string>
+    <string name="importReserved">किताब का यह नाम पहले से एक बिल्ट-इन अनुवाद में है</string>
     <string name="strTitleSelectReciter">क़ारी चुनें</string>
     <string name="strTitleBookmarkDeleteAll">सभी बुकमार्क्स हटायें\?</string>
     <string name="strTitleBookmarkDeleteCount" formatted="false">%d बुकमार्क्स हटायें?</string>

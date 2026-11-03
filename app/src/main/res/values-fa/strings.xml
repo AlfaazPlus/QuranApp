@@ -70,6 +70,16 @@
     <string name="strTitleFilters">فیلترها</string>
     <string name="strTitleTranslations">ترجمه ها</string>
     <string name="strTitleDownloadTranslations">بارگیری</string>
+    <string name="labelFormatGuide">راهنمای قالب</string>
+    <string name="labelBook">کتاب</string>
+    <string name="labelAuthor">نویسنده</string>
+    <string name="labelDisplayName">نام کوتاه</string>
+    <string name="labelLanguage">زبان</string>
+    <string name="translationImported">ترجمه افزوده شد</string>
+    <string name="importTranslationReplace">این ترجمه از قبل وجود دارد و جایگزین می‌شود.</string>
+    <string name="importDetailsInvalid">جزئیات کتاب را با راهنمای قالب بررسی کنید</string>
+    <string name="importInvalid">این فایل با قالب لازم هم‌خوانی ندارد</string>
+    <string name="importReserved">این نام کتاب از قبل در یک ترجمهٔ داخلی استفاده شده است</string>
     <string name="strTitleSelectReciter">انتخاب قاری</string>
     <string name="strTitleBookmarkDeleteThis">این نشانک حذف شود؟</string>
     <string name="strTitleBookmarkDeleteAll">همه نشانک ها حذف شوند؟</string>

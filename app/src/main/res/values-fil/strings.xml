@@ -54,6 +54,16 @@
     <string name="strTitleAboutSurah">Tungkol sa Surat</string>
     <string name="strTitleTranslations">Mga Translation</string>
     <string name="strTitleDownloadTranslations">I-Download</string>
+    <string name="labelFormatGuide">Gabay sa format</string>
+    <string name="labelBook">Aklat</string>
+    <string name="labelAuthor">May-akda</string>
+    <string name="labelDisplayName">Maikling pangalan</string>
+    <string name="labelLanguage">Wika</string>
+    <string name="translationImported">Naidagdag ang translation</string>
+    <string name="importTranslationReplace">May ganito nang translation at papalitan ito.</string>
+    <string name="importDetailsInvalid">Tingnan ang detalye ng aklat sa gabay sa format</string>
+    <string name="importInvalid">Hindi tumutugma ang file na ito sa kinakailangang format</string>
+    <string name="importReserved">Ginagamit na ang pamagat na ito ng built-in na translation</string>
     <string name="strTitleBookmarkDeleteCount" formatted="false">Aalisin ang %d na mga bookmarks\?</string>
     <string name="strTitleTranslDelete">Tatanggalin ang translation\?</string>
     <string name="strTitleShareVerse">I-share ang taludtod</string>

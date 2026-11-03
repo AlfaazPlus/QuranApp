@@ -62,6 +62,16 @@
     <string name="strTitleAboutSurah">دەربارەی سورەت</string>
     <string name="strTitleTranslations">وەرگێڕانەکان</string>
     <string name="strTitleDownloadTranslations">داگرتن</string>
+    <string name="labelFormatGuide">ڕێنمایی فۆرمات</string>
+    <string name="labelBook">کتێب</string>
+    <string name="labelAuthor">نووسەر</string>
+    <string name="labelDisplayName">ناوی کورت</string>
+    <string name="labelLanguage">زمان</string>
+    <string name="translationImported">وەرگێڕان زیادکرا</string>
+    <string name="importTranslationReplace">ئەم وەرگێڕانە پێشتر هەیە و جێگەی دەگیرێتەوە.</string>
+    <string name="importDetailsInvalid">وردەکاریی کتێب لەگەڵ ڕێنمایی فۆرمات بپشکنە</string>
+    <string name="importInvalid">ئەم فایلە لەگەڵ فۆرماتی داواکراو ناگونجێت</string>
+    <string name="importReserved">ئەم ناوی کتێبە پێشتر لە وەرگێڕانێکی ناوەکیدا بەکارهاتووە</string>
     <string name="strTitleSelectReciter">قورئانخوێن هەڵبژێرە</string>
     <string name="strTitleScripts">فۆنت</string>
     <string name="strTitleBookmarkDeleteCount" formatted="false">لابردنی نیشانەکراوەکانی %d؟</string>

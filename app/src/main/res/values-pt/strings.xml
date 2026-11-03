@@ -41,6 +41,16 @@
     <string name="strTitleAddNote">Adicionar nota</string>
     <string name="strTitleRateApp">Avaliar app</string>
     <string name="strTitleDownloadTranslations">Baixar</string>
+    <string name="labelFormatGuide">Guia de formato</string>
+    <string name="labelBook">Livro</string>
+    <string name="labelAuthor">Autor</string>
+    <string name="labelDisplayName">Nome curto</string>
+    <string name="labelLanguage">Idioma</string>
+    <string name="translationImported">Tradução adicionada</string>
+    <string name="importTranslationReplace">Esta tradução já existe e será substituída.</string>
+    <string name="importDetailsInvalid">Confira os dados do livro no guia de formato</string>
+    <string name="importInvalid">Este ficheiro não está no formato exigido</string>
+    <string name="importReserved">Este título já é usado por uma tradução incluída</string>
     <string name="strTitleTranslDelete">Apagar tradução\?</string>
     <string name="strTitlePrivacyPolicy">Política de Privacidade</string>
     <string name="strTitleSuccess">Sucesso</string>

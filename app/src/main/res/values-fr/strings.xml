@@ -64,6 +64,16 @@
     <string name="strTitleTafsir">Tafsîr</string>
     <string name="strTitleAboutSurah">À propos de la sourate</string>
     <string name="strTitleDownloadTranslations">Télécharger</string>
+    <string name="labelFormatGuide">Guide du format</string>
+    <string name="labelBook">Livre</string>
+    <string name="labelAuthor">Auteur</string>
+    <string name="labelDisplayName">Nom court</string>
+    <string name="labelLanguage">Langue</string>
+    <string name="translationImported">Traduction ajoutée</string>
+    <string name="importTranslationReplace">Cette traduction existe déjà et sera remplacée.</string>
+    <string name="importDetailsInvalid">Vérifiez les informations du livre avec le guide du format</string>
+    <string name="importInvalid">Ce fichier ne correspond pas au format requis</string>
+    <string name="importReserved">Ce titre de livre est déjà utilisé par une traduction intégrée</string>
     <string name="strTitleBookmarkDeleteThis">Supprimer ce marque-page \?</string>
     <string name="strTitleBookmarkDeleteAll">Supprimer tous les marques-pages \?</string>
     <string name="strTitleTranslDelete">Supprimer la traduction \?</string>

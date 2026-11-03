@@ -46,6 +46,16 @@
     <string name="strTitleReaderJuz">الأجزاء</string>
     <string name="strTitleTranslations">الترجمات</string>
     <string name="strTitleDownloadTranslations">تنزيل</string>
+    <string name="labelFormatGuide">دليل التنسيق</string>
+    <string name="labelBook">الكتاب</string>
+    <string name="labelAuthor">المؤلف</string>
+    <string name="labelDisplayName">الاسم المختصر</string>
+    <string name="labelLanguage">اللغة</string>
+    <string name="translationImported">أُضيفت الترجمة</string>
+    <string name="importTranslationReplace">هذه الترجمة موجودة وستُستبدل.</string>
+    <string name="importDetailsInvalid">راجع بيانات الكتاب في دليل التنسيق</string>
+    <string name="importInvalid">هذا الملف لا يطابق التنسيق المطلوب</string>
+    <string name="importReserved">اسم الكتاب هذا مستخدم في ترجمة مدمجة</string>
     <string name="strTitleScripts">الخطوط</string>
     <string name="strTitleBookmarkDeleteCount" formatted="false">إزالة عدد %d من الإشارات المرجعية؟</string>
     <string name="strTitleTranslDelete">حذف الترجمة؟</string>

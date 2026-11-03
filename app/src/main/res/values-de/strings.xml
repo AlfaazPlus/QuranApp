@@ -67,6 +67,16 @@
     <string name="strTitleAboutSurah">über die Sure</string>
     <string name="strTitleTranslations">Übersetzungen</string>
     <string name="strTitleDownloadTranslations">Download</string>
+    <string name="labelFormatGuide">Formathilfe</string>
+    <string name="labelBook">Buch</string>
+    <string name="labelAuthor">Autor</string>
+    <string name="labelDisplayName">Kurzname</string>
+    <string name="labelLanguage">Sprache</string>
+    <string name="translationImported">Übersetzung hinzugefügt</string>
+    <string name="importTranslationReplace">Diese Übersetzung ist bereits vorhanden und wird ersetzt.</string>
+    <string name="importDetailsInvalid">Buchangaben anhand der Formathilfe prüfen</string>
+    <string name="importInvalid">Diese Datei entspricht nicht dem erforderlichen Format</string>
+    <string name="importReserved">Dieser Buchtitel wird bereits von einer eingebauten Übersetzung verwendet</string>
     <string name="strTitleRecitations">Rezitationen</string>
     <string name="strTitleSelectReciter">Rezitator auswählen</string>
     <string name="strTitleScripts">Schriftsysteme</string>

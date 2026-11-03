@@ -86,6 +86,16 @@
     <string name="strTitleTafsir">Тафсир</string>
     <string name="strTitleAboutSurah">О Суре</string>
     <string name="strTitleDownloadTranslations">Загрузить</string>
+    <string name="labelFormatGuide">Справка по формату</string>
+    <string name="labelBook">Книга</string>
+    <string name="labelAuthor">Автор</string>
+    <string name="labelDisplayName">Краткое имя</string>
+    <string name="labelLanguage">Язык</string>
+    <string name="translationImported">Перевод добавлен</string>
+    <string name="importTranslationReplace">Этот перевод уже есть и будет заменён.</string>
+    <string name="importDetailsInvalid">Проверьте сведения о книге по справке</string>
+    <string name="importInvalid">Этот файл не соответствует нужному формату</string>
+    <string name="importReserved">Это название уже занято встроенным переводом</string>
     <string name="strTitleRecitations">Чтения</string>
     <string name="strTitleSelectReciter">Выбрать чтеца</string>
     <string name="audioOption">Настройки аудио</string>
