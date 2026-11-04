@@ -113,7 +113,12 @@
             "themeId": {
               "type": "string",
               "enum": ["app.theme.default", "app.theme.light", "app.theme.dark"]
-            }
+            },
+            "colorId": {
+              "type": "string",
+              "enum": ["default", "blue", "red", "purple", "mono", "violet", "yellow"]
+            },
+            "dynamicColor": { "type": "boolean" }
           }
         },
         "reminders": {

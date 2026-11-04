@@ -159,6 +159,8 @@ class BackupContractTest {
             mapOf(
                 SettingsContract.LOCALE to JsonPrimitive("default"),
                 SettingsContract.THEME to JsonPrimitive("app.theme.default"),
+                SettingsContract.THEME_COLOR to JsonPrimitive("blue"),
+                SettingsContract.DYNAMIC_COLOR to JsonPrimitive(false),
                 SettingsContract.DOWNLOAD_SOURCE to JsonPrimitive("alfaazplus"),
                 SettingsContract.AUTO_SCROLL_SPEED to JsonPrimitive(7),
                 SettingsContract.ARABIC_ENABLED to JsonPrimitive(true),

@@ -81,6 +81,14 @@ object ThemeUtils {
         DataStoreManager.write(KEY_THEME_MODE, themeMode)
     }
 
+    fun getThemeColor(): String {
+        return DataStoreManager.read(KEY_THEME_COLOR, THEME_COLOR_DEFAULT)
+    }
+
+    fun getDynamicColor(): Boolean {
+        return DataStoreManager.read(KEY_THEME_DYNAMIC_COLOR, DEFAULT_DYNAMIC_COLOR)
+    }
+
     @Composable
     fun observeThemeColor(): String {
         return DataStoreManager.observe(KEY_THEME_COLOR, THEME_COLOR_DEFAULT)
@@ -113,8 +121,8 @@ object ThemeUtils {
         return buildColorScheme(
             context,
             isDark ?: isDarkTheme(context),
-            DataStoreManager.read(KEY_THEME_COLOR, THEME_COLOR_DEFAULT),
-            DataStoreManager.read(KEY_THEME_DYNAMIC_COLOR, DEFAULT_DYNAMIC_COLOR),
+            getThemeColor(),
+            getDynamicColor(),
         )
     }
 

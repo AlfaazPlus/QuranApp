@@ -48,6 +48,8 @@ object SettingsContract {
     const val NUMERAL_SYSTEM = "app.numeralSystemId"
     const val DEVELOPER_MODE = "app.developerMode"
     const val THEME = "appearance.themeId"
+    const val THEME_COLOR = "appearance.colorId"
+    const val DYNAMIC_COLOR = "appearance.dynamicColor"
     const val DOWNLOAD_SOURCE = "downloads.sourceId"
     const val DAILY_REMINDER = "reminders.dailyVerse.enabled"
     const val AUTO_SCROLL_SPEED = "reader.autoScroll.speed"
@@ -101,6 +103,21 @@ object SettingsContract {
             ),
             v1Key = "config.theme",
         ),
+        SettingSpec(
+            THEME_COLOR,
+            SettingKind.TEXT,
+            true,
+            allowed = setOf(
+                ThemeUtils.THEME_COLOR_DEFAULT,
+                ThemeUtils.THEME_COLOR_BLUE,
+                ThemeUtils.THEME_COLOR_RED,
+                ThemeUtils.THEME_COLOR_PURPLE,
+                ThemeUtils.THEME_COLOR_MONO,
+                ThemeUtils.THEME_COLOR_VIOLET,
+                ThemeUtils.THEME_COLOR_YELLOW,
+            ),
+        ),
+        SettingSpec(DYNAMIC_COLOR, SettingKind.BOOLEAN, true),
         SettingSpec(
             DOWNLOAD_SOURCE,
             SettingKind.TEXT,

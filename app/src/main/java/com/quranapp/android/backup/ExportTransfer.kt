@@ -6,13 +6,20 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.OpenableColumns
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.net.toUri
 import com.quranapp.android.R
 import com.quranapp.android.activities.base.BaseActivity
+import com.quranapp.android.compose.utils.NumeralSystem
+import com.quranapp.android.compose.utils.ThemeUtils
+import com.quranapp.android.compose.utils.appLocaleForLanguageChange
+import com.quranapp.android.compose.utils.setAppLocale
 import com.quranapp.android.utils.Log
+import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
 import com.quranapp.android.utils.univ.MessageUtils
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.withContext
-import androidx.core.net.toUri
 
 private const val PERSISTABLE_URI_FLAGS =
     Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
@@ -35,7 +42,7 @@ internal suspend fun importBackup(context: Context, uri: Uri, scopes: Map<String
             ?: throw BackupReadException(BackupReadFailure.UNREADABLE)
         val result = BackupImportService(context).import(bytes, scopes)
 
-        withContext(Dispatchers.Main) {
+        withContext(Dispatchers.Main + NonCancellable) {
             val counts = result.counts
             MessageUtils.showRemovableToast(
                 context,
@@ -51,7 +58,17 @@ internal suspend fun importBackup(context: Context, uri: Uri, scopes: Map<String
                 Toast.LENGTH_LONG,
             )
 
-            if (result.settingsImported) context.findBaseActivity()?.restartMainActivity()
+            if (result.settingsImported) {
+                AppCompatDelegate.setDefaultNightMode(ThemeUtils.resolveThemeModeForDelegate())
+
+                val numeral = NumeralSystem.fromStorage(SPAppConfigs.getNumeralSystem(context))
+                setAppLocale(
+                    context,
+                    appLocaleForLanguageChange(context, SPAppConfigs.getLocale(context), numeral),
+                )
+
+                context.findBaseActivity()?.restartMainActivity()
+            }
         }
     } catch (error: Exception) {
         Log.saveError(error, "importData")

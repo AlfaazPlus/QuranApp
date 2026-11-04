@@ -1,7 +1,6 @@
 package com.quranapp.android.backup
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatDelegate
 import com.quranapp.android.compose.components.player.dialogs.AudioEndBehaviour
 import com.quranapp.android.compose.components.player.dialogs.AudioOption
 import com.quranapp.android.compose.components.reader.ReaderMode
@@ -16,8 +15,6 @@ import com.quranapp.android.db.entities.user.BookmarkEntity
 import com.quranapp.android.utils.app.ResourceDownloadProxy
 import com.quranapp.android.utils.reader.QuranScriptVariant
 import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
@@ -107,6 +104,8 @@ class BackupImportService(private val context: Context) {
             SPAppConfigs.getNumeralSystem(context) ?: SPAppConfigs.NUMERAL_SYSTEM_DEFAULT
         )
         values[SettingsContract.THEME] = JsonPrimitive(ThemeUtils.getThemeMode())
+        values[SettingsContract.THEME_COLOR] = JsonPrimitive(ThemeUtils.getThemeColor())
+        values[SettingsContract.DYNAMIC_COLOR] = JsonPrimitive(ThemeUtils.getDynamicColor())
         values[SettingsContract.DAILY_REMINDER] =
             JsonPrimitive(VersePreferences.getVOTDReminderEnabled())
         values[SettingsContract.DOWNLOAD_SOURCE] =
@@ -174,9 +173,11 @@ class BackupImportService(private val context: Context) {
 
     private suspend fun importSettings(settings: JsonObject): List<String> {
         val read = SettingsContract.read(settings)
+
         for (setting in read.accepted) {
             apply(setting)
         }
+
         return read.issues
     }
 
@@ -194,7 +195,18 @@ class BackupImportService(private val context: Context) {
                 VersePreferences.setVOTDReminderEnabled((setting.value as SettingValue.Bool).value)
             }
 
-            SettingsContract.THEME -> applyTheme((setting.value as SettingValue.Text).value)
+            SettingsContract.THEME -> {
+                ThemeUtils.setThemeMode((setting.value as SettingValue.Text).value)
+            }
+
+            SettingsContract.THEME_COLOR -> {
+                ThemeUtils.setThemeColor((setting.value as SettingValue.Text).value)
+            }
+
+            SettingsContract.DYNAMIC_COLOR -> {
+                ThemeUtils.setDynamicColor((setting.value as SettingValue.Bool).value)
+            }
+
             SettingsContract.DOWNLOAD_SOURCE -> {
                 AppPreferences.setResourceDownloadProxy(
                     ResourceDownloadProxy.entries.first { it.value == (setting.value as SettingValue.Text).value }
@@ -311,19 +323,6 @@ class BackupImportService(private val context: Context) {
         }
     }
 
-    private suspend fun applyTheme(theme: String) {
-        ThemeUtils.setThemeMode(theme)
-        withContext(Dispatchers.Main) {
-            AppCompatDelegate.setDefaultNightMode(
-                when (theme) {
-                    ThemeUtils.THEME_MODE_DARK -> AppCompatDelegate.MODE_NIGHT_YES
-                    ThemeUtils.THEME_MODE_LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
-                    ThemeUtils.THEME_MODE_DEFAULT -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-                    else -> AppCompatDelegate.getDefaultNightMode()
-                }
-            )
-        }
-    }
 }
 
 private fun BookmarkEntity.toBackupBookmark(): BackupBookmark {
