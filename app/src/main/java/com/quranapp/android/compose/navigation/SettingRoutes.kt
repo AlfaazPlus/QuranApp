@@ -28,5 +28,6 @@ object SettingRoutes {
     const val SCRIPT = "settings.script"
     const val WWB = "settings.wbw"
     const val RECITATION_DOWNLOAD = "settings.recitation_download"
+    const val ADVANCED_SETTINGS = "settings.advanced"
     const val APP_LOGS = "settings.app_logs"
 }

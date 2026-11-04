@@ -18,13 +18,8 @@ private const val SLUG_MARKER = "_custom-"
 private val combiningMarks = Regex("\\p{Mn}+")
 private val nonSlugChars = Regex("[^a-z0-9]+")
 
-private class ImportLanguageIndex(
-    val languages: List<ImportLanguage>,
-    val byCode: Map<String, ImportLanguage>,
-)
-
-private val importLanguageIndex: ImportLanguageIndex by lazy {
-    val languages = Locale.getISOLanguages()
+private val languages: List<ImportLanguage> by lazy {
+    Locale.getISOLanguages()
         .map { code ->
             val name = Locale.forLanguageTag(code)
                 .getDisplayLanguage(Locale.ENGLISH)
@@ -40,25 +35,26 @@ private val importLanguageIndex: ImportLanguageIndex by lazy {
         }
         .distinctBy { it.code }
         .sortedBy { it.name }
-
-    ImportLanguageIndex(languages, languages.associateBy { it.code })
 }
 
-fun importLanguages(): List<ImportLanguage> = importLanguageIndex.languages
+private val languagesByCode: Map<String, ImportLanguage> by lazy {
+    languages.associateBy { it.code }
+}
+
+fun importLanguages(): List<ImportLanguage> = languages
 
 fun translationSlug(langCode: String, book: String): String? {
     val code = langCode.trim().lowercase()
-    if (code !in importLanguageIndex.byCode) return null
+    if (code !in languagesByCode) return null
 
     val bookPart = book.toBookSlug()
     if (bookPart.isEmpty()) return null
 
     val prefix = "$code$SLUG_MARKER"
-    val maxBookLength = MAX_SLUG_LENGTH - prefix.length
-    if (maxBookLength < 1) return null
-
-    val trimmedBook = bookPart.take(maxBookLength).trim('-')
+    
+    val trimmedBook = bookPart.take(MAX_SLUG_LENGTH - prefix.length).trim('-')
     if (trimmedBook.isEmpty()) return null
+
     return prefix + trimmedBook
 }
 
@@ -67,7 +63,7 @@ fun Map<ImportFieldId, String>.toTranslationManifest(): ImportManifest {
 
     val book = value(ImportFieldId.BOOK)
     val author = value(ImportFieldId.AUTHOR)
-    val language = importLanguageIndex.byCode[value(ImportFieldId.LANG_CODE).lowercase()]
+    val language = languagesByCode[value(ImportFieldId.LANG_CODE).lowercase()]
     val slug = language?.let { translationSlug(it.code, book) }
 
     if (book.isEmpty() || author.isEmpty() || language == null || slug == null) {

@@ -57,7 +57,6 @@ fun SettingsMainScreen(
 
     var showDailyReminderSheet by rememberSaveable { mutableStateOf(false) }
     var showTextSizesSheet by rememberSaveable { mutableStateOf(false) }
-    var showResourceDownloadSrcSheet by rememberSaveable { mutableStateOf(false) }
 
     val selectedLanguage = remember(context) {
         val availableLocalesValues = context.getStringArray(R.array.availableLocalesValues)
@@ -213,28 +212,15 @@ fun SettingsMainScreen(
                 }
 
                 SettingsItem(
-                    title = R.string.titleResourceDownloadSource,
-                    icon = R.drawable.dr_icon_download,
-                    subtitleStr = DownloadSourceUtils.observeCurrentSourceName(),
+                    title = R.string.advanced_settings,
+                    icon = R.drawable.ic_wrench,
                 ) {
-                    showResourceDownloadSrcSheet = true
-                }
-
-                SettingsItem(
-                    title = R.string.appLogs,
-                    icon = R.drawable.dr_icon_bug,
-                    subtitle = R.string.crashLogs,
-                ) {
-                    navController.navigate(SettingRoutes.APP_LOGS)
+                    navController.navigate(SettingRoutes.ADVANCED_SETTINGS)
                 }
             }
 
             TextSizeSheet(isOpen = showTextSizesSheet) {
                 showTextSizesSheet = false
-            }
-
-            ResourceDownloadSrcSheet(isOpen = showResourceDownloadSrcSheet) {
-                showResourceDownloadSrcSheet = false
             }
 
             DailyReminderSheet(

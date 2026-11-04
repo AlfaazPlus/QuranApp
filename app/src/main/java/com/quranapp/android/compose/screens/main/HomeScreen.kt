@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.compose.components.MainAppBar
 import com.quranapp.android.compose.components.homepage.AppUpdateBanner
+import com.quranapp.android.compose.components.homepage.AutoBackupDeletedBanner
 import com.quranapp.android.compose.components.homepage.HomeResourceUpdatesBanner
 import com.quranapp.android.compose.components.homepage.HomeSectionFeaturedReading
 import com.quranapp.android.compose.components.homepage.HomeSectionVersesCollections
@@ -42,6 +43,7 @@ fun HomeScreen() {
                     .padding(bottom = MINI_PLAYER_HEIGHT),
             ) {
                 AppUpdateBanner()
+                AutoBackupDeletedBanner()
                 HomeResourceUpdatesBanner()
 
                 HomeTabbedSection()

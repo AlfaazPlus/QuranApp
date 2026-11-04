@@ -34,7 +34,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -62,7 +61,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.peacedesign.android.utils.AppBridge
@@ -82,8 +80,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-enum class ImportFieldSpan { Full, Half }
-
 data class ImportChoice(
     val value: String,
     val label: String,
@@ -93,11 +89,6 @@ data class ImportField(
     val id: ImportFieldId,
     val label: Int,
     val required: Boolean,
-    val placeholder: String? = null,
-    val initial: String = "",
-    val span: ImportFieldSpan = ImportFieldSpan.Full,
-    val keyboardType: KeyboardType = KeyboardType.Text,
-    val transform: (String) -> String = { it },
     val choices: List<ImportChoice>? = null,
 )
 
@@ -129,7 +120,7 @@ fun ContentImportSheet(
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val initialValues = remember(fields) { fields.associate { it.id to it.initial } }
+    val initialValues = remember(fields) { fields.associate { it.id to "" } }
     var values by rememberSaveable(stateSaver = formSaver) { mutableStateOf(initialValues) }
     var fileUri by rememberSaveable(stateSaver = uriSaver) { mutableStateOf(null) }
     var fileName by rememberSaveable { mutableStateOf<String?>(null) }
@@ -196,24 +187,9 @@ fun ContentImportSheet(
                 .padding(bottom = 16.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-            fieldRows(fields).forEach { row ->
-                if (row.size == 1) {
-                    ImportFieldInput(row.first(), values, importing) { id, updated ->
-                        values = values + (id to updated)
-                    }
-                } else {
-                    Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                        row.forEach { field ->
-                            ImportFieldInput(
-                                field = field,
-                                values = values,
-                                importing = importing,
-                                modifier = Modifier.weight(1f),
-                            ) { id, updated ->
-                                values = values + (id to updated)
-                            }
-                        }
-                    }
+            fields.forEach { field ->
+                ImportFieldInput(field, values, importing) { id, updated ->
+                    values = values + (id to updated)
                 }
             }
 
@@ -353,32 +329,11 @@ fun ContentImportSheet(
     }
 }
 
-private fun fieldRows(fields: List<ImportField>): List<List<ImportField>> {
-    val rows = mutableListOf<List<ImportField>>()
-    var index = 0
-
-    while (index < fields.size) {
-        val field = fields[index]
-        val next = fields.getOrNull(index + 1)
-
-        if (field.span == ImportFieldSpan.Half && next?.span == ImportFieldSpan.Half) {
-            rows += listOf(field, next)
-            index += 2
-        } else {
-            rows += listOf(field)
-            index += 1
-        }
-    }
-
-    return rows
-}
-
 @Composable
 private fun ImportFieldInput(
     field: ImportField,
     values: Map<ImportFieldId, String>,
     importing: Boolean,
-    modifier: Modifier = Modifier,
     onValueChange: (ImportFieldId, String) -> Unit,
 ) {
     val choices = field.choices
@@ -388,21 +343,17 @@ private fun ImportFieldInput(
             value = values[field.id].orEmpty(),
             choices = choices,
             enabled = !importing,
-            modifier = modifier,
             onValueChange = { onValueChange(field.id, it) },
         )
         return
     }
 
     TextInput(
-        modifier = modifier,
         value = values[field.id].orEmpty(),
-        onValueChange = { updated -> onValueChange(field.id, field.transform(updated)) },
+        onValueChange = { onValueChange(field.id, it) },
         label = stringResource(field.label),
-        placeholder = field.placeholder,
         maxLines = 1,
         enabled = !importing,
-        keyboardOptions = KeyboardOptions(keyboardType = field.keyboardType),
     )
 }
 
@@ -412,7 +363,6 @@ private fun ImportChoiceField(
     value: String,
     choices: List<ImportChoice>,
     enabled: Boolean,
-    modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit,
 ) {
     var pickerOpen by rememberSaveable { mutableStateOf(false) }
@@ -431,7 +381,7 @@ private fun ImportChoiceField(
         )
     }
 
-    Box(modifier = modifier) {
+    Box {
         OutlinedTextField(
             value = selected?.label.orEmpty(),
             onValueChange = {},

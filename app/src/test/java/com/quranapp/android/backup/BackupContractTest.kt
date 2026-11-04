@@ -166,6 +166,7 @@ class BackupContractTest {
                 SettingsContract.KEEP_SCREEN_ON to JsonPrimitive(true),
                 SettingsContract.READING_LAYOUT to JsonPrimitive("page"),
                 SettingsContract.NUMERAL_SYSTEM to JsonPrimitive("latn"),
+                SettingsContract.DEVELOPER_MODE to JsonPrimitive(true),
                 SettingsContract.DAILY_REMINDER to JsonPrimitive(false),
                 SettingsContract.PLAYBACK_SPEED to JsonPrimitive(1.0),
                 SettingsContract.REPEAT_COUNT to JsonPrimitive(0),
@@ -198,6 +199,7 @@ class BackupContractTest {
         )
         val read = SettingsContract.read(BackupCodec.read(text, schema).settings!!)
         assertEquals("default", text(read, SettingsContract.LOCALE))
+        assertEquals(true, bool(read, SettingsContract.DEVELOPER_MODE))
         assertTrue(read.issues.isEmpty())
         assertTrue(!text.contains('\n'))
     }
@@ -228,6 +230,10 @@ class BackupContractTest {
 
     private fun text(read: SettingsRead, path: String): String {
         return (read.accepted.first { it.path == path }.value as SettingValue.Text).value
+    }
+
+    private fun bool(read: SettingsRead, path: String): Boolean {
+        return (read.accepted.first { it.path == path }.value as SettingValue.Bool).value
     }
 
     private fun texts(read: SettingsRead, path: String): List<String> {

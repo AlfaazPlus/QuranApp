@@ -111,6 +111,8 @@ class BackupImportService(private val context: Context) {
             JsonPrimitive(VersePreferences.getVOTDReminderEnabled())
         values[SettingsContract.DOWNLOAD_SOURCE] =
             JsonPrimitive(AppPreferences.getResourceDownloadProxy().value)
+        values[SettingsContract.DEVELOPER_MODE] =
+            JsonPrimitive(AppPreferences.getDeveloperModeEnabled())
         values[SettingsContract.AUTO_SCROLL_SPEED] =
             JsonPrimitive(ReaderPreferences.getAutoScrollSpeed())
         values[SettingsContract.ARABIC_ENABLED] =
@@ -197,6 +199,10 @@ class BackupImportService(private val context: Context) {
                 AppPreferences.setResourceDownloadProxy(
                     ResourceDownloadProxy.entries.first { it.value == (setting.value as SettingValue.Text).value }
                 )
+            }
+
+            SettingsContract.DEVELOPER_MODE -> {
+                AppPreferences.setDeveloperModeEnabled((setting.value as SettingValue.Bool).value)
             }
 
             SettingsContract.AUTO_SCROLL_SPEED -> {

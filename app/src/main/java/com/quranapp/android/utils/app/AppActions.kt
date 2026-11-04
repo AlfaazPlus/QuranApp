@@ -52,7 +52,10 @@ object AppActions {
         }
 
         CoroutineScope(Dispatchers.IO).launch {
-            if (BackupPreferences.isEnabled()) AutoBackup.schedule(ctx)
+            if (!BackupPreferences.isEnabled()) return@launch
+            
+            AutoBackup.ensureAvailable(ctx)
+            AutoBackup.schedule(ctx)
         }
     }
 

@@ -1,5 +1,6 @@
 package com.quranapp.android.compose.screens.settings
 
+import AdvancedSettingsScreen
 import android.content.Intent
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.core.tween
@@ -31,7 +32,6 @@ import com.quranapp.android.compose.screens.main.popExitTransition
 import com.quranapp.android.compose.screens.main.predictivePopEnterTransition
 import com.quranapp.android.compose.screens.main.predictivePopExitTransition
 import com.quranapp.android.utils.univ.Keys
-
 
 
 fun NavGraphBuilder.route(
@@ -102,6 +102,7 @@ fun SettingsScreen(intent: Intent?, isNewIntent: Boolean) {
                 route(SettingRoutes.SCRIPT) { ScriptsScreen() }
                 route(SettingRoutes.WWB) { SettingsWbwScreen() }
                 route(SettingRoutes.RECITATION_DOWNLOAD) { RecitationDownloadScreen() }
+                route(SettingRoutes.ADVANCED_SETTINGS) { AdvancedSettingsScreen() }
                 route(SettingRoutes.APP_LOGS) { AppLogsScreen() }
             }
         }

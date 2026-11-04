@@ -110,9 +110,13 @@ internal suspend fun enableAutoBackup(context: Context, documentUri: String) {
     AutoBackup.schedule(context, restart = true)
 
     try {
-        AutoBackup.writeNow(context)
+        val saved = AutoBackup.writeNow(context)
         withContext(Dispatchers.Main) {
-            MessageUtils.showRemovableToast(context, R.string.autoBackupSaved, Toast.LENGTH_LONG)
+            MessageUtils.showRemovableToast(
+                context,
+                if (saved) R.string.autoBackupSaved else R.string.autoBackupFailed,
+                Toast.LENGTH_LONG,
+            )
         }
     } catch (error: Exception) {
         Log.saveError(error, "autoBackup")

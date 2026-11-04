@@ -74,6 +74,7 @@ import com.quranapp.android.compose.components.importing.ContentImportSheet
 import com.quranapp.android.compose.components.importing.TranslationImportDetails
 import com.quranapp.android.compose.components.importing.translationImportFields
 import com.quranapp.android.compose.navigation.SettingRoutes
+import com.quranapp.android.compose.utils.preferences.AppPreferences
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.importing.ImportFieldId
 import com.quranapp.android.utils.reader.translation.CustomTranslationImporter
@@ -89,6 +90,8 @@ import java.util.regex.Pattern
 fun TranslationSelectionScreen() {
     val viewModel = viewModel<TranslationViewModel>()
     val uiState by viewModel.uiState.collectAsState()
+
+    val isDeveloperModeEnabled = AppPreferences.observeDeveloperModeEnabled()
     var importSheetOpen by rememberSaveable { mutableStateOf(false) }
 
     val visibleGroups = remember(uiState.translationGroups, uiState.searchQuery) {
@@ -126,15 +129,18 @@ fun TranslationSelectionScreen() {
                     viewModel.onEvent(TranslationEvent.Search(it))
                 },
                 actions = {
-                    val importLabel = stringResource(R.string.labelImport)
-                    SimpleTooltip(text = importLabel) {
-                        IconButton(
-                            painter = painterResource(R.drawable.ic_upload),
-                            contentDescription = importLabel,
-                        ) {
-                            importSheetOpen = true
+                    if (isDeveloperModeEnabled) {
+                        val importLabel = stringResource(R.string.labelImport)
+                        SimpleTooltip(text = importLabel) {
+                            IconButton(
+                                painter = painterResource(R.drawable.ic_upload),
+                                contentDescription = importLabel,
+                            ) {
+                                importSheetOpen = true
+                            }
                         }
                     }
+
                     IconButton(
                         painterResource(R.drawable.dr_icon_refresh)
                     ) {

@@ -37,6 +37,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -65,6 +66,7 @@ import com.quranapp.android.backup.persistBackupFile
 import com.quranapp.android.utils.univ.MessageUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import androidx.core.net.toUri
 
 internal data class ExportOption(
@@ -193,8 +195,12 @@ private fun AutoBackupSheet(
     val enabled = BackupPreferences.observeEnabled()
     val documentUri = BackupPreferences.observeDocumentUri()
     val fileName = remember(documentUri) {
-        documentUri.takeIf { it.isNotBlank() }
-            ?.let { AutoBackup.displayName(context, it.toUri()) }
+        documentUri.takeIf { it.isNotBlank() }?.let { AutoBackup.displayName(context, it.toUri()) }
+    }
+
+    LaunchedEffect(documentUri) {
+        if (documentUri.isBlank()) return@LaunchedEffect
+        withContext(Dispatchers.IO) { AutoBackup.ensureAvailable(context) }
     }
 
     val fileLauncher = rememberLauncherForActivityResult(
@@ -303,7 +309,7 @@ private fun AutoBackupSheet(
             ) {
                 OutlinedButton(
                     onClick = viewFile,
-                    enabled = documentUri.isNotBlank(),
+                    enabled = fileName != null,
                     modifier = Modifier
                         .weight(1f)
                         .height(48.dp),

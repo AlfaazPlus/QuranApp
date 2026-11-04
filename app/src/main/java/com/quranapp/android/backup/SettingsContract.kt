@@ -46,6 +46,7 @@ data class SettingsRead(
 object SettingsContract {
     const val LOCALE = "app.locale"
     const val NUMERAL_SYSTEM = "app.numeralSystemId"
+    const val DEVELOPER_MODE = "app.developerMode"
     const val THEME = "appearance.themeId"
     const val DOWNLOAD_SOURCE = "downloads.sourceId"
     const val DAILY_REMINDER = "reminders.dailyVerse.enabled"
@@ -87,6 +88,7 @@ object SettingsContract {
             true,
             allowed = NumeralSystem.entries.map { it.storageKey }.toSet(),
         ),
+        SettingSpec(DEVELOPER_MODE, SettingKind.BOOLEAN, true),
         SettingSpec(DAILY_REMINDER, SettingKind.BOOLEAN, true),
         SettingSpec(
             THEME,

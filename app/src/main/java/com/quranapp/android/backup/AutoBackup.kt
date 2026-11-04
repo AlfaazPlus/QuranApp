@@ -9,12 +9,15 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.quranapp.android.utils.workers.AutoBackupWorker
+import java.io.FileNotFoundException
 import java.util.concurrent.TimeUnit
 import androidx.core.net.toUri
 
 object AutoBackup {
     const val FILE_NAME = "quranapp-backup.json.gz"
     private const val WORK_NAME = "auto_backup"
+    private const val PERSISTABLE_URI_FLAGS =
+        Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
 
     private val scopes = mapOf(
         ExportKeys.BOOKMARKS to true,
@@ -35,21 +38,63 @@ object AutoBackup {
         WorkManager.getInstance(context).cancelUniqueWork(WORK_NAME)
     }
 
-    suspend fun writeNow(context: Context) {
-        val documentUri = BackupPreferences.readDocumentUri().takeIf { it.isNotBlank() }
-            ?: error("Auto backup file is not set")
-        val bytes = BackupImportService(context).exportBytes(scopes)
+    suspend fun ensureAvailable(context: Context) {
+        if (!BackupPreferences.isEnabled()) return
 
-        writeToDocument(context.contentResolver, documentUri.toUri(), bytes)
+        val raw = BackupPreferences.readDocumentUri().takeIf { it.isNotBlank() } ?: return
+        val uri = raw.toUri()
+        if (displayName(context, uri) == null) forgetMissing(context, uri)
     }
 
-    fun displayName(context: Context, uri: Uri): String {
-        return runCatching {
-            context.contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)
-                ?.use { cursor ->
-                    if (cursor.moveToFirst()) cursor.getString(0) else null
-                }
-        }.getOrNull()?.takeIf { it.isNotBlank() } ?: FILE_NAME
+    suspend fun writeNow(context: Context): Boolean {
+        ensureAvailable(context)
+        if (!BackupPreferences.isEnabled()) return false
+
+        val uri = BackupPreferences.readDocumentUri().toUri()
+        val bytes = BackupImportService(context).exportBytes(scopes)
+
+        return try {
+            writeToDocument(context.contentResolver, uri, bytes)
+            true
+        } catch (error: FileNotFoundException) {
+            forgetMissing(context, uri)
+            false
+        } catch (error: SecurityException) {
+            forgetMissing(context, uri)
+            false
+        }
+    }
+
+    fun displayName(context: Context, uri: Uri): String? {
+        return try {
+            val cursor = context.contentResolver.query(
+                uri,
+                arrayOf(OpenableColumns.DISPLAY_NAME),
+                null,
+                null,
+                null,
+            ) ?: return null
+
+            cursor.use {
+                if (!it.moveToFirst()) return null
+                it.getString(0)?.takeIf { name -> name.isNotBlank() } ?: FILE_NAME
+            }
+        } catch (error: Exception) {
+            when (error) {
+                is FileNotFoundException, is SecurityException, is IllegalArgumentException -> null
+                else -> FILE_NAME
+            }
+        }
+    }
+
+    private suspend fun forgetMissing(context: Context, uri: Uri) {
+        if (BackupPreferences.readDocumentUri() != uri.toString()) return
+
+        cancel(context)
+        BackupPreferences.clearMissingFile()
+        runCatching {
+            context.contentResolver.releasePersistableUriPermission(uri, PERSISTABLE_URI_FLAGS)
+        }
     }
 
     fun openFile(context: Context, uri: Uri): Boolean {
