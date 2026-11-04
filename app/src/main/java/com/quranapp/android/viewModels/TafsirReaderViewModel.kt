@@ -17,6 +17,7 @@ import com.quranapp.android.utils.reader.QuranVerseWebItem
 import com.quranapp.android.utils.reader.QuranVerseWebRequest
 import com.quranapp.android.utils.reader.buildQuranVerseWebAssets
 import com.quranapp.android.utils.reader.tafsir.TafsirManager
+import com.quranapp.android.utils.reader.translation.isCustomImportSlug
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.tafsir.TafsirUtils
 import kotlinx.coroutines.CancellationException
@@ -88,9 +89,7 @@ class TafsirReaderViewModel(application: Application) : AndroidViewModel(applica
         when (event) {
             is TafsirReaderEvent.Init -> {
                 viewModelScope.launch {
-                    withContext(Dispatchers.IO) {
-                        initialize(event.tafsirKey, event.chapterNo, event.verseNo)
-                    }
+                    initialize(event.tafsirKey, event.chapterNo, event.verseNo)
                 }
             }
 
@@ -103,8 +102,9 @@ class TafsirReaderViewModel(application: Application) : AndroidViewModel(applica
     }
 
     private suspend fun initialize(tafsirKey: String?, chapterNo: Int, verseNo: Int) {
-        val key =
+        val key = withContext(Dispatchers.IO) {
             tafsirKey ?: ReaderPreferences.getTafsirId() ?: TafsirUtils.getDefaultTafsirKey()
+        }
 
         if (key == null) {
             _uiState.update {
@@ -114,7 +114,10 @@ class TafsirReaderViewModel(application: Application) : AndroidViewModel(applica
         }
 
         val tafsirInfo = TafsirManager.getModel(key)
-        val chapterMeta = repository.getSurahWithLocalizations(chapterNo)
+        val (chapterMeta, textSizeMultiplier) = withContext(Dispatchers.IO) {
+            repository.getSurahWithLocalizations(chapterNo) to
+                    ReaderPreferences.getTafsirTextSizeMultiplier()
+        }
 
         _uiState.update {
             it.copy(
@@ -123,7 +126,7 @@ class TafsirReaderViewModel(application: Application) : AndroidViewModel(applica
                 chapterNo = chapterNo,
                 verseNo = verseNo,
                 chapterMeta = chapterMeta,
-                textSizeMultiplier = ReaderPreferences.getTafsirTextSizeMultiplier(),
+                textSizeMultiplier = textSizeMultiplier,
                 contentState = TafsirContentState.Loading
             )
         }
@@ -132,6 +135,10 @@ class TafsirReaderViewModel(application: Application) : AndroidViewModel(applica
     }
 
     private fun changeTafsir(tafsirKey: String) {
+        // DataStore emits "" before a selection exists. Applying that after Init
+        // clears the resolved key and leaves contentState on Loading.
+        if (tafsirKey.isBlank()) return
+
         val snapshot = _uiState.value
 
         if (snapshot.chapterNo >= 1 &&
@@ -290,6 +297,10 @@ class TafsirReaderViewModel(application: Application) : AndroidViewModel(applica
                                 chapterNo,
                                 verseNo,
                             )
+                        }
+
+                        if (isCustomImportSlug(tafsirKey)) {
+                            return@withContext LoadOutcome.NotFound
                         }
 
                         if (!NetworkStateReceiver.isNetworkConnected(context)) {

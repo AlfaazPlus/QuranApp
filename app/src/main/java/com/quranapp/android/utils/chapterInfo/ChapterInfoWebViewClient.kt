@@ -14,9 +14,17 @@ import org.json.JSONObject
 import java.net.URLConnection
 
 class ChapterInfoWebViewClient(
-    private val data: ChapterInfoContentData,
-    private val onPageFinished: (() -> Unit)? = null,
+    private var data: ChapterInfoContentData,
+    private var onPageFinished: (() -> Unit)? = null,
 ) : WebViewClient() {
+
+    fun update(
+        data: ChapterInfoContentData,
+        onPageFinished: (() -> Unit)?,
+    ) {
+        this.data = data
+        this.onPageFinished = onPageFinished
+    }
 
     override fun shouldInterceptRequest(
         view: WebView,

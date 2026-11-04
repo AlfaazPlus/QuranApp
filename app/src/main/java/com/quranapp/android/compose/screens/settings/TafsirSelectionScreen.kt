@@ -43,7 +43,10 @@ import androidx.compose.material3.VerticalDivider
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -60,12 +63,22 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.peacedesign.android.utils.ColorUtils
 import com.peacedesign.android.widget.dialog.base.PeaceDialog
 import com.quranapp.android.R
+import com.quranapp.android.api.DocPage
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import com.quranapp.android.components.tafsir.TafsirGroupModel
 import com.quranapp.android.compose.components.common.AppBar
 import com.quranapp.android.compose.components.common.ErrorMessageCard
 import com.quranapp.android.compose.components.common.IconButton
+import com.quranapp.android.compose.components.dialogs.SimpleTooltip
+import com.quranapp.android.compose.components.importing.ContentImportSheet
+import com.quranapp.android.compose.components.importing.TafsirImportDetails
+import com.quranapp.android.compose.components.importing.tafsirImportFields
 import com.quranapp.android.compose.utils.LocalAppLocale
+import com.quranapp.android.compose.utils.preferences.AppPreferences
+import com.quranapp.android.utils.reader.importing.ImportFieldId
+import com.quranapp.android.utils.reader.tafsir.CustomTafsirImporter
+import com.quranapp.android.utils.reader.translation.toTranslationManifest
+import com.quranapp.android.utils.reader.translation.translationSlug
 import com.quranapp.android.utils.managers.ResourceDownloadStatus
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.viewModels.TafsirEvent
@@ -75,12 +88,25 @@ import com.quranapp.android.viewModels.TafsirViewModel
 fun TafsirSelectionScreen() {
     val viewModel = viewModel<TafsirViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val isDeveloperModeEnabled = AppPreferences.observeDeveloperModeEnabled()
+    var importSheetOpen by rememberSaveable { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
             AppBar(
                 stringResource(R.string.strTitleTafsir),
                 actions = {
+                    if (isDeveloperModeEnabled) {
+                        SimpleTooltip(text = "Import") {
+                            IconButton(
+                                painter = painterResource(R.drawable.ic_upload),
+                                contentDescription = "Import",
+                            ) {
+                                importSheetOpen = true
+                            }
+                        }
+                    }
+
                     IconButton(
                         painterResource(R.drawable.dr_icon_refresh)
                     ) {
@@ -110,6 +136,32 @@ fun TafsirSelectionScreen() {
             }
         }
     }
+
+    val importFields = remember { tafsirImportFields() }
+    val existingKeys = remember(uiState.tafsirGroups) {
+        uiState.tafsirGroups.flatMap { group -> group.tafsirs.map { it.key } }.toSet()
+    }
+    
+    ContentImportSheet(
+        isOpen = importSheetOpen,
+        onDismiss = { importSheetOpen = false },
+        title = "Import",
+        fields = importFields,
+        doc = DocPage.CUSTOM_TAFSIR,
+        successMessage = "Tafsir added",
+        onImported = { viewModel.onEvent(TafsirEvent.RefreshQuiet) },
+        details = { TafsirImportDetails(it, existingKeys) },
+        canSubmit = { values ->
+            translationSlug(
+                values[ImportFieldId.LANG_CODE].orEmpty(),
+                values[ImportFieldId.BOOK].orEmpty(),
+            ) != null
+        },
+        buildManifest = { _, values -> values.toTranslationManifest() },
+        onImport = { context, manifest, uri ->
+            CustomTafsirImporter.import(context, manifest, uri)
+        },
+    )
 }
 
 @Composable

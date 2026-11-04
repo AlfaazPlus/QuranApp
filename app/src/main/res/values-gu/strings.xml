@@ -188,16 +188,6 @@
     <string name="strTitleAboutSurah">સુરા વિશે</string>
     <string name="strTitleTranslations">અનુવાદો</string>
     <string name="strTitleDownloadTranslations">ડાઉનલોડ કરો</string>
-    <string name="labelFormatGuide">ફોર્મેટ માર્ગદર્શિકા</string>
-    <string name="labelBook">પુસ્તક</string>
-    <string name="labelAuthor">લેખક</string>
-    <string name="labelDisplayName">ટૂંકું નામ</string>
-    <string name="labelLanguage">ભાષા</string>
-    <string name="translationImported">અનુવાદ ઉમેરાયો</string>
-    <string name="importTranslationReplace">આ અનુવાદ પહેલેથી છે અને બદલાઈ જશે.</string>
-    <string name="importDetailsInvalid">પુસ્તકની વિગતો ફોર્મેટ માર્ગદર્શિકા સાથે તપાસો</string>
-    <string name="importInvalid">આ ફાઇલ જરૂરી ફોર્મેટ સાથે મેળ ખાતી નથી</string>
-    <string name="importReserved">પુસ્તકનું આ નામ પહેલેથી બિલ્ટ-ઇન અનુવાદમાં છે</string>
     <string name="strTitleRecitations">પઠન</string>
     <string name="strTitleSelectReciter">રીસીટર પસંદ કરો</string>
     <string name="downloadRecitations">પઠન ડાઉનલોડ કરો</string>
@@ -381,6 +371,7 @@
     <string name="autoBackupOpenFailed">ફાઇલ ખોલી શકાઈ નહીં</string>
     <string name="autoBackupSaved">બેકઅપ સાચવાયું</string>
     <string name="autoBackupFailed">બેકઅપ સાચવી શકાયું નહીં</string>
+    <string name="autoBackupFileDeleted">આપમેળે બેકઅપ માટે તમે પસંદ કરેલી ફાઇલ કાઢી નાખવામાં આવી. નવી ફાઇલ પસંદ ન કરો ત્યાં સુધી બુકમાર્ક, સંગ્રહ અને સેટિંગ્સ સાચવાશે નહીં.</string>
     <string name="importSummary">આયાત પૂરી થઈ. %1$d ઉમેરાયા, %2$d અપડેટ થયા, %3$d જેમ હતા તેમ રહ્યા, %4$d છોડાયા, %5$dમાં તકરાર થઈ, અને %6$d સેટિંગ્સ સપોર્ટેડ નથી.</string>
     <string name="backupFailed">આ બેકઅપ વાંચી શકાયું નહીં.</string>
     <string name="backupUnsupportedVersion">આ બેકઅપ એપના નવા વર્ઝનનું છે.</string>

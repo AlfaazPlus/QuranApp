@@ -248,6 +248,9 @@ private fun ChapterInfoWebViewContent(
 
     var isLoading by remember { mutableStateOf(true) }
     var lastLoad by remember { mutableStateOf<String?>(null) }
+    val webClient = remember {
+        ChapterInfoWebViewClient(contentData) { isLoading = false }
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         AndroidView(
@@ -287,12 +290,12 @@ private fun ChapterInfoWebViewContent(
                             return true
                         }
                     }
+
+                    webViewClient = webClient
                 }
             },
             update = { webView ->
-                webView.webViewClient = ChapterInfoWebViewClient(contentData) {
-                    isLoading = false
-                }
+                webClient.update(contentData) { isLoading = false }
 
                 val html = contentState.html
 

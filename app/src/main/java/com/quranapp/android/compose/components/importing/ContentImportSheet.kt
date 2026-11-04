@@ -87,7 +87,7 @@ data class ImportChoice(
 
 data class ImportField(
     val id: ImportFieldId,
-    val label: Int,
+    val label: String,
     val required: Boolean,
     val choices: List<ImportChoice>? = null,
 )
@@ -171,7 +171,7 @@ fun ContentImportSheet(
 
                 Spacer(modifier = Modifier.width(6.dp))
 
-                Text(text = stringResource(R.string.labelFormatGuide))
+                Text(text = "Format guide")
             }
         },
         contentWindowInsets = {
@@ -224,7 +224,7 @@ fun ContentImportSheet(
                 )
 
                 Text(
-                    text = fileName ?: stringResource(R.string.labelSelectFile),
+                    text = fileName ?: "Select file",
                     modifier = Modifier.weight(1f),
                     style = typography.bodyLarge,
                     maxLines = 1,
@@ -294,15 +294,15 @@ fun ContentImportSheet(
                             if (!explicit.isNullOrBlank()) {
                                 importError = explicit
                             } else {
-                                val messageRes = when ((failure as? ImportException)?.failure) {
-                                    ImportFailure.DETAILS -> R.string.importDetailsInvalid
-                                    ImportFailure.RESERVED -> R.string.importReserved
-                                    else -> R.string.importInvalid
+                                val message = when ((failure as? ImportException)?.failure) {
+                                    ImportFailure.DETAILS -> "Check the book details against the format guide"
+                                    ImportFailure.RESERVED -> "This book name is already used by a built-in book"
+                                    else -> "This file does not match the required format"
                                 }
 
                                 MessageUtils.showRemovableToast(
                                     context,
-                                    messageRes,
+                                    message,
                                     Toast.LENGTH_LONG
                                 )
                             }
@@ -322,7 +322,7 @@ fun ContentImportSheet(
                         color = colorScheme.onPrimary,
                     )
                 } else {
-                    Text(text = stringResource(R.string.labelImport))
+                    Text(text = "Import")
                 }
             }
         }
@@ -339,7 +339,7 @@ private fun ImportFieldInput(
     val choices = field.choices
     if (choices != null) {
         ImportChoiceField(
-            label = stringResource(field.label),
+            label = field.label,
             value = values[field.id].orEmpty(),
             choices = choices,
             enabled = !importing,
@@ -351,7 +351,7 @@ private fun ImportFieldInput(
     TextInput(
         value = values[field.id].orEmpty(),
         onValueChange = { onValueChange(field.id, it) },
-        label = stringResource(field.label),
+        label = field.label,
         maxLines = 1,
         enabled = !importing,
     )

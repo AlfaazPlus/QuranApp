@@ -31,12 +31,11 @@ object CustomTranslationImporter {
             val root = try {
                 JSONObject(text)
             } catch (error: JSONException) {
-                val detail = error.message?.takeIf { it.isNotBlank() }
-                invalid(if (detail == null) "This file is not valid JSON." else "This file is not valid JSON. $detail")
+                invalid(error.message ?: "The file is not valid JSON.")
             }
 
             val chapters = root.optJSONArray(QuranConstants.KEY_CHAPTER_LIST)
-                ?: invalid("The file is missing a suras array.")
+                ?: invalid("Missing \"suras\" array.")
 
             validateVerses(chapters)
 
@@ -66,7 +65,7 @@ object CustomTranslationImporter {
     }
 
     private fun validateVerses(chapters: JSONArray) {
-        if (chapters.length() == 0) invalid("suras must contain at least one chapter.")
+        if (chapters.length() == 0) invalid("\"suras\" must contain at least one chapter.")
 
         val parser = newTranslationMarkupParser()
         val seenChapters = BooleanArray(QuranMeta.chapterRange.last + 1)
@@ -74,37 +73,43 @@ object CustomTranslationImporter {
 
         for (chapterIndex in 0 until chapters.length()) {
             val chapter = chapters.optJSONObject(chapterIndex)
-                ?: invalid("Sura at position ${chapterIndex + 1} is not an object.")
+                ?: invalid("Chapter at position ${chapterIndex + 1} must be an object.")
 
             val chapterNo = positiveInt(chapter, QuranConstants.KEY_NUMBER)
-            if (chapterNo == null) invalid("A sura is missing a valid index.")
+            if (chapterNo == null) {
+                invalid("Chapter at position ${chapterIndex + 1} is missing a positive \"index\".")
+            }
 
-            if (!QuranMeta.isChapterValid(chapterNo)) invalid("Sura $chapterNo is outside 1 to 114.")
-            if (seenChapters[chapterNo]) invalid("Sura $chapterNo is repeated.")
+            if (!QuranMeta.isChapterValid(chapterNo)) {
+                invalid("Chapter $chapterNo is outside 1 to 114.")
+            }
+            if (seenChapters[chapterNo]) invalid("Chapter $chapterNo is repeated.")
 
             seenChapters[chapterNo] = true
 
             val verses = chapter.optJSONArray(QuranConstants.KEY_VERSE_LIST)
-                ?: invalid("Sura $chapterNo is missing an ayas array.")
+                ?: invalid("Chapter $chapterNo is missing an \"ayas\" array.")
 
             seenVerses.fill(false)
 
             for (verseIndex in 0 until verses.length()) {
                 val verse = verses.optJSONObject(verseIndex)
-                    ?: invalid("Sura $chapterNo has a verse that is not an object.")
+                    ?: invalid("Chapter $chapterNo has a verse at position ${verseIndex + 1} that is not an object.")
 
                 val verseNo = positiveInt(verse, QuranConstants.KEY_NUMBER)
-                if (verseNo == null) invalid("Sura $chapterNo has a verse without a valid index.")
+                if (verseNo == null) {
+                    invalid("Chapter $chapterNo, verse at position ${verseIndex + 1}, is missing a positive \"index\".")
+                }
                 if (verseNo > MAX_VERSE_NUMBER) {
-                    invalid("Sura $chapterNo verse $verseNo is outside 1 to $MAX_VERSE_NUMBER.")
+                    invalid("Chapter $chapterNo verse $verseNo is outside 1 to $MAX_VERSE_NUMBER.")
                 }
 
-                if (seenVerses[verseNo]) invalid("Sura $chapterNo verse $verseNo is repeated.")
+                if (seenVerses[verseNo]) invalid("Chapter $chapterNo verse $verseNo is repeated.")
                 seenVerses[verseNo] = true
 
                 val translation = verse.opt(QuranConstants.KEY_TRANSLATION_TEXT)
                 if (translation !is String) {
-                    invalid("Sura $chapterNo verse $verseNo is missing translation text.")
+                    invalid("Chapter $chapterNo verse $verseNo is missing \"translation\" text.")
                 }
 
                 requireValidTranslationMarkup(
@@ -120,7 +125,7 @@ object CustomTranslationImporter {
                 ) {
                     validateFootnotes(
                         verse.optJSONArray(QuranConstants.KEY_FOOTNOTE_LIST)
-                            ?: invalid("Sura $chapterNo verse $verseNo footnotes must be an array."),
+                            ?: invalid("Chapter $chapterNo verse $verseNo \"footnotes\" must be an array."),
                         parser,
                         chapterNo,
                         verseNo,
@@ -139,14 +144,16 @@ object CustomTranslationImporter {
         val seen = HashSet<Int>(footnotes.length())
         for (index in 0 until footnotes.length()) {
             val footnote = footnotes.optJSONObject(index)
-                ?: invalid("Sura $chapterNo verse $verseNo has a footnote that is not an object.")
+                ?: invalid("Chapter $chapterNo verse $verseNo has a footnote at position ${index + 1} that is not an object.")
             val number = positiveInt(footnote, QuranConstants.KEY_NUMBER)
             val text = footnote.opt(QuranConstants.KEY_FOOTNOTE_SINGLE_TEXT)
             if (number == null) {
-                invalid("Sura $chapterNo verse $verseNo has a footnote without a positive index.")
+                invalid("Chapter $chapterNo verse $verseNo has a footnote without a positive \"index\".")
             }
-            if (!seen.add(number)) invalid("Sura $chapterNo verse $verseNo footnote $number is repeated.")
-            if (text !is String) invalid("Sura $chapterNo verse $verseNo footnote $number is missing text.")
+            if (!seen.add(number)) invalid("Chapter $chapterNo verse $verseNo repeats footnote $number.")
+            if (text !is String) {
+                invalid("Chapter $chapterNo verse $verseNo footnote $number is missing \"text\".")
+            }
             requireValidTranslationMarkup(parser, text, chapterNo, verseNo, "footnote#$number")
         }
     }

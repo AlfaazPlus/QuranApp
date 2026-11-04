@@ -73,16 +73,6 @@
     <string name="strLabelVerseNoWithColon" formatted="false">আয়াত : %d নং আয়াতে যান</string>
     <string name="strTitleBookmarks">আপনার বুকমার্কগুলো দেখুন</string>
     <string name="strTitleDownloadTranslations">ডাউনলোড</string>
-    <string name="labelFormatGuide">ফরম্যাট গাইড</string>
-    <string name="labelBook">বই</string>
-    <string name="labelAuthor">লেখক</string>
-    <string name="labelDisplayName">সংক্ষিপ্ত নাম</string>
-    <string name="labelLanguage">ভাষা</string>
-    <string name="translationImported">অনুবাদ যোগ করা হয়েছে</string>
-    <string name="importTranslationReplace">এই অনুবাদটি আগে থেকেই আছে এবং এটি বদলে যাবে।</string>
-    <string name="importDetailsInvalid">বইয়ের তথ্য ফরম্যাট গাইডের সাথে মিলিয়ে দেখুন</string>
-    <string name="importInvalid">এই ফাইলটি প্রয়োজনীয় ফরম্যাটের সাথে মেলে না</string>
-    <string name="importReserved">বইয়ের এই নামটি আগে থেকেই একটি বিল্ট-ইন অনুবাদে আছে</string>
     <string name="strTitleBookmarkDeleteThis">এই বুকমার্কটা রিমুভ করবেন?</string>
     <string name="strTitleBookmarkDeleteCount" formatted="false">%dটা বুকমার্ক রিমুভ করবেন?</string>
     <string name="strLabelVersesWithColon" formatted="false">আয়াত : %1$d থেকে %2$d নং আয়াতে যান</string>
@@ -289,6 +279,7 @@
     <string name="autoBackupOpenFailed">ফাইল খোলা যায়নি</string>
     <string name="autoBackupSaved">ব্যাকআপ সেভ হয়েছে</string>
     <string name="autoBackupFailed">ব্যাকআপ সেভ করা যায়নি</string>
+    <string name="autoBackupFileDeleted">স্বয়ংক্রিয় ব্যাকআপের জন্য আপনার বেছে নেওয়া ফাইলটি মুছে গেছে। নতুন ফাইল বেছে না নেওয়া পর্যন্ত বুকমার্ক, সংগ্রহ এবং সেটিংস সেভ হবে না।</string>
     <string name="importSummary">আনা শেষ হয়েছে। %1$d যোগ হয়েছে, %2$d আপডেট হয়েছে, %3$d আগের মতোই আছে, %4$d বাদ পড়েছে, %5$d-এ গরমিল হয়েছে, এবং %6$d সেটিংস সমর্থিত নয়।</string>
     <string name="backupFailed">এই ব্যাকআপ পড়া যায়নি।</string>
     <string name="backupUnsupportedVersion">এই ব্যাকআপ অ্যাপের নতুন সংস্করণের।</string>

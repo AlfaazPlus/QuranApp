@@ -72,16 +72,6 @@
     <string name="strTitleAboutSurah">سورہ کی معلومات</string>
     <string name="strTitleTranslations">ترجمے</string>
     <string name="strTitleDownloadTranslations">ڈاؤن لوڈ کریں</string>
-    <string name="labelFormatGuide">فارمیٹ گائیڈ</string>
-    <string name="labelBook">کتاب</string>
-    <string name="labelAuthor">مصنف</string>
-    <string name="labelDisplayName">مختصر نام</string>
-    <string name="labelLanguage">زبان</string>
-    <string name="translationImported">ترجمہ شامل ہو گیا</string>
-    <string name="importTranslationReplace">یہ ترجمہ پہلے سے موجود ہے اور بدل دیا جائے گا۔</string>
-    <string name="importDetailsInvalid">کتاب کی تفصیلات فارمیٹ گائیڈ سے ملا کر دیکھیں</string>
-    <string name="importInvalid">یہ فائل مطلوبہ فارمیٹ سے میل نہیں کھاتی</string>
-    <string name="importReserved">کتاب کا یہ نام بلٹ اِن ترجمے میں پہلے سے استعمال ہو رہا ہے</string>
     <string name="strTitleSelectReciter">قاری منتخب کریں</string>
     <string name="strTitleBookmarkDeleteAll">تمام بک مارکس ہٹائیں؟</string>
     <string name="strTitleBookmarkDeleteCount" formatted="false">%d بک مارکس ہٹائیں؟</string>
@@ -310,6 +300,7 @@
     <string name="autoBackupOpenFailed">فائل نہیں کھل سکی</string>
     <string name="autoBackupSaved">بیک اپ محفوظ ہو گیا</string>
     <string name="autoBackupFailed">بیک اپ محفوظ نہیں ہو سکا</string>
+    <string name="autoBackupFileDeleted">خودکار بیک اپ کے لیے آپ کی منتخب فائل حذف ہو گئی۔ نئی فائل منتخب کرنے تک بُک مارکس، مجموعے اور ترتیبات محفوظ نہیں ہوں گے۔</string>
     <string name="importSummary">درآمد مکمل ہو گئی۔ %1$d شامل ہوئے، %2$d اپ ڈیٹ ہوئے، %3$d ویسے ہی رہے، %4$d چھوڑ دیے گئے، %5$d میں ٹکراؤ ہوا، اور %6$d ترتیبات کام نہیں کرتیں۔</string>
     <string name="backupFailed">یہ بیک اپ پڑھا نہیں جا سکا۔</string>
     <string name="backupUnsupportedVersion">یہ بیک اپ ایپ کے نئے ورژن کا ہے۔</string>

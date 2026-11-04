@@ -86,16 +86,6 @@
     <string name="strTitleTafsir">Тафсир</string>
     <string name="strTitleAboutSurah">О Суре</string>
     <string name="strTitleDownloadTranslations">Загрузить</string>
-    <string name="labelFormatGuide">Справка по формату</string>
-    <string name="labelBook">Книга</string>
-    <string name="labelAuthor">Автор</string>
-    <string name="labelDisplayName">Краткое имя</string>
-    <string name="labelLanguage">Язык</string>
-    <string name="translationImported">Перевод добавлен</string>
-    <string name="importTranslationReplace">Этот перевод уже есть и будет заменён.</string>
-    <string name="importDetailsInvalid">Проверьте сведения о книге по справке</string>
-    <string name="importInvalid">Этот файл не соответствует нужному формату</string>
-    <string name="importReserved">Это название уже занято встроенным переводом</string>
     <string name="strTitleRecitations">Чтения</string>
     <string name="strTitleSelectReciter">Выбрать чтеца</string>
     <string name="audioOption">Настройки аудио</string>
@@ -299,6 +289,7 @@
     <string name="autoBackupOpenFailed">Не удалось открыть файл</string>
     <string name="autoBackupSaved">Копия сохранена</string>
     <string name="autoBackupFailed">Не удалось сохранить копию</string>
+    <string name="autoBackupFileDeleted">Файл, который вы выбрали для автоматической копии, удалён. Закладки, подборки и настройки не будут сохраняться, пока вы не выберете новый файл.</string>
     <string name="importSummary">Импорт завершён. Добавлено %1$d, обновлено %2$d, без изменений %3$d, пропущено %4$d, конфликтов %5$d, неподдерживаемых настроек %6$d.</string>
     <string name="backupFailed">Не удалось прочитать эту копию.</string>
     <string name="backupUnsupportedVersion">Эта копия создана более новой версией приложения.</string>

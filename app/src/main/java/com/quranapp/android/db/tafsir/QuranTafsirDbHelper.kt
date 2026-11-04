@@ -208,7 +208,40 @@ class QuranTafsirDBHelper(private val context: Context) : SQLiteOpenHelper(
         return downloadedKeys
     }
 
-    suspend fun deleteTafsirData(tafsirKey: String) {
+    fun getStoredTafsirInfos(): List<TafsirInfoModel> {
+        val infos = mutableListOf<TafsirInfoModel>()
+        val cursor = readableDatabase.query(
+            QuranTafsirInfoEntry.TABLE_NAME,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+        )
+
+        cursor.use {
+            while (it.moveToNext()) {
+                val key = it.getString(it.getColumnIndexOrThrow(QuranTafsirInfoEntry.COL_TAFSIR_KEY))
+                if (key.isNullOrBlank()) continue
+                infos += TafsirInfoModel(
+                    key = key,
+                    name = it.getString(it.getColumnIndexOrThrow(QuranTafsirInfoEntry.COL_BOOK_NAME)).orEmpty(),
+                    author = it.getString(it.getColumnIndexOrThrow(QuranTafsirInfoEntry.COL_AUTHOR_NAME)).orEmpty(),
+                    langCode = it.getString(it.getColumnIndexOrThrow(QuranTafsirInfoEntry.COL_LANG_CODE)).orEmpty(),
+                    langName = it.getString(it.getColumnIndexOrThrow(QuranTafsirInfoEntry.COL_LANG_NAME)).orEmpty(),
+                ).apply {
+                    isDownloaded = it.getInt(
+                        it.getColumnIndexOrThrow(QuranTafsirInfoEntry.COL_IS_DOWNLOADED)
+                    ) == 1
+                }
+            }
+        }
+
+        return infos
+    }
+
+    fun deleteTafsirData(tafsirKey: String) {
         val db = writableDatabase
 
         db.transaction {

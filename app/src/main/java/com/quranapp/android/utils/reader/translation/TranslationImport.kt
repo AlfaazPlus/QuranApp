@@ -43,6 +43,8 @@ private val languagesByCode: Map<String, ImportLanguage> by lazy {
 
 fun importLanguages(): List<ImportLanguage> = languages
 
+fun isCustomImportSlug(slug: String): Boolean = slug.contains(SLUG_MARKER)
+
 fun translationSlug(langCode: String, book: String): String? {
     val code = langCode.trim().lowercase()
     if (code !in languagesByCode) return null

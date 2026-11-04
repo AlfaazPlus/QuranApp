@@ -106,6 +106,13 @@ private fun ScienceContentWebView(
     val context = LocalContext.current
     val atlasAyahImageCache = remember { ConcurrentHashMap<String, ByteArray>() }
     var webViewRef by remember(item) { mutableStateOf<WebView?>(null) }
+    val webClient = remember {
+        QuranScienceWebViewClient(
+            atlasPngCache = atlasAyahImageCache,
+            quranArabicScriptCode = "",
+            onOpenReference = { _, _, _ -> },
+        )
+    }
 
     val colors = MaterialTheme.colorScheme
     val scriptCode = ReaderPreferences.observeQuranScript()
@@ -150,6 +157,7 @@ private fun ScienceContentWebView(
                 }
 
                 overScrollMode = View.OVER_SCROLL_NEVER
+                webViewClient = webClient
                 webChromeClient = object : WebChromeClient() {
                     override fun onConsoleMessage(consoleMessage: ConsoleMessage): Boolean {
                         val msg = "[${consoleMessage.lineNumber()}] ${consoleMessage.message()}"
@@ -162,8 +170,7 @@ private fun ScienceContentWebView(
         },
         update = { webView ->
             webViewRef = webView
-            webView.webViewClient = QuranScienceWebViewClient(
-                atlasPngCache = atlasAyahImageCache,
+            webClient.update(
                 quranArabicScriptCode = scriptCode,
                 onOpenReference = onOpenReference,
             )

@@ -62,16 +62,6 @@
     <string name="strTitleAboutSurah">Tentang Surah</string>
     <string name="strTitleTranslations">Terjemahan</string>
     <string name="strTitleDownloadTranslations">Unduh</string>
-    <string name="labelFormatGuide">Panduan format</string>
-    <string name="labelBook">Buku</string>
-    <string name="labelAuthor">Penulis</string>
-    <string name="labelDisplayName">Nama singkat</string>
-    <string name="labelLanguage">Bahasa</string>
-    <string name="translationImported">Terjemahan ditambahkan</string>
-    <string name="importTranslationReplace">Terjemahan ini sudah ada dan akan diganti.</string>
-    <string name="importDetailsInvalid">Periksa detail buku sesuai panduan format</string>
-    <string name="importInvalid">File ini tidak sesuai format yang diperlukan</string>
-    <string name="importReserved">Nama buku ini sudah dipakai terjemahan bawaan</string>
     <string name="strTitleSelectReciter">Pilih Pembaca</string>
     <string name="strTitleBookmarkDeleteThis">Hapus bookmark ini\?</string>
     <string name="strTitleBookmarkDeleteAll">Hapus semua bookmark\?</string>
@@ -292,6 +282,7 @@
     <string name="autoBackupOpenFailed">File tidak bisa dibuka</string>
     <string name="autoBackupSaved">Cadangan tersimpan</string>
     <string name="autoBackupFailed">Cadangan tidak bisa disimpan</string>
+    <string name="autoBackupFileDeleted">File yang Anda pilih untuk cadangan otomatis dihapus. Markah, koleksi, dan pengaturan tidak akan disimpan sampai Anda memilih file baru.</string>
     <string name="importSummary">Impor selesai. %1$d ditambahkan, %2$d diperbarui, %3$d tidak berubah, %4$d dilewati, %5$d bentrok, dan %6$d pengaturan tidak didukung.</string>
     <string name="backupFailed">Cadangan ini tidak bisa dibaca.</string>
     <string name="backupUnsupportedVersion">Cadangan ini dari versi aplikasi yang lebih baru.</string>

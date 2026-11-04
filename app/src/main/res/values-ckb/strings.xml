@@ -62,16 +62,6 @@
     <string name="strTitleAboutSurah">دەربارەی سورەت</string>
     <string name="strTitleTranslations">وەرگێڕانەکان</string>
     <string name="strTitleDownloadTranslations">داگرتن</string>
-    <string name="labelFormatGuide">ڕێنمایی فۆرمات</string>
-    <string name="labelBook">کتێب</string>
-    <string name="labelAuthor">نووسەر</string>
-    <string name="labelDisplayName">ناوی کورت</string>
-    <string name="labelLanguage">زمان</string>
-    <string name="translationImported">وەرگێڕان زیادکرا</string>
-    <string name="importTranslationReplace">ئەم وەرگێڕانە پێشتر هەیە و جێگەی دەگیرێتەوە.</string>
-    <string name="importDetailsInvalid">وردەکاریی کتێب لەگەڵ ڕێنمایی فۆرمات بپشکنە</string>
-    <string name="importInvalid">ئەم فایلە لەگەڵ فۆرماتی داواکراو ناگونجێت</string>
-    <string name="importReserved">ئەم ناوی کتێبە پێشتر لە وەرگێڕانێکی ناوەکیدا بەکارهاتووە</string>
     <string name="strTitleSelectReciter">قورئانخوێن هەڵبژێرە</string>
     <string name="strTitleScripts">فۆنت</string>
     <string name="strTitleBookmarkDeleteCount" formatted="false">لابردنی نیشانەکراوەکانی %d؟</string>
@@ -291,6 +281,7 @@
     <string name="autoBackupOpenFailed">فایلەکە نەکرایەوە</string>
     <string name="autoBackupSaved">پاشەکەوتەکە پارێزرا</string>
     <string name="autoBackupFailed">پاشەکەوتەکە نەپارێزرا</string>
+    <string name="autoBackupFileDeleted">ئەو فایلەی بۆ پاشەکەوتی خۆکار هەڵتبژاردبوو سڕایەوە. نیشانەکان، کۆکراوەکان و ڕێکخستنەکان ناپارێزرێن تا فایلێکی نوێ هەڵبژێریت.</string>
     <string name="importSummary">هێنان تەواو بوو. %1$d زیادکرا، %2$d نوێکرایەوە، %3$d وەک خۆی مایەوە، %4$d پشتگوێ خرا، %5$d ناکۆکی هەبوو، و %6$d ڕێکخستن پشتگیری ناکرێت.</string>
     <string name="backupFailed">ئەم پاشەکەوتە نەخوێندرایەوە.</string>
     <string name="backupUnsupportedVersion">ئەم پاشەکەوتە لە وەشانێکی نوێتری ئەپە.</string>

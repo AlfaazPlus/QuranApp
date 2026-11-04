@@ -75,16 +75,6 @@
     <string name="strTitleAboutSurah">सूरह की जानकारी</string>
     <string name="strTitleTranslations">अनुवाद</string>
     <string name="strTitleDownloadTranslations">डाउनलोड</string>
-    <string name="labelFormatGuide">फ़ॉर्मैट गाइड</string>
-    <string name="labelBook">किताब</string>
-    <string name="labelAuthor">लेखक</string>
-    <string name="labelDisplayName">छोटा नाम</string>
-    <string name="labelLanguage">भाषा</string>
-    <string name="translationImported">अनुवाद जोड़ दिया गया</string>
-    <string name="importTranslationReplace">यह अनुवाद पहले से है और बदल दिया जाएगा।</string>
-    <string name="importDetailsInvalid">किताब की जानकारी फ़ॉर्मैट गाइड से मिलाएँ</string>
-    <string name="importInvalid">यह फ़ाइल ज़रूरी फ़ॉर्मैट से मेल नहीं खाती</string>
-    <string name="importReserved">किताब का यह नाम पहले से एक बिल्ट-इन अनुवाद में है</string>
     <string name="strTitleSelectReciter">क़ारी चुनें</string>
     <string name="strTitleBookmarkDeleteAll">सभी बुकमार्क्स हटायें\?</string>
     <string name="strTitleBookmarkDeleteCount" formatted="false">%d बुकमार्क्स हटायें?</string>
@@ -298,6 +288,7 @@
     <string name="autoBackupOpenFailed">फ़ाइल नहीं खोली जा सकी</string>
     <string name="autoBackupSaved">बैकअप सेव हो गया</string>
     <string name="autoBackupFailed">बैकअप सेव नहीं हो सका</string>
+    <string name="autoBackupFileDeleted">अपने आप बैकअप के लिए आपकी चुनी हुई फ़ाइल हटा दी गई है। नई फ़ाइल चुनने तक बुकमार्क, संग्रह और सेटिंग्स सेव नहीं होंगे।</string>
     <string name="importSummary">आयात पूरा हुआ। %1$d जोड़े गए, %2$d अपडेट हुए, %3$d वैसे ही रहे, %4$d छोड़े गए, %5$d में टकराव हुआ, और %6$d सेटिंग्स काम नहीं करतीं।</string>
     <string name="backupFailed">यह बैकअप पढ़ा नहीं जा सका।</string>
     <string name="backupUnsupportedVersion">यह बैकअप ऐप के नए संस्करण का है।</string>

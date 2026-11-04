@@ -395,6 +395,15 @@ private fun TafsirWebViewContent(
     var lastLoadSignature by remember { mutableStateOf<String?>(null) }
     var lastAppliedFontSize by remember { mutableIntStateOf(-1) }
 
+    val webClient = remember {
+        TafsirWebViewClient(
+            tafsirKey = "",
+            quranArabicScriptCode = "",
+            onPageReady = { isLoading = false },
+            onOpenReference = { _, _ -> },
+        )
+    }
+
     val pageSignature = remember(
         uiState.tafsirKey,
         uiState.chapterNo,
@@ -420,6 +429,7 @@ private fun TafsirWebViewContent(
 
                     overScrollMode = View.OVER_SCROLL_IF_CONTENT_SCROLLS
                     webChromeClient = WebChromeClient()
+                    webViewClient = webClient
 
                     setOnScrollChangeListener { _, _, scrollY, _, _ ->
                         onScrollChanged(scrollY)
@@ -429,11 +439,11 @@ private fun TafsirWebViewContent(
                 }
             },
             update = { webView ->
-                webView.webViewClient = TafsirWebViewClient(
+                webClient.update(
                     tafsirKey = uiState.tafsirKey,
                     quranArabicScriptCode = quranArabicScript,
                     atlasAyahImageCache = contentState.atlasAyahImageCache.takeIf { it.isNotEmpty() },
-                    onPageFinished = { isLoading = false },
+                    onPageReady = { isLoading = false },
                     onOpenReference = onOpenReference,
                 )
 
@@ -442,7 +452,7 @@ private fun TafsirWebViewContent(
                     lastAppliedFontSize = fontSizePercent
                     isLoading = true
                     webView.loadDataWithBaseURL(
-                        null,
+                        "https://assets-file/",
                         htmlContent,
                         "text/html; charset=UTF-8",
                         "utf-8",

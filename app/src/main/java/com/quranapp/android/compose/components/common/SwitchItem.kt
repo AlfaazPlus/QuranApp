@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -17,6 +18,27 @@ fun SwitchItem(
     modifier: Modifier = Modifier,
     title: Int,
     subtitle: Int? = null,
+    checked: Boolean,
+    enabled: Boolean = true,
+    shape: Shape = MaterialTheme.shapes.small,
+    onCheckedChange: (Boolean) -> Unit
+) {
+    SwitchItem(
+        modifier,
+        title = stringResource(title),
+        subtitle = subtitle?.let { stringResource(it) },
+        checked = checked,
+        enabled = enabled,
+        shape = shape,
+        onCheckedChange = onCheckedChange,
+    )
+}
+
+@Composable
+fun SwitchItem(
+    modifier: Modifier = Modifier,
+    title: String,
+    subtitle: String? = null,
     checked: Boolean,
     enabled: Boolean = true,
     shape: Shape = MaterialTheme.shapes.small,
@@ -32,10 +54,11 @@ fun SwitchItem(
         verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
     ) {
         ListItemContent(
-            title = title,
-            subtitle = subtitle,
+            titleStr = title,
+            subtitleStr = subtitle,
             modifier = Modifier.weight(1f)
         )
+
         Switch(
             modifier = Modifier
                 .padding(start = 16.dp)

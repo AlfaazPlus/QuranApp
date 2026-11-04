@@ -2,7 +2,7 @@
 
 Turn on **Developer mode** in **Settings → Advanced settings**. Then open **Settings → Translations** and choose **Import**. Enter the book name, author, display name, and language, and choose a JSON file. Importing the same book and language again replaces that translation.
 
-![Import sheet for a custom translation](import.jpg)
+<img src="import.jpg" alt="Import sheet for a custom translation" width="240">
 
 The file is a UTF-8 JSON object with a `suras` array. Each chapter has an `index` and an `ayas` array. Each verse has an `index` and a `translation`. The files in [inventory/translations](/inventory/translations) are full examples of this shape. A short file looks like this:
 

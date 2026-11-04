@@ -116,16 +116,6 @@
     <string name="strTitleAboutSurah">About Surah</string>
     <string name="strTitleTranslations">Translations</string>
     <string name="strTitleDownloadTranslations">Download</string>
-    <string name="labelFormatGuide">Format guide</string>
-    <string name="labelBook">Book</string>
-    <string name="labelAuthor">Author</string>
-    <string name="labelDisplayName">Short name</string>
-    <string name="labelLanguage">Language</string>
-    <string name="translationImported">Translation added</string>
-    <string name="importTranslationReplace">This translation already exists and will be replaced.</string>
-    <string name="importDetailsInvalid">Check the book details against the format guide</string>
-    <string name="importInvalid">This file does not match the required format</string>
-    <string name="importReserved">This book name is already used by a built-in translation</string>
     <string name="strTitleRecitations">Recitations</string>
     <string name="strTitleSelectReciter">Select Reciter</string>
     <string name="strMsgReciterDownloadHint">Download recitation audio for offline listening and smoother playback.</string>
@@ -385,7 +375,7 @@
     <string name="autoBackupOpenFailed">Could not open the file</string>
     <string name="autoBackupSaved">Backup saved</string>
     <string name="autoBackupFailed">Could not save the backup</string>
-    <string name="autoBackupFileDeleted">The backup file was deleted. Auto backup is off until you choose a new file.</string>
+    <string name="autoBackupFileDeleted">The file you chose for auto backup was deleted. Your bookmarks, collections, and settings will not be saved until you choose a new file.</string>
     <string name="importSummary">Import finished. %1$d added, %2$d updated, %3$d unchanged, %4$d skipped, %5$d conflicts, and %6$d settings were not supported.</string>
     <string name="backupFailed">Could not read this backup.</string>
     <string name="backupUnsupportedVersion">This backup was made with a newer version of the app.</string>
@@ -544,8 +534,6 @@
     <string name="updated_just_now">Updated just now</string>
 
     <string name="advanced_settings">Advanced settings</string>
-    <string name="developer_mode">Developer mode</string>
-    <string name="desc_developer_mode">Enables additional developer capabilities, e.g., custom translation import.</string>
 
     <plurals name="verse_count">
         <item quantity="one">%d verse</item>

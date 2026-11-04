@@ -11,6 +11,7 @@ import com.quranapp.android.db.tafsir.QuranTafsirDBHelper
 import com.quranapp.android.utils.managers.ResourceDownloadStatus
 import com.quranapp.android.utils.managers.TafsirDownloadManager
 import com.quranapp.android.utils.reader.tafsir.TafsirManager
+import com.quranapp.android.utils.reader.translation.isCustomImportSlug
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import kotlinx.coroutines.Dispatchers
@@ -35,6 +36,7 @@ data class TafsirUiState(
 
 sealed interface TafsirEvent {
     object Refresh : TafsirEvent
+    object RefreshQuiet : TafsirEvent
     data class ToggleGroup(val langCode: String) : TafsirEvent
     data class SelectTafsir(val key: String) : TafsirEvent
     data class DownloadTafsir(val key: String) : TafsirEvent
@@ -64,16 +66,17 @@ class TafsirViewModel(application: Application) : AndroidViewModel(application) 
 
     private fun loadDownloadedTafsirKeys() {
         viewModelScope.launch {
-            val downloadedKeys = withContext(Dispatchers.IO) {
-                val dbHelper = QuranTafsirDBHelper(context)
-
-                try {
-                    dbHelper.getDownloadedTafsirKeys()
-                } finally {
-                    dbHelper.close()
-                }
-            }
+            val downloadedKeys = withContext(Dispatchers.IO) { readDownloadedKeys() }
             _uiState.update { it.copy(downloadedTafsirKeys = downloadedKeys) }
+        }
+    }
+
+    private fun readDownloadedKeys(): Set<String> {
+        val dbHelper = QuranTafsirDBHelper(context)
+        try {
+            return dbHelper.getDownloadedTafsirKeys()
+        } finally {
+            dbHelper.close()
         }
     }
 
@@ -88,6 +91,7 @@ class TafsirViewModel(application: Application) : AndroidViewModel(application) 
     fun onEvent(event: TafsirEvent) {
         when (event) {
             is TafsirEvent.Refresh -> loadTafsirs(force = true)
+            is TafsirEvent.RefreshQuiet -> refreshQuiet()
             is TafsirEvent.ToggleGroup -> toggleGroup(event.langCode)
             is TafsirEvent.SelectTafsir -> selectTafsir(event.key)
             is TafsirEvent.DownloadTafsir -> downloadTafsir(event.key)
@@ -113,6 +117,7 @@ class TafsirViewModel(application: Application) : AndroidViewModel(application) 
                     if (!models.isNullOrEmpty()) {
                         val savedKey = ReaderPreferences.getTafsirId()
                         val groups = parseAvailableTafsirs(models, savedKey)
+                        
                         _uiState.update {
                             it.copy(
                                 isLoading = false,
@@ -161,6 +166,24 @@ class TafsirViewModel(application: Application) : AndroidViewModel(application) 
         return tafsirGroups
     }
 
+    private fun refreshQuiet() {
+        viewModelScope.launch {
+            val downloadedKeys = withContext(Dispatchers.IO) { readDownloadedKeys() }
+            val savedKey = ReaderPreferences.getTafsirId()
+            val models = TafsirManager.getModels().orEmpty()
+           
+            _uiState.update {
+                it.copy(
+                    isLoading = false,
+                    tafsirGroups = parseAvailableTafsirs(models, savedKey),
+                    selectedTafsirKey = savedKey,
+                    downloadedTafsirKeys = downloadedKeys,
+                    error = if (models.isEmpty()) DataLoadError.NoData else null,
+                )
+            }
+        }
+    }
+
     private fun toggleGroup(langCode: String) {
         _uiState.update { state ->
             val updatedGroups = state.tafsirGroups.map { group ->
@@ -174,6 +197,7 @@ class TafsirViewModel(application: Application) : AndroidViewModel(application) 
                     group
                 }
             }
+
             state.copy(tafsirGroups = updatedGroups)
         }
     }
@@ -229,11 +253,21 @@ class TafsirViewModel(application: Application) : AndroidViewModel(application) 
                 }
             }
 
-            // Update the downloaded keys set
+            if (isCustomImportSlug(key)) {
+                TafsirManager.remove(key)
+            }
+
             _uiState.update { state ->
-                val newDownloadedKeys = state.downloadedTafsirKeys.toMutableSet()
-                newDownloadedKeys.remove(key)
-                state.copy(downloadedTafsirKeys = newDownloadedKeys)
+                val groups = if (isCustomImportSlug(key)) {
+                    parseAvailableTafsirs(TafsirManager.getModels().orEmpty(), state.selectedTafsirKey)
+                } else {
+                    state.tafsirGroups
+                }
+
+                state.copy(
+                    tafsirGroups = groups,
+                    downloadedTafsirKeys = state.downloadedTafsirKeys - key,
+                )
             }
         }
     }

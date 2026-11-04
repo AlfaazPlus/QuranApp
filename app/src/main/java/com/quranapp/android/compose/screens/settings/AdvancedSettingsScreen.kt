@@ -61,8 +61,8 @@ fun AdvancedSettingsScreen() {
             }
 
             SwitchItem(
-                title = R.string.developer_mode,
-                subtitle = R.string.desc_developer_mode,
+                title = "Developer mode",
+                subtitle = "Enables additional developer capabilities, e.g., custom translation import.",
                 checked = AppPreferences.observeDeveloperModeEnabled(),
             ) {
                 coroutineScope.launch {

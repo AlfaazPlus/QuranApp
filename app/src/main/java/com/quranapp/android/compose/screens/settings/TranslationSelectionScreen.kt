@@ -130,11 +130,10 @@ fun TranslationSelectionScreen() {
                 },
                 actions = {
                     if (isDeveloperModeEnabled) {
-                        val importLabel = stringResource(R.string.labelImport)
-                        SimpleTooltip(text = importLabel) {
+                        SimpleTooltip(text = "Import") {
                             IconButton(
                                 painter = painterResource(R.drawable.ic_upload),
-                                contentDescription = importLabel,
+                                contentDescription = "Import",
                             ) {
                                 importSheetOpen = true
                             }
@@ -183,10 +182,10 @@ fun TranslationSelectionScreen() {
     ContentImportSheet(
         isOpen = importSheetOpen,
         onDismiss = { importSheetOpen = false },
-        title = stringResource(R.string.labelImport),
+        title = "Import",
         fields = importFields,
         doc = DocPage.CUSTOM_TRANSLATION,
-        successMessage = stringResource(R.string.translationImported),
+        successMessage = "Translation added",
         onImported = { viewModel.onEvent(TranslationEvent.RefreshQuiet) },
         details = { TranslationImportDetails(it, existingSlugs) },
         canSubmit = { values ->

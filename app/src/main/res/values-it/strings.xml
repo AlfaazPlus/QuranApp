@@ -92,16 +92,6 @@
     <string name="strTitleAboutSurah">A proposito di Sura</string>
     <string name="strTitleTranslations">Traduzioni</string>
     <string name="strTitleDownloadTranslations">Scaricamento</string>
-    <string name="labelFormatGuide">Guida al formato</string>
-    <string name="labelBook">Libro</string>
-    <string name="labelAuthor">Autore</string>
-    <string name="labelDisplayName">Nome breve</string>
-    <string name="labelLanguage">Lingua</string>
-    <string name="translationImported">Traduzione aggiunta</string>
-    <string name="importTranslationReplace">Questa traduzione esiste già e verrà sostituita.</string>
-    <string name="importDetailsInvalid">Controlla i dati del libro nella guida al formato</string>
-    <string name="importInvalid">Questo file non corrisponde al formato richiesto</string>
-    <string name="importReserved">Questo titolo è già usato da una traduzione inclusa</string>
     <string name="strTitleSelectReciter">Seleziona Recitatore</string>
     <string name="strTitleBookmarkDeleteThis">Rimuovere questo segnalibro\?</string>
     <string name="strTitleTranslDelete">Elimina traduzione\?</string>
@@ -377,6 +367,7 @@
     <string name="autoBackupOpenFailed">Impossibile aprire il file</string>
     <string name="autoBackupSaved">Backup salvato</string>
     <string name="autoBackupFailed">Impossibile salvare il backup</string>
+    <string name="autoBackupFileDeleted">Il file che avevi scelto per il backup automatico è stato eliminato. Segnalibri, raccolte e impostazioni non verranno salvati finché non scegli un nuovo file.</string>
     <string name="importSummary">Importazione completata. %1$d aggiunti, %2$d aggiornati, %3$d invariati, %4$d ignorati, %5$d in conflitto e %6$d impostazioni non supportate.</string>
     <string name="backupFailed">Impossibile leggere questo backup.</string>
     <string name="backupUnsupportedVersion">Questo backup proviene da una versione più recente dell\'app.</string>

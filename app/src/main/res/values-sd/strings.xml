@@ -76,16 +76,6 @@
     <string name="strTitleAboutSurah">سورت جي باري ۾</string>
     <string name="strTitleTranslations">ترجما</string>
     <string name="strTitleDownloadTranslations">ڊائون لوڊ</string>
-    <string name="labelFormatGuide">فارميٽ جي رهنمائي</string>
-    <string name="labelBook">ڪتاب</string>
-    <string name="labelAuthor">ليکڪ</string>
-    <string name="labelDisplayName">مختصر نالو</string>
-    <string name="labelLanguage">ٻولي</string>
-    <string name="translationImported">ترجمو شامل ٿي ويو</string>
-    <string name="importTranslationReplace">هي ترجمو اڳ ۾ موجود آهي ۽ مٽجي ويندو.</string>
-    <string name="importDetailsInvalid">ڪتاب جي تفصيل کي فارميٽ جي رهنمائي سان ملايو</string>
-    <string name="importInvalid">هي فائل گهربل فارميٽ سان نه ٿي ملي</string>
-    <string name="importReserved">ڪتاب جو هي نالو اڳ ۾ ئي بلٽ اِن ترجمي ۾ استعمال ٿيل آهي</string>
     <string name="strTitleRecitations">تلاوتون</string>
     <string name="strTitleSelectReciter">تلاوت ڪندڙ چونڊيو</string>
     <string name="audioOption">آواز لاءِ آپشن</string>
@@ -258,6 +248,7 @@
     <string name="autoBackupOpenFailed">فائل نه کلي سگهي</string>
     <string name="autoBackupSaved">بيڪ اپ محفوظ ٿي ويو</string>
     <string name="autoBackupFailed">بيڪ اپ محفوظ نه ٿي سگهيو</string>
+    <string name="autoBackupFileDeleted">خودڪار بيڪ اپ لاءِ توهان جي چونڊيل فائل ڊهي وئي. نئين فائل چونڊڻ تائين بڪ مارڪ، مجموعا ۽ سيٽنگون محفوظ نه ٿينديون.</string>
     <string name="importSummary">درآمد مڪمل ٿي. %1$d شامل ٿيا، %2$d اپڊيٽ ٿيا، %3$d ائين ئي رهيا، %4$d ڇڏيا ويا، %5$d ۾ ٽڪراءُ ٿيو، ۽ %6$d سيٽنگون سپورٽ نه ٿيون.</string>
     <string name="backupFailed">هي بيڪ اپ پڙهي نه سگهيو.</string>
     <string name="backupUnsupportedVersion">هي بيڪ اپ ايپ جي نئين ورزن جو آهي.</string>

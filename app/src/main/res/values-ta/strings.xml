@@ -95,16 +95,6 @@
     <string name="strTitleAboutSurah">சூராவைப் பற்றி</string>
     <string name="strTitleTranslations">மொழிபெயர்ப்புகள்</string>
     <string name="strTitleDownloadTranslations">பதிவிறக்கம்</string>
-    <string name="labelFormatGuide">வடிவ வழிகாட்டி</string>
-    <string name="labelBook">புத்தகம்</string>
-    <string name="labelAuthor">ஆசிரியர்</string>
-    <string name="labelDisplayName">குறுகிய பெயர்</string>
-    <string name="labelLanguage">மொழி</string>
-    <string name="translationImported">மொழிபெயர்ப்பு சேர்க்கப்பட்டது</string>
-    <string name="importTranslationReplace">இந்த மொழிபெயர்ப்பு ஏற்கனவே உள்ளது. அது மாற்றப்படும்.</string>
-    <string name="importDetailsInvalid">புத்தக விவரங்களை வடிவ வழிகாட்டியுடன் சரிபார்க்கவும்</string>
-    <string name="importInvalid">இந்தக் கோப்பு தேவையான வடிவத்துடன் பொருந்தவில்லை</string>
-    <string name="importReserved">இந்தப் புத்தகப் பெயர் ஏற்கனவே உள்ளமைந்த மொழிபெயர்ப்பில் உள்ளது</string>
     <string name="strTitleRecitations">பாராயணங்கள்</string>
     <string name="strTitleSelectReciter">ரிப்பிட்டரைத் தேர்ந்தெடுக்கவும்</string>
     <string name="downloadRecitations">பாராய்ப்புகளைப் பதிவிறக்கவும்</string>
@@ -370,6 +360,7 @@
     <string name="autoBackupOpenFailed">கோப்பைத் திறக்க முடியவில்லை</string>
     <string name="autoBackupSaved">காப்பு சேமிக்கப்பட்டது</string>
     <string name="autoBackupFailed">காப்பைச் சேமிக்க முடியவில்லை</string>
+    <string name="autoBackupFileDeleted">தானியங்கி காப்புக்காக நீங்கள் தேர்ந்தெடுத்த கோப்பு நீக்கப்பட்டது. புதிய கோப்பைத் தேர்ந்தெடுக்கும் வரை புத்தகக்குறிகள், தொகுப்புகள் மற்றும் அமைப்புகள் சேமிக்கப்படாது.</string>
     <string name="importSummary">இறக்குமதி முடிந்தது. %1$d சேர்க்கப்பட்டன, %2$d புதுப்பிக்கப்பட்டன, %3$d மாறவில்லை, %4$d தவிர்க்கப்பட்டன, %5$d முரண்பட்டன, %6$d அமைப்புகள் ஆதரிக்கப்படவில்லை.</string>
     <string name="backupFailed">இந்தக் காப்பைப் படிக்க முடியவில்லை.</string>
     <string name="backupUnsupportedVersion">இந்தக் காப்பு செயலியின் புதிய பதிப்பிலிருந்து வந்தது.</string>

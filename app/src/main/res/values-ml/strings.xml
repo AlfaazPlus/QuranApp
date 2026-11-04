@@ -67,16 +67,6 @@
     <string name="strTitleAboutSurah">സൂറത്തിനെ കുറിച്ച്</string>
     <string name="strTitleTranslations">വിവർത്തനങ്ങൾ</string>
     <string name="strTitleDownloadTranslations">ഡൗൺലോഡ്</string>
-    <string name="labelFormatGuide">ഫോർമാറ്റ് ഗൈഡ്</string>
-    <string name="labelBook">പുസ്തകം</string>
-    <string name="labelAuthor">രചയിതാവ്</string>
-    <string name="labelDisplayName">ചെറിയ പേര്</string>
-    <string name="labelLanguage">ഭാഷ</string>
-    <string name="translationImported">വിവർത്തനം ചേർത്തു</string>
-    <string name="importTranslationReplace">ഈ വിവർത്തനം ഇതിനകം ഉണ്ട്. അത് മാറ്റിസ്ഥാപിക്കും.</string>
-    <string name="importDetailsInvalid">പുസ്തക വിവരങ്ങൾ ഫോർമാറ്റ് ഗൈഡുമായി ഒത്തുനോക്കുക</string>
-    <string name="importInvalid">ഈ ഫയൽ ആവശ്യമായ ഫോർമാറ്റുമായി പൊരുത്തപ്പെടുന്നില്ല</string>
-    <string name="importReserved">ഈ പുസ്തകപ്പേര് നിലവിലുള്ള ഒരു ബിൽറ്റ്-ഇൻ വിവർത്തനത്തിലുണ്ട്</string>
     <string name="strTitleSelectReciter">റിസൈറ്റർ തിരഞ്ഞെടുക്കുക</string>
     <string name="strTitleBookmarkDeleteThis">ഈ ബുക്ക്‌മാർക്ക് നീക്കം ചെയ്യണോ?</string>
     <string name="strTitleBookmarkDeleteAll">എല്ലാ ബുക്ക്‌മാർക്കുകളും നീക്കം ചെയ്യണോ?</string>
@@ -375,6 +365,7 @@
     <string name="autoBackupOpenFailed">ഫയൽ തുറക്കാനായില്ല</string>
     <string name="autoBackupSaved">ബാക്കപ്പ് സേവ് ചെയ്തു</string>
     <string name="autoBackupFailed">ബാക്കപ്പ് സേവ് ചെയ്യാനായില്ല</string>
+    <string name="autoBackupFileDeleted">സ്വയമേവയുള്ള ബാക്കപ്പിനായി നിങ്ങൾ തിരഞ്ഞെടുത്ത ഫയൽ ഇല്ലാതാക്കി. പുതിയ ഫയൽ തിരഞ്ഞെടുക്കും വരെ ബുക്ക്‌മാർക്കുകൾ, ശേഖരങ്ങൾ, ക്രമീകരണങ്ങൾ സേവ് ആകില്ല.</string>
     <string name="importSummary">ഇമ്പോർട്ട് കഴിഞ്ഞു. %1$d ചേർത്തു, %2$d പുതുക്കി, %3$d മാറ്റമില്ല, %4$d ഒഴിവാക്കി, %5$d പൊരുത്തക്കേട്, %6$d ക്രമീകരണങ്ങൾ പിന്തുണയ്ക്കുന്നില്ല.</string>
     <string name="backupFailed">ഈ ബാക്കപ്പ് വായിക്കാനായില്ല.</string>
     <string name="backupUnsupportedVersion">ഈ ബാക്കപ്പ് ആപ്പിന്റെ പുതിയ പതിപ്പിൽ നിന്നുള്ളതാണ്.</string>

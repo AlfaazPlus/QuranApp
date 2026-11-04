@@ -28,7 +28,7 @@ fun requireValidTranslationMarkup(
     val issue = markupIssue(parser, text) ?: return
     throw ImportException(
         ImportFailure.INVALID,
-        "Sura $chapterNo verse $verseNo $field: $issue",
+        "Chapter $chapterNo verse $verseNo, $field: $issue",
     )
 }
 
@@ -73,30 +73,30 @@ private fun tagIssue(parser: XmlPullParser): String? {
     return when (parser.name) {
         "fn" -> {
             val indexAttr = parser.getAttributeValue(null, "index")
-                ?: return "<fn> tag must include index=\"...\""
+                ?: return "<fn> is missing index."
 
             val parsed = indexAttr.trim().toIntOrNull()
-            if (parsed == null || parsed <= 0) "<fn index> must be a positive integer" else null
+            if (parsed == null || parsed <= 0) "<fn> index must be a positive integer." else null
         }
 
         "reference" -> {
             val chapterAttr = parser.getAttributeValue(null, "chapter")
-                ?: return "<reference> tag must include chapter=\"...\""
+                ?: return "<reference> is missing chapter."
 
             val parsed = chapterAttr.trim().toIntOrNull()
             if (parsed == null || parsed <= 0) {
-                return "<reference chapter> must be a positive integer"
+                return "<reference> chapter must be a positive integer."
             }
 
             val versesAttr = parser.getAttributeValue(null, "verses")
             if (!versesAttr.isNullOrEmpty() && !versesPattern.matches(versesAttr)) {
-                "<reference verses> must be like \"12\", \"12-15\", or \"12,15,18-20\""
+                "<reference> verses \"$versesAttr\" is not a valid range. Use \"12\", \"12-15\", or \"12,15,18-20\"."
             } else {
                 null
             }
         }
 
-        else -> "Unsupported tag <${parser.name}>. Allowed tags: <fn>, <reference>"
+        else -> "Unsupported tag <${parser.name}>. Only <fn> and <reference> are allowed."
     }
 }
 

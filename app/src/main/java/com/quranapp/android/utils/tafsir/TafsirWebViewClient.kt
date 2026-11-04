@@ -25,12 +25,30 @@ import java.util.concurrent.ConcurrentHashMap
  * - quranapp.verse.ref / quranapp.verse.reader links
  */
 class TafsirWebViewClient(
-    private val tafsirKey: String,
-    private val quranArabicScriptCode: String,
-    private val atlasAyahImageCache: ConcurrentHashMap<String, ByteArray>? = null,
-    private val onPageFinished: (() -> Unit)? = null,
-    private val onOpenReference: (chapterNo: Int, verses: String) -> Unit = { _, _ -> },
+    private var tafsirKey: String,
+    private var quranArabicScriptCode: String,
+    private var atlasAyahImageCache: ConcurrentHashMap<String, ByteArray>? = null,
+    private var onPageReady: (() -> Unit)? = null,
+    private var onOpenReference: (chapterNo: Int, verses: String) -> Unit = { _, _ -> },
 ) : WebViewClientCompat() {
+
+    /**
+     * Keep one client for the lifetime of the WebView. Replacing it while a load is in
+     * progress drops the page-finished callback, which leaves the reader spinner up.
+     */
+    fun update(
+        tafsirKey: String,
+        quranArabicScriptCode: String,
+        atlasAyahImageCache: ConcurrentHashMap<String, ByteArray>?,
+        onPageReady: (() -> Unit)?,
+        onOpenReference: (chapterNo: Int, verses: String) -> Unit,
+    ) {
+        this.tafsirKey = tafsirKey
+        this.quranArabicScriptCode = quranArabicScriptCode
+        this.atlasAyahImageCache = atlasAyahImageCache
+        this.onPageReady = onPageReady
+        this.onOpenReference = onOpenReference
+    }
 
     override fun shouldInterceptRequest(
         view: WebView,
@@ -49,7 +67,12 @@ class TafsirWebViewClient(
 
     override fun onPageFinished(view: WebView?, url: String?) {
         super.onPageFinished(view, url)
-        onPageFinished?.invoke()
+        onPageReady?.invoke()
+    }
+
+    override fun onPageCommitVisible(view: WebView, url: String) {
+        super.onPageCommitVisible(view, url)
+        onPageReady?.invoke()
     }
 
     override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {

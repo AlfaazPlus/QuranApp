@@ -6,7 +6,9 @@ import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.api.models.tafsir.AvailableTafsirsModel
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
+import com.quranapp.android.db.tafsir.QuranTafsirDBHelper
 import com.quranapp.android.utils.Log
+import com.quranapp.android.utils.reader.translation.isCustomImportSlug
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import com.quranapp.android.utils.univ.FileUtils
 import kotlinx.coroutines.CoroutineScope
@@ -96,23 +98,59 @@ object TafsirManager {
         val savedTafsirKey = ReaderPreferences.getTafsirId()
 
         try {
-            val availableTafsirsModel = JsonHelper.json.decodeFromString<AvailableTafsirsModel>(
-                stringData
-            )
-
-            availableTafsirsModel.tafsirs.values.forEach { tafsirModels ->
+            val loaded = JsonHelper.json.decodeFromString<AvailableTafsirsModel>(stringData)
+            loaded.tafsirs.values.forEach { tafsirModels ->
                 tafsirModels.forEach { tafsirModel ->
                     tafsirModel.isChecked = tafsirModel.key == savedTafsirKey
                 }
-
             }
-
-            callback(availableTafsirsModel)
+            callback(withCustom(ctx, loaded))
         } catch (e: Exception) {
             Log.saveError(e, "postTafsirsLoad")
             e.printStackTrace()
             callback(null)
         }
+    }
+
+    fun add(info: TafsirInfoModel) {
+        val current = availableTafsirsModel ?: return
+        availableTafsirsModel = withInfos(current, listOf(info))
+    }
+
+    fun remove(key: String) {
+        val current = availableTafsirsModel ?: return
+        availableTafsirsModel = current.copy(
+            tafsirs = current.tafsirs
+                .mapValues { (_, tafsirs) -> tafsirs.filter { it.key != key } }
+                .filterValues { it.isNotEmpty() }
+        )
+    }
+
+    private fun withCustom(ctx: Context, model: AvailableTafsirsModel): AvailableTafsirsModel {
+        val dbHelper = QuranTafsirDBHelper(ctx)
+
+        try {
+            val custom = dbHelper.getStoredTafsirInfos().filter { isCustomImportSlug(it.key) }
+            return withInfos(model, custom)
+        } finally {
+            dbHelper.close()
+        }
+    }
+
+    private fun withInfos(
+        model: AvailableTafsirsModel,
+        infos: List<TafsirInfoModel>,
+    ): AvailableTafsirsModel {
+        if (infos.isEmpty()) return model
+        val grouped = model.tafsirs.mapValues { (_, tafsirs) -> tafsirs.toMutableList() }.toMutableMap()
+        
+        for (info in infos) {
+            val list = grouped.getOrPut(info.langCode) { mutableListOf() }
+            list.removeAll { it.key == info.key }
+            list.add(info)
+        }
+
+        return model.copy(tafsirs = grouped)
     }
 
     @JvmStatic

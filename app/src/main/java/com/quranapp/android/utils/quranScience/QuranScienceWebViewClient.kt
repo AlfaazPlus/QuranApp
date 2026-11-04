@@ -17,9 +17,17 @@ import java.util.concurrent.ConcurrentHashMap
 
 open class QuranScienceWebViewClient(
     private val atlasPngCache: ConcurrentHashMap<String, ByteArray> = ConcurrentHashMap(),
-    private val quranArabicScriptCode: String,
-    private val onOpenReference: (chapterNo: Int, fromVerse: Int, toVerse: Int) -> Unit,
+    private var quranArabicScriptCode: String,
+    private var onOpenReference: (chapterNo: Int, fromVerse: Int, toVerse: Int) -> Unit,
 ) : WebViewClientCompat() {
+
+    fun update(
+        quranArabicScriptCode: String,
+        onOpenReference: (chapterNo: Int, fromVerse: Int, toVerse: Int) -> Unit,
+    ) {
+        this.quranArabicScriptCode = quranArabicScriptCode
+        this.onOpenReference = onOpenReference
+    }
 
     override fun shouldInterceptRequest(
         view: WebView,

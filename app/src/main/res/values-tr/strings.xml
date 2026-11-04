@@ -65,16 +65,6 @@
     <string name="strTitleRateApp">Uygulamayı değerlendir</string>
     <string name="strTitleMenu">Menü</string>
     <string name="strTitleDownloadTranslations">İndir</string>
-    <string name="labelFormatGuide">Biçim kılavuzu</string>
-    <string name="labelBook">Kitap</string>
-    <string name="labelAuthor">Yazar</string>
-    <string name="labelDisplayName">Kısa ad</string>
-    <string name="labelLanguage">Dil</string>
-    <string name="translationImported">Meal eklendi</string>
-    <string name="importTranslationReplace">Bu meal zaten var ve değiştirilecek.</string>
-    <string name="importDetailsInvalid">Kitap bilgilerini biçim kılavuzuna göre kontrol edin</string>
-    <string name="importInvalid">Bu dosya gerekli biçime uymuyor</string>
-    <string name="importReserved">Bu kitap adı yerleşik bir meal tarafından kullanılıyor</string>
     <string name="strTitleScripts">Hatlar</string>
     <string name="strTitleMadani">Medeni</string>
     <string name="strLabelPreviousVerse">Önceki ayet</string>
@@ -306,6 +296,7 @@
     <string name="autoBackupOpenFailed">Dosya açılamadı</string>
     <string name="autoBackupSaved">Yedek kaydedildi</string>
     <string name="autoBackupFailed">Yedek kaydedilemedi</string>
+    <string name="autoBackupFileDeleted">Otomatik yedekleme için seçtiğiniz dosya silindi. Yeni bir dosya seçene kadar yer imleri, koleksiyonlar ve ayarlar kaydedilmeyecek.</string>
     <string name="importSummary">İçe aktarma bitti. %1$d eklendi, %2$d güncellendi, %3$d aynı kaldı, %4$d atlandı, %5$d çakıştı ve %6$d ayar desteklenmiyor.</string>
     <string name="backupFailed">Bu yedek okunamadı.</string>
     <string name="backupUnsupportedVersion">Bu yedek uygulamanın daha yeni bir sürümünden.</string>
