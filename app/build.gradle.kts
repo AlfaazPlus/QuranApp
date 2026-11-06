@@ -1,6 +1,7 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
     id("kotlinx-serialization")
     id("com.google.devtools.ksp")
     alias(libs.plugins.androidx.room3)
@@ -108,7 +109,7 @@ android {
     }
 
     sourceSets.named("main") {
-        assets.srcDir(rootProject.file("backup"))
+        assets.directories.add(rootProject.file("backup").absolutePath)
     }
 
     compileOptions {
@@ -129,7 +130,7 @@ android {
 kotlin {
     compilerOptions {
         jvmTarget.set(
-            org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+            JvmTarget.JVM_17
         )
     }
 }
@@ -140,13 +141,12 @@ room3 {
 
 dependencies {
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.test.ext:junit:1.3.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
 
     implementation(project(":peacedesign"))
 
-    val composeBom = platform(libs.compose.bom)
-    implementation(composeBom)
+    implementation(platform(libs.compose.bom))
 
     implementation(libs.compose.runtime)
     implementation(libs.compose.ui)
