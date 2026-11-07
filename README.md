@@ -19,7 +19,7 @@ The QuranApp is an ad-free and privacy-focused mobile application that facilitat
 alt='Get it on Google Play'
 height="80">](https://play.google.com/store/apps/details?id=com.quranapp.android)
 [<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png"
-alt='Get it on GitHub'
+alt='Get it on IzzyOnDroid'
 height="80">](https://apt.izzysoft.de/fdroid/index/apk/com.quranapp.android)
 [<img src="https://user-images.githubusercontent.com/69304392/148696068-0cfea65d-b18f-4685-82b5-329a330b1c0d.png"
 alt='Get it on GitHub'
@@ -50,6 +50,7 @@ height="80">](https://github.com/alfaazplus/quranapp/releases/latest)
 - Features
     - [Highlights](#features)
     - [All features](/FEATURES.md)
+- [Custom imports](#custom-imports)
 - [Credits](#credits)
 - Contribute
     - [Contributing](#contributing)
@@ -86,9 +87,16 @@ height="80">](https://github.com/alfaazplus/quranapp/releases/latest)
 | ❤️ Verse Reminder                          | ✅   |
 | ⚡ [Many more...](/FEATURES.md)             | ✅   |
 
-<sub>_* Permissions that affect your privacy such as storage, gps, camera etc. are not required._</sub>
+<sub>_* Privacy-sensitive permissions such as storage, location, and camera are not required._</sub>
 
-See an overview of all the features [here](/FEATURES.md).
+A full overview of the features is in [FEATURES.md](/FEATURES.md).
+
+## Custom imports
+
+You can bring your own translation or tafsir into the app. Turn on **Developer mode** in **Settings → Advanced settings**, then import a JSON file from **Settings → Translations** or **Settings → Tafsirs**. Importing the same book again replaces the copy already on the device.
+
+- [Import a custom translation](/docs/custom-translation/README.md)
+- [Import a custom tafsir](/docs/custom-tafsir/README.md)
 
 ## Credits
 

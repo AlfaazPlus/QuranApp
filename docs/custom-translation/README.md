@@ -59,10 +59,17 @@ Footnotes are optional. When a verse has them, `footnotes` is an array. Each foo
 
 ## Markup
 
-`translation` and footnote `text` use the same markup. The only tags are `<fn>` and `<reference>`, and every tag must be closed.
+`translation` and footnote `text` use the same markup. The only tags are `<fn>` and `<reference>`, and every tag must be closed. The text between the tags is what the reader sees.
 
-- `<fn index="1">` needs a positive `index`.
-- `<reference chapter="2" verses="255">` needs a positive `chapter`. `verses` is optional. When present, it is a single number (`12`), a range (`12-15`), or a list (`12,15,18-20`).
+A footnote marker looks like `<fn index="1">1</fn>`. The `index` is a positive number, unique within that verse, and it matches the footnote with the same `index` in the verse's `footnotes` array. In the example above, the reader sees `1`, and that opens the first footnote of the verse.
+
+A verse reference points to another place in the Quran. It needs a positive `chapter`. `verses` is optional.
+
+- `<reference chapter="1" verses="1">1:1</reference>` points to chapter 1, verse 1.
+- `<reference chapter="1" verses="1-5">1:1-5</reference>` points to chapter 1, verses 1 through 5.
+- `<reference chapter="2" verses="1,5,29">2:1,5,29</reference>` points to chapter 2, verses 1, 5, and 29.
+
+A `verses` value can also mix those forms, as in `12,15,18-20`.
 
 ## Escaping
 
