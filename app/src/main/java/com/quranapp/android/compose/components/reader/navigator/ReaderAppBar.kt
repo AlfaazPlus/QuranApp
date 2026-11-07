@@ -182,6 +182,9 @@ fun ReaderAppBar(
                     if (isWideScreen) {
                         when (readerMode) {
                             ReaderMode.Reading -> {
+                                ReadingLayoutSwitch(
+                                    Modifier.padding(end = 4.dp)
+                                )
                             }
 
                             ReaderMode.Translation -> {

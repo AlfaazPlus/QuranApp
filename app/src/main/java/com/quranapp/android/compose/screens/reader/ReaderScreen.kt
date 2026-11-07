@@ -1,6 +1,10 @@
 package com.quranapp.android.compose.screens.reader
 
+import android.graphics.Color as AndroidColor
+import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.BackHandler
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -39,6 +43,7 @@ import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -53,10 +58,12 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.keepScreenOn
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.rememberTextMeasurer
@@ -138,6 +145,44 @@ fun ReaderScreen(
         WindowSizeClass.WIDTH_DP_EXPANDED_LOWER_BOUND,
         WindowSizeClass.HEIGHT_DP_MEDIUM_LOWER_BOUND,
     )
+
+    val view = LocalView.current
+    val statusBarColor = colorScheme.surfaceContainer.toArgb()
+
+    DisposableEffect(showTwoPane, isDark, statusBarColor) {
+        val activity = view.context as? ComponentActivity
+
+        if (showTwoPane && activity != null) {
+            activity.enableEdgeToEdge(
+                statusBarStyle = if (isDark) {
+                    SystemBarStyle.dark(statusBarColor)
+                } else {
+                    SystemBarStyle.light(statusBarColor, statusBarColor)
+                },
+                navigationBarStyle = if (isDark) {
+                    SystemBarStyle.dark(AndroidColor.TRANSPARENT)
+                } else {
+                    SystemBarStyle.light(AndroidColor.TRANSPARENT, AndroidColor.TRANSPARENT)
+                },
+            )
+        }
+
+        onDispose {
+            if (showTwoPane && activity != null) {
+                activity.enableEdgeToEdge(
+                    statusBarStyle = SystemBarStyle.auto(
+                        AndroidColor.TRANSPARENT,
+                        AndroidColor.TRANSPARENT,
+                    ),
+                    navigationBarStyle = if (isDark) {
+                        SystemBarStyle.dark(AndroidColor.TRANSPARENT)
+                    } else {
+                        SystemBarStyle.light(AndroidColor.TRANSPARENT, AndroidColor.TRANSPARENT)
+                    },
+                )
+            }
+        }
+    }
 
     BackHandler(enabled = isFullscreen) {
         isFullscreen = false
