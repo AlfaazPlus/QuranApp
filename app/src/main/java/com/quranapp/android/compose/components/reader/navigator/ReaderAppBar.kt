@@ -8,6 +8,7 @@ import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -98,17 +99,21 @@ internal data class ReaderAppBarDimensions(
 
 @Composable
 internal fun rememberAppBarDimensions(isWideScreen: Boolean): ReaderAppBarDimensions {
-    return remember(isWideScreen) {
+    val statusBarHeight = TopAppBarDefaults.windowInsets.asPaddingValues().calculateTopPadding()
+    val barHeight = TopAppBarDefaults.TopAppBarExpandedHeight + statusBarHeight
+
+    return remember(isWideScreen)
+    {
         if (isWideScreen) {
             ReaderAppBarDimensions(
-                barHeight = 86.dp,
+                barHeight = barHeight,
                 headerHeight = 0.dp,
                 dividerHeight = 1.dp,
                 dividerCount = 1,
             )
         } else {
             ReaderAppBarDimensions(
-                barHeight = 86.dp,
+                barHeight = barHeight,
                 headerHeight = 52.dp,
                 dividerHeight = 1.dp,
                 dividerCount = 2,
