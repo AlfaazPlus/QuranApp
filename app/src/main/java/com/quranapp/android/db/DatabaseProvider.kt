@@ -5,11 +5,12 @@ import androidx.room3.Room
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import com.quranapp.android.db.migrations.ExternalQuranDatabaseMigrations
 import com.quranapp.android.db.searchindex.SearchIndexDatabase
-import com.quranapp.android.db.translation.QuranTranslDBHelper
 import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.repository.TopicsRepository
+import com.quranapp.android.repository.TranslationRepository
 import com.quranapp.android.repository.UserRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
@@ -41,7 +42,9 @@ object DatabaseProvider {
     private var topicsRepository: TopicsRepository? = null
 
     @Volatile
-    private var quranTranslDbHelper: QuranTranslDBHelper? = null
+    private var translationsReady = false
+
+    private val translationPrepareLock = Any()
 
     fun getUserDatabase(context: Context): UserDatabase {
         return userDatabase ?: synchronized(this) {
@@ -93,9 +96,10 @@ object DatabaseProvider {
     }
 
     fun getExternalQuranDatabase(context: Context): ExternalQuranDatabase {
-        return externalQuranDatabase ?: synchronized(this) {
+        val appContext = context.applicationContext
+        val db = externalQuranDatabase ?: synchronized(this) {
             externalQuranDatabase ?: Room.databaseBuilder(
-                context.applicationContext,
+                appContext,
                 ExternalQuranDatabase::class.java,
                 "quranapp_external"
             )
@@ -103,10 +107,32 @@ object DatabaseProvider {
                     ExternalQuranDatabaseMigrations.MIGRATION_1_2,
                     ExternalQuranDatabaseMigrations.MIGRATION_2_3,
                     ExternalQuranDatabaseMigrations.MIGRATION_3_4,
+                    ExternalQuranDatabaseMigrations.MIGRATION_4_5,
                 )
                 .fallbackToDestructiveMigration(false)
                 .build()
                 .also { externalQuranDatabase = it }
+        }
+
+        ensureTranslations(appContext, db)
+        return db
+    }
+
+    fun getTranslationRepository(context: Context): TranslationRepository {
+        return TranslationRepository(getExternalQuranDatabase(context))
+    }
+
+    private fun ensureTranslations(context: Context, db: ExternalQuranDatabase) {
+        if (translationsReady) return
+
+        synchronized(translationPrepareLock) {
+            if (translationsReady) return
+
+            runBlocking(Dispatchers.IO) {
+                TranslationRepository(db).prepare(context)
+            }
+            
+            translationsReady = true
         }
     }
 
@@ -154,14 +180,6 @@ object DatabaseProvider {
                 context.applicationContext,
                 getTopicsDatabase(context),
             ).also { topicsRepository = it }
-        }
-    }
-
-    fun getQuranTranslDBHelper(context: Context): QuranTranslDBHelper {
-        return quranTranslDbHelper ?: synchronized(this) {
-            quranTranslDbHelper ?: QuranTranslDBHelper(context.applicationContext).also {
-                quranTranslDbHelper = it
-            }
         }
     }
 

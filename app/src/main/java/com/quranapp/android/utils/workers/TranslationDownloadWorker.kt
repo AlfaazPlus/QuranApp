@@ -21,7 +21,7 @@ import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.app.AppActions
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.app.NotificationUtils.createForegroundInfoFallback
-import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.utils.sharedPrefs.SPAppActions.removeFromPendingAction
 import com.quranapp.android.utils.univ.Keys
 import kotlinx.coroutines.Dispatchers
@@ -118,9 +118,7 @@ class TranslationDownloadWorker(
             }
         }
 
-        QuranTranslationFactory(ctx).use {
-            it.dbHelper.storeTranslation(bookInfo, tmpFile.readText())
-        }
+        DatabaseProvider.getTranslationRepository(ctx).store(bookInfo, tmpFile.readText())
 
         SearchIndexScheduler.enqueueSlug(ctx.applicationContext, bookInfo.slug)
 

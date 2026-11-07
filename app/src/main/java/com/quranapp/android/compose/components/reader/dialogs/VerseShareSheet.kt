@@ -31,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -54,7 +55,7 @@ import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.utils.extensions.copyToClipboard
 import com.quranapp.android.utils.reader.QuranScriptUtils
-import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+import com.quranapp.android.repository.TranslationRepository
 import com.quranapp.android.utils.univ.MessageUtils
 import com.quranapp.android.utils.univ.ResUtils
 import com.quranapp.android.utils.univ.StringUtils
@@ -88,10 +89,13 @@ fun VerseShareSheet(
 
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
-    val translFactory = QuranTranslationFactory.remember(context)
+    val translRepo = TranslationRepository.remember(context)
 
-    val translationBooks = remember(translFactory) {
-        translFactory.getAvailableTranslationBooksInfo()
+    val translationBooks by produceState<Map<String, TranslationBookInfoModel>>(
+        emptyMap(),
+        translRepo,
+    ) {
+        value = translRepo.getBooks()
     }
 
     var state by remember { mutableStateOf(VerseShareState()) }
@@ -164,7 +168,7 @@ fun VerseShareSheet(
                         coroutineScope.launch {
                             val text = buildShareText(
                                 context,
-                                translFactory,
+                                translRepo,
                                 state = state,
                                 vwd = vwd,
                             )
@@ -190,7 +194,7 @@ fun VerseShareSheet(
                         coroutineScope.launch {
                             val text = buildShareText(
                                 context,
-                                translFactory = translFactory,
+                                translFactory = translRepo,
                                 state = state,
                                 vwd = vwd,
                             )
@@ -423,7 +427,7 @@ private fun resolveVerseRange(
 
 private suspend fun buildShareText(
     context: Context,
-    translFactory: QuranTranslationFactory,
+    translFactory: TranslationRepository,
     state: VerseShareState,
     vwd: VerseWithDetails,
 ): String? {
@@ -481,7 +485,7 @@ private suspend fun buildShareText(
 private suspend fun appendVerseBlock(
     context: Context,
     sb: StringBuilder,
-    translFactory: QuranTranslationFactory,
+    translFactory: TranslationRepository,
     chapterNo: Int,
     verseNo: Int,
     isSingleVerse: Boolean,
@@ -489,7 +493,7 @@ private suspend fun appendVerseBlock(
 ) {
     val repository = DatabaseProvider.getQuranRepository(context)
 
-    val transls = translFactory.getTranslationsSingleVerse(state.selectedSlugs, chapterNo, verseNo)
+    val transls = translFactory.getTranslations(state.selectedSlugs, chapterNo, verseNo)
     val hasMultiTransls = transls.size > 1
 
     if (!isSingleVerse || hasMultiTransls) {
@@ -539,9 +543,9 @@ private suspend fun appendVerseBlock(
     }
 }
 
-private fun makeTranslText(
+private suspend fun makeTranslText(
     context: Context,
-    translFactory: QuranTranslationFactory,
+    translFactory: TranslationRepository,
     transl: Translation,
     inclAuthor: Boolean,
     inclFootnotes: Boolean,
@@ -551,7 +555,7 @@ private fun makeTranslText(
     sb.append("\n\n").append(cleanHtml(transl.text, inclFootnotes))
 
     val footnotes = transl.footnotes
-    val bookInfo = translFactory.getTranslationBookInfo(transl.bookSlug)
+    val bookInfo = translFactory.getBook(transl.bookSlug)
     val hasFootnotes = footnotes.isNotEmpty()
 
     if (inclAuthor || (inclFootnotes && hasFootnotes)) {

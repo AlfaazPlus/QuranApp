@@ -10,7 +10,8 @@ import com.quranapp.android.db.relations.topics.TopicRelationshipRow
 import com.quranapp.android.db.relations.topics.TopicSearchCandidateRow
 import com.quranapp.android.db.relations.topics.TopicSummaryRow
 import com.quranapp.android.utils.quran.QuranMeta
-import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+import com.quranapp.android.db.DatabaseProvider
+import com.quranapp.android.repository.TranslationRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -299,16 +300,19 @@ class TopicsRepository(
 
             val primarySlug = ReaderPreferences.primaryTranslationSlug()
 
-            QuranTranslationFactory(context.applicationContext).use { factory ->
+            DatabaseProvider.getTranslationRepository(context.applicationContext).let { repo ->
+                val translations = repo.getTranslationsByAyahId(
+                    setOf(primarySlug),
+                    rows.map { it.ayahId },
+                )
+                
                 rows.map { row ->
                     val (chapterNo, verseNo) = QuranMeta.getVerseNoFromAyahId(row.ayahId)
+
                     TopicVersePreview(
                         chapterNo = chapterNo,
                         verseNo = verseNo,
-                        translation = factory
-                            .getTranslationsSingleSlugVerse(primarySlug, chapterNo, verseNo)
-                            ?.text
-                            .orEmpty(),
+                        translation = translations[row.ayahId]?.firstOrNull()?.text.orEmpty(),
                     )
                 }
             }

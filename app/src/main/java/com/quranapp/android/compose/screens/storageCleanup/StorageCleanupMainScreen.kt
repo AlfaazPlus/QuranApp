@@ -35,7 +35,8 @@ import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.db.tafsir.QuranTafsirDBHelper
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
-import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+import com.quranapp.android.db.DatabaseProvider
+import com.quranapp.android.repository.TranslationRepository
 import com.quranapp.android.utils.univ.FileUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -64,8 +65,8 @@ fun StorageCleanupMainScreen(
     LaunchedEffect(Unit) {
         loading = true
         metrics = withContext(Dispatchers.IO) {
-            val translations = QuranTranslationFactory(context).use {
-                it.getDownloadedTranslationBooksInfo().size
+            val translations = DatabaseProvider.getTranslationRepository(context).let {
+                it.getDownloadedBooks().size
             }
             val (recFiles, recReciters) = recitationManager.getDownloadedAudioStats()
             val scripts = fileUtils.scriptFontDir.listFiles()?.count { it.isDirectory } ?: 0

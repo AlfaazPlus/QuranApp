@@ -74,7 +74,7 @@ import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.FontResolver
 import com.quranapp.android.utils.reader.atlas.AtlasAyahRasterizer
 import com.quranapp.android.utils.reader.atlas.QuranAtlasLoader
-import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+import com.quranapp.android.repository.TranslationRepository
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.reader.isQuranAtlasScript
 import com.quranapp.android.utils.univ.StringUtils
@@ -383,9 +383,9 @@ private suspend fun buildVotdWidgetState(
     val chapterNo = vwd.chapterNo
     val verseNo = vwd.verseNo
 
-    val translation = QuranTranslationFactory(context).use { factory ->
-        val bookInfo = factory.getTranslationBookInfo(ReaderPreferences.primaryTranslationSlug())
-        factory.getTranslationsSingleSlugVerse(bookInfo.slug, chapterNo, verseNo)
+    val translation = DatabaseProvider.getTranslationRepository(context).let { repo ->
+        val bookInfo = repo.getBook(ReaderPreferences.primaryTranslationSlug())
+        repo.getTranslation(bookInfo.slug, chapterNo, verseNo)
     }
 
     val translationBitmap = if (translation != null) createTextBitmap(

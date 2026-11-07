@@ -6,7 +6,8 @@ import com.quranapp.android.api.RetrofitInstance
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.reader.TranslUtils
-import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+import com.quranapp.android.db.DatabaseProvider
+import com.quranapp.android.repository.TranslationRepository
 import com.quranapp.android.utils.univ.FileUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -74,15 +75,15 @@ class TranslationVersionManager private constructor(context: Context) {
                 val stored = store.loadAll()
                 var mutated = false
 
-                QuranTranslationFactory(appContext).use { factory ->
-                    val downloaded = factory.getDownloadedTranslationBooksInfo()
+                DatabaseProvider.getTranslationRepository(appContext).let { repo ->
+                    val downloaded = repo.getDownloadedBooks()
 
                     for ((slug, bookInfo) in downloaded) {
-                        if (TranslUtils.isPrebuilt(slug) || bookInfo.downloadPath.isBlank()) {
-                            continue
-                        }
+                        if (TranslUtils.isPrebuilt(slug)) continue
 
                         val remote = remoteMap[slug] ?: continue
+                        if (remote.downloadPath.isBlank()) continue
+                        
                         val storedVersionRaw = stored[slug]?.version
                         val localVersion = normalizeLocalVersion(
                             storedVersionRaw ?: bookInfo.version,

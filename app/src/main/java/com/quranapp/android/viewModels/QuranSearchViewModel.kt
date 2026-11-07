@@ -22,7 +22,7 @@ import com.quranapp.android.search.SearchPagingSource
 import com.quranapp.android.search.SearchQuickLinksParser
 import com.quranapp.android.search.SearchResult
 import com.quranapp.android.search.TranslationOption
-import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+import com.quranapp.android.repository.TranslationRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -195,9 +195,8 @@ class QuranSearchViewModel(private val application: Application) : AndroidViewMo
     private fun loadAvailableTranslations() {
         viewModelScope.launch {
             val options = withContext(Dispatchers.IO) {
-                QuranTranslationFactory(getApplication()).use { factory ->
-                    factory.getAvailableTranslationBooksInfo()
-                        .filterKeys { factory.isTranslationDownloaded(it) }
+                DatabaseProvider.getTranslationRepository(getApplication()).let { repo ->
+                    repo.getBooks()
                         .map { (slug, info) ->
                             TranslationOption(
                                 slug = slug,
@@ -207,6 +206,7 @@ class QuranSearchViewModel(private val application: Application) : AndroidViewMo
                         .sortedBy { it.displayName.lowercase() }
                 }
             }
+
             _availableTranslations.value = options
         }
     }

@@ -16,7 +16,7 @@ import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.QuranScriptVariant
 import com.quranapp.android.utils.reader.ReaderTextSizeUtils
 import com.quranapp.android.utils.reader.TranslUtils
-import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+import com.quranapp.android.repository.TranslationRepository
 import com.quranapp.android.utils.reader.isKFQPCScript
 import com.quranapp.android.utils.reader.isQuranAtlasScript
 import com.quranapp.android.utils.reader.tafsir.TafsirManager
@@ -233,8 +233,8 @@ object ReaderPreferences {
                     else -> ""
                 }
 
-                val availableTranslationSlugs = QuranTranslationFactory(appCtx).use { factory ->
-                    factory.getAvailableTranslationBooksInfo().keys
+                val availableTranslationSlugs = DatabaseProvider.getTranslationRepository(appCtx).let { repo ->
+                    repo.getBooks().keys
                 }
                 val repairedTranslations = storedTranslations.filterTo(hashSetOf()) {
                     it in availableTranslationSlugs

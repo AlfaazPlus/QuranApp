@@ -18,7 +18,8 @@ import com.quranapp.android.compose.utils.preferences.VersePreferences
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.extensions.copyToClipboard
 import com.quranapp.android.utils.managers.TranslationDownloadManager
-import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+import com.quranapp.android.db.DatabaseProvider
+import com.quranapp.android.repository.TranslationRepository
 import com.quranapp.android.utils.sharedPrefs.SPLog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,17 +32,19 @@ object AppActions {
     const val APP_ACTION_URLS_UPDATE = "app.action.urls_update"
 
     private fun updateTransl(ctx: ContextWrapper, slug: String) {
-        val factory = QuranTranslationFactory(ctx)
-        val translationExists = factory.isTranslationDownloaded(slug)
-        if (translationExists) {
-            val bookInfo = factory.getTranslationBookInfo(slug)
+        CoroutineScope(Dispatchers.IO).launch {
+            val repo = DatabaseProvider.getTranslationRepository(ctx)
+            val translationExists = repo.isDownloaded(slug)
 
-            // The slug could be empty. Check factory.getTranslationBookInfo(slug) for more info.
-            if (bookInfo.slug.isNotEmpty()) {
-                TranslationDownloadManager.startDownload(ctx, bookInfo)
+            if (translationExists) {
+                val bookInfo = repo.getBook(slug)
+
+                // The slug could be empty. Check repo.getBook(slug) for more info.
+                if (bookInfo.slug.isNotEmpty()) {
+                    TranslationDownloadManager.startDownload(ctx, bookInfo)
+                }
             }
         }
-        factory.close()
     }
 
     @JvmStatic

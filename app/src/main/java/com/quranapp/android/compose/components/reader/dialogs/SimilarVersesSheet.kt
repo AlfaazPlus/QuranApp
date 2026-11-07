@@ -66,7 +66,8 @@ import com.quranapp.android.utils.reader.atlas.AtlasGlyphPlacement
 import com.quranapp.android.utils.reader.atlas.LocalQuranAtlasBundle
 import com.quranapp.android.utils.reader.atlas.getForWord
 import com.quranapp.android.utils.reader.buildTranslationAnnotatedString
-import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+import com.quranapp.android.db.DatabaseProvider
+import com.quranapp.android.repository.TranslationRepository
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.reader.getQuranTextStyle
 import com.quranapp.android.utils.reader.getTranslationTextStyle
@@ -127,50 +128,46 @@ fun SimilarVersesSheet(
         rows = withContext(Dispatchers.IO) {
             val similar = repository.extrasDao.getSimilarVerses(v.id)
 
-            QuranTranslationFactory(context).use { factory ->
-                similar.mapNotNull { s ->
-                    val ayah = repository.getAyahById(s.matchedAyahId)
-                        ?: return@mapNotNull null
-                    val surah = repository.getSurahWithLocalizations(ayah.surahNo)
-                        ?: return@mapNotNull null
+            val translationRepo = DatabaseProvider.getTranslationRepository(context)
+            val translations = if (primarySlug.isNotEmpty()) {
+                translationRepo.getTranslationsByAyahId(
+                    setOf(primarySlug),
+                    similar.map { it.matchedAyahId },
+                )
+            } else {
+                emptyMap()
+            }
 
-                    val vwd = repository.getVerseWithDetails(
-                        ayah.surahNo,
-                        ayah.ayahNo,
-                        scriptCode,
-                        arabicEnabled
-                    )
-                        ?: return@mapNotNull null
+            similar.mapNotNull { s ->
+                val ayah = repository.getAyahById(s.matchedAyahId)
+                    ?: return@mapNotNull null
+                val surah = repository.getSurahWithLocalizations(ayah.surahNo)
+                    ?: return@mapNotNull null
 
-                    val translation = if (
-                        primarySlug.isNotEmpty() &&
-                        factory.isTranslationDownloaded(primarySlug)
-                    ) {
-                        val list = factory.getTranslationsSingleVerse(
-                            setOf(primarySlug),
-                            ayah.surahNo,
-                            ayah.ayahNo,
-                        )
-                        list.firstOrNull()
-                    } else {
-                        null
-                    }
+                val vwd = repository.getVerseWithDetails(
+                    ayah.surahNo,
+                    ayah.ayahNo,
+                    scriptCode,
+                    arabicEnabled
+                )
+                    ?: return@mapNotNull null
 
-                    val highlights = parseMatchWordIndices(s.matchWords)
+                val translation = translations[s.matchedAyahId]?.firstOrNull()
 
-                    SimilarVerseListRow(
-                        entity = s,
-                        surahName = surah.getCurrentName(),
-                        surahNo = ayah.surahNo,
-                        verseNo = ayah.ayahNo,
-                        words = vwd.words,
-                        atlasPlacements = atlasBundle?.getPlacementsForWords(vwd.words, vwd.pageNo)
-                            ?: emptyMap(),
-                        translation = translation,
-                        highlightWordIndices = highlights,
-                        pageNo = vwd.pageNo,
-                    )
-                }
+                val highlights = parseMatchWordIndices(s.matchWords)
+
+                SimilarVerseListRow(
+                    entity = s,
+                    surahName = surah.getCurrentName(),
+                    surahNo = ayah.surahNo,
+                    verseNo = ayah.ayahNo,
+                    words = vwd.words,
+                    atlasPlacements = atlasBundle?.getPlacementsForWords(vwd.words, vwd.pageNo)
+                        ?: emptyMap(),
+                    translation = translation,
+                    highlightWordIndices = highlights,
+                    pageNo = vwd.pageNo,
+                )
             }
         }
 

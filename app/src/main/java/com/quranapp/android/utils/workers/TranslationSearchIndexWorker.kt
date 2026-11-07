@@ -9,14 +9,11 @@ import com.quranapp.android.R
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.searchindex.SEARCH_INDEX_CONTENT_VERSION
 import com.quranapp.android.db.searchindex.TranslationSearchContentEntity
-import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.COL_CHAPTER_NO
-import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.COL_TEXT
-import com.quranapp.android.db.translation.QuranTranslContract.QuranTranslEntry.COL_VERSE_NO
-import com.quranapp.android.db.translation.QuranTranslDBHelper
+import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.search.SearchNormalizer
 import com.quranapp.android.search.SearchIndexScheduler
 import com.quranapp.android.utils.app.NotificationUtils
-import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+import com.quranapp.android.repository.TranslationRepository
 import com.quranapp.android.utils.univ.StringUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -66,21 +63,17 @@ class TranslationSearchIndexWorker(
             }
 
             MODE_ALL -> {
-                QuranTranslationFactory(applicationContext).use { factory ->
-                    val slugs = factory.getAvailableTranslationBooksInfo().keys
+                DatabaseProvider.getTranslationRepository(applicationContext).let { factory ->
+                    val slugs = factory.getBooks().keys
 
                     for (slug in slugs) {
                         if (isStopped) return@withContext Result.retry()
 
-                        if (factory.isTranslationDownloaded(slug)) {
-                            buildIndexForSlugIfNeeded(
-                                applicationContext,
-                                slug,
-                                rebuildFts = false,
-                            )
-                        } else {
-                            removeSlug(applicationContext, slug, rebuildFts = false)
-                        }
+                        buildIndexForSlugIfNeeded(
+                            applicationContext,
+                            slug,
+                            rebuildFts = false,
+                        )
                     }
 
                     DatabaseProvider.getSearchIndexDatabase(applicationContext)
@@ -104,44 +97,35 @@ class TranslationSearchIndexWorker(
     ): Boolean = withContext(Dispatchers.IO) {
             val dao = DatabaseProvider.getSearchIndexDatabase(context).searchIndexDao()
 
-            QuranTranslationFactory(context).use { factory ->
-                if (!factory.isTranslationDownloaded(slug)) {
+            DatabaseProvider.getTranslationRepository(context).let { factory ->
+                if (!factory.isDownloaded(slug)) {
                     dao.replaceSlugIndex(slug, emptyList(), "", rebuildFts)
-                    return@use true
+                    return@let true
                 }
 
-                val book = factory.getTranslationBookInfo(slug)
-                val rowCount = countRows(factory, slug)
+                val book = factory.getBook(slug)
+                val rowCount = factory.countVerses(slug)
                 val fingerprint = "${book.version}|$rowCount|$SEARCH_INDEX_CONTENT_VERSION"
 
                 val existing = dao.getMeta(slug)?.fingerprint
-                if (existing == fingerprint) return@use false
+                if (existing == fingerprint) return@let false
 
                 val rows = ArrayList<TranslationSearchContentEntity>(rowCount.coerceAtMost(7000))
-                val table = QuranTranslDBHelper.escapeTableName(slug)
 
-                val q =
-                    "SELECT $COL_CHAPTER_NO, $COL_VERSE_NO, $COL_TEXT FROM $table ORDER BY $COL_CHAPTER_NO ASC, $COL_VERSE_NO ASC"
+                for (row in factory.getVerseTexts(slug)) {
+                    val plain = StringUtils.removeHTML(row.text, false)
+                    val norm = SearchNormalizer.normalizeForTranslationIndex(plain)
+                    if (norm.isBlank()) continue
 
-                factory.dbHelper.readableDatabase.rawQuery(q, null).use { c ->
-                    while (c.moveToNext()) {
-                        val surah = c.getInt(0)
-                        val ayah = c.getInt(1)
-                        val raw = c.getString(2) ?: ""
-                        val plain = StringUtils.removeHTML(raw, false)
-
-                        val norm = SearchNormalizer.normalizeForTranslationIndex(plain)
-                        if (norm.isBlank()) continue
-
-                        rows.add(
-                            TranslationSearchContentEntity(
-                                slug = slug,
-                                surahNo = surah,
-                                ayahNo = ayah,
-                                text = norm,
-                            )
+                    val (surahNo, ayahNo) = QuranMeta.getVerseNoFromAyahId(row.ayahId)
+                    rows.add(
+                        TranslationSearchContentEntity(
+                            slug = slug,
+                            surahNo = surahNo,
+                            ayahNo = ayahNo,
+                            text = norm,
                         )
-                    }
+                    )
                 }
 
                 dao.replaceSlugIndex(slug, rows, fingerprint, rebuildFts)
@@ -159,13 +143,4 @@ class TranslationSearchIndexWorker(
         true
     }
 
-    private fun countRows(factory: QuranTranslationFactory, slug: String): Int {
-        val table = QuranTranslDBHelper.escapeTableName(slug)
-
-        factory.dbHelper.readableDatabase.rawQuery("SELECT COUNT(*) FROM $table", null).use { c ->
-            if (c.moveToFirst()) return c.getInt(0)
-        }
-
-        return 0
-    }
 }

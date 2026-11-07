@@ -14,7 +14,8 @@ import com.quranapp.android.compose.utils.DataLoadError
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.managers.ResourceDownloadStatus
 import com.quranapp.android.utils.managers.TranslationDownloadManager
-import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+import com.quranapp.android.db.DatabaseProvider
+import com.quranapp.android.repository.TranslationRepository
 import com.quranapp.android.utils.reader.translation.TranslationVersionManager
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
@@ -130,8 +131,12 @@ class TranslationDownloadViewModel(application: Application) : AndroidViewModel(
         }
     }
 
-    private fun parseAvailableTranslations(data: String): List<TranslationGroupModel> {
+    private suspend fun parseAvailableTranslations(data: String): List<TranslationGroupModel> {
         val translationGroups = LinkedList<TranslationGroupModel>()
+
+        val downloadedSlugs = DatabaseProvider.getTranslationRepository(application).let { factory ->
+            factory.getDownloadedSlugs()
+        }
 
         val obj = JsonHelper.json.parseToJsonElement(data).jsonObject
         obj["translations"]?.jsonObject?.let { translations ->
@@ -146,7 +151,7 @@ class TranslationDownloadViewModel(application: Application) : AndroidViewModel(
                 val translationItems = ArrayList<TranslModel>()
 
                 for (slug in slugs) {
-                    if (isTranslationDownloaded(slug)) continue
+                    if (slug in downloadedSlugs) continue
 
                     val model = readTranslInfo(
                         langCode,
@@ -222,17 +227,19 @@ class TranslationDownloadViewModel(application: Application) : AndroidViewModel(
             return
         }
 
-        if (isTranslationDownloaded(bookInfo.slug)) {
-            updateDownloadStatus(bookInfo.slug, ResourceDownloadStatus.Completed)
-            return
-        }
+        viewModelScope.launch {
+            if (isDownloaded(bookInfo.slug)) {
+                updateDownloadStatus(bookInfo.slug, ResourceDownloadStatus.Completed)
+                return@launch
+            }
 
-        if (!NetworkStateReceiver.canProceed(context)) {
-            return
-        }
+            if (!NetworkStateReceiver.canProceed(context)) {
+                return@launch
+            }
 
-        updateDownloadStatus(bookInfo.slug, ResourceDownloadStatus.Started)
-        TranslationDownloadManager.startDownload(context, bookInfo)
+            updateDownloadStatus(bookInfo.slug, ResourceDownloadStatus.Started)
+            TranslationDownloadManager.startDownload(context, bookInfo)
+        }
     }
 
     private fun cancelDownload(key: String) {
@@ -330,13 +337,7 @@ class TranslationDownloadViewModel(application: Application) : AndroidViewModel(
     }
 
 
-    private fun isTranslationDownloaded(slug: String): Boolean {
-        var translFactory = QuranTranslationFactory(application)
-
-        try {
-            return translFactory.isTranslationDownloaded(slug) == true
-        } finally {
-            translFactory.close()
-        }
+    private suspend fun isDownloaded(slug: String): Boolean {
+        return DatabaseProvider.getTranslationRepository(application).isDownloaded(slug)
     }
 }

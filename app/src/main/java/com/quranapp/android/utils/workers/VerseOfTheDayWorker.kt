@@ -19,7 +19,6 @@ import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.reader.ReaderIntentData
 import com.quranapp.android.utils.reader.ReaderLaunchParams
 import com.quranapp.android.utils.reader.TranslUtils
-import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.univ.Codes
 import com.quranapp.android.utils.univ.StringUtils
 import com.quranapp.android.utils.verse.VerseUtils
@@ -52,8 +51,8 @@ class VerseOfTheDayWorker constructor(
             slugs = TranslUtils.defaultTranslationSlugs()
         }
 
-        val factory = QuranTranslationFactory(context)
-        val translations = factory.getTranslationsSingleVerse(slugs, votd.chapterNo, votd.verseNo)
+        val translationRepo = DatabaseProvider.getTranslationRepository(context)
+        val translations = translationRepo.getTranslations(slugs, votd.chapterNo, votd.verseNo)
 
         if (translations.isEmpty()) {
             return

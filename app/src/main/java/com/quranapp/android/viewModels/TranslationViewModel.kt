@@ -13,7 +13,8 @@ import com.quranapp.android.search.SearchIndexScheduler
 import com.quranapp.android.utils.managers.ResourceDownloadStatus
 import com.quranapp.android.utils.managers.TranslationDownloadManager
 import com.quranapp.android.utils.reader.TranslUtils
-import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+import com.quranapp.android.db.DatabaseProvider
+import com.quranapp.android.repository.TranslationRepository
 import com.quranapp.android.utils.reader.translation.TranslationVersionManager
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.univ.FileUtils
@@ -128,7 +129,7 @@ class TranslationViewModel(application: Application) : AndroidViewModel(applicat
             )
 
             is TranslationEvent.Search -> _uiState.update { it.copy(searchQuery = event.query) }
-            is TranslationEvent.DeleteTranslation -> deleteTranslation(event.slug)
+            is TranslationEvent.DeleteTranslation -> delete(event.slug)
             is TranslationEvent.UpdateTranslation -> updateTranslation(event.slug)
         }
     }
@@ -184,14 +185,20 @@ class TranslationViewModel(application: Application) : AndroidViewModel(applicat
         }
     }
 
-    private fun deleteTranslation(slug: String) {
+    private fun delete(slug: String) {
+        viewModelScope.launch {
+            deleteTranslationNow(slug)
+        }
+    }
+
+    private suspend fun deleteTranslationNow(slug: String) {
         if (TranslUtils.isPrebuilt(slug)) {
             return
         }
 
         var updatedSelectedSlugs: Set<String> = emptySet()
-        QuranTranslationFactory(application).use {
-            it.deleteTranslation(slug)
+        DatabaseProvider.getTranslationRepository(application).let {
+            it.delete(slug)
             SearchIndexScheduler.enqueueRemoveSlug(application.applicationContext, slug)
 
             _uiState.update { current ->
@@ -223,8 +230,8 @@ class TranslationViewModel(application: Application) : AndroidViewModel(applicat
 
         viewModelScope.launch {
             val remoteInfo = versionManager.getRemoteBookInfo(slug)
-                ?: QuranTranslationFactory(context.applicationContext).use { factory ->
-                    factory.getTranslationBookInfo(slug)
+                ?: DatabaseProvider.getTranslationRepository(context.applicationContext).let { factory ->
+                    factory.getBook(slug)
                 }
 
             if (remoteInfo.downloadPath.isBlank()) return@launch
@@ -282,48 +289,42 @@ class TranslationViewModel(application: Application) : AndroidViewModel(applicat
         }
     }
 
-    private fun loadTranslationsFromDatabase(
+    private suspend fun loadTranslationsFromDatabase(
         oldGroups: List<TranslationGroupModel>,
         selectedSlugs: Set<String>
     ): List<TranslationGroupModel> {
         val fileUtils = FileUtils.newInstance(context)
-        val translFactory = QuranTranslationFactory(fileUtils.context)
+        val translFactory = DatabaseProvider.getTranslationRepository(fileUtils.context)
 
         // map old groups expanded state for better UX
         val oldExpandedState = oldGroups.associate { it.langCode to it.isExpanded }
 
-        return try {
-            val translationGroups = mutableListOf<TranslationGroupModel>()
+        val translationGroups = mutableListOf<TranslationGroupModel>()
+        val languageAndInfo = mutableMapOf<String, MutableList<TranslationBookInfoModel>>()
 
-            val languageAndInfo =
-                mutableMapOf<String, MutableList<TranslationBookInfoModel>>()
-
-            for (bookInfo in translFactory.getAvailableTranslationBooksInfo().values) {
-                val listOfLang = languageAndInfo.getOrPut(bookInfo.langCode) {
-                    mutableListOf()
-                }
-                listOfLang.add(bookInfo)
+        for (bookInfo in translFactory.getBooks().values) {
+            val listOfLang = languageAndInfo.getOrPut(bookInfo.langCode) {
+                mutableListOf()
             }
-
-            languageAndInfo.forEach { (langCode, listOfBooks) ->
-                val groupModel = TranslationGroupModel(langCode)
-                groupModel.langName = listOfBooks.firstOrNull()?.langName ?: langCode
-
-                for (book in listOfBooks) {
-                    val model = TranslModel(book)
-                    model.isChecked = selectedSlugs.contains(book.slug)
-                    groupModel.translations.add(model)
-
-                    val wasExpanded = oldExpandedState[langCode] ?: false
-                    groupModel.isExpanded = groupModel.isExpanded || wasExpanded || model.isChecked
-                }
-
-                translationGroups.add(groupModel)
-            }
-
-            translationGroups
-        } finally {
-            translFactory.close()
+            listOfLang.add(bookInfo)
         }
+
+        languageAndInfo.forEach { (langCode, listOfBooks) ->
+            val groupModel = TranslationGroupModel(langCode)
+            groupModel.langName = listOfBooks.firstOrNull()?.langName ?: langCode
+
+            for (book in listOfBooks) {
+                val model = TranslModel(book)
+                model.isChecked = selectedSlugs.contains(book.slug)
+                groupModel.translations.add(model)
+
+                val wasExpanded = oldExpandedState[langCode] ?: false
+                groupModel.isExpanded = groupModel.isExpanded || wasExpanded || model.isChecked
+            }
+
+            translationGroups.add(groupModel)
+        }
+
+        return translationGroups
     }
 }

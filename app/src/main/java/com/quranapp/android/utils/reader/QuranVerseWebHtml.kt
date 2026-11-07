@@ -16,7 +16,6 @@ import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.utils.reader.atlas.AtlasAyahRasterizer
 import com.quranapp.android.utils.reader.atlas.QuranAtlasBundle
 import com.quranapp.android.utils.reader.atlas.QuranAtlasLoader
-import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.univ.StringUtils
 import kotlin.math.roundToInt
 
@@ -40,7 +39,7 @@ data class QuranVerseArabicWebResult(
 )
 
 suspend fun buildQuranVerseWebAssets(request: QuranVerseWebRequest): QuranVerseArabicWebResult {
-    val translationFactory = QuranTranslationFactory(request.context)
+    val translationRepo = DatabaseProvider.getTranslationRepository(request.context)
     val isAtlas = request.scriptCode.isQuranAtlasScript()
     val isKFQPC = request.scriptCode.isKFQPCScript()
 
@@ -93,14 +92,19 @@ suspend fun buildQuranVerseWebAssets(request: QuranVerseWebRequest): QuranVerseA
             vwd = vwd,
         )
 
-        val translations = translationFactory.getTranslationsSingleVerse(chapterNo, verseNo)
+        val translations = translationRepo.getTranslations(
+            ReaderPreferences.getTranslations(),
+            chapterNo,
+            verseNo,
+        )
+        
         val primaryTransl = translations.firstOrNull()
         val translationRaw = primaryTransl?.text.orEmpty()
 
         val translationEscaped = escapePlainForHtml(plainTranslationForWeb(translationRaw))
 
         val authorAttributionHtml = primaryTransl?.bookSlug?.takeIf { it.isNotEmpty() }?.let { slug ->
-            val label = translationFactory.getTranslationBookInfo(slug).getDisplayName(false).trim()
+            val label = translationRepo.getBook(slug).getDisplayName(false).trim()
             if (label.isEmpty()) null
             else "<p class=\"translation-attribution\">${escapePlainForHtml(label)}</p>"
         }.orEmpty()

@@ -79,7 +79,8 @@ import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
-import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+import com.quranapp.android.db.DatabaseProvider
+import com.quranapp.android.repository.TranslationRepository
 import com.quranapp.android.utils.reader.toQuranMushafId
 import com.quranapp.android.utils.univ.Keys
 import com.quranapp.android.viewModels.ReaderUiState
@@ -655,8 +656,8 @@ fun TranslationModeTranslationButton() {
     val translationSlug = ReaderPreferences.observePrimaryTranslationSlug()
 
     val bookName by produceState("", translationSlug) {
-        value = QuranTranslationFactory(context).use {
-            it.getTranslationBookInfo(translationSlug).displayName
+        value = DatabaseProvider.getTranslationRepository(context).let {
+            it.getBook(translationSlug).displayName
         }
     }
 

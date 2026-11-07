@@ -44,7 +44,7 @@ import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.atlas.AtlasGlyphPlacement
 import com.quranapp.android.utils.reader.atlas.QuranAtlasBundle
 import com.quranapp.android.utils.reader.atlas.QuranAtlasLoader
-import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+import com.quranapp.android.repository.TranslationRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -135,6 +135,7 @@ object ReaderItemsBuilder {
         val chapterNo: Int,
         val verseNo: Int,
     )
+
     suspend fun buildChapterVersesForTranslationMode(
         context: Context,
         params: TextBuilderParams,
@@ -149,7 +150,7 @@ object ReaderItemsBuilder {
         val verseCount = quranRepository.getChapterVerseCount(chapterNo)
         if (verseCount <= 0) return null
 
-        val translationFactory = QuranTranslationFactory(context)
+        val translationRepo = DatabaseProvider.getTranslationRepository(context)
         val externalQuranDb = DatabaseProvider.getExternalQuranDatabase(context)
 
         val out = ArrayList<ReaderLayoutItem>()
@@ -161,19 +162,17 @@ object ReaderItemsBuilder {
             out.add(ReaderLayoutItem.Bismillah(key = "bismillah-$chapterNo"))
         }
 
-        translationFactory.use {
-            buildReaderVerses(
-                params,
-                out,
-                textStyles,
-                it,
-                quranRepository,
-                externalQuranDb,
-                chapterNo,
-                1,
-                verseCount,
-            )
-        }
+        buildReaderVerses(
+            params,
+            out,
+            textStyles,
+            translationRepo,
+            quranRepository,
+            externalQuranDb,
+            chapterNo,
+            1,
+            verseCount,
+        )
 
         return ReaderPreparedData(out, textStyles)
     }
@@ -219,38 +218,36 @@ object ReaderItemsBuilder {
 
         val quranRepository = DatabaseProvider.getQuranRepository(context)
         val externalQuranDb = DatabaseProvider.getExternalQuranDatabase(context)
-        val translationFactory = QuranTranslationFactory(context)
+        val translationRepo = DatabaseProvider.getTranslationRepository(context)
 
         val out = ArrayList<ReaderLayoutItem>()
         val textStyles = HashMap<Int, TextStyle>()
 
-        translationFactory.use {
-            for ((chapterNo, verseRange) in chapterRanges) {
-                if (verseRange.first == 1) {
-                    out.add(
-                        ReaderLayoutItem.ChapterTitle(
-                            chapterNo,
-                            key = "chapterTitle-$chapterNo"
-                        )
+        for ((chapterNo, verseRange) in chapterRanges) {
+            if (verseRange.first == 1) {
+                out.add(
+                    ReaderLayoutItem.ChapterTitle(
+                        chapterNo,
+                        key = "chapterTitle-$chapterNo"
                     )
-
-                    if (chapterNo != 1 && chapterNo != 9) {
-                        out.add(ReaderLayoutItem.Bismillah(key = "bismillah-$chapterNo"))
-                    }
-                }
-
-                buildReaderVerses(
-                    params,
-                    out,
-                    textStyles,
-                    it,
-                    quranRepository,
-                    externalQuranDb,
-                    chapterNo,
-                    verseRange.first,
-                    verseRange.last,
                 )
+
+                if (chapterNo != 1 && chapterNo != 9) {
+                    out.add(ReaderLayoutItem.Bismillah(key = "bismillah-$chapterNo"))
+                }
             }
+
+            buildReaderVerses(
+                params,
+                out,
+                textStyles,
+                translationRepo,
+                quranRepository,
+                externalQuranDb,
+                chapterNo,
+                verseRange.first,
+                verseRange.last,
+            )
         }
 
         return ReaderPreparedData(out, textStyles)
@@ -260,7 +257,7 @@ object ReaderItemsBuilder {
         params: TextBuilderParams,
         out: ArrayList<ReaderLayoutItem>,
         textStyles: MutableMap<Int, TextStyle>,
-        factory: QuranTranslationFactory,
+        factory: TranslationRepository,
         quranRepository: QuranRepository,
         externalQuranDb: ExternalQuranDatabase,
         chapterNo: Int,
@@ -294,7 +291,9 @@ object ReaderItemsBuilder {
         val atlasWbw = coroutineScope {
             val atlasDef = async(Dispatchers.IO) {
                 if (isAtlasScript) {
-                    val bundle = QuranAtlasLoader.getBundle(uiConfig.context, externalQuranDb, scriptCode)
+                    val bundle = QuranAtlasLoader.getBundle(
+                        uiConfig.context, externalQuranDb, scriptCode
+                    )
                     val prefetchPairs =
                         (fromVerse..toVerse).asSequence()
                             .flatMap { vn ->
@@ -334,8 +333,8 @@ object ReaderItemsBuilder {
         val atlasBundle = atlasWbw.atlasBundle
         val wbwByAyah = atlasWbw.wbwByAyah
 
-        val booksInfo = factory.getTranslationBooksInfoValidated(params.slugs)
-        val translationsByVerseIndex = factory.getTranslationsVerseRange(
+        val booksInfo = factory.getBooks(params.slugs)
+        val translationsByVerseIndex = factory.getTranslations(
             params.slugs,
             chapterNo,
             fromVerse,
@@ -437,7 +436,8 @@ object ReaderItemsBuilder {
             out.add(
                 ReaderLayoutItem.VerseUI(
                     verse = verse,
-                    atlasPlacements = atlasBundle?.getPlacementsForWords(words, pageNo) ?: emptyMap(),
+                    atlasPlacements = atlasBundle?.getPlacementsForWords(words, pageNo)
+                        ?: emptyMap(),
                     parsedTranslationTexts = parsedTranslationTexts,
                     wbwByWordIndex = wbwByAyah[verse.id]?.takeIf { it.isNotEmpty() },
                     showDivider = verseNo != toVerse,
@@ -481,7 +481,7 @@ object ReaderItemsBuilder {
             ?: return null
         val surah = batch.surah
 
-        val translationFactory = QuranTranslationFactory(context)
+        val translationRepo = DatabaseProvider.getTranslationRepository(context)
         val externalQuranDb = DatabaseProvider.getExternalQuranDatabase(context)
 
         val out = ArrayList<ReaderLayoutItem>(verseNos.size)
@@ -496,114 +496,113 @@ object ReaderItemsBuilder {
 
         val textStyles = HashMap<Int, TextStyle>()
 
-        translationFactory.use { factory ->
-            val booksInfo = factory.getTranslationBooksInfoValidated(params.slugs)
+        val booksInfo = translationRepo.getBooks(params.slugs)
 
-            fun ensureQuranTextStyleForPage(pageNo: Int) {
-                textStyles.getOrPut(pageNo) {
-                    getQuranTextStyle(
-                        QuranTextStyleParams(
-                            context = uiConfig.context,
-                            fontResolver = params.fontResolver,
-                            colors = uiConfig.colors,
-                            type = uiConfig.type,
-                            script = params.script,
-                            pageNo = pageNo,
-                            sizeMultiplier = params.arabicSizeMultiplier,
-                            isDark = isDarkThem
-                        )
-                    )
-                }
-            }
-
-            val translationWrapStyles = booksInfo.keys.associateWith { slug ->
-                val ts = getTranslationTextStyle(
-                    TranslationTextStyleParams(
-                        slug,
-                        uiConfig.type,
-                        params.translationSizeMultiplier,
+        fun ensureQuranTextStyleForPage(pageNo: Int) {
+            textStyles.getOrPut(pageNo) {
+                getQuranTextStyle(
+                    QuranTextStyleParams(
+                        context = uiConfig.context,
+                        fontResolver = params.fontResolver,
+                        colors = uiConfig.colors,
+                        type = uiConfig.type,
+                        script = params.script,
+                        pageNo = pageNo,
+                        sizeMultiplier = params.arabicSizeMultiplier,
+                        isDark = isDarkThem
                     )
                 )
-                ts.toParagraphStyle() to ts.toSpanStyle()
+            }
+        }
+
+        val translationWrapStyles = booksInfo.keys.associateWith { slug ->
+            val ts = getTranslationTextStyle(
+                TranslationTextStyleParams(
+                    slug,
+                    uiConfig.type,
+                    params.translationSizeMultiplier,
+                )
+            )
+            ts.toParagraphStyle() to ts.toSpanStyle()
+        }
+
+        val (labelMutedUrdu, labelMutedNonUrdu) = mutedTranslatorLabelStyles(
+            uiConfig.colors,
+            uiConfig.type
+        )
+
+        val wbwByAyah =
+            if (wbwId != null && (wbwTranslationEnabled || wbwTransliterationEnabled)) {
+                val ids = verseNos.mapNotNull { batch.ayahByVerseNo[it]?.ayahId }
+                if (ids.isEmpty()) emptyMap()
+                else repository.getWbwWordsForAyahs(
+                    wbwId = wbwId,
+                    ayahIds = ids,
+                    wbwTranslation = wbwTranslationEnabled,
+                    wbwTransliteration = wbwTransliterationEnabled,
+                )
+            } else emptyMap()
+
+        val translationsByVerseNo = loadQuickReferenceTranslationsByVerseNo(
+            translationRepo = translationRepo,
+            slugs = params.slugs,
+            chapterNo = chapterNo,
+            verseNos = verseNos,
+        )
+
+        for ((idx, verseNo) in verseNos.withIndex()) {
+            val ayah = batch.ayahByVerseNo[verseNo] ?: continue
+            val words = batch.wordsByVerseNo[verseNo] ?: emptyList()
+
+            val pageNo = batch.pageByVerseNo[verseNo] ?: -1
+            if (words.isNotEmpty()) {
+                ensureQuranTextStyleForPage(pageNo)
             }
 
-            val (labelMutedUrdu, labelMutedNonUrdu) = mutedTranslatorLabelStyles(
-                uiConfig.colors,
-                uiConfig.type
-            )
+            val translations = translationsByVerseNo[verseNo].orEmpty()
 
-            val wbwByAyah =
-                if (wbwId != null && (wbwTranslationEnabled || wbwTransliterationEnabled)) {
-                    val ids = verseNos.mapNotNull { batch.ayahByVerseNo[it]?.ayahId }
-                    if (ids.isEmpty()) emptyMap()
-                    else repository.getWbwWordsForAyahs(
-                        wbwId = wbwId,
-                        ayahIds = ids,
-                        wbwTranslation = wbwTranslationEnabled,
-                        wbwTransliteration = wbwTransliterationEnabled,
-                    )
-                } else emptyMap()
+            val verse = VerseWithDetails(
+                words = words,
+                pageNo = pageNo,
+                verse = ayah,
+                chapter = surah
+            ).apply {
+                this.translations = translations
+                includeChapterNameInSerial = true
+            }
 
-            val translationsByVerseNo = loadQuickReferenceTranslationsByVerseNo(
-                factory = factory,
-                slugs = params.slugs,
-                chapterNo = chapterNo,
-                verseNos = verseNos,
-            )
+            val parsedTranslationTexts = translations.mapNotNull { translation ->
+                val bookInfo = booksInfo[translation.bookSlug] ?: return@mapNotNull null
+                val (paragraphStyle, translationSpanStyle) =
+                    translationWrapStyles[translation.bookSlug] ?: return@mapNotNull null
 
-            for ((idx, verseNo) in verseNos.withIndex()) {
-                val ayah = batch.ayahByVerseNo[verseNo] ?: continue
-                val words = batch.wordsByVerseNo[verseNo] ?: emptyList()
-
-                val pageNo = batch.pageByVerseNo[verseNo] ?: -1
-                if (words.isNotEmpty()) {
-                    ensureQuranTextStyleForPage(pageNo)
-                }
-
-                val translations = translationsByVerseNo[verseNo].orEmpty()
-
-                val verse = VerseWithDetails(
-                    words = words,
-                    pageNo = pageNo,
-                    verse = ayah,
-                    chapter = surah
-                ).apply {
-                    this.translations = translations
-                    includeChapterNameInSerial = true
-                }
-
-                val parsedTranslationTexts = translations.mapNotNull { translation ->
-                    val bookInfo = booksInfo[translation.bookSlug] ?: return@mapNotNull null
-                    val (paragraphStyle, translationSpanStyle) =
-                        translationWrapStyles[translation.bookSlug] ?: return@mapNotNull null
-
-                    Pair(
-                        bookInfo.langCode,
-                        buildAnnotatedTranslationWithTranslatorLine(
-                            translation = translation,
-                            verse = verse,
-                            colors = uiConfig.colors,
-                            paragraphStyle = paragraphStyle,
-                            translationSpanStyle = translationSpanStyle,
-                            labelMutedUrdu = labelMutedUrdu,
-                            labelMutedNonUrdu = labelMutedNonUrdu,
-                            bookInfo = bookInfo,
-                            verseActions = params.verseActions,
-                        ),
-                    )
-                }
-
-                out.add(
-                    ReaderLayoutItem.VerseUI(
+                Pair(
+                    bookInfo.langCode,
+                    buildAnnotatedTranslationWithTranslatorLine(
+                        translation = translation,
                         verse = verse,
-                        atlasPlacements = atlasBundle?.getPlacementsForWords(words, pageNo) ?: emptyMap(),
-                        parsedTranslationTexts = parsedTranslationTexts,
-                        wbwByWordIndex = wbwByAyah[verse.id]?.takeIf { it.isNotEmpty() },
-                        showDivider = idx != verseNos.lastIndex,
-                        key = "qref-$chapterNo:$verseNo${params.toKey()}"
-                    )
+                        colors = uiConfig.colors,
+                        paragraphStyle = paragraphStyle,
+                        translationSpanStyle = translationSpanStyle,
+                        labelMutedUrdu = labelMutedUrdu,
+                        labelMutedNonUrdu = labelMutedNonUrdu,
+                        bookInfo = bookInfo,
+                        verseActions = params.verseActions,
+                    ),
                 )
             }
+
+            out.add(
+                ReaderLayoutItem.VerseUI(
+                    verse = verse,
+                    atlasPlacements = atlasBundle?.getPlacementsForWords(words, pageNo)
+                        ?: emptyMap(),
+                    parsedTranslationTexts = parsedTranslationTexts,
+                    wbwByWordIndex = wbwByAyah[verse.id]?.takeIf { it.isNotEmpty() },
+                    showDivider = idx != verseNos.lastIndex,
+                    key = "qref-$chapterNo:$verseNo${params.toKey()}"
+                )
+            )
         }
 
         return ReaderPreparedData(out, textStyles)
@@ -645,8 +644,8 @@ object ReaderItemsBuilder {
         return preparedByKey
     }
 
-    private fun loadQuickReferenceTranslationsByVerseNo(
-        factory: QuranTranslationFactory,
+    private suspend fun loadQuickReferenceTranslationsByVerseNo(
+        translationRepo: TranslationRepository,
         slugs: Set<String>,
         chapterNo: Int,
         verseNos: List<Int>,
@@ -665,8 +664,8 @@ object ReaderItemsBuilder {
         var runStart = uniqueSorted.first()
         var prev = runStart
 
-        fun flushRange(start: Int, end: Int) {
-            val grouped = factory.getTranslationsVerseRange(slugs, chapterNo, start, end)
+        suspend fun flushRange(start: Int, end: Int) {
+            val grouped = translationRepo.getTranslations(slugs, chapterNo, start, end)
             for ((idx, verseNo) in (start..end).withIndex()) {
                 out[verseNo] = grouped.getOrNull(idx).orEmpty()
             }
@@ -846,15 +845,7 @@ object ReaderItemsBuilder {
         val ayahById = quranRepository.getAyahEntitiesForMushafAyahLines(ayahRows)
         val sortedAyahIds = ayahById.keys.sorted()
 
-        val chapterMinVerse = HashMap<Int, Int>()
-        val chapterMaxVerse = HashMap<Int, Int>()
-        for (entity in ayahById.values) {
-            val c = entity.surahNo
-            val v = entity.ayahNo
-            chapterMinVerse[c] = minOf(chapterMinVerse[c] ?: v, v)
-            chapterMaxVerse[c] = maxOf(chapterMaxVerse[c] ?: v, v)
-        }
-        val chapterNos = chapterMinVerse.keys.sorted()
+        val chapterNos = ayahById.values.map { it.surahNo }.distinct().sorted()
         val surahByNo = quranRepository.getSurahsWithLocalizationsByChapterNos(chapterNos)
 
         val chapterNamesByPage = LinkedHashMap<Int, String>(distinct.size)
@@ -863,65 +854,59 @@ object ReaderItemsBuilder {
                 quranRepository.getChapterNamesOnMushafPage(mushafId, pageNo)
         }
 
+        val translationRepo = DatabaseProvider.getTranslationRepository(context)
+
         val out = LinkedHashMap<Int, TranslationPageItem>(distinct.size)
+        val slugSet = setOf(translationSlug)
 
-        QuranTranslationFactory(context).use { factory ->
-            val slugSet = setOf(translationSlug)
+        val ts = getTranslationTextStyle(
+            TranslationTextStyleParams(
+                slug = translationSlug,
+                sizeMultiplier = params.translationSizeMultiplier,
+                type = params.type,
+                baselineHeightMultiplier = 1.75f
+            ),
+        )
 
-            val ts = getTranslationTextStyle(
-                TranslationTextStyleParams(
-                    slug = translationSlug,
-                    sizeMultiplier = params.translationSizeMultiplier,
-                    type = params.type,
-                    baselineHeightMultiplier = 1.75f
-                ),
-            )
+        val translationSpanStyle = ts.toSpanStyle()
+        val translationSpanPressedStyle = translationSpanStyle.copy(
+            color = params.colors.primary
+        )
+        val paragraphStyle = ts.toParagraphStyle()
 
-            val translationSpanStyle = ts.toSpanStyle()
-            val translationSpanPressedStyle = translationSpanStyle.copy(
-                color = params.colors.primary
-            )
-            val paragraphStyle = ts.toParagraphStyle()
+        val translationByChapterVerse = HashMap<Pair<Int, Int>, Translation>(
+            ayahById.size
+        )
+        val translationsByAyah = translationRepo.getTranslationsByAyahId(slugSet, ayahById.keys)
+        for ((ayahId, entity) in ayahById) {
+            val transl = translationsByAyah[ayahId]?.firstOrNull() ?: continue
+            translationByChapterVerse[entity.surahNo to entity.ayahNo] = transl
+        }
 
-            val translationByChapterVerse = HashMap<Pair<Int, Int>, Translation>(
-                ayahById.size
-            )
-            for (chap in chapterNos) {
-                val minV = chapterMinVerse[chap] ?: continue
-                val maxV = chapterMaxVerse[chap] ?: continue
-                val range = factory.getTranslationsVerseRange(slugSet, chap, minV, maxV)
-                for (v in minV..maxV) {
-                    val idx = v - minV
-                    val transl = range.getOrNull(idx)?.firstOrNull() ?: continue
-                    translationByChapterVerse[chap to v] = transl
+        coroutineScope {
+            distinct.map { pageNo ->
+                async(Dispatchers.Default) {
+                    val item = buildOneTranslationPage(
+                        pageNo = pageNo,
+                        rows = linesByPage[pageNo].orEmpty().sortedBy { it.lineNumber },
+                        ayahById = ayahById,
+                        sortedAyahIds = sortedAyahIds,
+                        translationByChapterVerse = translationByChapterVerse,
+                        surahByNo = surahByNo,
+                        paragraphStyle = paragraphStyle,
+                        translationSpanStyle = translationSpanStyle,
+                        translationSpanPressedStyle = translationSpanPressedStyle,
+                        slugSet = slugSet,
+                        translationSlug = translationSlug,
+                        params = params,
+                        juzNo = juzByPage[pageNo] ?: -1,
+                        hizbNos = hizbByPage[pageNo].orEmpty(),
+                        chapterNames = chapterNamesByPage[pageNo].orEmpty(),
+                    )
+                    pageNo to item
                 }
-            }
-
-            coroutineScope {
-                distinct.map { pageNo ->
-                    async(Dispatchers.Default) {
-                        val item = buildOneTranslationPage(
-                            pageNo = pageNo,
-                            rows = linesByPage[pageNo].orEmpty().sortedBy { it.lineNumber },
-                            ayahById = ayahById,
-                            sortedAyahIds = sortedAyahIds,
-                            translationByChapterVerse = translationByChapterVerse,
-                            surahByNo = surahByNo,
-                            paragraphStyle = paragraphStyle,
-                            translationSpanStyle = translationSpanStyle,
-                            translationSpanPressedStyle = translationSpanPressedStyle,
-                            slugSet = slugSet,
-                            translationSlug = translationSlug,
-                            params = params,
-                            juzNo = juzByPage[pageNo] ?: -1,
-                            hizbNos = hizbByPage[pageNo].orEmpty(),
-                            chapterNames = chapterNamesByPage[pageNo].orEmpty(),
-                        )
-                        pageNo to item
-                    }
-                }.awaitAll().forEach { (pageNo, item) ->
-                    out[pageNo] = item
-                }
+            }.awaitAll().forEach { (pageNo, item) ->
+                out[pageNo] = item
             }
         }
 

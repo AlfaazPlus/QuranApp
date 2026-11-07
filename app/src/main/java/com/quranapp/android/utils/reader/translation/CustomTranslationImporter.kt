@@ -8,7 +8,7 @@ import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.quran.QuranConstants
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.TranslUtils
-import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.utils.reader.importing.ImportException
 import com.quranapp.android.utils.reader.importing.ImportFailure
 import com.quranapp.android.utils.reader.importing.ImportManifest
@@ -21,7 +21,7 @@ import org.xmlpull.v1.XmlPullParser
 object CustomTranslationImporter {
     private const val MAX_VERSE_NUMBER = 286
 
-    fun import(context: Context, manifest: ImportManifest, uri: Uri) {
+    suspend fun import(context: Context, manifest: ImportManifest, uri: Uri) {
         try {
             if (TranslUtils.isPrebuilt(manifest.slug)) {
                 throw ImportException(ImportFailure.RESERVED)
@@ -39,9 +39,8 @@ object CustomTranslationImporter {
 
             validateVerses(chapters)
 
-            QuranTranslationFactory(context).use { factory ->
-                factory.dbHelper.storeTranslation(manifest.toBookInfo(), text)
-            }
+            DatabaseProvider.getTranslationRepository(context)
+                .store(manifest.toBookInfo(), text)
             SearchIndexScheduler.enqueueSlug(context.applicationContext, manifest.slug)
         } catch (error: ImportException) {
             throw error

@@ -36,7 +36,8 @@ import com.quranapp.android.compose.components.common.ErrorMessageCard
 import com.quranapp.android.compose.components.dialogs.AlertDialog
 import com.quranapp.android.compose.components.dialogs.AlertDialogAction
 import com.quranapp.android.compose.components.dialogs.AlertDialogActionStyle
-import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+import com.quranapp.android.db.DatabaseProvider
+import com.quranapp.android.repository.TranslationRepository
 import com.quranapp.android.viewModels.TranslationEvent
 import com.quranapp.android.viewModels.TranslationViewModel
 import kotlinx.coroutines.Dispatchers
@@ -61,8 +62,8 @@ fun StorageCleanupTranslationScreen(
     LaunchedEffect(uiState.translationGroups, uiState.isLoading) {
         if (uiState.isLoading) return@LaunchedEffect
         withContext(Dispatchers.IO) {
-            QuranTranslationFactory(context).use { factory ->
-                downloadedSlugs = factory.getDownloadedTranslationBooksInfo().keys.toSet()
+            DatabaseProvider.getTranslationRepository(context).let { repo ->
+                downloadedSlugs = repo.getDownloadedBooks().keys.toSet()
             }
         }
         downloadedSlugsReady = true

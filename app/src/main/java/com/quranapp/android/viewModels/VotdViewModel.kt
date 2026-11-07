@@ -26,7 +26,6 @@ import com.quranapp.android.utils.reader.TranslationTextStyleParams
 import com.quranapp.android.utils.reader.VerseActions
 import com.quranapp.android.utils.reader.atlas.QuranAtlasBundle
 import com.quranapp.android.utils.reader.buildTranslationAnnotatedString
-import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
 import com.quranapp.android.utils.reader.getTranslationTextStyle
 import com.quranapp.android.utils.verse.VerseUtils
 import kotlinx.coroutines.Dispatchers
@@ -51,7 +50,7 @@ class VotdViewModel(
 ) : AndroidViewModel(application) {
 
     private val repository = DatabaseProvider.getQuranRepository(application)
-    private val translationFactory = QuranTranslationFactory(application)
+    private val translationRepo = DatabaseProvider.getTranslationRepository(application)
 
     private val _uiState = MutableStateFlow(VotdUiState())
     val uiState: StateFlow<VotdUiState> = _uiState.asStateFlow()
@@ -122,14 +121,16 @@ class VotdViewModel(
         val context = uiConfig.context
         val verse = VerseUtils.getVOTD(context, repository) ?: return null
         val slugs = setOf(primarySlug)
-        val translations = translationFactory.getTranslationsSingleVerse(
+        val translations = translationRepo.getTranslations(
             slugs,
             verse.chapterNo,
             verse.verseNo,
         )
-        val booksInfo = translationFactory.getTranslationBooksInfoValidated(slugs)
+
+        val booksInfo = translationRepo.getBooks(slugs)
         val atlasPlacements = atlasBundle?.getPlacementsForWords(verse.words, verse.pageNo)
             ?: emptyMap()
+
         val serialPattern = context.getString(R.string.strLabelVerseSerialWithChapter)
         val locale = appLocaleFlow.value
 

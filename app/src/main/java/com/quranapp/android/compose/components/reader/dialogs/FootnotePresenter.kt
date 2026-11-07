@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -39,6 +40,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.compose.theme.fontUrdu
 import com.quranapp.android.R
+import com.quranapp.android.api.models.translation.TranslationBookInfoModel
 import com.quranapp.android.components.quran.subcomponents.Footnote
 import com.quranapp.android.compose.components.common.Chip
 import com.quranapp.android.compose.extensions.bottomBorder
@@ -53,7 +55,7 @@ import com.quranapp.android.utils.reader.OnReferenceClick
 import com.quranapp.android.utils.reader.TranslationTextStyleParams
 import com.quranapp.android.utils.reader.VerseActions
 import com.quranapp.android.utils.reader.buildTranslationAnnotatedString
-import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+import com.quranapp.android.repository.TranslationRepository
 import com.quranapp.android.utils.reader.getTranslationTextStyle
 import com.quranapp.android.utils.univ.ResUtils
 import com.quranapp.android.utils.univ.StringUtils
@@ -93,7 +95,7 @@ fun FootnotePresenter(
 @Composable
 private fun SheetContent(data: FootnotePresenterData) {
     val context = LocalContext.current
-    val translFactory = QuranTranslationFactory.remember(context)
+    val translationRepo = TranslationRepository.remember(context)
 
     val verse = data.verse
     val singleFootnote = data.singleFootnote
@@ -106,11 +108,11 @@ private fun SheetContent(data: FootnotePresenterData) {
         modifier = Modifier
             .fillMaxWidth(),
     ) {
-        Header(translFactory, verse, singleFootnote)
+        Header(translationRepo, verse, singleFootnote)
 
         if (singleFootnote == null) {
             AuthorChips(
-                translFactory,
+                translationRepo,
                 verse,
                 selectedSlug,
             ) {
@@ -119,7 +121,7 @@ private fun SheetContent(data: FootnotePresenterData) {
         }
 
         FootnoteContent(
-            translFactory,
+            translationRepo,
             selectedSlug,
             verse,
             singleFootnote
@@ -129,15 +131,19 @@ private fun SheetContent(data: FootnotePresenterData) {
 
 @Composable
 private fun Header(
-    translFactory: QuranTranslationFactory,
+    translFactory: TranslationRepository,
     verse: VerseWithDetails,
     singleFootnote: Footnote?
 ) {
     val context = LocalContext.current
 
-    val singleFootnoteBooInfo = remember(singleFootnote, translFactory) {
-        singleFootnote?.let {
-            translFactory.getTranslationBookInfo(it.bookSlug)
+    val singleFootnoteBooInfo by produceState<TranslationBookInfoModel?>(
+        null,
+        singleFootnote,
+        translFactory,
+    ) {
+        value = singleFootnote?.let {
+            translFactory.getBook(it.bookSlug)
         }
     }
 
@@ -197,9 +203,10 @@ private fun Header(
                     )
                 )
 
-                if (singleFootnoteBooInfo != null) {
+                val bookInfo = singleFootnoteBooInfo
+                if (bookInfo != null) {
                     append(" ${StringUtils.HYPHEN} ")
-                    append(singleFootnoteBooInfo.getDisplayName(true))
+                    append(bookInfo.getDisplayName(true))
                 }
             },
             style = typography.labelSmall
@@ -209,7 +216,7 @@ private fun Header(
 
 @Composable
 fun AuthorChips(
-    translFactory: QuranTranslationFactory,
+    translFactory: TranslationRepository,
     verse: VerseWithDetails,
     selectedSlug: String?,
     onSelectionChange: (String) -> Unit
@@ -217,8 +224,12 @@ fun AuthorChips(
     val scrollState = rememberScrollState()
     val translations = verse.translations
     val slugs = translations.map { it.bookSlug }.toSet()
-    val booksInfo = remember {
-        translFactory.getTranslationBooksInfoValidated(slugs)
+    val booksInfo by produceState<Map<String, TranslationBookInfoModel>>(
+        emptyMap(),
+        slugs,
+        translFactory,
+    ) {
+        value = translFactory.getBooks(slugs)
     }
 
     Box(
@@ -257,7 +268,7 @@ fun AuthorChips(
 
 @Composable
 fun FootnoteContent(
-    translFactory: QuranTranslationFactory,
+    translFactory: TranslationRepository,
     selectedSlug: String?,
     verse: VerseWithDetails,
     singleFootnote: Footnote?,
@@ -266,9 +277,15 @@ fun FootnoteContent(
     val textSizeMultiplier = ReaderPreferences.observeTranlationTextSizeMultiplier()
     val isDark = ThemeUtils.observeDarkTheme()
 
-    val footnotes = remember(selectedSlug, translFactory) {
-        selectedSlug?.let {
-            translFactory.getFootnotesSingleVerse(
+    val footnotes by produceState<Map<Int, Footnote>>(
+        emptyMap(),
+        selectedSlug,
+        translFactory,
+        verse.chapterNo,
+        verse.verseNo,
+    ) {
+        value = selectedSlug?.let {
+            translFactory.getFootnotes(
                 it, verse.chapterNo,
                 verse.verseNo
             )

@@ -94,4 +94,44 @@ object ExternalQuranDatabaseMigrations {
             }
         }
     }
+
+    val MIGRATION_4_5 = object : Migration(4, 5) {
+        override suspend fun migrate(connection: SQLiteConnection) {
+            connection.execSQL(
+                """
+                CREATE TABLE IF NOT EXISTS `translation_books` (
+                    `slug` TEXT NOT NULL,
+                    `lang_code` TEXT NOT NULL,
+                    `lang_name` TEXT NOT NULL,
+                    `book_name` TEXT NOT NULL DEFAULT '',
+                    `author_name` TEXT NOT NULL DEFAULT '',
+                    `display_name` TEXT NOT NULL DEFAULT '',
+                    `version` INTEGER NOT NULL,
+                    PRIMARY KEY(`slug`)
+                )
+                """.trimIndent()
+            )
+            connection.execSQL(
+                """
+                CREATE TABLE IF NOT EXISTS `translation_verses` (
+                    `slug` TEXT NOT NULL,
+                    `ayah_id` INTEGER NOT NULL,
+                    `text` TEXT NOT NULL,
+                    PRIMARY KEY(`slug`, `ayah_id`)
+                )
+                """.trimIndent()
+            )
+            connection.execSQL(
+                """
+                CREATE TABLE IF NOT EXISTS `translation_footnotes` (
+                    `slug` TEXT NOT NULL,
+                    `ayah_id` INTEGER NOT NULL,
+                    `number` INTEGER NOT NULL,
+                    `text` TEXT NOT NULL,
+                    PRIMARY KEY(`slug`, `ayah_id`, `number`)
+                )
+                """.trimIndent()
+            )
+        }
+    }
 }

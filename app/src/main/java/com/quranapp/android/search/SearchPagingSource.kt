@@ -6,7 +6,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.utils.quran.QuranMeta
-import com.quranapp.android.utils.reader.factory.QuranTranslationFactory
+import com.quranapp.android.repository.TranslationRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -116,7 +116,7 @@ class SearchPagingSource(
                         nextKey = null
                     )
 
-                QuranTranslationFactory(application).use { factory ->
+                DatabaseProvider.getTranslationRepository(application).let { repo ->
                     val dao = DatabaseProvider
                         .getSearchIndexDatabase(application)
                         .searchIndexDao()
@@ -136,7 +136,7 @@ class SearchPagingSource(
                         )
                     }
 
-                    val books = factory.getAvailableTranslationBooksInfo()
+                    val books = repo.getBooks()
                     val grouped = rows.groupBy { it.surahNo to it.ayahNo }
 
                     return@withContext LoadResult.Page(

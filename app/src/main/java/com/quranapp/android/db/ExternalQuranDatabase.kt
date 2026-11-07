@@ -5,9 +5,13 @@ import androidx.room3.Database
 import androidx.room3.RoomDatabase
 import com.quranapp.android.db.converters.QuranConverters
 import com.quranapp.android.db.dao.AtlasWordShapeDao
+import com.quranapp.android.db.dao.TranslationDao
 import com.quranapp.android.db.dao.WbwDao
 import com.quranapp.android.db.entities.atlas.AtlasBundleEntity
 import com.quranapp.android.db.entities.atlas.AtlasWordShapeEntity
+import com.quranapp.android.db.entities.translation.TranslationBookEntity
+import com.quranapp.android.db.entities.translation.TranslationFootnoteEntity
+import com.quranapp.android.db.entities.translation.TranslationVerseEntity
 import com.quranapp.android.db.entities.wbw.WbwAudioTimingEntity
 import com.quranapp.android.db.entities.wbw.WbwWordEntity
 
@@ -17,12 +21,16 @@ import com.quranapp.android.db.entities.wbw.WbwWordEntity
         WbwAudioTimingEntity::class,
         AtlasBundleEntity::class,
         AtlasWordShapeEntity::class,
+        TranslationBookEntity::class,
+        TranslationVerseEntity::class,
+        TranslationFootnoteEntity::class,
     ],
-    version = 4,
+    version = 5,
     exportSchema = true
 )
 @ColumnTypeConverters(QuranConverters::class)
 abstract class ExternalQuranDatabase : RoomDatabase() {
     abstract fun wbwDao(): WbwDao
     abstract fun atlasWordShapeDao(): AtlasWordShapeDao
+    abstract fun translationDao(): TranslationDao
 }
