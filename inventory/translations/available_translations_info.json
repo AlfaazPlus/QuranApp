@@ -8,7 +8,7 @@
         "langCode": "en",
         "langName": "English",
         "downloadPath": "inventory/translations/en/en_hilali-khan.json",
-        "version": 1
+        "version": 2
       },
       "en_pickthall": {
         "book": "English Translation (Pickthall)",
@@ -111,7 +111,7 @@
         "langCode": "de",
         "langName": "Deutsch",
         "downloadPath": "inventory/translations/de/de_bubenheim.json",
-        "version": 1
+        "version": 2
       }
     },
     "es": {
@@ -122,7 +122,7 @@
         "langCode": "es",
         "langName": "Español",
         "downloadPath": "inventory/translations/es/es_isa_garcia.json",
-        "version": 1
+        "version": 2
       },
       "es_noor_international": {
         "book": "Noor International Center",
@@ -165,13 +165,13 @@
         "version": 1
       },
       "fr_rashid": {
-        "book": "Rashid Maash",
-        "author": "Rashid Maash",
-        "displayName": "Rashid Maash",
+        "book": "Rachid Maach",
+        "author": "Rachid Maach",
+        "displayName": "Rachid Maach",
         "langCode": "fr",
         "langName": "Français",
         "downloadPath": "inventory/translations/fr/fr_rashid.json",
-        "version": 1
+        "version": 2
       }
     },
     "gu": {
