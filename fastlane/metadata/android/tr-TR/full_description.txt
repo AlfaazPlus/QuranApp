@@ -1,96 +1,111 @@
-QuranApp, her an ve her yerde Kur'an-ı Kerim'i okumayı ve keşfetmeyi kolaylaştıran, reklamsız ve mahremiyet odaklı bir mobil uygulamadır. Gezinmesi kolay, sade ve zarif tasarımı ile kullanıcıların teknoloji çağında Kuran okumanın zorluklarını aşmasına yardımcı olur. Bu uygulama, farklı dillerden ve bölgelerden insanların Kuran'ın amacını anlayabilmesi için çeşitli dillerde 15'ten fazla meale sahiptir.
+QuranApp, Kutsal Kur’an’ı her an ve her yerde okumak, dinlemek ve incelemek için özel, çevrimdışı kullanıma hazır bir mobil uygulamadır. Kolay gezinmeli ve sade tasarımı, kullanıcıların Kur’an’ı rahatça okumasına ve keşfetmesine yardımcı olur. Bu uygulamada 25 dilde 51 meal bulunur; böylece farklı dil ve bölgelerden insanlar Kur’an’ın amacını anlayabilir.
 
- ~~~~~~~
+~~~~~~~
 
- <h3>QuranApp Uygulamasının Özellikleri;</h3>
+<h3>QuranApp’in Özellikleri</h3>
 
- Aşağıdaki özellikler, QuranApp'i kullanmanız için birer nedendir.
+Aşağıdaki özellikler, QuranApp’i kullanmanızın nedenleridir.
 
- <b>🛡️ Saf</b>
+<b>🛡️ Gizlilik</b>
 
- - Özgür yazılım
- - Reklam veya satın alma yok
- - Hiçbir uygulama izni gerekmez
- - Veri analizi veya takibi yok
- - Veri toplama veya paylaşma yok
+- Açık kaynak
+- Reklam ve uygulama içi satın alma yok
+- Telefon izni gerekmez
+- Analitik ve takip yok
+- Kişisel veriler ne toplanır ne paylaşılır
 
- <b>📙 Mealler</b>
+<b>📙 Mealler</b>
 
- - 30'ten fazla meal
- - Birden çok meali birlikte okuyabilme
- - Dipnotları hızlı ön izleme
- - Ayet referanslarının hızlı ön izleme
- - İndirildikten sonra tamamen çevrimdışı
+- 25 dilde 51 meal
+- Birden fazla meali birlikte okuyun
+- Ayeti terk etmeden dipnotları önizleyin
+- Atıf yapılan ayetleri yerinde önizleyin
+- İndirdikten sonra çevrimdışı kullanılabilir
 
- <b>🎙️ Okuma</b>
+<b>🎙️ Tilavetler</b>
 
- - 15'ten fazla tilavet
- - 5+ Farklı dilde tilavet
-  - Sadece Kur'an
-  - Sadece meal
-  - Hem Kuran hem de meal
- - Tek bir ayeti tekrarlama
- - Ayet aralığını oynatma
- - Sürekli ezberleneni çalma
- - Otomatik ayet takibi
- - Oynatma hızı kontrolü
- - Çevrimdışı kullanım için tilavet indirebilme
+- 21 tilavet
+- 11 meal ses kaydı
+  - Yalnızca Kur’an
+  - Yalnızca meal
+  - Kur’an ve meal birlikte
+- Özel tekrar
+- Geçerli ayeti takip eden otomatik kaydırma
+- Ayarlanabilir oynatma hızı
+- Spotlight modu
+- Arka planda oynatma
+- İndirdikten sonra çevrimdışı kullanılabilir
 
 <b>📖️ Tefsir</b>
 
-- 5+ Tefsir
-- Tefsirler çevrimdışı kullanım için indirilir
+- 6 dilde 10 tefsir
+- İndirdikten sonra çevrimdışı kullanılabilir
 
- <b>🎨 Yazı tipleri</b>
+<b>🔤 Kelime Kelime</b>
 
- - Çoklu hat desteği
-  - Uthmani
+- 14 dilde mevcut
+- Kelime anlamları ve transliterasyon
+- Kelime sesi
+
+<b>🎨 Yazı Tipleri</b>
+
+- Birden fazla Arapça yazı
+  - Uthmani Hafs
   - Indopak
-  - KFQPC
- - Arapça metin boyutunu özelleştirme
- - Meal metin boyutunu özelleştirme
+  - KFQPC (v1, v2 ve v4)
+- Ayarlanabilir Arapça metin boyutu
+- Ayarlanabilir meal metin boyutu
 
- <b>⚙ Düzen</b>
+<b>⚙ Düzen</b>
 
- - Meal görünümünde okuma
- - Sayfa görünümünde okuma
- - Farklı biçimlerde okuma (tek ayet, ayet aralığı, tam bölüm, tam cüz)
+- Ayet ayet okuma
+- Sayfa başına satır sayısı ayarlanabilir Mushaf düzeni
+- Sure, cüz veya hizb ile okuma
 
- <b>➡️ Gezinme</b>
+<b>➡️ Gezinme</b>
 
- - Tek ayet görünümünde rahat gezinme
- - İstenilen ayete hızlıca atlama
- - Herhangi bir bölüme hızlıca atlama
- - Herhangi bir cüze hızlıca atlama
+- Herhangi bir ayete, sureye, cüze, hizbe veya sayfaya doğrudan atlayın
 
- <b>❤️ Kuran'dan İçerikler</b>
+<b>❤️ Kur’an’dan</b>
 
- - Kuran'dan dualar
- - Kuran'dan Çözümler
- - Kuran'da adı geçen peygamberler
- - Kur'an'dan Ahlak
- - Kuran ve Bilim
+- Kur’an’dan dualar
+- Çözümlere dair ayetler
+- Kur’an’da geçen peygamberler
+- Kur’an’da edep
+- Kur’an’da geçen büyük günahlar
+- Kur’an ve bilim
 
- <b>🔍 Arama</b>
+<b>🧭 Konular</b>
 
- - Gelişmiş Arama
- - Sesli arama
- - Arama geçmişi
- - Arama sonuçlarından herhangi bir meale kolayca gitme
- - Tam kelime veya kelime parçası arama
+- Ontology gezgini
+- Temaya göre konular
 
- <b>📝 Yer İmleme</b>
+<b>🔍 Arama</b>
 
- - Daha sonrası için ayetleri yer imlerine ekleme
- - Ayet imleme
- - Ayet aralığını yer imlerine ekleme
- - Yer imlerine özel notlar yazabilme
+- Mealler arasında gelişmiş arama
+- Kur’an’ın Arapça metninde arama
+- Sesli arama
+- Arama geçmişi
+- Sonuçlardan doğrudan herhangi bir meali açın
+- Farklı eşleştirme stratejileri
 
- <b>🔥 Diğer Özellikler</b>
+<b>📝 Yer İmleri</b>
 
- - Günlük ayet hatırlatma
- - Gelişmiş paylaşım
- - Karanlık ve aydınlık temalar
- - Çoklu dil desteği
+- Sonra okumak için ayetleri kaydedin
+- Tek bir ayeti veya bir ayet aralığını yer imlerine ekleyin
+- Yer imlerine not ekleyin
+- Yer imlerini dışa ve içe aktarın
 
- <i>🐞 Bir sorunu bildirmek veya yeni bir özellik talep etmek için lütfen <a href='https://github.com/AlfaazPlus/QuranApp'>Github</a> adresindeki GitHub deposunu ziyaret edin.</i>
+<b>📂 Koleksiyonlar</b>
+
+- Kişisel ayet koleksiyonları oluşturun
+- Toplanan ayetlere not ekleyin
+
+<b>🔥 Ek özellikler</b>
+
+- Günlük ayet hatırlatıcısı
+- Esnek paylaşım seçenekleri
+- Açık ve koyu temalar; 7 Material renk ve dinamik renk
+- 23 dilde mevcut
+
+<i>🐞 Bir sorunu bildirmek veya yeni bir özellik istemek için lütfen <a href='https://github.com/AlfaazPlus/QuranApp'>Github</a> adresindeki GitHub deposunu ziyaret edin.</i>

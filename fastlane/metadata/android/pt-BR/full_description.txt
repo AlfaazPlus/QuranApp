@@ -1,0 +1,111 @@
+O QuranApp é um aplicativo móvel privado e pronto para uso offline para ler, ouvir e estudar o Sagrado Alcorão a qualquer hora e em qualquer lugar. Seu design limpo e de fácil navegação ajuda os usuários a ler e explorar o Alcorão com facilidade. Este app possui 51 traduções em 25 idiomas para que pessoas de diferentes línguas e regiões possam compreender o propósito do Alcorão.
+
+~~~~~~~
+
+<h3>Recursos do QuranApp</h3>
+
+Os seguintes recursos são o motivo pelo qual você deve usar o QuranApp.
+
+<b>🛡️ Privacidade</b>
+
+- Código aberto
+- Sem anúncios e sem compras no aplicativo
+- Nenhuma permissão do telefone é necessária
+- Sem análises nem rastreamento
+- Dados pessoais não são coletados nem compartilhados
+
+<b>📙 Traduções</b>
+
+- 51 traduções em 25 idiomas
+- Leia várias traduções ao mesmo tempo
+- Pré-visualize notas de rodapé sem sair do versículo
+- Pré-visualize versículos referenciados no lugar
+- Disponível offline após o download
+
+<b>🎙️ Recitações</b>
+
+- 21 recitações
+- 11 faixas de áudio de tradução
+  - Somente Alcorão
+  - Somente tradução
+  - Alcorão e tradução juntos
+- Repetição personalizada
+- Rolagem automática que acompanha o versículo atual
+- Velocidade de reprodução ajustável
+- Modo Spotlight
+- Reprodução em segundo plano
+- Disponível offline após o download
+
+<b>📖️ Tafsir</b>
+
+- 10 tafsirs em 6 idiomas
+- Disponível offline após o download
+
+<b>🔤 Palavra por palavra</b>
+
+- Disponível em 14 idiomas
+- Significados das palavras e transliteração
+- Áudio das palavras
+
+<b>🎨 Fontes</b>
+
+- Vários scripts árabes
+  - Uthmani Hafs
+  - Indopak
+  - KFQPC (v1, v2 e v4)
+- Tamanho do texto árabe ajustável
+- Tamanho do texto da tradução ajustável
+
+<b>⚙ Layout</b>
+
+- Leitura versículo a versículo
+- Layout Mushaf com linhas por página ajustáveis
+- Leia por capítulo, juz ou hizb
+
+<b>➡️ Navegação</b>
+
+- Vá diretamente a qualquer versículo, capítulo, juz, hizb ou página
+
+<b>❤️ Do Alcorão</b>
+
+- Duas do Alcorão
+- Versículos sobre soluções
+- Profetas mencionados no Alcorão
+- Etiqueta no Alcorão
+- Grandes pecados mencionados no Alcorão
+- Alcorão e ciência
+
+<b>🧭 Tópicos</b>
+
+- Explorador Ontology
+- Tópicos por tema
+
+<b>🔍 Pesquisa</b>
+
+- Pesquisa avançada nas traduções
+- Pesquise o texto árabe do Alcorão
+- Pesquisa por voz
+- Histórico de pesquisa
+- Abra qualquer tradução diretamente pelos resultados
+- Diferentes estratégias de correspondência
+
+<b>📝 Favoritos</b>
+
+- Salve versículos para ler depois
+- Marque um único versículo ou um intervalo de versículos
+- Adicione notas aos favoritos
+- Exporte e importe favoritos
+
+<b>📂 Coleções</b>
+
+- Crie coleções pessoais de versículos
+- Adicione notas aos versículos coletados
+
+<b>🔥 Recursos adicionais</b>
+
+- Lembrete diário de versículo
+- Opções flexíveis de compartilhamento
+- Temas claro e escuro, com 7 cores Material e cor dinâmica
+- Disponível em 23 idiomas
+
+<i>🐞 Para relatar um problema ou solicitar um novo recurso, visite o repositório GitHub em <a href='https://github.com/AlfaazPlus/QuranApp'>Github</a>.</i>

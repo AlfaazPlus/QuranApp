@@ -1,6 +1,11 @@
 # Import a custom translation
 
-Turn on **Developer mode** in **Settings → Advanced settings**. Then open **Settings → Translations** and choose **Import**. Enter the book name, author, display name, and language, and choose a JSON file. Importing the same book and language again replaces that translation.
+- Turn on **Developer mode** in **Settings → Advanced settings**.
+- Open **Settings → Translations**.
+- Choose **Import**.
+- Enter the book name, author, display name, and language.
+- Choose a JSON file.
+- Importing the same book and language again replaces that translation.
 
 <img src="import.jpg" alt="Import sheet for a custom translation" width="240">
 

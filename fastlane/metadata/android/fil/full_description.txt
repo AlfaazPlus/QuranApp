@@ -1,0 +1,111 @@
+Ang QuranApp ay isang pribado at offline-ready na mobile application para sa pagbabasa, pakikinig, at pag-aaral ng Banal na Qur’an anumang oras at saanman. Ang madaling i-navigate at malinis nitong disenyo ay tumutulong sa mga user na basahin at tuklasin ang Qur’an nang may kadalian. Mayroon itong 51 salin sa 25 wika upang ang mga tao mula sa iba’t ibang wika at rehiyon ay maunawaan ang layunin ng Qur’an.
+
+~~~~~~~
+
+<h3>Mga tampok ng QuranApp</h3>
+
+Ang mga sumusunod na tampok ang dahilan kung bakit dapat mong gamitin ang QuranApp.
+
+<b>🛡️ Privacy</b>
+
+- Open source
+- Walang mga advertisement at in-app purchases
+- Walang kinakailangang permiso sa telepono
+- Walang analytics at tracking
+- Ang personal na data ay hindi kinokolekta o ibinabahagi
+
+<b>📙 Translations</b>
+
+- 51 salin sa 25 wika
+- Magbasa ng maraming salin nang sabay
+- I-preview ang mga footnote nang hindi umaalis sa talata
+- I-preview ang mga tinutukoy na talata sa lugar
+- Available offline pagkatapos i-download
+
+<b>🎙️ Recitations</b>
+
+- 21 recitation
+- 11 translation audio track
+  - Quran lamang
+  - Translation lamang
+  - Quran at translation nang magkasama
+- Custom na ulit
+- Auto-scroll na sumusunod sa kasalukuyang talata
+- Naiaayos na bilis ng playback
+- Spotlight mode
+- Background playback
+- Available offline pagkatapos i-download
+
+<b>📖️ Tafsir</b>
+
+- 10 tafsir sa 6 wika
+- Available offline pagkatapos i-download
+
+<b>🔤 Word by Word</b>
+
+- Available sa 14 wika
+- Kahulugan ng salita at transliteration
+- Audio ng salita
+
+<b>🎨 Fonts</b>
+
+- Maraming Arabic script
+  - Uthmani Hafs
+  - Indopak
+  - KFQPC (v1, v2, at v4)
+- Naiaayos na laki ng tekstong Arabic
+- Naiaayos na laki ng tekstong salin
+
+<b>⚙ Layout</b>
+
+- Pagbasa nang talata-talata
+- Layout ng Mushaf na may naiaayos na bilang ng linya sa bawat pahina
+- Magbasa ayon sa kabanata, juz, o hizb
+
+<b>➡️ Navigation</b>
+
+- Tumalon nang direkta sa anumang talata, kabanata, juz, hizb, o pahina
+
+<b>❤️ From the Quran</b>
+
+- Mga dua mula sa Quran
+- Mga talata tungkol sa mga solusyon
+- Mga propeta na nabanggit sa Quran
+- Etiquette sa Quran
+- Mga pangunahing kasalanan na nabanggit sa Quran
+- Quran at agham
+
+<b>🧭 Topics</b>
+
+- Ontology explorer
+- Mga paksa ayon sa tema
+
+<b>🔍 Search</b>
+
+- Advanced na paghahanap sa mga salin
+- Maghanap sa tekstong Arabic ng Quran
+- Voice search
+- Kasaysayan ng paghahanap
+- Buksan ang anumang salin nang direkta mula sa mga resulta
+- Iba’t ibang matching strategy
+
+<b>📝 Bookmarks</b>
+
+- Mag-save ng mga talata para sa susunod na pagbabasa
+- Mag-bookmark ng isang talata o isang saklaw ng mga talata
+- Magdagdag ng mga tala sa mga bookmark
+- Mag-export at mag-import ng mga bookmark
+
+<b>📂 Collections</b>
+
+- Gumawa ng personal na mga koleksyon ng talata
+- Magdagdag ng mga tala sa mga nakolektang talata
+
+<b>🔥 Additional features</b>
+
+- Pang-araw-araw na paalala ng talata
+- Flexible na mga opsyon sa pagbabahagi
+- Light at dark na tema, na may 7 kulay ng Material at dynamic color
+- Available sa 23 wika
+
+<i>🐞 Upang mag-ulat ng isyu o humiling ng bagong tampok, bisitahin ang repositoryo ng GitHub sa <a href='https://github.com/AlfaazPlus/QuranApp'>Github</a>.</i>

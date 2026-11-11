@@ -1,79 +1,111 @@
-QuranApp adalah aplikasi seluler bebas iklan yang berfokus pada privasi. yang dapat memfasilitasi Anda membaca dan menjelajahi Al-Quran setiap hari kapan saja dan di mana saja. Desainnya yang rapi serta bersih membantu pengguna mengatasi kesulitan membaca Al-Quran di masa teknologi. Aplikasi ini memiliki 20+ terjemahan dalam beberapa bahasa sehingga orang-orang dari berbagai bahasa dan wilayah dapat memahami tujuan Al-Quran.
+QuranApp adalah aplikasi seluler privat yang siap digunakan offline untuk membaca, mendengarkan, dan mempelajari Al-Qur’an di mana saja dan kapan saja. Desainnya yang bersih dan mudah dinavigasi membantu pengguna membaca serta menjelajahi Al-Qur’an dengan mudah. Aplikasi ini memiliki 51 terjemahan dalam 25 bahasa agar orang dari berbagai bahasa dan wilayah dapat memahami tujuan Al-Qur’an.
 
 ~~~~~~~
 
-<h3>Fitur:</h3>
+<h3>Fitur QuranApp</h3>
 
-Fitur-fitur berikut adalah alasan mengapa Anda harus menggunakan QuranApp.
+Fitur-fitur berikut adalah alasan Anda sebaiknya menggunakan QuranApp.
 
-<b>🛡️ Murni</b>
+<b>🛡️ Privasi</b>
 
 - Sumber terbuka
-- Tidak ada iklan atau pembelian
-- Tidak diperlukan izin telepon
-- Tidak ada analitik atau pelacakan
-- Tidak ada pengumpulan atau pembagian data
+- Bebas iklan dan pembelian dalam aplikasi
+- Tidak memerlukan izin ponsel
+- Bebas analitik dan pelacakan
+- Data pribadi tidak dikumpulkan maupun dibagikan
 
 <b>📙 Terjemahan</b>
 
-- 20+ Terjemahan
-- Baca banyak terjemahan bersama
-- Pratinjau cepat catatan kaki
-- Pratinjau cepat referensi ayat
+- 51 terjemahan dalam 25 bahasa
+- Baca beberapa terjemahan sekaligus
+- Pratinjau catatan kaki tanpa meninggalkan ayat
+- Pratinjau ayat yang dirujuk di tempat
+- Tersedia offline setelah diunduh
 
 <b>🎙️ Bacaan</b>
 
-- 15+ Qori
-- Ulangi satu ayat
-- Mainkan rentang ayat
-- Mainkan bacaan terus menerus
-- Gulir otomatis untuk mencocokkan ayat yang diputar
+- 21 bacaan
+- 11 trek audio terjemahan
+  - Hanya Al-Qur’an
+  - Hanya terjemahan
+  - Al-Qur’an dan terjemahan bersama
+- Pengulangan khusus
+- Gulir otomatis yang mengikuti ayat saat ini
+- Kecepatan putar yang dapat disesuaikan
+- Mode Spotlight
+- Pemutaran di latar belakang
+- Tersedia offline setelah diunduh
+
+<b>📖️ Tafsir</b>
+
+- 10 tafsir dalam 6 bahasa
+- Tersedia offline setelah diunduh
+
+<b>🔤 Kata per Kata</b>
+
+- Tersedia dalam 14 bahasa
+- Makna kata dan transliterasi
+- Audio kata
 
 <b>🎨 Font</b>
 
-- Mendukung beberapa font (Uthmani, Indopak dan KFQPC)
-- Dapat mesuaikan ukuran teks Arab
-- Dapat menyesuaikan ukuran teks terjemahan
+- Beberapa skrip Arab
+  - Uthmani Hafs
+  - Indopak
+  - KFQPC (v1, v2, dan v4)
+- Ukuran teks Arab yang dapat disesuaikan
+- Ukuran teks terjemahan yang dapat disesuaikan
 
 <b>⚙ Tata Letak</b>
 
-- Membaca dalam mode terjemahan
-- Membaca dalam mode halaman
-- Baca Alquran dalam berbagai mode terjemahan (ayat tunggal, rentang ayat, bab lengkap, juz lengkap)
+- Bacaan ayat demi ayat
+- Tata letak Mushaf dengan baris per halaman yang dapat disesuaikan
+- Baca menurut surah, juz, atau hizb
 
 <b>➡️ Navigasi</b>
 
-- Navigasi yang nyaman dalam mode ayat tunggal
-- Lompat ke ayat mana pun
-- Lompat ke bab mana pun
-- Lompat ke juz apa pun
+- Loncat langsung ke ayat, surah, juz, hizb, atau halaman mana pun
 
-<b>❤️ Isi dari Al-Qur'an</b>
+<b>❤️ Dari Al-Qur’an</b>
 
-- Topik dari Al-Qur'an
-- Doa dari Al-Qur'an
-- Nabi yang disebutkan dalam Al-Qur'an
+- Doa dari Al-Qur’an
+- Ayat tentang solusi
+- Nabi yang disebutkan dalam Al-Qur’an
+- Adab dalam Al-Qur’an
+- Dosa besar yang disebutkan dalam Al-Qur’an
+- Al-Qur’an dan sains
 
-<b>🔍 Telusuri</b>
+<b>🧭 Topik</b>
 
-- Pencarian lanjutan
+- Penjelajah Ontology
+- Topik menurut tema
+
+<b>🔍 Pencarian</b>
+
+- Pencarian lanjutan di seluruh terjemahan
+- Cari teks Arab Al-Qur’an
 - Pencarian suara
-- Riwayat Pencarian
-- Mudah menavigasi ke terjemahan apa pun di hasil pencarian
-- Cari kata lengkap atau bagian kata
+- Riwayat pencarian
+- Buka terjemahan apa pun langsung dari hasil
+- Strategi pencocokan yang berbeda
 
-<b>📌 Bookmark</b>
+<b>📝 Markah</b>
 
-- Tandai ayat untuk nanti
-- Tandai ayat tunggal
-- Tandai rentang ayat
-- Tambahkan catatan khusus ke bookmark
+- Simpan ayat untuk dibaca nanti
+- Markahi satu ayat atau rentang ayat
+- Tambahkan catatan pada markah
+- Ekspor dan impor markah
 
-<b>🔥 Fitur Lainnya</b>
+<b>📂 Koleksi</b>
 
-- Pengingat Ayat Hari Ini
-- Berbagi
-- Tema gelap dan terang
-- Dukungan beberapa bahasa
+- Buat koleksi ayat pribadi
+- Tambahkan catatan pada ayat yang dikumpulkan
+
+<b>🔥 Fitur tambahan</b>
+
+- Pengingat ayat harian
+- Opsi berbagi yang fleksibel
+- Tema terang dan gelap, dengan 7 warna Material dan warna dinamis
+- Tersedia dalam 23 bahasa
 
 <i>🐞 Untuk melaporkan masalah atau meminta fitur baru, silakan kunjungi repositori GitHub di <a href='https://github.com/AlfaazPlus/QuranApp'>Github</a>.</i>

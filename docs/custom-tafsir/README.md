@@ -1,6 +1,11 @@
 # Import a custom tafsir
 
-Turn on **Developer mode** in **Settings → Advanced settings**. Then open **Settings → Tafsirs** and choose **Import**. Enter the book name, author, and language, and choose a JSON file. Importing the same book again replaces the copy already on the device.
+- Turn on **Developer mode** in **Settings → Advanced settings**.
+- Open **Settings → Tafsirs**.
+- Choose **Import**.
+- Enter the book name, author, and language.
+- Choose a JSON file.
+- Importing the same book again replaces the copy already on the device.
 
 <img src="import.jpg" alt="Import sheet for a custom tafsir" width="240">
 

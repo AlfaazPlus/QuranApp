@@ -1,4 +1,4 @@
-The QuranApp is an ad-free and privacy-focused mobile application that facilitates reading and exploring the Holy Qur’an on daily basis at any time and place. Its easy-to-navigate and neat and clean design helps users to overcome the difficulties of reading the Qur’an in the time of technology. This app has 30+ translations in several languages so that people of different languages and regions can understand the purpose of the Qur’an.
+The QuranApp is a private, offline-ready mobile application for reading, listening to, and studying the Holy Qur’an at any time and place. Its easy-to-navigate and clean design helps users read and explore the Qur’an with ease. This app has 51 translations in 25 languages so that people of different languages and regions can understand the purpose of the Qur’an.
 
 ~~~~~~~
 
@@ -6,91 +6,106 @@ The QuranApp is an ad-free and privacy-focused mobile application that facilitat
 
 The following features are the reason why you should use the QuranApp.
 
-<b>🛡️ Pure</b>
+<b>🛡️ Privacy</b>
 
 - Open source
-- No ads or purchases
-- No phone permission is required
-- No analytics or tracking
-- No data collection or sharing
+- Free of advertisements and in-app purchases
+- No phone permission required
+- Free of analytics and tracking
+- Personal data is neither collected nor shared
 
 <b>📙 Translations</b>
 
-- 30+ Translations
+- 51 translations in 25 languages
 - Read multiple translations together
-- Quick preview of footnotes
-- Quick preview of verse references
-- Fully offline once downloaded
+- Preview footnotes without leaving the verse
+- Preview referenced verses in place
+- Available offline after download
 
 <b>🎙️ Recitations</b>
 
-- 15+ Recitations
-- 5+ Translation Recitations
-  - Play only Quran
-  - Play only translation
-  - Play both Quran and translation
-- Repeat single verse
-- Play verse range
-- Play recitation continuously
-- Automatic scroll to match current verse
-- Playback speed control
-- Download recitations for offline use
+- 21 recitations
+- 11 translation audio tracks
+  - Quran only
+  - Translation only
+  - Quran and translation together
+- Custom repeat
+- Auto-scroll that follows the current verse
+- Adjustable playback speed
+- Spotlight mode
+- Background playback
+- Available offline after download
 
 <b>📖️ Tafsir</b>
 
-- 5+ Tafsirs
-- Tafsirs are stored for offline use
+- 10 tafsirs in 6 languages
+- Available offline after download
+
+<b>🔤 Word by Word</b>
+
+- Available in 14 languages
+- Word meanings and transliteration
+- Word audio
 
 <b>🎨 Fonts</b>
 
-- Multiple fonts
+- Multiple Arabic scripts
   - Uthmani Hafs
   - Indopak
-  - KFQPC
-- Customize Arabic text size
-- Customise translation text size
+  - KFQPC (v1, v2, and v4)
+- Adjustable Arabic text size
+- Adjustable translation text size
 
 <b>⚙ Layout</b>
 
-- Reading in translation mode
-- Reading in page mode
-- Read Qur'an in different translation modes (single verse, verse range, full chapter, full juz)
+- Verse-by-verse reading
+- Mushaf layout with adjustable lines per page
+- Read by chapter, juz, or hizb
 
 <b>➡️ Navigation</b>
 
-- Convenient navigation in single verse mode
-- Quickly jump to any verse
-- Quickly jump to any chapter
-- Quickly jump to any juz
+- Jump directly to any verse, chapter, juz, hizb, or page
 
-<b>❤️ Contents from the Qur'an</b>
+<b>❤️ From the Quran</b>
 
-- Duas from the Qur'an
-- Solutions from the Qur'an
-- Prophets mentioned in the Qur'an
-- Etiquette from the Qur'an
-- Quran and Science
+- Duas from the Quran
+- Verses on solutions
+- Prophets mentioned in the Quran
+- Etiquette in the Quran
+- Major sins mentioned in the Quran
+- Quran and science
+
+<b>🧭 Topics</b>
+
+- Ontology explorer
+- Topics by theme
 
 <b>🔍 Search</b>
 
-- Advanced search
+- Advanced search across translations
+- Search the Arabic text of the Quran
 - Voice search
 - Search history
-- Easily navigate to any translation in search results
-- Search for full word or word part
+- Open any translation directly from the results
+- Different matching strategies
 
-<b>📝 Bookmarking</b>
+<b>📝 Bookmarks</b>
 
-- Bookmark verses for later
-- Bookmark single verse
-- Bookmark a verse range
-- Add custom notes to bookmarks
+- Save verses for later reading
+- Bookmark a single verse or a range of verses
+- Add notes to bookmarks
+- Export and import bookmarks
 
-<b>🔥 Other Features</b>
+<b>📂 Collections</b>
 
-- Verse of the Day Reminder
-- Advanced sharing
-- Dark and light themes
-- App is available in 15+ languages
+- Create personal verse collections
+- Add notes to collected verses
+
+<b>🔥 Additional features</b>
+
+- Daily verse reminder
+- Flexible sharing options
+- Light and dark themes, with 7 Material colors and dynamic color
+- Available in 23 languages
 
 <i>🐞 To report an issue or request a new feature, kindly visit the GitHub repository at <a href='https://github.com/AlfaazPlus/QuranApp'>Github</a>.</i>

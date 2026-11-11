@@ -1,98 +1,111 @@
-QuranApp è un'applicazione mobile senza pubblicità e incentrata sulla privacy che facilita la lettura e l'esplorazione del Sacro Corano su base giornaliera, in qualsiasi momento e luogo. Il suo design intuitivo, pulito e ordinato aiuta gli utenti a superare le difficoltà di lettura del Corano nell'
-era della tecnologia. Questa app dispone di oltre 30 traduzioni in diverse lingue, in modo che persone di lingue e regioni diverse possano comprendere lo scopo del Corano.
+QuranApp è un’applicazione mobile privata e pronta per l’uso offline per leggere, ascoltare e studiare il Sacro Corano in qualsiasi momento e luogo. Il design pulito e di facile navigazione aiuta gli utenti a leggere ed esplorare il Corano con facilità. L’app offre 51 traduzioni in 25 lingue, così persone di lingue e regioni diverse possono comprendere lo scopo del Corano.
 
 ~~~~~~~
 
-<h3>Caratteristiche di QuranApp</h3>
+<h3>Funzionalità di QuranApp</h3>
 
-Le funzionalità seguenti sono la ragione per cui dovresti usare QuranApp.
+Le seguenti funzionalità sono il motivo per cui dovresti usare QuranApp.
 
-<b>🛡️ Puro</b>
+<b>🛡️ Privacy</b>
 
 - Open source
-- Nessun annuncio o acquisti
-- Nessuna autorizzazione telefonica è richiesta
-- Nessun analitica o tracking
-- Nessuna raccolta o condivisione dei dati
+- Senza pubblicità e acquisti in-app
+- Nessuna autorizzazione del telefono richiesta
+- Senza analytics e tracciamento
+- I dati personali non vengono né raccolti né condivisi
 
 <b>📙 Traduzioni</b>
 
-- 30+ Traduzioni
+- 51 traduzioni in 25 lingue
 - Leggi più traduzioni insieme
-- Anteprima rapida delle note
-- Anteprima rapida dei riferimenti ai versetti
-- Completamente offline una volta scaricata
+- Anteprima delle note a piè di pagina senza lasciare il versetto
+- Anteprima dei versetti citati sul posto
+- Disponibili offline dopo il download
 
 <b>🎙️ Recitazioni</b>
 
-- 15+ Recitazioni
-- 5+ Recitazioni delle Traduzioni
-  - Riproduci solo Corano
-  - Riproduci solo Traduzione
-  - Riproduci sia Corano che Traduzione
-- Ripeti verso singolo
-- Riproduci intervallo di versi
-- Riproduci continuamente la recitazione
-- Scorrimento automatico al versetto corrente
-- Controllo della velocità di riproduzione
-- Scarica recitazioni per uso offline
+- 21 recitazioni
+- 11 tracce audio di traduzione
+  - Solo Corano
+  - Solo traduzione
+  - Corano e traduzione insieme
+- Ripetizione personalizzata
+- Scorrimento automatico che segue il versetto corrente
+- Velocità di riproduzione regolabile
+- Modalità Spotlight
+- Riproduzione in background
+- Disponibili offline dopo il download
 
 <b>📖️ Tafsir</b>
 
-- 5+ Tafsir
-- I tafsir sono scaricati per uso offline
+- 10 tafsir in 6 lingue
+- Disponibili offline dopo il download
 
-<b>🎨 Fonts</b>
+<b>🔤 Parola per parola</b>
 
-- Più fonts
+- Disponibile in 14 lingue
+- Significati delle parole e traslitterazione
+- Audio delle parole
+
+<b>🎨 Font</b>
+
+- Più scritture arabe
   - Uthmani Hafs
   - Indopak
-  - KFQPC
-- Personalizza la dimensione del testo Arabo
-- Personalizza la dimensione del testo di traduzione
+  - KFQPC (v1, v2 e v4)
+- Dimensione del testo arabo regolabile
+- Dimensione del testo della traduzione regolabile
 
 <b>⚙ Layout</b>
 
-- Leggi in modalità traduzione
-- Leggi in modalità pagina
-- Leggi il Corano in diverse modalità di traduzione (verso singolo, intervallo di versi, capitolo intero, juz intero)
+- Lettura versetto per versetto
+- Layout Mushaf con righe per pagina regolabili
+- Lettura per capitolo, juz o hizb
 
 <b>➡️ Navigazione</b>
 
-- Navigazione conveniente in modalità verso singolo
-- Salta velocemente a qualsiasi verso
-- Salta velocemente a qualsiasi capitolo
-- Salta velocemente a qualsiasi juz
+- Vai direttamente a qualsiasi versetto, capitolo, juz, hizb o pagina
 
-<b>❤️ Contenuti dal Corano </b>
+<b>❤️ Dal Corano</b>
 
 - Dua dal Corano
-- Soluzioni dal Corano
+- Versetti sulle soluzioni
 - Profeti menzionati nel Corano
-- Buon comportamento nel Corano
-- Il Corano e la Scienza
+- Galateo nel Corano
+- Peccati maggiori menzionati nel Corano
+- Corano e scienza
+
+<b>🧭 Argomenti</b>
+
+- Esploratore Ontology
+- Argomenti per tema
 
 <b>🔍 Ricerca</b>
 
-- Ricerca avanzata
+- Ricerca avanzata tra le traduzioni
+- Cerca nel testo arabo del Corano
 - Ricerca vocale
-- Cronologia di ricerca
-- Naviga facilmente a qualsiasi traduzione nei risultati di ricerca
-- Cerca un'intera parola o parte di una parola
+- Cronologia delle ricerche
+- Apri qualsiasi traduzione direttamente dai risultati
+- Diverse strategie di corrispondenza
 
 <b>📝 Segnalibri</b>
 
-- Aggiungi i versi ai Segnalibri per più tardi
-- Aggiungi un singolo verso ai Segnalibri
-- Aggiungi un intervallo di versi ai Segnalibri
-- Aggiungi note personalizzate ai Segnalibri
+- Salva i versetti per leggerli in seguito
+- Aggiungi ai segnalibri un singolo versetto o un intervallo di versetti
+- Aggiungi note ai segnalibri
+- Esporta e importa i segnalibri
 
-<b>🔥 Altre funzionalità</b>
+<b>📂 Raccolte</b>
 
-- Promemoria Versetto del Giorno
-- Condivisione avanzata
-- Dark and light themes
-- Temi scuri e luminosi
-- L'app è disponibile in oltre 15 lingue
+- Crea raccolte personali di versetti
+- Aggiungi note ai versetti raccolti
 
-<i>🐞 Per segnalare un problema o richiedere una nuova funzionalità, visita il repository GitHub a <a href='https://github.com/AlfaazPlus/QuranApp'>Github</a>.</i>
+<b>🔥 Funzionalità aggiuntive</b>
+
+- Promemoria del versetto quotidiano
+- Opzioni di condivisione flessibili
+- Temi chiaro e scuro, con 7 colori Material e colore dinamico
+- Disponibile in 23 lingue
+
+<i>🐞 Per segnalare un problema o richiedere una nuova funzionalità, visita gentilmente il repository GitHub all’indirizzo <a href='https://github.com/AlfaazPlus/QuranApp'>Github</a>.</i>

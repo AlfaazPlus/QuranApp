@@ -1,96 +1,111 @@
-QuranApp est une application mobile sans publicité et axée sur la confidentialité qui facilite la lecture et l'exploration du Saint Coran au quotidien, à tout moment et en tout lieu. Sa conception facile à naviguer et soignée et épurée aide les utilisateurs à surmonter les difficultés liées à la lecture du Coran à l’ère de la technologie. Cette application propose plus de 30 traductions dans plusieurs langues afin que les personnes de différentes langues et régions puissent comprendre le but du Coran.
+QuranApp est une application mobile privée et prête à l’emploi hors ligne pour lire, écouter et étudier le Saint Coran à tout moment et en tout lieu. Son design clair et facile à parcourir aide les utilisateurs à lire et explorer le Coran en toute simplicité. L’application propose 51 traductions en 25 langues afin que les personnes de différentes langues et régions puissent comprendre le sens du Coran.
 
 ~~~~~~~
 
-<h3>Caractéristiques de QuranApp</h3>
+<h3>Fonctionnalités de QuranApp</h3>
 
-Les fonctionnalités suivantes sont la raison pour laquelle vous devriez utiliser QuranApp.
+Les fonctionnalités suivantes sont les raisons pour lesquelles vous devriez utiliser QuranApp.
 
-<b>🛡️ Pur</b>
+<b>🛡️ Confidentialité</b>
 
 - Open source
-- Pas de publicité ni d'achats
-- Aucune autorisation téléphonique n'est requise
-- Aucune analyse ni suivi
-- Pas de collecte ni de partage de données
+- Sans publicités ni achats intégrés
+- Aucune autorisation du téléphone requise
+- Sans analyses ni suivi
+- Les données personnelles ne sont ni collectées ni partagées
 
 <b>📙 Traductions</b>
 
-- 30+ traductions
+- 51 traductions en 25 langues
 - Lire plusieurs traductions ensemble
-- Aperçu rapide des notes de bas de page
-- Aperçu rapide des références de versets
-- Entièrement hors ligne une fois téléchargé
+- Aperçu des notes de bas de page sans quitter le verset
+- Aperçu des versets référencés sur place
+- Disponibles hors ligne après téléchargement
 
 <b>🎙️ Récitations</b>
 
-- 15+ récitations
-- 5+ récitations de traduction
-  - Jouer uniquement le Coran
-  - Lire uniquement la traduction
-  - Jouez à la fois le Coran et la traduction
-- Répétez un seul verset
-- Jouer la gamme de vers
-- Jouer la récitation en continu
-- Défilement automatique pour correspondre au verset actuel
-- Contrôle de la vitesse de lecture
-- Téléchargez des récitations pour une utilisation hors ligne
+- 21 récitations
+- 11 pistes audio de traduction
+  - Coran uniquement
+  - Traduction uniquement
+  - Coran et traduction ensemble
+- Répétition personnalisée
+- Défilement automatique qui suit le verset actuel
+- Vitesse de lecture réglable
+- Mode Spotlight
+- Lecture en arrière-plan
+- Disponibles hors ligne après téléchargement
 
 <b>📖️ Tafsir</b>
 
-- 5+ Tafsir
-- Les Tafsirs sont stockés pour une utilisation hors ligne
+- 10 tafsirs en 6 langues
+- Disponibles hors ligne après téléchargement
+
+<b>🔤 Mot à mot</b>
+
+- Disponible en 14 langues
+- Sens des mots et translittération
+- Audio des mots
 
 <b>🎨 Polices</b>
 
-- Plusieurs polices
+- Plusieurs écritures arabes
   - Uthmani Hafs
   - Indopak
-  - KFQPC
-- Personnaliser la taille du texte arabe
-- Personnaliser la taille du texte de traduction
+  - KFQPC (v1, v2 et v4)
+- Taille du texte arabe réglable
+- Taille du texte de traduction réglable
 
-<b>⚙Mise en page</b>
+<b>⚙ Mise en page</b>
 
-- Lecture en mode traduction
-- Lecture en mode page
-- Lisez le Coran dans différents modes de traduction (verset unique, plage de versets, chapitre complet, juz complet)
+- Lecture verset par verset
+- Mise en page Mushaf avec lignes par page réglables
+- Lecture par chapitre, juz ou hizb
 
 <b>➡️ Navigation</b>
 
-- Navigation pratique en mode verset unique
-- Passez rapidement à n'importe quel verset
-- Accédez rapidement à n'importe quel chapitre
-- Accédez rapidement à n'importe quel juz
+- Accéder directement à n’importe quel verset, chapitre, juz, hizb ou page
 
-<b>❤️ Contenu du Coran</b>
+<b>❤️ Issu du Coran</b>
 
-- Invocations du Coran
-- Solutions du Coran
+- Douas du Coran
+- Versets sur les solutions
 - Prophètes mentionnés dans le Coran
-- Étiquettes du Coran
-- Coran et Science
+- Étiquette dans le Coran
+- Grands péchés mentionnés dans le Coran
+- Coran et science
+
+<b>🧭 Thèmes</b>
+
+- Explorateur Ontology
+- Thèmes par sujet
 
 <b>🔍 Recherche</b>
 
-- Recherche avancée
+- Recherche avancée dans les traductions
+- Recherche dans le texte arabe du Coran
 - Recherche vocale
 - Historique de recherche
-- Accédez facilement à n'importe quelle traduction dans les résultats de recherche
-- Rechercher un mot complet ou une partie de mot
+- Ouvrir n’importe quelle traduction directement depuis les résultats
+- Différentes stratégies de correspondance
 
-<b>📝 Marques-pages</b>
+<b>📝 Favoris</b>
 
-- Ajouter des versets à vos marques-pages pour plus tard
-- Ajouter un seul verset à vos marques-pages
-- Ajouter une plage de versets à vos marques-pages
-- Ajouter des notes personnalisées aux marques-pages
+- Enregistrer des versets pour une lecture ultérieure
+- Mettre en favori un seul verset ou une plage de versets
+- Ajouter des notes aux favoris
+- Exporter et importer les favoris
 
-<b>🔥 Autres fonctionnalités</b>
+<b>📂 Collections</b>
 
-- Rappel du verset du jour
-- Partage avancé
-- Thèmes sombres et clairs
-- L'application est disponible dans plus de 15 langues
+- Créer des collections personnelles de versets
+- Ajouter des notes aux versets collectés
 
-<i>🐞 Pour signaler un problème ou demander une nouvelle fonctionnalité, veuillez visiter le référentiel GitHub à l'adresse <a href='https://github.com/AlfaazPlus/QuranApp'>Github</a>.</i>
+<b>🔥 Fonctionnalités supplémentaires</b>
+
+- Rappel quotidien de verset
+- Options de partage flexibles
+- Thèmes clair et sombre, avec 7 couleurs Material et couleur dynamique
+- Disponible en 23 langues
+
+<i>🐞 Pour signaler un problème ou demander une nouvelle fonctionnalité, veuillez visiter le dépôt GitHub à l’adresse <a href='https://github.com/AlfaazPlus/QuranApp'>Github</a>.</i>
