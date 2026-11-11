@@ -128,6 +128,10 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
     private val _navigateToVerse = MutableStateFlow<ChapterVersePair?>(null)
     val navigateToVerse: StateFlow<ChapterVersePair?> = _navigateToVerse.asStateFlow()
 
+    /** Bumps on every request so navigating to the current verse still starts a new scroll. */
+    private val _verseNavToken = MutableStateFlow(0)
+    val verseNavToken: StateFlow<Int> = _verseNavToken.asStateFlow()
+
     private val _verseByVersePrepared = MutableStateFlow(
         ReaderPreparedData(emptyList(), emptyMap()),
     )
@@ -434,10 +438,14 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
             it.copy(currentPageNo = pageNo)
         }
 
-        lastKnownVerse = initialVerse?.takeIf { it.isValid }
-            ?: resolveFirstVerseOnPage(pageNo)
+        val verse = initialVerse?.takeIf { it.isValid }
+        lastKnownVerse = verse ?: resolveFirstVerseOnPage(pageNo)
 
-        requestPageNavigation(pageNo)
+        if (verse != null) {
+            requestVerseNavigation(verse.chapterNo, verse.verseNo)
+        } else {
+            requestPageNavigation(pageNo)
+        }
     }
 
     private suspend fun resolveFirstVerseOnPage(pageNo: Int): ChapterVersePair? {
@@ -741,12 +749,8 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         when (to) {
             ReaderMode.Reading,
             ReaderMode.Translation -> {
-                val page = _mushafSession.value.currentPageNo ?: resolvePageNo(chapterNo, verseNo)
-
-                if (page != null) {
-                    selectedNavigationTabIndex.intValue = 3
-                    requestPageNavigation(page)
-                }
+                selectedNavigationTabIndex.intValue = 3
+                requestVerseNavigation(chapterNo, verseNo)
             }
 
             ReaderMode.VerseByVerse -> {
@@ -777,7 +781,10 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
     }
 
     fun requestVerseNavigation(chapterNo: Int, verseNo: Int) {
-        _navigateToVerse.value = ChapterVersePair(chapterNo, verseNo)
+        val verse = ChapterVersePair(chapterNo, verseNo)
+        _navigateToVerse.value = verse
+        lastKnownVerse = verse
+        _verseNavToken.value = _verseNavToken.value + 1
     }
 
     fun consumeVerseNavigation() {
@@ -793,8 +800,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
 
         when (mode) {
             ReaderMode.Reading, ReaderMode.Translation -> {
-                val page = resolvePageNo(chapterNo, verseNo)
-                if (page != null) requestPageNavigation(page)
+                requestVerseNavigation(chapterNo, verseNo)
             }
 
             ReaderMode.VerseByVerse -> {

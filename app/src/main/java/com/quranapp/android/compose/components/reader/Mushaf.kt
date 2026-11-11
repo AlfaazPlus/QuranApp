@@ -24,7 +24,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
-import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
@@ -32,8 +32,8 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -41,6 +41,7 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInParent
+import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -52,9 +53,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.reader.dialogs.WbwSheetData
+import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.ThemeUtils
-import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.ComposeUiConfig
@@ -65,6 +66,7 @@ import com.quranapp.android.utils.reader.atlas.getForWord
 import com.quranapp.android.utils.reader.mushafShowsRuledPageDecoration
 import com.quranapp.android.viewModels.ReaderViewModel
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onStart
 import verticalFadingEdge
 
@@ -175,6 +177,8 @@ fun ReaderLayoutPageMode(
     }
 
     val navigateToPage by readerVm.navigateToPage.collectAsStateWithLifecycle()
+    val navigateToVerse by readerVm.navigateToVerse.collectAsStateWithLifecycle()
+    val latestNavigateToVerse by rememberUpdatedState(navigateToVerse)
 
     LaunchedEffect(context, pagerState, pageCount, navigateToPage) {
         snapshotFlow { pagerState.currentPage }
@@ -182,7 +186,7 @@ fun ReaderLayoutPageMode(
             .collect { currentPage ->
                 // While a programmatic scroll is pending, the pager may still report page 1 until
                 // [pageCount] is ready; do not overwrite [currentPageNo] from the initial open.
-                if (navigateToPage != null) return@collect
+                if (navigateToPage != null || latestNavigateToVerse != null) return@collect
 
                 val currentPageNo = currentPage + 1
 
@@ -193,8 +197,6 @@ fun ReaderLayoutPageMode(
                 }
             }
     }
-
-    val navigateToVerse by readerVm.navigateToVerse.collectAsStateWithLifecycle()
 
     LaunchedEffect(navigateToPage, pageCount) {
         val targetPage = navigateToPage ?: return@LaunchedEffect
@@ -212,9 +214,13 @@ fun ReaderLayoutPageMode(
         }
     }
 
-    LaunchedEffect(navigateToVerse, pageCount) {
+    var verseTarget by remember { mutableStateOf<Pair<ChapterVersePair, Int>?>(null) }
+    val verseAnchor = remember { VerseScrollAnchor() }
+
+    LaunchedEffect(navigateToVerse, pageCount, sessionLayout, mushafSession.version) {
         val targetVerse = navigateToVerse ?: return@LaunchedEffect
         if (pageCount <= 0) return@LaunchedEffect
+        verseTarget = null
 
         val targetPage = readerVm.resolvePageNo(targetVerse.chapterNo, targetVerse.verseNo)
             ?: run {
@@ -222,8 +228,28 @@ fun ReaderLayoutPageMode(
                 return@LaunchedEffect
             }
 
-        readerVm.consumeVerseNavigation()
-        readerVm.requestPageNavigation(targetPage)
+        verseAnchor.beginTarget()
+
+        val clampedPage = targetPage.coerceIn(1, pageCount)
+
+        if (pagerState.settledPage != clampedPage - 1) {
+            pagerState.scrollToPage(clampedPage - 1)
+        }
+
+        readerVm.updateCurrentPageNo(clampedPage)
+
+        val pageItem = snapshotFlow { pageItems[clampedPage] }
+            .first { it != null } ?: return@LaunchedEffect
+        val hasTargetVerse = pageItem.lines.any { line ->
+            line is QuranPageLineItem.Text && line.words.any { it.ayahId == targetVerse.ayahId }
+        }
+
+        if (!hasTargetVerse) {
+            readerVm.consumeVerseNavigation()
+            return@LaunchedEffect
+        }
+
+        verseTarget = targetVerse to clampedPage
     }
 
     val playerState = LocalRecitation.current
@@ -241,14 +267,10 @@ fun ReaderLayoutPageMode(
                 ?: return@LaunchedEffect
         if (targetPage !in 1..pageCount) return@LaunchedEffect
 
-        snapshotFlow { pagerState.settledPage }
-            .distinctUntilChanged()
-            .collect { settledIdx ->
-                val currentPage = settledIdx + 1
-                if (currentPage != targetPage) {
-                    readerVm.requestPageNavigation(targetPage)
-                }
-            }
+        readerVm.requestVerseNavigation(
+            playingVerseMushaf.chapterNo,
+            playingVerseMushaf.verseNo,
+        )
     }
 
     LaunchedEffect(playingVerseMushaf, pageCount) {
@@ -291,9 +313,17 @@ fun ReaderLayoutPageMode(
                 key(sessionLayout, page) {
                     PageModePage(
                         item = item,
-                        contentWidth,
-                        ruledPageDecoration,
-                        nestedScrollConnection,
+                        contentWidth = contentWidth,
+                        ruledPageDecoration = ruledPageDecoration,
+                        nestedScrollConnection = nestedScrollConnection,
+                        targetVerse = verseTarget?.takeIf { it.second == pageNo }?.first,
+                        verseAnchor = verseAnchor,
+                        onVersePositioned = { verse ->
+                            if (verseTarget?.first == verse) {
+                                readerVm.consumeVerseNavigation()
+                                verseTarget = null
+                            }
+                        },
                     )
                 }
             }
@@ -308,6 +338,9 @@ private fun PageModePage(
     contentWidth: Dp,
     ruledPageDecoration: Boolean,
     nestedScrollConnection: NestedScrollConnection?,
+    targetVerse: ChapterVersePair?,
+    verseAnchor: VerseScrollAnchor,
+    onVersePositioned: (ChapterVersePair) -> Unit,
 ) {
     if (item == null) {
         return Loader(true)
@@ -318,10 +351,18 @@ private fun PageModePage(
     val playerState = LocalRecitation.current
     val isPlaying = playerState.isAnyPlaying
     val playingVerse = playerState.playingVerse
+    val playingWordIndex = if (isPlaying) playerState.playingWordIndex else -1
+    val targetWordIndex = targetVerse?.let { item.firstWordIndexForAyah(it.ayahId) }
 
-    val playingWordKey = remember(isPlaying, item.lines, playingVerse, playerState.playingWordIndex) {
-        if (!isPlaying || playerState.playingWordIndex < 0) return@remember NO_PLAYING_WORD_KEY
-        encodePlayingWordKey(playingVerse, playerState.playingWordIndex)
+    LaunchedEffect(targetVerse, item.pageNo) {
+        val verse = targetVerse ?: return@LaunchedEffect
+        scrollState.scrollToVersePosition(verseAnchor)
+        onVersePositioned(verse)
+    }
+
+    val playingAyahId = remember(isPlaying, playingVerse) {
+        if (!isPlaying || !playingVerse.isValid) -1
+        else QuranMeta.getAyahId(playingVerse.chapterNo, playingVerse.verseNo)
     }
 
     TextStyleProvider(emptyMap()) {
@@ -334,13 +375,21 @@ private fun PageModePage(
                 modifier = Modifier
                     .fillMaxHeight()
                     .widthIn(max = contentWidth)
+                    .then(
+                        if (targetVerse == null) Modifier
+                        else Modifier.onGloballyPositioned { coordinates ->
+                            val top = coordinates.positionInRoot().y.toInt()
+                            verseAnchor.viewportTopPx = top
+                            verseAnchor.viewportBottomPx = top + coordinates.size.height
+                        }
+                    )
                     .verticalFadingEdge(scrollState, color = colorScheme.surface, length = 24.dp),
             ) {
                 CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
                     Column(
                         Modifier
                             .verticalScroll(scrollState)
-                            .padding(top = 16.dp, bottom = 64.dp)
+                            .padding(top = 16.dp, bottom = 128.dp)
                             .then(
                                 if (nestedScrollConnection == null) Modifier
                                 else Modifier.nestedScroll(nestedScrollConnection)
@@ -406,15 +455,23 @@ private fun PageModePage(
                                                 ) {
                                                     MushafLineContent(
                                                         line = line,
-                                                        playingWordKey = playingWordKey,
+                                                        playingAyahId = playingAyahId,
+                                                        playingWordIndex = playingWordIndex,
                                                         ruledPageDecoration = ruledPageDecoration,
+                                                        targetVerse = targetVerse,
+                                                        targetWordIndex = targetWordIndex,
+                                                        verseAnchor = verseAnchor,
                                                     )
                                                 }
                                             } else {
                                                 MushafLineContent(
                                                     line = line,
-                                                    playingWordKey = playingWordKey,
+                                                    playingAyahId = playingAyahId,
+                                                    playingWordIndex = playingWordIndex,
                                                     ruledPageDecoration = ruledPageDecoration,
+                                                    targetVerse = targetVerse,
+                                                    targetWordIndex = targetWordIndex,
+                                                    verseAnchor = verseAnchor,
                                                 )
                                             }
                                         }
@@ -429,11 +486,27 @@ private fun PageModePage(
     }
 }
 
+private fun QuranPageItem.firstWordIndexForAyah(ayahId: Int): Int? {
+    for (line in lines) {
+        if (line is QuranPageLineItem.Text) {
+            for (word in line.words) {
+                if (word.ayahId == ayahId) return word.wordIndex
+            }
+        }
+    }
+
+    return null
+}
+
 @Composable
 private fun MushafLineContent(
     line: QuranPageLineItem,
-    playingWordKey: Long,
+    playingAyahId: Int,
+    playingWordIndex: Int,
     ruledPageDecoration: Boolean,
+    targetVerse: ChapterVersePair?,
+    targetWordIndex: Int?,
+    verseAnchor: VerseScrollAnchor,
 ) {
     when (line) {
         is QuranPageLineItem.Title -> ChapterTitle(line.chapterNo, ruledPageDecoration)
@@ -441,7 +514,11 @@ private fun MushafLineContent(
         is QuranPageLineItem.Text -> MushafLineText(
             textLine = line,
             layout = line.layout,
-            playingWordKey = playingWordKey,
+            playingAyahId = playingAyahId,
+            playingWordIndex = playingWordIndex,
+            targetVerse = targetVerse,
+            targetWordIndex = targetWordIndex,
+            verseAnchor = verseAnchor,
         )
     }
 }
@@ -450,7 +527,11 @@ private fun MushafLineContent(
 private fun MushafLineText(
     textLine: QuranPageLineItem.Text,
     layout: MushafLineLayout,
-    playingWordKey: Long,
+    playingAyahId: Int,
+    playingWordIndex: Int,
+    targetVerse: ChapterVersePair?,
+    targetWordIndex: Int?,
+    verseAnchor: VerseScrollAnchor,
 ) {
     val fittedStyle = layout.fittedStyle
     val centeredGap = layout.centeredGap
@@ -460,7 +541,11 @@ private fun MushafLineText(
             MushafWordsRow(
                 textLine = textLine,
                 fittedStyle = fittedStyle,
-                playingWordKey = playingWordKey,
+                playingAyahId = playingAyahId,
+                playingWordIndex = playingWordIndex,
+                targetVerse = targetVerse,
+                targetWordIndex = targetWordIndex,
+                verseAnchor = verseAnchor,
                 horizontalArrangement = Arrangement.spacedBy(
                     centeredGap, Alignment.CenterHorizontally
                 ),
@@ -471,7 +556,11 @@ private fun MushafLineText(
         MushafWordsRow(
             textLine = textLine,
             fittedStyle = fittedStyle,
-            playingWordKey = playingWordKey,
+            playingAyahId = playingAyahId,
+            playingWordIndex = playingWordIndex,
+            targetVerse = targetVerse,
+            targetWordIndex = targetWordIndex,
+            verseAnchor = verseAnchor,
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxWidth(),
         )
@@ -482,17 +571,44 @@ private fun MushafLineText(
 private fun MushafWordsRow(
     textLine: QuranPageLineItem.Text,
     fittedStyle: TextStyle,
-    playingWordKey: Long,
+    playingAyahId: Int,
+    playingWordIndex: Int,
+    targetVerse: ChapterVersePair?,
+    targetWordIndex: Int?,
+    verseAnchor: VerseScrollAnchor,
     horizontalArrangement: Arrangement.Horizontal,
     modifier: Modifier = Modifier,
 ) {
     val words = textLine.words
-    val wordRects = remember(words) {
-        mutableStateListOf<Rect?>().apply { repeat(words.size) { add(null) } }
+    val targetAyahId = targetVerse?.ayahId
+    val bounds = remember(words) { RecitationWordBounds(words.size) }
+    val trackPositions = playingAyahId >= 0
+
+    val positionModifiers = remember(bounds, trackPositions) {
+        Array(bounds.wordCount) { index ->
+            if (!trackPositions) {
+                Modifier
+            } else {
+                Modifier.onGloballyPositioned { coordinates ->
+                    val pos = coordinates.positionInParent()
+                    val sz = coordinates.size
+                    bounds.update(
+                        index = index,
+                        left = pos.x,
+                        top = pos.y,
+                        right = pos.x + sz.width,
+                        bottom = pos.y + sz.height,
+                    )
+                }
+            }
+        }
     }
 
-    val highlightRects = mergedMushafHighlightRects(words, wordRects, playingWordKey)
-    val highlightColor = colorScheme.primary.alpha(0.3f)
+    val verseHighlightColor = colorScheme.primary.alpha(0.2f)
+    val wordHighlightColor = colorScheme.primary.alpha(0.3f)
+    val highlightCorner = with(LocalDensity.current) {
+        CornerRadius(8.dp.toPx(), 8.dp.toPx())
+    }
 
     val wbwState = LocalWbwState.current
     val quranTextStyles = LocalQuranTextStyle.current
@@ -500,28 +616,39 @@ private fun MushafWordsRow(
 
     Row(
         modifier = modifier.drawBehind {
-            for (rect in highlightRects) {
-                drawRoundRect(
-                    color = highlightColor,
-                    topLeft = Offset(rect.left, rect.top),
-                    size = Size(rect.width, rect.height),
-                )
-            }
+            drawRecitationHighlights(
+                bounds = bounds,
+                words = words,
+                ayahId = playingAyahId,
+                wordIndex = playingWordIndex,
+                splitRows = false,
+                verseColor = verseHighlightColor,
+                wordColor = wordHighlightColor,
+                corner = highlightCorner,
+            )
         },
         horizontalArrangement = horizontalArrangement,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         for ((index, word) in words.withIndex()) {
-            val positionModifier = Modifier.onGloballyPositioned { coordinates ->
-                val pos = coordinates.positionInParent()
-                val sz = coordinates.size
-                wordRects[index] = Rect(
-                    pos.x,
-                    pos.y,
-                    pos.x + sz.width,
-                    pos.y + sz.height,
-                )
+            val targetWordModifier = if (
+                targetVerse != null &&
+                word.ayahId == targetAyahId &&
+                (word.wordIndex == targetWordIndex || word.isLastWordOfAyah)
+            ) {
+                Modifier.onGloballyPositioned { coordinates ->
+                    val top = coordinates.positionInRoot().y.toInt()
+                    if (word.wordIndex == targetWordIndex) {
+                        verseAnchor.targetTopPx = top
+                    }
+                    if (word.isLastWordOfAyah) {
+                        verseAnchor.targetBottomPx = top + coordinates.size.height
+                    }
+                }
+            } else {
+                Modifier
             }
+            val wordModifier = positionModifiers[index].then(targetWordModifier)
 
             if (wbwState.activeTooltipWord == word && shouldShowTooltip) {
                 WbwTooltip(
@@ -546,7 +673,7 @@ private fun MushafWordsRow(
                         atlasPlacements = textLine.atlasPlacements.getForWord(word),
                         fittedStyle = fittedStyle,
                         onClick = { wbwState.onWordClick(word) },
-                        modifier = positionModifier,
+                        modifier = wordModifier,
                     )
                 }
             } else {
@@ -556,7 +683,7 @@ private fun MushafWordsRow(
                     atlasPlacements = textLine.atlasPlacements.getForWord(word),
                     fittedStyle = fittedStyle,
                     onClick = { wbwState.onWordClick(word) },
-                    modifier = positionModifier,
+                    modifier = wordModifier,
                 )
             }
         }
@@ -585,65 +712,6 @@ private fun Word(
         style = fittedStyle,
     )
 }
-
-private fun mergedMushafHighlightRects(
-    words: List<AyahWordEntity>,
-    wordRects: List<Rect?>,
-    playingWordKey: Long,
-): List<Rect> {
-    if (words.isEmpty()) return emptyList()
-
-    val result = mutableListOf<Rect>()
-    var i = 0
-
-    while (i < words.size) {
-        val w = words[i]
-        val highlighted = encodePlayingWordKey(w.ayahId, w.wordIndex) == playingWordKey
-
-        if (!highlighted) {
-            i++
-            continue
-        }
-
-        var rect = wordRects.getOrNull(i) ?: run {
-            i++
-            continue
-        }
-
-        val ayahId = w.ayahId
-
-        var j = i + 1
-
-        while (j < words.size) {
-            val w2 = words[j]
-            if (encodePlayingWordKey(w2.ayahId, w2.wordIndex) != playingWordKey || w2.ayahId != ayahId) {
-                break
-            }
-            val r2 = wordRects.getOrNull(j) ?: break
-            rect = Rect(
-                minOf(rect.left, r2.left),
-                minOf(rect.top, r2.top),
-                maxOf(rect.right, r2.right),
-                maxOf(rect.bottom, r2.bottom),
-            )
-            j++
-        }
-
-        result.add(rect)
-
-        i = j
-    }
-
-    return result
-}
-
-private const val NO_PLAYING_WORD_KEY = Long.MIN_VALUE
-
-private fun encodePlayingWordKey(verse: ChapterVersePair, wordIndex: Int): Long =
-    encodePlayingWordKey(QuranMeta.getAyahId(verse.chapterNo, verse.verseNo), wordIndex)
-
-private fun encodePlayingWordKey(ayahId: Int, wordIndex: Int): Long =
-    (ayahId.toLong() shl 32) xor (wordIndex.toLong() and 0xffffffffL)
 
 private fun Modifier.mushafHorizontalRuleBelow(
     color: Color,

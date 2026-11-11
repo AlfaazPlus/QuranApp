@@ -4,7 +4,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
@@ -28,13 +27,20 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInParent
+import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.LayoutDirection
@@ -44,6 +50,7 @@ import com.quranapp.android.compose.components.reader.dialogs.WbwSheetData
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.ThemeUtils
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
+import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.db.relations.SurahWithLocalizations
 import com.quranapp.android.utils.quran.QuranMeta
@@ -53,6 +60,7 @@ import com.quranapp.android.utils.reader.atlas.getForWord
 import com.quranapp.android.utils.reader.getQuranTextStyle
 import com.quranapp.android.viewModels.ReaderViewModel
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onStart
 
 sealed class ReadingFlowSection {
@@ -131,12 +139,14 @@ fun ReaderLayoutReadingFlow(
     }
 
     val navigateToPage by readerVm.navigateToPage.collectAsStateWithLifecycle()
+    val navigateToVerse by readerVm.navigateToVerse.collectAsStateWithLifecycle()
+    val latestNavigateToVerse by rememberUpdatedState(navigateToVerse)
 
     LaunchedEffect(context, listState, pageCount, navigateToPage) {
         snapshotFlow { listState.firstVisibleItemIndex }
             .distinctUntilChanged()
             .collect { currentIndex ->
-                if (navigateToPage != null) return@collect
+                if (navigateToPage != null || latestNavigateToVerse != null) return@collect
                 if (pageCount <= 0) return@collect
 
                 val currentPageNo = (currentIndex + 1).coerceIn(1, pageCount)
@@ -159,11 +169,14 @@ fun ReaderLayoutReadingFlow(
         }
     }
 
-    val navigateToVerse by readerVm.navigateToVerse.collectAsStateWithLifecycle()
+    var verseBringIntoViewTarget by remember { mutableStateOf<Pair<ChapterVersePair, Int>?>(null) }
+    val verseAnchor = remember { VerseScrollAnchor() }
 
-    LaunchedEffect(navigateToVerse, pageCount) {
+    LaunchedEffect(navigateToVerse, pageCount, sessionLayout, mushafSession.version) {
         val targetVerse = navigateToVerse ?: return@LaunchedEffect
         if (pageCount <= 0) return@LaunchedEffect
+
+        verseBringIntoViewTarget = null
 
         val targetPage = readerVm.resolvePageNo(targetVerse.chapterNo, targetVerse.verseNo)
             ?: run {
@@ -171,8 +184,36 @@ fun ReaderLayoutReadingFlow(
                 return@LaunchedEffect
             }
 
+        verseAnchor.beginTarget()
+
+        val clampedPage = targetPage.coerceIn(1, pageCount)
+
+        val targetIndex = clampedPage - 1
+
+        val targetPageIsVisible = listState.layoutInfo.visibleItemsInfo
+            .any { it.index == targetIndex }
+        if (!targetPageIsVisible) listState.scrollToItem(targetIndex)
+
+        readerVm.updateCurrentPageNo(clampedPage)
+
+        val pageItem = snapshotFlow { readingFlowPageItems[clampedPage] }
+            .first { it != null } ?: return@LaunchedEffect
+
+        val hasTargetVerse = pageItem.sections.any { section ->
+            section is ReadingFlowSection.Words && section.words.any { it.ayahId == targetVerse.ayahId }
+        }
+
+        if (!hasTargetVerse) {
+            readerVm.consumeVerseNavigation()
+            return@LaunchedEffect
+        }
+
+        verseBringIntoViewTarget = targetVerse to clampedPage
+
+        listState.scrollToVersePosition(verseAnchor)
         readerVm.consumeVerseNavigation()
-        readerVm.requestPageNavigation(targetPage)
+
+        verseBringIntoViewTarget = null
     }
 
     val playerState = LocalRecitation.current
@@ -189,14 +230,7 @@ fun ReaderLayoutReadingFlow(
             ?: return@LaunchedEffect
         if (targetPage !in 1..pageCount) return@LaunchedEffect
 
-        snapshotFlow { listState.firstVisibleItemIndex }
-            .distinctUntilChanged()
-            .collect { settledIdx ->
-                val currentPage = settledIdx + 1
-                if (currentPage != targetPage) {
-                    readerVm.requestPageNavigation(targetPage)
-                }
-            }
+        readerVm.requestVerseNavigation(playingVerse.chapterNo, playingVerse.verseNo)
     }
 
     LaunchedEffect(playingVerse, pageCount) {
@@ -224,6 +258,11 @@ fun ReaderLayoutReadingFlow(
             state = listState,
             modifier = Modifier
                 .fillMaxSize()
+                .onGloballyPositioned { coordinates ->
+                    val top = coordinates.positionInRoot().y.toInt()
+                    verseAnchor.viewportTopPx = top
+                    verseAnchor.viewportBottomPx = top + coordinates.size.height
+                }
                 .then(
                     if (nestedScrollConnection == null) Modifier
                     else Modifier.nestedScroll(nestedScrollConnection)
@@ -242,7 +281,18 @@ fun ReaderLayoutReadingFlow(
                         Spacer(Modifier.height(12.dp))
                     }
 
-                    ReadingFlowPage(item = item)
+                    ReadingFlowPage(
+                        item = item,
+                        targetVerse = verseBringIntoViewTarget
+                            ?.takeIf { it.second == pageNo }
+                            ?.first,
+                        onWordPositioned = { verse, top, bottom, isStart, isEnd ->
+                            if (verseBringIntoViewTarget?.first == verse) {
+                                if (isStart) verseAnchor.targetTopPx = top
+                                if (isEnd) verseAnchor.targetBottomPx = bottom
+                            }
+                        },
+                    )
                 }
             }
         }
@@ -250,7 +300,11 @@ fun ReaderLayoutReadingFlow(
 }
 
 @Composable
-private fun ReadingFlowPage(item: ReadingFlowPageItem?) {
+private fun ReadingFlowPage(
+    item: ReadingFlowPageItem?,
+    targetVerse: ChapterVersePair?,
+    onWordPositioned: (ChapterVersePair, Int, Int, Boolean, Boolean) -> Unit,
+) {
     if (item == null) {
         TranslationPageLoadingSkeleton()
         return
@@ -290,6 +344,8 @@ private fun ReadingFlowPage(item: ReadingFlowPageItem?) {
                         words = section.words,
                         atlasPlacements = section.atlasPlacements,
                         style = style,
+                        targetVerse = targetVerse,
+                        onWordPositioned = onWordPositioned,
                     )
                 }
             }
@@ -328,28 +384,88 @@ private fun ReadingFlowWords(
     words: List<AyahWordEntity>,
     atlasPlacements: Map<Int, List<AtlasGlyphPlacement>>,
     style: TextStyle,
+    targetVerse: ChapterVersePair?,
+    onWordPositioned: (ChapterVersePair, Int, Int, Boolean, Boolean) -> Unit,
 ) {
     val playerState = LocalRecitation.current
+    val isPlaying = playerState.isAnyPlaying
     val playingVerse = playerState.playingVerse
-    val verseHighlighted = playerState.isAnyPlaying && playingVerse.isValid
+    val playingWordIndex = playerState.playingWordIndex
     val wbwState = LocalWbwState.current
     val shouldShowTooltip = !wbwState.isWbwSheetOpen
+    val targetAyahId = targetVerse?.ayahId
+    val targetWordIndex = if (targetAyahId == null) null
+    else words.firstOrNull { it.ayahId == targetAyahId }?.wordIndex
+
+    val playingAyahId = remember(isPlaying, playingVerse) {
+        if (!isPlaying || !playingVerse.isValid) -1
+        else QuranMeta.getAyahId(playingVerse.chapterNo, playingVerse.verseNo)
+    }
+
+    val bounds = remember(words) { RecitationWordBounds(words.size) }
+    val trackPositions = playingAyahId >= 0
+
+    // Stable modifiers so word-index ticks don't recompose every word cell.
+    val positionModifiers = remember(bounds, trackPositions) {
+        Array(bounds.wordCount) { index ->
+            if (!trackPositions) {
+                Modifier
+            } else {
+                Modifier.onGloballyPositioned { coordinates ->
+                    val pos = coordinates.positionInParent()
+                    val sz = coordinates.size
+                    bounds.update(
+                        index = index,
+                        left = pos.x,
+                        top = pos.y,
+                        right = pos.x + sz.width,
+                        bottom = pos.y + sz.height,
+                    )
+                }
+            }
+        }
+    }
+
+    val verseHighlightColor = colorScheme.primary.alpha(0.2f)
+    val wordHighlightColor = colorScheme.primary.alpha(0.3f)
+    val highlightCorner = with(LocalDensity.current) {
+        CornerRadius(8.dp.toPx(), 8.dp.toPx())
+    }
 
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         FlowRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(14.dp),
+                .padding(14.dp)
+                .drawBehind {
+                    drawRecitationHighlights(
+                        bounds = bounds,
+                        words = words,
+                        ayahId = playingAyahId,
+                        wordIndex = playingWordIndex,
+                        splitRows = true,
+                        verseColor = verseHighlightColor,
+                        wordColor = wordHighlightColor,
+                        corner = highlightCorner,
+                    )
+                },
             horizontalArrangement = Arrangement.Start,
             verticalArrangement = Arrangement.spacedBy(2.dp),
         ) {
-            for (word in words) {
+            for ((index, word) in words.withIndex()) {
                 ReadingFlowWordCell(
                     word = word,
                     atlasPlacements = atlasPlacements.getForWord(word),
                     style = style,
-                    highlighted = verseHighlighted && playingVerse.doesEqual(word.ayahId),
                     showTooltip = shouldShowTooltip && wbwState.activeTooltipWord == word,
+                    modifier = positionModifiers[index],
+                    targetVerse = targetVerse?.takeIf {
+                        word.ayahId == targetAyahId &&
+                            (word.wordIndex == targetWordIndex || word.isLastWordOfAyah)
+                    },
+                    targetIsStart = word.ayahId == targetAyahId && word.wordIndex == targetWordIndex,
+                    targetIsEnd = word.ayahId == targetAyahId && word.isLastWordOfAyah,
+                    onWordPositioned = onWordPositioned,
                 )
             }
         }
@@ -361,11 +477,27 @@ private fun ReadingFlowWordCell(
     word: AyahWordEntity,
     atlasPlacements: List<AtlasGlyphPlacement>?,
     style: TextStyle,
-    highlighted: Boolean,
     showTooltip: Boolean,
+    modifier: Modifier = Modifier,
+    targetVerse: ChapterVersePair?,
+    targetIsStart: Boolean,
+    targetIsEnd: Boolean,
+    onWordPositioned: (ChapterVersePair, Int, Int, Boolean, Boolean) -> Unit,
 ) {
     val wbwState = LocalWbwState.current
-    val active = highlighted || wbwState.activeTooltipWord == word
+    val active = wbwState.activeTooltipWord == word
+    val targetPositionModifier = targetVerse?.let { verse ->
+        Modifier.onGloballyPositioned { coordinates ->
+            val top = coordinates.positionInRoot().y.toInt()
+            onWordPositioned(
+                verse,
+                top,
+                top + coordinates.size.height,
+                targetIsStart,
+                targetIsEnd,
+            )
+        }
+    } ?: Modifier
 
     val wordContent: @Composable () -> Unit = {
         ReadingFlowWord(
@@ -374,6 +506,7 @@ private fun ReadingFlowWordCell(
             style = style,
             active = active,
             onClick = { wbwState.onWordClick(word) },
+            modifier = modifier.then(targetPositionModifier),
         )
     }
 
@@ -406,11 +539,12 @@ private fun ReadingFlowWord(
     style: TextStyle,
     active: Boolean,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     QuranWordText(
-        modifier = Modifier
+        modifier = modifier
             .background(
-                if (active) colorScheme.primary.alpha(0.2f) else Color.Transparent,
+                if (active) colorScheme.primary.alpha(0.3f) else Color.Transparent,
                 shape = shapes.small,
             )
             .clickable(onClick = onClick)

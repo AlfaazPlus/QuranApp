@@ -39,20 +39,26 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDirection
@@ -61,6 +67,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.theme.tightTextStyle
 import com.quranapp.android.R
 import com.quranapp.android.compose.components.ChapterIcon
@@ -74,6 +81,7 @@ import com.quranapp.android.utils.reader.TranslationPageBuilderParams
 import com.quranapp.android.utils.univ.StringUtils
 import com.quranapp.android.viewModels.ReaderViewModel
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onStart
 
 data class TranslationPageVerse(
@@ -181,12 +189,14 @@ fun ReaderLayoutTranslationPageMode(
     }
 
     val navigateToPage by readerVm.navigateToPage.collectAsStateWithLifecycle()
+    val navigateToVerse by readerVm.navigateToVerse.collectAsStateWithLifecycle()
+    val latestNavigateToVerse by rememberUpdatedState(navigateToVerse)
 
     LaunchedEffect(context, listState, pageCount, navigateToPage) {
         snapshotFlow { listState.firstVisibleItemIndex }
             .distinctUntilChanged()
             .collect { currentIndex ->
-                if (navigateToPage != null) return@collect
+                if (navigateToPage != null || latestNavigateToVerse != null) return@collect
                 if (pageCount <= 0) return@collect
 
                 val currentPageNo = (currentIndex + 1).coerceIn(1, pageCount)
@@ -211,11 +221,13 @@ fun ReaderLayoutTranslationPageMode(
         }
     }
 
-    val navigateToVerse by readerVm.navigateToVerse.collectAsStateWithLifecycle()
+    var verseTarget by remember { mutableStateOf<Pair<ChapterVersePair, Int>?>(null) }
+    val verseAnchor = remember { VerseScrollAnchor() }
 
-    LaunchedEffect(navigateToVerse, pageCount) {
+    LaunchedEffect(navigateToVerse, pageCount, sessionLayout, mushafSession.version) {
         val targetVerse = navigateToVerse ?: return@LaunchedEffect
         if (pageCount <= 0) return@LaunchedEffect
+        verseTarget = null
 
         val targetPage = readerVm.resolvePageNo(targetVerse.chapterNo, targetVerse.verseNo)
             ?: run {
@@ -223,8 +235,34 @@ fun ReaderLayoutTranslationPageMode(
                 return@LaunchedEffect
             }
 
+        verseAnchor.beginTarget()
+
+        val clampedPage = targetPage.coerceIn(1, pageCount)
+        val targetIndex = clampedPage - 1
+        val targetPageIsVisible =
+            listState.layoutInfo.visibleItemsInfo.any { it.index == targetIndex }
+        if (!targetPageIsVisible) listState.scrollToItem(targetIndex)
+
+        readerVm.updateCurrentPageNo(clampedPage)
+
+        val pageItem = snapshotFlow { translationPageItems[clampedPage] }
+            .first { it != null } ?: return@LaunchedEffect
+        val hasTargetVerse = pageItem.sections.any { section ->
+            section is TranslationPageSection.Text &&
+                    section.verses.any { it.chapterNo == targetVerse.chapterNo && it.verseNo == targetVerse.verseNo }
+        }
+
+        if (!hasTargetVerse) {
+            readerVm.consumeVerseNavigation()
+            return@LaunchedEffect
+        }
+
+        verseTarget = targetVerse to clampedPage
+
+        listState.scrollToVersePosition(verseAnchor)
         readerVm.consumeVerseNavigation()
-        readerVm.requestPageNavigation(targetPage)
+
+        verseTarget = null
     }
 
     val playerState = LocalRecitation.current
@@ -242,14 +280,10 @@ fun ReaderLayoutTranslationPageMode(
                 ?: return@LaunchedEffect
         if (targetPage !in 1..pageCount) return@LaunchedEffect
 
-        snapshotFlow { listState.firstVisibleItemIndex }
-            .distinctUntilChanged()
-            .collect { settledIdx ->
-                val currentPage = settledIdx + 1
-                if (currentPage != targetPage) {
-                    readerVm.requestPageNavigation(targetPage)
-                }
-            }
+        readerVm.requestVerseNavigation(
+            playingVerseMushaf.chapterNo,
+            playingVerseMushaf.verseNo,
+        )
     }
 
     LaunchedEffect(playingVerseMushaf, pageCount) {
@@ -279,6 +313,11 @@ fun ReaderLayoutTranslationPageMode(
             state = listState,
             modifier = Modifier
                 .fillMaxSize()
+                .onGloballyPositioned { coordinates ->
+                    val top = coordinates.positionInRoot().y.toInt()
+                    verseAnchor.viewportTopPx = top
+                    verseAnchor.viewportBottomPx = top + coordinates.size.height
+                }
                 .then(
                     if (nestedScrollConnection == null) Modifier
                     else Modifier.nestedScroll(nestedScrollConnection)
@@ -299,6 +338,8 @@ fun ReaderLayoutTranslationPageMode(
 
                     TranslationModePage(
                         item = item,
+                        targetVerse = verseTarget?.takeIf { it.second == pageNo }?.first,
+                        verseAnchor = verseAnchor,
                     )
                 }
             }
@@ -308,7 +349,9 @@ fun ReaderLayoutTranslationPageMode(
 
 @Composable
 private fun TranslationModePage(
-    item: TranslationPageItem?
+    item: TranslationPageItem?,
+    targetVerse: ChapterVersePair?,
+    verseAnchor: VerseScrollAnchor,
 ) {
     if (item == null) {
         TranslationPageLoadingSkeleton()
@@ -391,12 +434,11 @@ private fun TranslationModePage(
                             is TranslationPageSection.Bismillah -> Bismillah()
                             is TranslationPageSection.Text -> {
                                 if (it.annotatedTextNormalized != null) {
-                                    Text(
-                                        text = it.annotatedTextNormalized!!,
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(14.dp),
-                                        style = TextStyle(textDirection = textDirection),
+                                    TranslationPageText(
+                                        section = it,
+                                        targetVerse = targetVerse,
+                                        verseAnchor = verseAnchor,
+                                        textDirection = textDirection,
                                     )
                                 }
                             }
@@ -406,6 +448,68 @@ private fun TranslationModePage(
             }
         }
     }
+}
+
+@Composable
+private fun TranslationPageText(
+    section: TranslationPageSection.Text,
+    targetVerse: ChapterVersePair?,
+    verseAnchor: VerseScrollAnchor,
+    textDirection: TextDirection,
+) {
+    val text = section.annotatedTextNormalized ?: return
+    val targetRange = remember(section.verses, targetVerse) {
+        targetVerse?.let { target ->
+            section.verses.firstOrNull {
+                it.chapterNo == target.chapterNo && it.verseNo == target.verseNo
+            }
+        }
+    }
+    var textTopPx by remember(targetRange) { mutableIntStateOf(Int.MIN_VALUE) }
+    var verseLineTopPx by remember(targetRange) { mutableIntStateOf(Int.MIN_VALUE) }
+    var verseLineBottomPx by remember(targetRange) { mutableIntStateOf(Int.MIN_VALUE) }
+
+    fun updateAnchor() {
+        if (
+            textTopPx != Int.MIN_VALUE &&
+            verseLineTopPx != Int.MIN_VALUE &&
+            verseLineBottomPx != Int.MIN_VALUE
+        ) {
+            verseAnchor.targetTopPx = textTopPx + verseLineTopPx
+            verseAnchor.targetBottomPx = textTopPx + verseLineBottomPx
+        }
+    }
+
+    val anchorModifier = if (targetRange == null) {
+        Modifier
+    } else {
+        Modifier.onGloballyPositioned { coordinates ->
+            textTopPx = coordinates.positionInRoot().y.toInt()
+            updateAnchor()
+        }
+    }
+
+    Text(
+        text = text,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(14.dp)
+            .then(anchorModifier),
+        style = TextStyle(textDirection = textDirection),
+        onTextLayout = if (targetRange == null) {
+            {}
+        } else {
+            { layout ->
+                val lastOffset = (text.length - 1).coerceAtLeast(0)
+                val start = layout.getLineForOffset(targetRange.rangeStart.coerceIn(0, lastOffset))
+                val end =
+                    layout.getLineForOffset((targetRange.rangeEnd - 1).coerceIn(0, lastOffset))
+                verseLineTopPx = layout.getLineTop(start).toInt()
+                verseLineBottomPx = layout.getLineBottom(end).toInt()
+                updateAnchor()
+            }
+        },
+    )
 }
 
 @Composable

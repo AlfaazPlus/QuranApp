@@ -260,8 +260,7 @@ private fun ReaderLayoutVerseMode(
                     val viewportHeight =
                         layoutInfo.viewportEndOffset - layoutInfo.viewportStartOffset
                     listState.animateScrollToItem(
-                        index = currentPlayingIndex,
-                        scrollOffset = -(viewportHeight / 5),
+                        index = currentPlayingIndex
                     )
                 }
             }

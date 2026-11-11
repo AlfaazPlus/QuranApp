@@ -74,8 +74,7 @@ fun ReaderNavigator(
         scope.launch {
             when (readerMode) {
                 ReaderMode.Reading, ReaderMode.Translation -> {
-                    val page = readerVm.resolvePageNo(chapterNo, verseNo)
-                    if (page != null) readerVm.requestPageNavigation(page)
+                    readerVm.requestVerseNavigation(chapterNo, verseNo)
                 }
 
                 else -> {

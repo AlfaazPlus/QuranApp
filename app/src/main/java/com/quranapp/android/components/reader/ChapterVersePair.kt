@@ -7,7 +7,9 @@ import java.io.Serializable
 data class ChapterVersePair(val chapterNo: Int, val verseNo: Int) : Serializable {
     constructor(verse: VerseWithDetails) : this(verse.chapterNo, verse.verseNo)
 
-    val isValid: Boolean get() = chapterNo > 0 && verseNo > 0
+    val isValid get() = chapterNo > 0 && verseNo > 0
+
+    val ayahId by lazy { QuranMeta.getAyahId(chapterNo, verseNo) }
 
     fun doesEqual(verse: VerseWithDetails): Boolean {
         return doesEqual(verse.chapterNo, verse.verseNo)
