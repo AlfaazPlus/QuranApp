@@ -145,12 +145,13 @@ private fun RowScope.JuzList(
                         || juz.ranges.any { it.surah.surah.surahNo in surahNos }
             }
 
-            gridState.scrollToItem(0)
+            gridState.readerNavigatorScrollToIndex(0)
         }
     }
 
     LaunchedEffect(activeJuzNo) {
-        gridState.scrollToItem(((activeJuzNo ?: 1) - 1).fastCoerceAtLeast(0))
+        val index = ((activeJuzNo ?: 1) - 1).fastCoerceAtLeast(0)
+        gridState.readerNavigatorScrollToIndex(index)
     }
 
     Column(
@@ -206,7 +207,12 @@ internal fun NavigationVerseList(
 ) {
     if (ayahs.isEmpty()) return
 
-    val state = rememberLazyListState()
+    val state = rememberLazyListState(
+        initialFirstVisibleItemIndex = ayahs.indexOfFirst {
+        it.chapterNo == activeVerse?.chapterNo && it.verseNo == activeVerse.verseNo
+    }.fastCoerceAtLeast(0),
+        initialFirstVisibleItemScrollOffset = -100,
+    )
 
     var searchQuery by remember { mutableStateOf("") }
 
@@ -224,7 +230,7 @@ internal fun NavigationVerseList(
                 it.verseNo.toString().contains(query)
             }
 
-            state.scrollToItem(0)
+            state.readerNavigatorScrollToIndex(0)
         }
     }
 
@@ -232,7 +238,7 @@ internal fun NavigationVerseList(
         if (searchQuery.isNotBlank() || activeVerse == null) return@LaunchedEffect
 
         val idx = filteredAyahs.indexOf(activeVerse)
-        if (idx >= 0) state.scrollToItem(idx)
+        if (idx >= 0) state.readerNavigatorScrollToIndex(idx)
     }
 
     Column(

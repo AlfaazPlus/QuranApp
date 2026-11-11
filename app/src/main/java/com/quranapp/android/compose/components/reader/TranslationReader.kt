@@ -35,6 +35,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -47,6 +48,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -56,10 +61,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.TextLayoutResult
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.text.style.TextOverflow
@@ -76,6 +79,7 @@ import com.quranapp.android.compose.utils.LocalAppLocale
 import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.relations.SurahWithLocalizations
+import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.TranslationPageBuilderParams
 import com.quranapp.android.utils.univ.StringUtils
@@ -100,7 +104,6 @@ sealed class TranslationPageSection {
 
     data class Text(
         val annotatedText: AnnotatedString,
-        var annotatedTextNormalized: AnnotatedString? = null,
         val verses: List<TranslationPageVerse>,
     ) : TranslationPageSection()
 }
@@ -113,6 +116,34 @@ data class TranslationPageItem(
     val translationSlug: String,
     val sections: List<TranslationPageSection>,
 )
+
+private class TranslationVersePositions(private val section: TranslationPageSection.Text) {
+    private val ayahIds = IntArray(section.verses.size) { index ->
+        val verse = section.verses[index]
+        QuranMeta.getAyahId(verse.chapterNo, verse.verseNo)
+    }
+    private val tops = IntArray(section.verses.size)
+    private val bottoms = IntArray(section.verses.size)
+    private var hasLayout = false
+
+    fun updateLayout(layout: TextLayoutResult, textLength: Int) {
+        val lastOffset = (textLength - 1).coerceAtLeast(0)
+        for ((index, verse) in section.verses.withIndex()) {
+            val firstLine = layout.getLineForOffset(verse.rangeStart.coerceIn(0, lastOffset))
+            val lastLine = layout.getLineForOffset((verse.rangeEnd - 1).coerceIn(0, lastOffset))
+            tops[index] = layout.getLineTop(firstLine).toInt()
+            bottoms[index] = layout.getLineBottom(lastLine).toInt()
+        }
+        hasLayout = true
+    }
+
+    fun updatePosition(tracker: VerseVisibilityTracker, rootTop: Int) {
+        if (!hasLayout) return
+        for (index in ayahIds.indices) {
+            tracker.recordBounds(ayahIds[index], rootTop + tops[index], rootTop + bottoms[index])
+        }
+    }
+}
 
 @Composable
 fun ReaderLayoutTranslationPageMode(
@@ -144,6 +175,11 @@ fun ReaderLayoutTranslationPageMode(
     val initialPageIndex =
         mushafSession.currentPageNo?.minus(1)?.coerceAtLeast(0) ?: 0
     val listState = rememberLazyListState(initialFirstVisibleItemIndex = initialPageIndex)
+    val activePageIndex by remember(listState) {
+        derivedStateOf { listState.firstVisibleItemIndex }
+    }
+    val visibilityTrackers = remember { VerseVisibilityRegistry() }
+    val verseAnchor = remember { VerseScrollAnchor() }
 
     var previousMushafKey by remember { mutableStateOf(sessionLayout) }
 
@@ -202,8 +238,16 @@ fun ReaderLayoutTranslationPageMode(
                 val currentPageNo = (currentIndex + 1).coerceIn(1, pageCount)
 
                 readerVm.updateCurrentPageNo(currentPageNo)
-                readerVm.updateLastKnownVerseFromTranslationPage(currentPageNo)
             }
+    }
+
+    LaunchedEffect(listState, pageCount) {
+        listState.updateVisibleVerseWhenIdle(
+            pageCount = pageCount,
+            trackers = visibilityTrackers,
+            viewport = verseAnchor,
+            onVerseVisible = readerVm::updateLastKnownVerse,
+        )
     }
 
     LaunchedEffect(navigateToPage, pageCount) {
@@ -222,7 +266,6 @@ fun ReaderLayoutTranslationPageMode(
     }
 
     var verseTarget by remember { mutableStateOf<Pair<ChapterVersePair, Int>?>(null) }
-    val verseAnchor = remember { VerseScrollAnchor() }
 
     LaunchedEffect(navigateToVerse, pageCount, sessionLayout, mushafSession.version) {
         val targetVerse = navigateToVerse ?: return@LaunchedEffect
@@ -260,7 +303,7 @@ fun ReaderLayoutTranslationPageMode(
         verseTarget = targetVerse to clampedPage
 
         listState.scrollToVersePosition(verseAnchor)
-        readerVm.consumeVerseNavigation()
+        readerVm.completeVerseNavigation()
 
         verseTarget = null
     }
@@ -283,6 +326,7 @@ fun ReaderLayoutTranslationPageMode(
         readerVm.requestVerseNavigation(
             playingVerseMushaf.chapterNo,
             playingVerseMushaf.verseNo,
+            highlightAfterNavigation = false,
         )
     }
 
@@ -338,6 +382,8 @@ fun ReaderLayoutTranslationPageMode(
 
                     TranslationModePage(
                         item = item,
+                        visibilityTrackers = visibilityTrackers,
+                        trackVisibleVerses = pageIndex == activePageIndex,
                         targetVerse = verseTarget?.takeIf { it.second == pageNo }?.first,
                         verseAnchor = verseAnchor,
                     )
@@ -350,6 +396,8 @@ fun ReaderLayoutTranslationPageMode(
 @Composable
 private fun TranslationModePage(
     item: TranslationPageItem?,
+    visibilityTrackers: VerseVisibilityRegistry,
+    trackVisibleVerses: Boolean,
     targetVerse: ChapterVersePair?,
     verseAnchor: VerseScrollAnchor,
 ) {
@@ -362,32 +410,19 @@ private fun TranslationModePage(
     val isPlaying = playerState.isAnyPlaying
     val playingVerse = playerState.playingVerse
     val isRtl = StringUtils.isRtlLanguage(item.translationSlug)
-    val colors = colorScheme
-
-    val sections = remember(item.sections, isPlaying, playingVerse, colors) {
-        item.sections.map { section ->
-            if (section is TranslationPageSection.Text) {
-                section.annotatedTextNormalized = buildAnnotatedString {
-                    append(section.annotatedText)
-
-                    if (!isPlaying || !playingVerse.isValid) return@buildAnnotatedString
-
-                    val v = section.verses.find {
-                        it.chapterNo == playingVerse.chapterNo && it.verseNo == playingVerse.verseNo
-                    } ?: return@buildAnnotatedString
-
-                    addStyle(
-                        SpanStyle(background = colors.primary.alpha(0.2f)),
-                        v.rangeStart,
-                        v.rangeEnd,
-                    )
-                }
-            }
-
-            section
-        }
+    val playingVerseToHighlight = playingVerse.takeIf { isPlaying && it.isValid }
+    val visibilityTracker = remember(item) {
+        VerseVisibilityTracker(
+            item.sections.asSequence()
+                .filterIsInstance<TranslationPageSection.Text>()
+                .flatMap { it.verses.asSequence() }
+                .map { QuranMeta.getAyahId(it.chapterNo, it.verseNo) }
+                .distinct().toList().toIntArray())
     }
-
+    androidx.compose.runtime.DisposableEffect(item.pageNo, visibilityTracker, visibilityTrackers) {
+        visibilityTrackers.register(item.pageNo, visibilityTracker)
+        onDispose { visibilityTrackers.unregister(item.pageNo, visibilityTracker) }
+    }
     val textDirection = if (isRtl) TextDirection.Rtl else TextDirection.Ltr
 
     CompositionLocalProvider(
@@ -423,7 +458,7 @@ private fun TranslationModePage(
                         color = colorScheme.outlineVariant,
                     )
 
-                    sections.forEach {
+                    item.sections.forEach {
                         when (it) {
                             TranslationPageSection.Divider -> HorizontalDivider(
                                 modifier = Modifier.padding(vertical = 8.dp),
@@ -432,16 +467,15 @@ private fun TranslationModePage(
 
                             is TranslationPageSection.Title -> TranslationReaderChapterTitle(it.swl)
                             is TranslationPageSection.Bismillah -> Bismillah()
-                            is TranslationPageSection.Text -> {
-                                if (it.annotatedTextNormalized != null) {
-                                    TranslationPageText(
-                                        section = it,
-                                        targetVerse = targetVerse,
-                                        verseAnchor = verseAnchor,
-                                        textDirection = textDirection,
-                                    )
-                                }
-                            }
+                            is TranslationPageSection.Text -> TranslationPageText(
+                                section = it,
+                                targetVerse = targetVerse,
+                                playingVerse = playingVerseToHighlight,
+                                verseAnchor = verseAnchor,
+                                textDirection = textDirection,
+                                visibilityTracker = visibilityTracker,
+                                trackVisibleVerses = trackVisibleVerses,
+                            )
                         }
                     }
                 }
@@ -454,10 +488,13 @@ private fun TranslationModePage(
 private fun TranslationPageText(
     section: TranslationPageSection.Text,
     targetVerse: ChapterVersePair?,
+    playingVerse: ChapterVersePair?,
     verseAnchor: VerseScrollAnchor,
     textDirection: TextDirection,
+    visibilityTracker: VerseVisibilityTracker,
+    trackVisibleVerses: Boolean,
 ) {
-    val text = section.annotatedTextNormalized ?: return
+    val text = section.annotatedText
     val targetRange = remember(section.verses, targetVerse) {
         targetVerse?.let { target ->
             section.verses.firstOrNull {
@@ -468,6 +505,29 @@ private fun TranslationPageText(
     var textTopPx by remember(targetRange) { mutableIntStateOf(Int.MIN_VALUE) }
     var verseLineTopPx by remember(targetRange) { mutableIntStateOf(Int.MIN_VALUE) }
     var verseLineBottomPx by remember(targetRange) { mutableIntStateOf(Int.MIN_VALUE) }
+    var textLayout by remember(section) { mutableStateOf<TextLayoutResult?>(null) }
+    val versePositions = remember(section) { TranslationVersePositions(section) }
+
+    val highlightState = LocalTransientVerseHighlight.current
+    val highlightedVerse = highlightState.verse
+    val highlightAlpha = highlightState.alpha
+    val highlightColor = colorScheme.primary
+
+    val navigationRange = remember(section.verses, highlightedVerse) {
+        highlightedVerse?.let { target ->
+            section.verses.firstOrNull {
+                it.chapterNo == target.chapterNo && it.verseNo == target.verseNo
+            }
+        }
+    }
+
+    val playingRange = remember(section.verses, playingVerse, highlightedVerse) {
+        playingVerse?.takeIf { it != highlightedVerse }?.let { target ->
+            section.verses.firstOrNull {
+                it.chapterNo == target.chapterNo && it.verseNo == target.verseNo
+            }
+        }
+    }
 
     fun updateAnchor() {
         if (
@@ -480,13 +540,62 @@ private fun TranslationPageText(
         }
     }
 
-    val anchorModifier = if (targetRange == null) {
+    val anchorModifier = if (targetRange == null && !trackVisibleVerses) {
         Modifier
     } else {
         Modifier.onGloballyPositioned { coordinates ->
-            textTopPx = coordinates.positionInRoot().y.toInt()
-            updateAnchor()
+            val rootTop = coordinates.positionInRoot().y.toInt()
+            textTopPx = rootTop
+            if (targetRange != null) {
+                updateAnchor()
+            }
+            if (trackVisibleVerses) {
+                versePositions.updatePosition(visibilityTracker, rootTop)
+            }
         }
+    }
+
+    val highlightModifier = if (navigationRange == null && playingRange == null) {
+        Modifier
+    } else Modifier.drawBehind {
+        val layout = textLayout ?: return@drawBehind
+        if (text.isEmpty()) return@drawBehind
+
+        fun drawRange(range: TranslationPageVerse, alpha: Float) {
+            if (range.rangeEnd <= range.rangeStart || alpha <= 0f) return
+            val startOffset = range.rangeStart.coerceIn(0, text.length - 1)
+            val endOffset = range.rangeEnd.coerceIn(startOffset + 1, text.length)
+            val firstLine = layout.getLineForOffset(startOffset)
+            val lastLine = layout.getLineForOffset(endOffset - 1)
+
+            for (line in firstLine..lastLine) {
+                val lineStart = maxOf(startOffset, layout.getLineStart(line))
+                val lineEnd = minOf(endOffset, layout.getLineEnd(line, visibleEnd = false)) - 1
+                if (lineEnd < lineStart) continue
+
+                val firstBounds = layout.getBoundingBox(lineStart)
+                val lastBounds = layout.getBoundingBox(lineEnd)
+
+                drawRoundRect(
+                    color = highlightColor.copy(alpha = VERSE_HIGHLIGHT_ALPHA * alpha),
+                    topLeft = Offset(
+                        minOf(firstBounds.left, lastBounds.left),
+                        layout.getLineTop(line)
+                    ),
+                    size = Size(
+                        maxOf(firstBounds.right, lastBounds.right) - minOf(
+                            firstBounds.left,
+                            lastBounds.left
+                        ),
+                        layout.getLineBottom(line) - layout.getLineTop(line),
+                    ),
+                    cornerRadius = CornerRadius(4.dp.toPx()),
+                )
+            }
+        }
+
+        playingRange?.let { drawRange(it, 1f) }
+        navigationRange?.let { drawRange(it, highlightAlpha.value) }
     }
 
     Text(
@@ -494,12 +603,17 @@ private fun TranslationPageText(
         modifier = Modifier
             .fillMaxWidth()
             .padding(14.dp)
-            .then(anchorModifier),
+            .then(anchorModifier)
+            .then(highlightModifier),
         style = TextStyle(textDirection = textDirection),
-        onTextLayout = if (targetRange == null) {
-            {}
-        } else {
-            { layout ->
+        onTextLayout = { layout ->
+            textLayout = layout
+            versePositions.updateLayout(layout, text.length)
+            if (trackVisibleVerses && textTopPx != Int.MIN_VALUE) {
+                versePositions.updatePosition(visibilityTracker, textTopPx)
+            }
+
+            if (targetRange != null) {
                 val lastOffset = (text.length - 1).coerceAtLeast(0)
                 val start = layout.getLineForOffset(targetRange.rangeStart.coerceIn(0, lastOffset))
                 val end =

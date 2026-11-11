@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
@@ -46,6 +47,9 @@ import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 
+const val VERSE_HIGHLIGHT_ALPHA = 0.28f
+const val VERSE_WORD_HIGHLIGHT_ALPHA = 0.38f
+
 enum class VerseActionBarMode {
     Full,
     Minimal,
@@ -64,13 +68,23 @@ fun VerseView(
     val recState = LocalRecitation.current
     val isVersePlaying = recState.isAnyPlaying && recState.playingVerse.doesEqual(verse)
 
+    val highlightState = LocalTransientVerseHighlight.current
+    val highlightAlpha = highlightState.alpha
+    val isHighlighted = highlightState.verse?.let {
+        it.chapterNo == verse.chapterNo && it.verseNo == verse.verseNo
+    } == true
+
+    val colors = colorScheme
+
     Box {
         Column(
             modifier = Modifier
-                .background(
-                    if (isVersePlaying) colorScheme.primary.alpha(0.2f)
-                    else Color.Transparent
-                )
+                .drawBehind {
+                    if (isVersePlaying || isHighlighted) {
+                        val alpha = if (isHighlighted) highlightAlpha.value else 1f
+                        drawRect(colors.primary.copy(alpha = VERSE_HIGHLIGHT_ALPHA * alpha))
+                    }
+                }
                 .padding(horizontal = 12.dp, vertical = 16.dp)
         ) {
             VerseActionBar(verse, isVersePlaying, isBookmarked, actionBarMode)

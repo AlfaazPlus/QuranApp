@@ -65,12 +65,13 @@ fun PageNavigationList(
             filteredPages = allPages
         } else {
             filteredPages = allPages.filter { it.toString().startsWith(query) }
-            gridState.scrollToItem(0)
+            gridState.readerNavigatorScrollToIndex(0)
         }
     }
 
     LaunchedEffect(currentPageNo) {
-        gridState.scrollToItem(((currentPageNo ?: 1) - 1).fastCoerceAtLeast(0))
+        val index = ((currentPageNo ?: 1) - 1).fastCoerceAtLeast(0)
+        gridState.readerNavigatorScrollToIndex(index)
     }
 
     Column {

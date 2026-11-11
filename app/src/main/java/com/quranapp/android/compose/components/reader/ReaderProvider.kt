@@ -3,7 +3,9 @@ package com.quranapp.android.compose.components.reader
 import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
@@ -49,6 +51,19 @@ import kotlinx.coroutines.launch
 
 val LocalReaderViewModel = staticCompositionLocalOf<ReaderProviderViewModel> {
     error("ReaderProviderViewModel not provided")
+}
+
+data class TransientVerseHighlight(
+    val verse: ChapterVersePair?,
+    val alpha: State<Float>,
+)
+
+private val defaultTransientVerseHighlight = TransientVerseHighlight(
+    verse = null,
+    alpha = mutableFloatStateOf(1f),
+)
+val LocalTransientVerseHighlight = staticCompositionLocalOf {
+    defaultTransientVerseHighlight
 }
 
 data class LocalRecitationStateData(

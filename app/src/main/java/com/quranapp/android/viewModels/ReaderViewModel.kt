@@ -40,7 +40,9 @@ import com.quranapp.android.utils.reader.VerseActions
 import com.quranapp.android.utils.reader.toQuranMushafId
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -58,6 +60,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+import kotlin.time.Duration.Companion.milliseconds
 
 sealed class ReaderViewType {
     data class Chapter(val chapterNo: Int) : ReaderViewType()
@@ -122,15 +125,16 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
     var lastKnownVerse: ChapterVersePair? by mutableStateOf(null)
         private set
 
+    var transientHighlightedVerse: ChapterVersePair? by mutableStateOf(null)
+        private set
+    private var highlightVerseAfterNavigation = false
+    private var clearVerseHighlightJob: Job? = null
+
     private val _navigateToPage = MutableStateFlow<Int?>(null)
     val navigateToPage: StateFlow<Int?> = _navigateToPage.asStateFlow()
 
     private val _navigateToVerse = MutableStateFlow<ChapterVersePair?>(null)
     val navigateToVerse: StateFlow<ChapterVersePair?> = _navigateToVerse.asStateFlow()
-
-    /** Bumps on every request so navigating to the current verse still starts a new scroll. */
-    private val _verseNavToken = MutableStateFlow(0)
-    val verseNavToken: StateFlow<Int> = _verseNavToken.asStateFlow()
 
     private val _verseByVersePrepared = MutableStateFlow(
         ReaderPreparedData(emptyList(), emptyMap()),
@@ -588,84 +592,8 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
     }
 
 
-    fun updateLastKnownVerseFromItems(firstVisibleIndex: Int) {
-        val items = _verseByVersePrepared.value.items
-
-        for (i in firstVisibleIndex until items.size) {
-            val item = items[i]
-            if (item is ReaderLayoutItem.VerseUI) {
-                lastKnownVerse = ChapterVersePair(item.verse)
-                return
-            }
-        }
-    }
-
-    fun updateLastKnownVerseFromPage(pageNo: Int) {
-        val page = _pageItems.value[pageNo]
-
-        if (page != null) {
-            val firstWord = page.lines
-                .filterIsInstance<QuranPageLineItem.Text>()
-                .firstOrNull()?.words?.firstOrNull()
-            if (firstWord != null) {
-                lastKnownVerse = QuranMeta.getVerseNoFromAyahId(firstWord.ayahId).let {
-                    ChapterVersePair(it.first, it.second)
-                }
-                return
-            }
-        }
-        viewModelScope.launch(Dispatchers.IO) {
-            val ayahId = repository.getFirstAyahIdOnPage(pageNo) ?: return@launch
-            lastKnownVerse = QuranMeta.getVerseNoFromAyahId(ayahId).let {
-                ChapterVersePair(it.first, it.second)
-            }
-        }
-    }
-
-    fun updateLastKnownVerseFromTranslationPage(pageNo: Int) {
-        val page = _translationPageItems.value[pageNo]
-
-        if (page != null) {
-            val firstVerse = page.sections
-                .filterIsInstance<TranslationPageSection.Text>()
-                .firstOrNull()
-                ?.verses
-                ?.firstOrNull()
-
-            if (firstVerse != null) {
-                lastKnownVerse = ChapterVersePair(firstVerse.chapterNo, firstVerse.verseNo)
-                return
-            }
-        }
-
-        viewModelScope.launch(Dispatchers.IO) {
-            val ayahId = repository.getFirstAyahIdOnPage(pageNo) ?: return@launch
-
-            lastKnownVerse = QuranMeta.getVerseNoFromAyahId(ayahId).let {
-                ChapterVersePair(it.first, it.second)
-            }
-        }
-    }
-
-    fun updateLastKnownVerseFromReadingFlowPage(pageNo: Int) {
-        val page = _readingFlowPageItems.value[pageNo]
-        val firstWord = page?.sections
-            ?.filterIsInstance<ReadingFlowSection.Words>()
-            ?.firstOrNull()
-            ?.words
-            ?.firstOrNull()
-
-        if (firstWord != null) {
-            val pair = QuranMeta.getVerseNoFromAyahId(firstWord.ayahId)
-            lastKnownVerse = ChapterVersePair(pair.first, pair.second)
-            return
-        }
-
-        viewModelScope.launch(Dispatchers.IO) {
-            val ayahId = repository.getFirstAyahIdOnPage(pageNo) ?: return@launch
-            val pair = QuranMeta.getVerseNoFromAyahId(ayahId)
-            lastKnownVerse = ChapterVersePair(pair.first, pair.second)
-        }
+    fun updateLastKnownVerse(verse: ChapterVersePair) {
+        if (verse.isValid && lastKnownVerse != verse) lastKnownVerse = verse
     }
 
     fun saveReadHistory() {
@@ -780,15 +708,49 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         _navigateToPage.value = null
     }
 
-    fun requestVerseNavigation(chapterNo: Int, verseNo: Int) {
+    fun requestVerseNavigation(
+        chapterNo: Int,
+        verseNo: Int,
+        highlightAfterNavigation: Boolean = true,
+    ) {
         val verse = ChapterVersePair(chapterNo, verseNo)
+
+        clearTransientVerseHighlight()
+        highlightVerseAfterNavigation = highlightAfterNavigation
+
         _navigateToVerse.value = verse
         lastKnownVerse = verse
-        _verseNavToken.value = _verseNavToken.value + 1
     }
 
     fun consumeVerseNavigation() {
         _navigateToVerse.value = null
+        highlightVerseAfterNavigation = false
+    }
+
+    fun completeVerseNavigation() {
+        val verse = _navigateToVerse.value
+        val shouldHighlight = highlightVerseAfterNavigation
+
+        consumeVerseNavigation()
+
+        if (!shouldHighlight || verse == null) return
+
+        clearVerseHighlightJob?.cancel()
+        transientHighlightedVerse = verse
+        clearVerseHighlightJob = viewModelScope.launch {
+            delay(2_850.milliseconds)
+
+            if (transientHighlightedVerse == verse) {
+                transientHighlightedVerse = null
+                clearVerseHighlightJob = null
+            }
+        }
+    }
+
+    private fun clearTransientVerseHighlight() {
+        clearVerseHighlightJob?.cancel()
+        clearVerseHighlightJob = null
+        transientHighlightedVerse = null
     }
 
     suspend fun syncToPlayingVerse() {
@@ -800,7 +762,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
 
         when (mode) {
             ReaderMode.Reading, ReaderMode.Translation -> {
-                requestVerseNavigation(chapterNo, verseNo)
+                requestVerseNavigation(chapterNo, verseNo, highlightAfterNavigation = false)
             }
 
             ReaderMode.VerseByVerse -> {
@@ -818,7 +780,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
                     _uiState.update { state }
                 }
 
-                requestVerseNavigation(chapterNo, verseNo)
+                requestVerseNavigation(chapterNo, verseNo, highlightAfterNavigation = false)
             }
         }
     }

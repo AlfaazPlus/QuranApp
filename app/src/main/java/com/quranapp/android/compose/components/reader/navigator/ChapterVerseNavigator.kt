@@ -197,8 +197,15 @@ private fun RowScope.ChapterOnlyList(
                 surah.surah.surahNo in surahNos
             }
 
-            gridState.scrollToItem(0)
+            gridState.readerNavigatorScrollToIndex(0)
         }
+    }
+
+    LaunchedEffect(selectedChapterNo, searchQuery) {
+        if (searchQuery.isNotBlank()) return@LaunchedEffect
+
+        val index = (selectedChapterNo?.minus(1) ?: 0).coerceAtLeast(0)
+        gridState.readerNavigatorScrollToIndex(index)
     }
 
     Column(Modifier.weight(1f)) {
@@ -248,8 +255,10 @@ private fun VerseSelectList(
 ) {
     if (currentChapter == null) return
 
+    val initialVerseIndex = ((selectedVerseNos.minOrNull() ?: 1) - 1).coerceAtLeast(0)
+
     val state = rememberLazyListState(
-        initialFirstVisibleItemIndex = selectedVerseNos.firstOrNull() ?: 0,
+        initialFirstVisibleItemIndex = initialVerseIndex,
         initialFirstVisibleItemScrollOffset = -200,
     )
 
@@ -258,7 +267,7 @@ private fun VerseSelectList(
     var filteredAyahs by remember { mutableStateOf(ayahs) }
 
     LaunchedEffect(currentChapter) {
-        state.scrollToItem(selectedVerseNos.firstOrNull() ?: 0, -200)
+        state.readerNavigatorScrollToIndex(initialVerseIndex)
     }
 
     LaunchedEffect(ayahs, searchQuery) {
@@ -270,7 +279,7 @@ private fun VerseSelectList(
             filteredAyahs = ayahs.filter { ayahNo ->
                 ayahNo.toString().contains(query)
             }
-            state.scrollToItem(0)
+            state.readerNavigatorScrollToIndex(0)
         }
     }
 

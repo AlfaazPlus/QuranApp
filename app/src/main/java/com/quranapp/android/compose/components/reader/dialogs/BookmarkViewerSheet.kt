@@ -409,7 +409,7 @@ private fun BookmarkVersesTab(
         return
     }
 
-    TextStyleProvider(prepared?.textStyles ?: emptyMap()) {
+    TextStyleProvider(prepared.textStyles) {
         LazyColumn(modifier = Modifier.fillMaxHeight()) {
             itemsIndexed(verses, key = { _, verseUi -> verseUi.key }) { index, verseUi ->
                 VerseView(

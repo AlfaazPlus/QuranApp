@@ -130,12 +130,13 @@ private fun RowScope.HizbGrid(
                         || hizb.ranges.any { it.surah.surah.surahNo in surahNos }
             }
 
-            gridState.scrollToItem(0)
+            gridState.readerNavigatorScrollToIndex(0)
         }
     }
 
     LaunchedEffect(activeHizbNo) {
-        gridState.scrollToItem(((activeHizbNo ?: 1) - 1).fastCoerceAtLeast(0))
+        val index = ((activeHizbNo ?: 1) - 1).fastCoerceAtLeast(0)
+        gridState.readerNavigatorScrollToIndex(index)
     }
 
     Column(

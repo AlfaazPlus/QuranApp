@@ -21,6 +21,8 @@ import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -98,9 +100,16 @@ fun ReaderLayoutReadingFlow(
     val context = LocalContext.current
     val isDark = ThemeUtils.observeDarkTheme()
 
-    val initialPageIndex =
-        mushafSession.currentPageNo?.minus(1)?.coerceAtLeast(0) ?: 0
+    val initialPageIndex = mushafSession.currentPageNo?.minus(1)
+        ?.coerceAtLeast(0) ?: 0
     val listState = rememberLazyListState(initialFirstVisibleItemIndex = initialPageIndex)
+    val activePageIndex by remember(listState) {
+        derivedStateOf { listState.firstVisibleItemIndex }
+    }
+
+    val visibilityTrackers = remember { VerseVisibilityRegistry() }
+    val verseAnchor = remember { VerseScrollAnchor() }
+    var verseBringIntoViewTarget by remember { mutableStateOf<Pair<ChapterVersePair, Int>?>(null) }
 
     var previousMushafKey by remember { mutableStateOf(sessionLayout) }
 
@@ -151,8 +160,16 @@ fun ReaderLayoutReadingFlow(
 
                 val currentPageNo = (currentIndex + 1).coerceIn(1, pageCount)
                 readerVm.updateCurrentPageNo(currentPageNo)
-                readerVm.updateLastKnownVerseFromReadingFlowPage(currentPageNo)
             }
+    }
+
+    LaunchedEffect(listState, pageCount) {
+        listState.updateVisibleVerseWhenIdle(
+            pageCount = pageCount,
+            trackers = visibilityTrackers,
+            viewport = verseAnchor,
+            onVerseVisible = readerVm::updateLastKnownVerse,
+        )
     }
 
     LaunchedEffect(navigateToPage, pageCount) {
@@ -168,9 +185,6 @@ fun ReaderLayoutReadingFlow(
             readerVm.consumePageNavigation()
         }
     }
-
-    var verseBringIntoViewTarget by remember { mutableStateOf<Pair<ChapterVersePair, Int>?>(null) }
-    val verseAnchor = remember { VerseScrollAnchor() }
 
     LaunchedEffect(navigateToVerse, pageCount, sessionLayout, mushafSession.version) {
         val targetVerse = navigateToVerse ?: return@LaunchedEffect
@@ -211,7 +225,7 @@ fun ReaderLayoutReadingFlow(
         verseBringIntoViewTarget = targetVerse to clampedPage
 
         listState.scrollToVersePosition(verseAnchor)
-        readerVm.consumeVerseNavigation()
+        readerVm.completeVerseNavigation()
 
         verseBringIntoViewTarget = null
     }
@@ -230,7 +244,11 @@ fun ReaderLayoutReadingFlow(
             ?: return@LaunchedEffect
         if (targetPage !in 1..pageCount) return@LaunchedEffect
 
-        readerVm.requestVerseNavigation(playingVerse.chapterNo, playingVerse.verseNo)
+        readerVm.requestVerseNavigation(
+            playingVerse.chapterNo,
+            playingVerse.verseNo,
+            highlightAfterNavigation = false,
+        )
     }
 
     LaunchedEffect(playingVerse, pageCount) {
@@ -283,6 +301,8 @@ fun ReaderLayoutReadingFlow(
 
                     ReadingFlowPage(
                         item = item,
+                        visibilityTrackers = visibilityTrackers,
+                        trackVisibleVerses = pageIndex == activePageIndex,
                         targetVerse = verseBringIntoViewTarget
                             ?.takeIf { it.second == pageNo }
                             ?.first,
@@ -302,6 +322,8 @@ fun ReaderLayoutReadingFlow(
 @Composable
 private fun ReadingFlowPage(
     item: ReadingFlowPageItem?,
+    visibilityTrackers: VerseVisibilityRegistry,
+    trackVisibleVerses: Boolean,
     targetVerse: ChapterVersePair?,
     onWordPositioned: (ChapterVersePair, Int, Int, Boolean, Boolean) -> Unit,
 ) {
@@ -311,6 +333,21 @@ private fun ReadingFlowPage(
     }
 
     val style = rememberReadingFlowStyle(item.pageNo)
+    val visibilityTracker = remember(item) {
+        val ids = item.sections.asSequence()
+            .filterIsInstance<ReadingFlowSection.Words>()
+            .flatMap { it.words.asSequence() }
+            .map { it.ayahId }
+            .distinct()
+            .toList()
+            .toIntArray()
+        VerseVisibilityTracker(ids)
+    }
+
+    DisposableEffect(item.pageNo, visibilityTracker, visibilityTrackers) {
+        visibilityTrackers.register(item.pageNo, visibilityTracker)
+        onDispose { visibilityTrackers.unregister(item.pageNo, visibilityTracker) }
+    }
 
     Surface(
         modifier = Modifier
@@ -346,6 +383,7 @@ private fun ReadingFlowPage(
                         style = style,
                         targetVerse = targetVerse,
                         onWordPositioned = onWordPositioned,
+                        visibilityTracker = visibilityTracker.takeIf { trackVisibleVerses },
                     )
                 }
             }
@@ -386,6 +424,7 @@ private fun ReadingFlowWords(
     style: TextStyle,
     targetVerse: ChapterVersePair?,
     onWordPositioned: (ChapterVersePair, Int, Int, Boolean, Boolean) -> Unit,
+    visibilityTracker: VerseVisibilityTracker?,
 ) {
     val playerState = LocalRecitation.current
     val isPlaying = playerState.isAnyPlaying
@@ -402,13 +441,17 @@ private fun ReadingFlowWords(
         else QuranMeta.getAyahId(playingVerse.chapterNo, playingVerse.verseNo)
     }
 
+    val highlightState = LocalTransientVerseHighlight.current
+    val navigationAyahId = highlightState.verse?.ayahId
+        ?.takeIf { ayahId -> words.any { it.ayahId == ayahId } }
+    val highlightAlpha = highlightState.alpha
+
     val bounds = remember(words) { RecitationWordBounds(words.size) }
-    val trackPositions = playingAyahId >= 0
 
     // Stable modifiers so word-index ticks don't recompose every word cell.
-    val positionModifiers = remember(bounds, trackPositions) {
+    val positionModifiers = remember(bounds, navigationAyahId, playingAyahId) {
         Array(bounds.wordCount) { index ->
-            if (!trackPositions) {
+            if (words[index].ayahId != navigationAyahId && words[index].ayahId != playingAyahId) {
                 Modifier
             } else {
                 Modifier.onGloballyPositioned { coordinates ->
@@ -426,8 +469,8 @@ private fun ReadingFlowWords(
         }
     }
 
-    val verseHighlightColor = colorScheme.primary.alpha(0.2f)
-    val wordHighlightColor = colorScheme.primary.alpha(0.3f)
+    val verseHighlightColor = colorScheme.primary.alpha(VERSE_HIGHLIGHT_ALPHA)
+    val wordHighlightColor = colorScheme.primary.alpha(VERSE_WORD_HIGHLIGHT_ALPHA)
     val highlightCorner = with(LocalDensity.current) {
         CornerRadius(8.dp.toPx(), 8.dp.toPx())
     }
@@ -438,16 +481,27 @@ private fun ReadingFlowWords(
                 .fillMaxWidth()
                 .padding(14.dp)
                 .drawBehind {
-                    drawRecitationHighlights(
-                        bounds = bounds,
-                        words = words,
-                        ayahId = playingAyahId,
-                        wordIndex = playingWordIndex,
-                        splitRows = true,
-                        verseColor = verseHighlightColor,
-                        wordColor = wordHighlightColor,
-                        corner = highlightCorner,
-                    )
+                    val primaryAyahId = navigationAyahId ?: playingAyahId
+                    if (primaryAyahId >= 0) {
+                        drawRecitationHighlights(
+                            bounds = bounds,
+                            words = words,
+                            ayahId = primaryAyahId,
+                            wordIndex = if (navigationAyahId == null || navigationAyahId == playingAyahId) {
+                                playingWordIndex
+                            } else {
+                                -1
+                            },
+                            splitRows = true,
+                            verseColor = if (navigationAyahId != null) {
+                                verseHighlightColor.copy(alpha = verseHighlightColor.alpha * highlightAlpha.value)
+                            } else {
+                                verseHighlightColor
+                            },
+                            wordColor = wordHighlightColor,
+                            corner = highlightCorner,
+                        )
+                    }
                 },
             horizontalArrangement = Arrangement.Start,
             verticalArrangement = Arrangement.spacedBy(2.dp),
@@ -459,9 +513,12 @@ private fun ReadingFlowWords(
                     style = style,
                     showTooltip = shouldShowTooltip && wbwState.activeTooltipWord == word,
                     modifier = positionModifiers[index],
+                    visibilityTracker = visibilityTracker,
+                    trackVerseStart = index == 0 || words[index - 1].ayahId != word.ayahId,
+                    trackVerseEnd = index == words.lastIndex || words[index + 1].ayahId != word.ayahId,
                     targetVerse = targetVerse?.takeIf {
                         word.ayahId == targetAyahId &&
-                            (word.wordIndex == targetWordIndex || word.isLastWordOfAyah)
+                                (word.wordIndex == targetWordIndex || word.isLastWordOfAyah)
                     },
                     targetIsStart = word.ayahId == targetAyahId && word.wordIndex == targetWordIndex,
                     targetIsEnd = word.ayahId == targetAyahId && word.isLastWordOfAyah,
@@ -483,21 +540,33 @@ private fun ReadingFlowWordCell(
     targetIsStart: Boolean,
     targetIsEnd: Boolean,
     onWordPositioned: (ChapterVersePair, Int, Int, Boolean, Boolean) -> Unit,
+    visibilityTracker: VerseVisibilityTracker?,
+    trackVerseStart: Boolean,
+    trackVerseEnd: Boolean,
 ) {
     val wbwState = LocalWbwState.current
     val active = wbwState.activeTooltipWord == word
-    val targetPositionModifier = targetVerse?.let { verse ->
+    val targetPositionModifier = if (
+        targetVerse != null || (visibilityTracker != null && (trackVerseStart || trackVerseEnd))
+    ) {
         Modifier.onGloballyPositioned { coordinates ->
             val top = coordinates.positionInRoot().y.toInt()
-            onWordPositioned(
-                verse,
-                top,
-                top + coordinates.size.height,
-                targetIsStart,
-                targetIsEnd,
-            )
+            val bottom = top + coordinates.size.height
+            if (visibilityTracker != null) {
+                if (trackVerseStart) visibilityTracker.recordVerseStart(word.ayahId, top)
+                if (trackVerseEnd) visibilityTracker.recordVerseEnd(word.ayahId, bottom)
+            }
+            targetVerse?.let { verse ->
+                onWordPositioned(
+                    verse,
+                    top,
+                    bottom,
+                    targetIsStart,
+                    targetIsEnd
+                )
+            }
         }
-    } ?: Modifier
+    } else Modifier
 
     val wordContent: @Composable () -> Unit = {
         ReadingFlowWord(

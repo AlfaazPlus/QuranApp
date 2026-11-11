@@ -1,5 +1,7 @@
 package com.quranapp.android.compose.components.reader
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.scrollBy
@@ -18,6 +20,8 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -41,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastCoerceAtLeast
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.R
+import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.reader.navigator.ReaderFooterNavigator
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
@@ -52,7 +57,9 @@ import com.quranapp.android.utils.reader.atlas.AtlasGlyphPlacement
 import com.quranapp.android.viewModels.ReaderUiState
 import com.quranapp.android.viewModels.ReaderViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlin.time.Duration.Companion.milliseconds
 
 enum class ReaderMode(val value: String) {
     VerseByVerse("mode_vbv"),
@@ -124,9 +131,33 @@ fun ReaderLayout(
 ) {
     val uiState by readerVm.uiState.collectAsStateWithLifecycle()
     val readerMode by readerVm.readerMode.collectAsState()
-
     if (readerMode == null) {
         return Loader(fill = true)
+    }
+
+    val highlightedVerse = readerVm.transientHighlightedVerse
+    val highlightAlpha = remember { Animatable(1f) }
+    val highlightAlphaState = remember(highlightAlpha) {
+        derivedStateOf { highlightAlpha.value }
+    }
+    val transientHighlight = remember(highlightedVerse, highlightAlphaState) {
+        TransientVerseHighlight(highlightedVerse, highlightAlphaState)
+    }
+
+    LaunchedEffect(highlightedVerse) {
+        if (highlightedVerse == null) {
+            highlightAlpha.snapTo(1f)
+            return@LaunchedEffect
+        }
+
+        highlightAlpha.snapTo(1f)
+
+        repeat(2) {
+            highlightAlpha.animateTo(0.08f, tween(450))
+            highlightAlpha.animateTo(1f, tween(450))
+        }
+
+        highlightAlpha.animateTo(0f, tween(1000))
     }
 
     val prevMode = remember { mutableStateOf(readerMode) }
@@ -140,49 +171,50 @@ fun ReaderLayout(
         }
     }
 
-    when (readerMode) {
-        ReaderMode.Reading -> {
-            val readingLayout = ReaderPreferences.observeReadingLayout()
+    CompositionLocalProvider(
+        LocalTransientVerseHighlight provides transientHighlight
+    ) {
+        when (readerMode) {
+            ReaderMode.Reading -> {
+                val readingLayout = ReaderPreferences.observeReadingLayout()
 
-            if (readingLayout == ReadingLayout.Flow) {
-                ReaderLayoutReadingFlow(
+                if (readingLayout == ReadingLayout.Flow) {
+                    ReaderLayoutReadingFlow(
+                        readerVm,
+                        nestedScrollConnection,
+                        onSyncStateChanged,
+                    )
+                } else {
+                    BoxWithConstraints(modifier = Modifier.fillMaxHeight()) {
+                        val contentWidth = maxWidth
+                            .coerceAtMost(MUSHAF_FONT_WIDTH_DP_MAX.dp)
+                            .coerceAtLeast(1.dp)
+
+                        ReaderLayoutPageMode(
+                            readerVm,
+                            contentWidth,
+                            nestedScrollConnection,
+                            onSyncStateChanged,
+                        )
+                    }
+                }
+            }
+
+            ReaderMode.Translation -> {
+                ReaderLayoutTranslationPageMode(
                     readerVm,
                     nestedScrollConnection,
                     onSyncStateChanged,
                 )
-            } else {
-                BoxWithConstraints(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                ) {
-                    val contentWidth =
-                        (maxWidth.coerceAtMost(MUSHAF_FONT_WIDTH_DP_MAX.dp))
-                            .coerceAtLeast(1.dp)
-
-                    ReaderLayoutPageMode(
-                        readerVm,
-                        contentWidth,
-                        nestedScrollConnection,
-                        onSyncStateChanged,
-                    )
-                }
             }
-        }
 
-        ReaderMode.Translation -> {
-            ReaderLayoutTranslationPageMode(
+            else -> ReaderLayoutVerseMode(
                 readerVm,
+                uiState,
                 nestedScrollConnection,
                 onSyncStateChanged,
             )
         }
-
-        else -> ReaderLayoutVerseMode(
-            readerVm,
-            uiState,
-            nestedScrollConnection,
-            onSyncStateChanged,
-        )
     }
 }
 
@@ -211,16 +243,26 @@ private fun ReaderLayoutVerseMode(
         }.toHashSet()
     }
 
-    LaunchedEffect(listState) {
-        snapshotFlow { listState.firstVisibleItemIndex }
+    LaunchedEffect(listState, items) {
+        snapshotFlow { listState.isScrollInProgress to listState.firstVisibleItemIndex }
             .distinctUntilChanged()
-            .collect { readerVm.updateLastKnownVerseFromItems(it) }
-    }
+            .collectLatest { (scrolling, index) ->
+                if (scrolling) return@collectLatest
 
-    LaunchedEffect(prepared) {
-        if (items.isNotEmpty()) {
-            readerVm.updateLastKnownVerseFromItems(listState.firstVisibleItemIndex)
-        }
+                delay(180.milliseconds)
+
+                if (listState.isScrollInProgress || listState.firstVisibleItemIndex != index) {
+                    return@collectLatest
+                }
+
+                val visibleItems = listState.layoutInfo.visibleItemsInfo
+                for (visibleItem in visibleItems) {
+                    val verseItem = items.getOrNull(visibleItem.index) as? ReaderLayoutItem.VerseUI
+                        ?: continue
+                    readerVm.updateLastKnownVerse(ChapterVersePair(verseItem.verse))
+                    break
+                }
+            }
     }
 
     LaunchedEffect(uiState.viewType) {
@@ -231,7 +273,6 @@ private fun ReaderLayoutVerseMode(
 
     var autoScrollSpeed by readerVm.autoScrollSpeed
     var playerVerseSync by readerVm.playerVerseSync
-
     val playerState = LocalRecitation.current
 
     val isPlaying = playerState.isAnyPlaying
@@ -299,7 +340,7 @@ private fun ReaderLayoutVerseMode(
         if (idx >= 0) {
             val optimalIdx = items.findOptimalScrollIndex(idx)
             listState.scrollToItem(optimalIdx)
-            readerVm.consumeVerseNavigation()
+            readerVm.completeVerseNavigation()
         }
     }
 
@@ -308,7 +349,7 @@ private fun ReaderLayoutVerseMode(
 
         while (speed != null) {
             listState.scrollBy(speed)
-            delay(16L) // ~60 FPS
+            delay(16.milliseconds) // ~60 FPS
         }
     }
 

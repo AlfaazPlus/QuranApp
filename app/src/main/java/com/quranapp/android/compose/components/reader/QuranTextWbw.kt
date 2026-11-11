@@ -137,7 +137,7 @@ private fun QuranTextWbwWordCell(
         Modifier
             .wrapContentWidth(Alignment.CenterHorizontally)
             .background(
-                if (active) colorScheme.primary.alpha(0.3f) else Color.Transparent,
+                if (active) colorScheme.primary.alpha(VERSE_WORD_HIGHLIGHT_ALPHA) else Color.Transparent,
                 shape = shapes.small
             )
             .clickable { handleWordClick(word) }

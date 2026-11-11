@@ -14,7 +14,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
@@ -140,12 +142,13 @@ private fun RowScope.ChapterList(
                 surah.surah.surahNo in surahNos
             }
 
-            gridState.scrollToItem(0)
+            gridState.readerNavigatorScrollToIndex(0)
         }
     }
 
     LaunchedEffect(activeChapterNo) {
-        gridState.scrollToItem(((activeChapterNo ?: 1) - 1).fastCoerceAtLeast(0))
+        val index = ((activeChapterNo ?: 1) - 1).fastCoerceAtLeast(0)
+        gridState.readerNavigatorScrollToIndex(index)
     }
 
     Column(
@@ -201,7 +204,10 @@ private fun ChapterVerseList(
 ) {
     if (currentChapter == null) return
 
-    val state = rememberLazyListState()
+    val state = rememberLazyListState(
+        initialFirstVisibleItemIndex = ((activeVerseNo ?: 1) - 1).fastCoerceAtLeast(0),
+        initialFirstVisibleItemScrollOffset = -100,
+    )
 
     val ayahs = (1..currentChapter.ayahCount).toList()
     var searchQuery by remember { mutableStateOf("") }
@@ -219,7 +225,7 @@ private fun ChapterVerseList(
                 ayahNo.toString().contains(query)
             }
 
-            state.scrollToItem(0)
+            state.readerNavigatorScrollToIndex(0)
         }
     }
 
@@ -227,7 +233,7 @@ private fun ChapterVerseList(
         if (searchQuery.isNotBlank() || activeVerseNo == null) return@LaunchedEffect
 
         val idx = filteredAyahs.indexOf(activeVerseNo)
-        if (idx >= 0) state.scrollToItem(idx)
+        if (idx >= 0) state.readerNavigatorScrollToIndex(idx)
     }
 
     Column(
@@ -320,4 +326,14 @@ internal fun FilterField(
         keyboardType = keyboardType,
         modifier = modifier
     )
+}
+
+internal suspend fun LazyGridState.readerNavigatorScrollToIndex(index: Int) {
+    if (layoutInfo.visibleItemsInfo.any { it.index == index }) return
+    scrollToItem(index, -100)
+}
+
+internal suspend fun LazyListState.readerNavigatorScrollToIndex(index: Int) {
+    if (layoutInfo.visibleItemsInfo.any { it.index == index }) return
+    scrollToItem(index, -100)
 }
