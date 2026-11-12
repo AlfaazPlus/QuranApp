@@ -10,6 +10,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.foundation.text.appendInlineContent
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.withStyle
@@ -1033,7 +1034,11 @@ object ReaderItemsBuilder {
                                         fontWeight = FontWeight.Bold
                                     )
                                 ) {
-                                    append("\u200F﴿${ayah.ayahNo}﴾\u200F ")
+                                    appendInlineContent(
+                                        "ayah_circle_${ayah.ayahNo}",
+                                        ayah.ayahNo.toString(),
+                                    )
+                                    append(" ")
                                 }
 
                                 append(

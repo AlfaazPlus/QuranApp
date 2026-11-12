@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.only
@@ -250,21 +249,20 @@ fun ContentImportSheet(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Button(
+                modifier = Modifier.weight(1f),
                 onClick = onDismiss,
                 enabled = !importing,
-                modifier = Modifier
-                    .weight(1f)
-                    .height(52.dp),
-                shape = MaterialTheme.shapes.medium,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = colorScheme.surfaceVariant,
                     contentColor = colorScheme.onSurfaceVariant,
                 ),
             ) {
-                Text(text = stringResource(R.string.strLabelCancel))
+                Text(stringResource(R.string.strLabelCancel))
             }
 
             Button(
+                modifier = Modifier.weight(1f),
+                enabled = requiredFilled && fileUri != null && canSubmit(values) && !importing,
                 onClick = {
                     val uri = fileUri ?: return@Button
                     scope.launch {
@@ -309,11 +307,6 @@ fun ContentImportSheet(
                         }
                     }
                 },
-                enabled = requiredFilled && fileUri != null && canSubmit(values) && !importing,
-                modifier = Modifier
-                    .weight(1f)
-                    .height(52.dp),
-                shape = MaterialTheme.shapes.medium,
             ) {
                 if (importing) {
                     CircularProgressIndicator(
@@ -322,7 +315,7 @@ fun ContentImportSheet(
                         color = colorScheme.onPrimary,
                     )
                 } else {
-                    Text(text = "Import")
+                    Text("Import")
                 }
             }
         }

@@ -46,6 +46,7 @@ import com.quranapp.android.compose.components.reader.LocalReaderViewModel
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.db.relations.VerseWithDetails
+import com.quranapp.android.utils.univ.MessageUtils
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -153,12 +154,11 @@ private fun VodSheetContent(
                         onDismiss()
                         onFootnotes(verse)
                     } else {
-                        Toast.makeText(
+                        MessageUtils.showRemovableToast(
                             context,
                             R.string.noFootnotesForThisVerse,
                             Toast.LENGTH_LONG
                         )
-                            .show()
                     }
                 },
             )
@@ -172,12 +172,11 @@ private fun VodSheetContent(
                         onDismiss()
                         onSimilarVerses(verse)
                     } else {
-                        Toast.makeText(
+                        MessageUtils.showRemovableToast(
                             context,
                             R.string.noSimilarVerses,
                             Toast.LENGTH_LONG
                         )
-                            .show()
                     }
                 }
             )

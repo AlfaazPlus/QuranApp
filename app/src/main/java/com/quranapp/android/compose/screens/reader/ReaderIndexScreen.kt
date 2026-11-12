@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -37,6 +36,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
@@ -44,11 +44,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberTopAppBarState
@@ -587,15 +587,17 @@ private fun ReaderIndexChapterFiltersSheet(
     ) {
         Column(
             modifier = Modifier
-                .padding(horizontal = 16.dp)
+                .fillMaxWidth()
+                .weight(1f, fill = false)
                 .verticalScroll(rememberScrollState())
-                .padding(bottom = 32.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .padding(horizontal = 16.dp)
+                .padding(bottom = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Text(
                 text = stringResource(R.string.strTitleChapInfoRevType),
                 style = MaterialTheme.typography.titleSmall,
-                color = colorScheme.onSurface
+                color = colorScheme.onSurface,
             )
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -626,7 +628,7 @@ private fun ReaderIndexChapterFiltersSheet(
             Text(
                 text = stringResource(R.string.sajda),
                 style = MaterialTheme.typography.titleSmall,
-                color = colorScheme.onSurface
+                color = colorScheme.onSurface,
             )
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -657,7 +659,7 @@ private fun ReaderIndexChapterFiltersSheet(
             Text(
                 text = stringResource(R.string.filterSectionLength),
                 style = MaterialTheme.typography.titleSmall,
-                color = colorScheme.onSurface
+                color = colorScheme.onSurface,
             )
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -691,21 +693,28 @@ private fun ReaderIndexChapterFiltersSheet(
                     label = { Text(stringResource(R.string.chapterFilterLengthLong)) },
                 )
             }
+        }
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(colorScheme.surfaceContainer)
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            OutlinedButton(
+                modifier = Modifier.weight(1f),
+                onClick = { onSetFilters(ReaderChapterIndexFilters.Default) },
             ) {
-                TextButton(
-                    onClick = { onSetFilters(ReaderChapterIndexFilters.Default) }
-                ) {
-                    Text(stringResource(R.string.clearFilters))
-                }
-                Spacer(modifier = Modifier.width(8.dp))
-                TextButton(onClick = onDismiss) {
-                    Text(stringResource(R.string.strLabelDone))
-                }
+                Text(stringResource(R.string.clearFilters))
+            }
+
+            Button(
+                modifier = Modifier.weight(1f),
+                onClick = onDismiss,
+            ) {
+                Text(stringResource(R.string.strLabelDone))
             }
         }
     }

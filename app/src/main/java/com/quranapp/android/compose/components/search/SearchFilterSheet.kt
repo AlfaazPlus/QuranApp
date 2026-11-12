@@ -1,5 +1,6 @@
 package com.quranapp.android.compose.components.search
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,6 +16,7 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -53,44 +55,48 @@ fun SearchFiltersSheet(
     ) {
         var draft by remember(currentFilters, isOpen) { mutableStateOf(currentFilters) }
 
-        Column {
-            Column(
-                modifier = Modifier
-                    .weight(1f, fill = false)
-                    .verticalScroll(rememberScrollState())
-                    .padding(top = 16.dp, bottom = 24.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-            ) {
-                MatchingStrategySection(
-                    draft = draft,
-                    onChange = { draft = it },
-                )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f, fill = false)
+                .verticalScroll(rememberScrollState())
+                .padding(top = 16.dp, bottom = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            MatchingStrategySection(
+                draft = draft,
+                onChange = { draft = it },
+            )
 
-                TranslationsSection(
-                    available = availableTranslations,
-                    draft = draft,
-                    quranTextEnabled = quranTextEnabled,
-                    onChange = { draft = it },
-                )
+            TranslationsSection(
+                available = availableTranslations,
+                draft = draft,
+                quranTextEnabled = quranTextEnabled,
+                onChange = { draft = it },
+            )
+        }
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(colorScheme.surfaceContainer)
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            OutlinedButton(
+                modifier = Modifier.weight(1f),
+                onClick = { draft = SearchFilters() },
+            ) {
+                Text(stringResource(R.string.reset))
             }
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
-                verticalAlignment = Alignment.CenterVertically,
+            Button(
+                modifier = Modifier.weight(1f),
+                enabled = draft.isValid && draft != currentFilters,
+                onClick = { onApplyFilters(draft) },
             ) {
-                TextButton(onClick = { draft = SearchFilters() }) {
-                    Text(stringResource(R.string.reset))
-                }
-
-                Button(
-                    enabled = draft.isValid && draft != currentFilters,
-                    onClick = { onApplyFilters(draft) }
-                ) {
-                    Text(stringResource(R.string.strLabelApply))
-                }
+                Text(stringResource(R.string.strLabelApply))
             }
         }
     }

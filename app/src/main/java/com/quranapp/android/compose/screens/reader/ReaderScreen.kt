@@ -283,7 +283,7 @@ private fun ReaderContentColumn(
     onSyncStateChanged: (Boolean) -> Unit,
 ) {
     Column(modifier = modifier) {
-        if ((isFullscreen || isWideScreen) && readerMode == ReaderMode.Reading || readerMode == ReaderMode.Translation) {
+        if ((isFullscreen || isWideScreen) && (readerMode == ReaderMode.Reading || readerMode == ReaderMode.Translation)) {
             FullscreenReaderHeader(
                 readerVm = readerVm,
             )

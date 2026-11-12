@@ -26,6 +26,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
@@ -63,6 +64,8 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.Placeholder
+import androidx.compose.ui.text.PlaceholderVerticalAlign
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDirection
@@ -70,10 +73,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.painterResource
+import androidx.compose.foundation.Image
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.isSpecified
+import com.quranapp.android.R
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.theme.tightTextStyle
-import com.quranapp.android.R
 import com.quranapp.android.compose.components.ChapterIcon
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.LocalAppLocale
@@ -477,6 +485,45 @@ private fun TranslationPageText(
     trackVisibleVerses: Boolean,
 ) {
     val text = section.annotatedText
+    val translationFontSize = text.spanStyles
+        .firstOrNull { it.item.fontSize.isSpecified }
+        ?.item
+        ?.fontSize
+        ?: MaterialTheme.typography.bodySmall.fontSize
+
+    val ayahCircleSize = translationFontSize * 2.2f
+    val ayahCircleContent = remember(section.verses, colorScheme.onSurface, ayahCircleSize) {
+        section.verses.associate { verse ->
+            val verseNo = verse.verseNo
+            "ayah_circle_$verseNo" to InlineTextContent(
+                placeholder = Placeholder(
+                    width = ayahCircleSize,
+                    height = ayahCircleSize,
+                    placeholderVerticalAlign = PlaceholderVerticalAlign.Center,
+                ),
+            ) {
+                Box(contentAlignment = Alignment.Center) {
+                    Image(
+                        painter = painterResource(R.drawable.ic_circle),
+                        contentDescription = null,
+                        colorFilter = ColorFilter.tint(colorScheme.onSurface.copy(alpha = 0.6f)),
+                        modifier = Modifier.fillMaxSize(),
+                    )
+                    Text(
+                        text = verseNo.toString(),
+                        color = colorScheme.onSurface.copy(alpha = 0.6f),
+                        fontSize = ayahCircleSize * when {
+                            verseNo >= 100 -> 0.39f
+                            verseNo >= 10 -> 0.48f
+                            else -> 0.58f
+                        },
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                    )
+                }
+            }
+        }
+    }
     val targetRange = remember(section.verses, targetVerse) {
         targetVerse?.let { target ->
             section.verses.firstOrNull {
@@ -582,6 +629,7 @@ private fun TranslationPageText(
 
     Text(
         text = text,
+        inlineContent = ayahCircleContent,
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)

@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -45,6 +46,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -249,7 +251,12 @@ private fun AutoBackupSheet(
         icon = R.drawable.ic_auto_backup,
         title = stringResource(R.string.autoBackup),
     ) {
-        Column(modifier = Modifier.padding(bottom = 24.dp)) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f, fill = false)
+                .padding(bottom = 16.dp),
+        ) {
             AlertCard(
                 modifier = Modifier.padding(horizontal = 16.dp),
             ) {
@@ -298,35 +305,29 @@ private fun AutoBackupSheet(
                     )
                 }
             }
+        }
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(colorScheme.surfaceContainer)
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            OutlinedButton(
+                modifier = Modifier.weight(1f),
+                onClick = viewFile,
+                enabled = fileName != null,
             ) {
-                OutlinedButton(
-                    onClick = viewFile,
-                    enabled = fileName != null,
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(48.dp),
-                    shape = RoundedCornerShape(50),
-                ) {
-                    Text(stringResource(R.string.viewFile))
-                }
+                Text(stringResource(R.string.viewFile))
+            }
 
-                Button(
-                    onClick = pickFile,
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(48.dp),
-                    shape = RoundedCornerShape(50),
-                ) {
-                    Text(stringResource(R.string.changeFile))
-                }
+            Button(
+                modifier = Modifier.weight(1f),
+                onClick = pickFile,
+            ) {
+                Text(stringResource(R.string.changeFile))
             }
         }
     }
