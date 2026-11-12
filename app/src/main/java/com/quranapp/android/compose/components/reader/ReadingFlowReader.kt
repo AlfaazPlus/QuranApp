@@ -153,15 +153,11 @@ fun ReaderLayoutReadingFlow(
     val latestNavigateToVerse by rememberUpdatedState(navigateToVerse)
 
     LaunchedEffect(context, listState, pageCount, navigateToPage) {
-        snapshotFlow { listState.firstVisibleItemIndex }
-            .distinctUntilChanged()
-            .collect { currentIndex ->
-                if (navigateToPage != null || latestNavigateToVerse != null) return@collect
-                if (pageCount <= 0) return@collect
-
-                val currentPageNo = (currentIndex + 1).coerceIn(1, pageCount)
+        listState.updatePageWhenIdle(pageCount) { currentPageNo ->
+            if (navigateToPage == null && latestNavigateToVerse == null) {
                 readerVm.updateCurrentPageNo(currentPageNo)
             }
+        }
     }
 
     LaunchedEffect(listState, pageCount) {
@@ -183,7 +179,7 @@ fun ReaderLayoutReadingFlow(
             listState.scrollToItem(clamped - 1)
             readerVm.updateCurrentPageNo(clamped)
         } finally {
-            readerVm.consumePageNavigation()
+            readerVm.consumePageNavigation(targetPage)
         }
     }
 
@@ -195,7 +191,7 @@ fun ReaderLayoutReadingFlow(
 
         val targetPage = readerVm.resolvePageNo(targetVerse.chapterNo, targetVerse.verseNo)
             ?: run {
-                readerVm.consumeVerseNavigation()
+                readerVm.consumeVerseNavigation(targetVerse)
                 return@LaunchedEffect
             }
 
@@ -219,14 +215,14 @@ fun ReaderLayoutReadingFlow(
         }
 
         if (!hasTargetVerse) {
-            readerVm.consumeVerseNavigation()
+            readerVm.consumeVerseNavigation(targetVerse)
             return@LaunchedEffect
         }
 
         verseBringIntoViewTarget = targetVerse to clampedPage
 
         listState.scrollToVersePosition(verseAnchor)
-        readerVm.completeVerseNavigation()
+        readerVm.completeVerseNavigation(targetVerse)
 
         verseBringIntoViewTarget = null
     }
@@ -358,20 +354,12 @@ private fun ReadingFlowPage(
                 .fillMaxWidth()
                 .padding(horizontal = pageInset)
         ) {
-            Surface(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
-                color = colorScheme.surfaceVariant,
-            ) {
-                TranslationBookPageHeader(
-                    pageNo = item.pageNo,
-                    chapterNames = item.chapterNames,
-                    juzNo = item.juzNo,
-                    hizbNos = item.hizbNos,
-                )
-            }
-
-            HorizontalDivider(color = colorScheme.outlineVariant)
+            TranslationBookPageHeader(
+                pageNo = item.pageNo,
+                chapterNames = item.chapterNames,
+                juzNo = item.juzNo,
+                hizbNos = item.hizbNos,
+            )
 
             item.sections.forEach { section ->
                 when (section) {

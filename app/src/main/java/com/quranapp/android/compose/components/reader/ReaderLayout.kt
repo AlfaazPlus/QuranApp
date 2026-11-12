@@ -340,7 +340,7 @@ private fun ReaderLayoutVerseMode(
         if (idx >= 0) {
             val optimalIdx = items.findOptimalScrollIndex(idx)
             listState.scrollToItem(optimalIdx)
-            readerVm.completeVerseNavigation()
+            readerVm.completeVerseNavigation(ChapterVersePair(chapterNo, verseNo))
         }
     }
 

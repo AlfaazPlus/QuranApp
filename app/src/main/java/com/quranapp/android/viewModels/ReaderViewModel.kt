@@ -648,11 +648,17 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
     }
 
     fun requestPageNavigation(pageNo: Int) {
+        _navigateToVerse.value = null
+        highlightVerseAfterNavigation = false
         _navigateToPage.value = pageNo
     }
 
-    fun consumePageNavigation() {
-        _navigateToPage.value = null
+    fun consumePageNavigation(pageNo: Int? = null) {
+        if (pageNo == null) {
+            _navigateToPage.value = null
+        } else {
+            _navigateToPage.compareAndSet(pageNo, null)
+        }
     }
 
     fun requestVerseNavigation(
@@ -662,6 +668,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
     ) {
         val verse = ChapterVersePair(chapterNo, verseNo)
 
+        _navigateToPage.value = null
         clearTransientVerseHighlight()
         highlightVerseAfterNavigation = highlightAfterNavigation
 
@@ -669,25 +676,31 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         lastKnownVerse = verse
     }
 
-    fun consumeVerseNavigation() {
-        _navigateToVerse.value = null
+    fun consumeVerseNavigation(verse: ChapterVersePair? = null) {
+        if (verse == null) {
+            _navigateToVerse.value = null
+        } else if (!_navigateToVerse.compareAndSet(verse, null)) {
+            return
+        }
         highlightVerseAfterNavigation = false
     }
 
-    fun completeVerseNavigation() {
-        val verse = _navigateToVerse.value
+    fun completeVerseNavigation(verse: ChapterVersePair? = null) {
+        val targetVerse = verse ?: _navigateToVerse.value ?: return
+        if (_navigateToVerse.value != targetVerse) return
+
         val shouldHighlight = highlightVerseAfterNavigation
 
-        consumeVerseNavigation()
+        consumeVerseNavigation(targetVerse)
 
-        if (!shouldHighlight || verse == null) return
+        if (!shouldHighlight) return
 
         clearVerseHighlightJob?.cancel()
-        transientHighlightedVerse = verse
+        transientHighlightedVerse = targetVerse
         clearVerseHighlightJob = viewModelScope.launch {
             delay(2_850.milliseconds)
 
-            if (transientHighlightedVerse == verse) {
+            if (transientHighlightedVerse == targetVerse) {
                 transientHighlightedVerse = null
                 clearVerseHighlightJob = null
             }

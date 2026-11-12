@@ -1,10 +1,6 @@
 package com.quranapp.android.compose.screens.reader
 
-import android.graphics.Color as AndroidColor
-import androidx.activity.ComponentActivity
-import androidx.activity.SystemBarStyle
 import androidx.activity.compose.BackHandler
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -23,9 +19,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -39,11 +38,9 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.VerticalDivider
-import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -58,12 +55,10 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.keepScreenOn
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.rememberTextMeasurer
@@ -79,12 +74,13 @@ import com.quranapp.android.R
 import com.quranapp.android.compose.components.player.MINI_PLAYER_HEIGHT
 import com.quranapp.android.compose.components.player.MiniPlayerVisibility
 import com.quranapp.android.compose.components.player.RecitationPlayerSheet
+import com.quranapp.android.compose.components.player.RecitationPlayerVisibilityState
 import com.quranapp.android.compose.components.player.rememberMiniPlayerVisibilityState
 import com.quranapp.android.compose.components.reader.ReaderLayout
 import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.compose.components.reader.ReadingLayout
 import com.quranapp.android.compose.components.reader.ReaderProvider
-import com.quranapp.android.compose.components.reader.navigator.FullscreenMushafHeader
+import com.quranapp.android.compose.components.reader.navigator.FullscreenReaderHeader
 import com.quranapp.android.compose.components.reader.navigator.ReaderAppBar
 import com.quranapp.android.compose.components.reader.navigator.ReaderNavigator
 import com.quranapp.android.compose.components.reader.navigator.rememberAppBarDimensions
@@ -146,44 +142,6 @@ fun ReaderScreen(
         WindowSizeClass.HEIGHT_DP_MEDIUM_LOWER_BOUND,
     )
 
-    val view = LocalView.current
-    val statusBarColor = colorScheme.surfaceContainer.toArgb()
-
-    DisposableEffect(isDark, statusBarColor) {
-        val activity = view.context as? ComponentActivity
-
-        if (activity != null) {
-            activity.enableEdgeToEdge(
-                statusBarStyle = if (isDark) {
-                    SystemBarStyle.dark(statusBarColor)
-                } else {
-                    SystemBarStyle.light(statusBarColor, statusBarColor)
-                },
-                navigationBarStyle = if (isDark) {
-                    SystemBarStyle.dark(statusBarColor)
-                } else {
-                    SystemBarStyle.light(statusBarColor, statusBarColor)
-                },
-            )
-        }
-
-        onDispose {
-            if (activity != null) {
-                activity.enableEdgeToEdge(
-                    statusBarStyle = SystemBarStyle.auto(
-                        AndroidColor.TRANSPARENT,
-                        AndroidColor.TRANSPARENT,
-                    ),
-                    navigationBarStyle = if (isDark) {
-                        SystemBarStyle.dark(AndroidColor.TRANSPARENT)
-                    } else {
-                        SystemBarStyle.light(AndroidColor.TRANSPARENT, AndroidColor.TRANSPARENT)
-                    },
-                )
-            }
-        }
-    }
-
     BackHandler(enabled = isFullscreen) {
         isFullscreen = false
     }
@@ -215,15 +173,11 @@ fun ReaderScreen(
         val density = LocalDensity.current
 
         val readerTopBarState = rememberTopAppBarState(
-            initialHeightOffsetLimit = with(density) { -appBarDims.expandedHeight.toPx() },
+            initialHeightOffsetLimit = with(density) { -appBarDims.collapsibleHeight.toPx() },
         )
         val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(readerTopBarState)
 
         Box(modifier = Modifier.fillMaxSize()) {
-            val chromeCollapsedFraction = scrollBehavior.state.collapsedFraction
-            val navBarBottomInset = WindowInsets.navigationBars.asPaddingValues()
-                .calculateBottomPadding()
-
             Scaffold(
                 modifier = Modifier
                     .fillMaxSize()
@@ -242,11 +196,24 @@ fun ReaderScreen(
                     }
                 },
                 containerColor = if (isDark || usesFlowingPages) colorScheme.background
-                else colorScheme.surface
+                else colorScheme.surface,
+                contentWindowInsets = WindowInsets.systemBars.only(
+                    WindowInsetsSides.Horizontal + WindowInsetsSides.Top
+                ),
             ) { padding ->
+                val chromeCollapsedFraction = scrollBehavior.state.collapsedFraction
+                val navBarBottomInset = WindowInsets.navigationBars.asPaddingValues()
+                    .calculateBottomPadding()
+
                 val contentModifier = Modifier
                     .padding(padding)
-                    .padding(bottom = miniPlayerHeight * (1f - chromeCollapsedFraction))
+                    .padding(
+                        bottom = readerBottomInset(
+                            navBarBottomInset,
+                            miniPlayerHeight,
+                            chromeCollapsedFraction,
+                        )
+                    )
 
                 if (showTwoPane && !isFullscreen) {
                     Row(
@@ -282,21 +249,13 @@ fun ReaderScreen(
             }
 
 
-            val totalBottomOffset =
-                navBarBottomInset + miniPlayerHeight * (1f - chromeCollapsedFraction)
-
-            FloatingBar(
-                isFullscreen,
+            ReaderCollapsedChrome(
+                scrollBehavior = scrollBehavior,
+                miniPlayerHeight = miniPlayerHeight,
+                isFullscreen = isFullscreen,
                 onChangeFullscreen = { isFullscreen = it },
-                tajweedBarVisible,
+                tajweedBarVisible = tajweedBarVisible,
                 onChangeTajweedBarVisible = { tajweedBarVisible = it },
-                chromeCollapsedFraction,
-                totalBottomOffset,
-            )
-
-            RecitationPlayerSheet(
-                collapsedBottomInset = navBarBottomInset,
-                barsCollapsedFraction = scrollBehavior.state.collapsedFraction,
                 playerVisibilityState = playerVisibilityState,
                 isSyncing = syncIndicatorLocked,
                 onSyncRequest = { forceJump ->
@@ -306,7 +265,7 @@ fun ReaderScreen(
                     if (willSync || forceJump) {
                         scope.launch { readerVm.syncToPlayingVerse() }
                     }
-                }
+                },
             )
         }
     }
@@ -324,8 +283,8 @@ private fun ReaderContentColumn(
     onSyncStateChanged: (Boolean) -> Unit,
 ) {
     Column(modifier = modifier) {
-        if ((isFullscreen || isWideScreen) && readerMode == ReaderMode.Reading) {
-            FullscreenMushafHeader(
+        if ((isFullscreen || isWideScreen) && readerMode == ReaderMode.Reading || readerMode == ReaderMode.Translation) {
+            FullscreenReaderHeader(
                 readerVm = readerVm,
             )
             HorizontalDivider(
@@ -357,6 +316,57 @@ private fun ReaderWideSidebar(
             onClose = {},
         )
     }
+}
+
+private fun readerBottomInset(
+    navBarBottomInset: Dp,
+    miniPlayerHeight: Dp,
+    collapsedFraction: Float,
+): Dp {
+    return if (miniPlayerHeight > 0.dp) {
+        (navBarBottomInset + miniPlayerHeight) * (1f - collapsedFraction)
+    } else {
+        navBarBottomInset
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun BoxScope.ReaderCollapsedChrome(
+    scrollBehavior: TopAppBarScrollBehavior,
+    miniPlayerHeight: Dp,
+    isFullscreen: Boolean,
+    onChangeFullscreen: (Boolean) -> Unit,
+    tajweedBarVisible: Boolean,
+    onChangeTajweedBarVisible: (Boolean) -> Unit,
+    playerVisibilityState: RecitationPlayerVisibilityState,
+    isSyncing: Boolean,
+    onSyncRequest: (Boolean) -> Unit,
+) {
+    val navBarBottomInset = WindowInsets.navigationBars.asPaddingValues()
+        .calculateBottomPadding()
+    val chromeCollapsedFraction = scrollBehavior.state.collapsedFraction
+
+    FloatingBar(
+        isFullscreen,
+        onChangeFullscreen = onChangeFullscreen,
+        tajweedBarVisible = tajweedBarVisible,
+        onChangeTajweedBarVisible = onChangeTajweedBarVisible,
+        chromeCollapsedFraction = chromeCollapsedFraction,
+        totalBottomOffset = readerBottomInset(
+            navBarBottomInset,
+            miniPlayerHeight,
+            chromeCollapsedFraction,
+        ),
+    )
+
+    RecitationPlayerSheet(
+        collapsedBottomInset = navBarBottomInset,
+        barsCollapsedFraction = chromeCollapsedFraction,
+        playerVisibilityState = playerVisibilityState,
+        isSyncing = isSyncing,
+        onSyncRequest = onSyncRequest,
+    )
 }
 
 @Composable

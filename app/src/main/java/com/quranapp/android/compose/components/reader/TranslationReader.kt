@@ -11,6 +11,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -229,16 +230,11 @@ fun ReaderLayoutTranslationPageMode(
     val latestNavigateToVerse by rememberUpdatedState(navigateToVerse)
 
     LaunchedEffect(context, listState, pageCount, navigateToPage) {
-        snapshotFlow { listState.firstVisibleItemIndex }
-            .distinctUntilChanged()
-            .collect { currentIndex ->
-                if (navigateToPage != null || latestNavigateToVerse != null) return@collect
-                if (pageCount <= 0) return@collect
-
-                val currentPageNo = (currentIndex + 1).coerceIn(1, pageCount)
-
+        listState.updatePageWhenIdle(pageCount) { currentPageNo ->
+            if (navigateToPage == null && latestNavigateToVerse == null) {
                 readerVm.updateCurrentPageNo(currentPageNo)
             }
+        }
     }
 
     LaunchedEffect(listState, pageCount) {
@@ -261,7 +257,7 @@ fun ReaderLayoutTranslationPageMode(
             listState.scrollToItem(clamped - 1)
             readerVm.updateCurrentPageNo(clamped)
         } finally {
-            readerVm.consumePageNavigation()
+            readerVm.consumePageNavigation(targetPage)
         }
     }
 
@@ -274,7 +270,7 @@ fun ReaderLayoutTranslationPageMode(
 
         val targetPage = readerVm.resolvePageNo(targetVerse.chapterNo, targetVerse.verseNo)
             ?: run {
-                readerVm.consumeVerseNavigation()
+                readerVm.consumeVerseNavigation(targetVerse)
                 return@LaunchedEffect
             }
 
@@ -296,14 +292,14 @@ fun ReaderLayoutTranslationPageMode(
         }
 
         if (!hasTargetVerse) {
-            readerVm.consumeVerseNavigation()
+            readerVm.consumeVerseNavigation(targetVerse)
             return@LaunchedEffect
         }
 
         verseTarget = targetVerse to clampedPage
 
         listState.scrollToVersePosition(verseAnchor)
-        readerVm.completeVerseNavigation()
+        readerVm.completeVerseNavigation(targetVerse)
 
         verseTarget = null
     }
@@ -430,53 +426,39 @@ private fun TranslationModePage(
             LayoutDirection.Ltr
         }
     ) {
-        Surface(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 12.dp),
-            shape = shapes.small,
-            color = colorScheme.surface,
-            border = BorderStroke(
-                1.dp,
-                colorScheme.outlineVariant,
-            ),
-            shadowElevation = 1.dp
-        ) {
-            Box(
+        BoxWithConstraints(Modifier.fillMaxWidth()) {
+            val pageInset = (maxWidth * 0.025f).coerceIn(8.dp, 20.dp)
+
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(horizontal = pageInset)
             ) {
-                Column(Modifier.fillMaxWidth()) {
-                    TranslationBookPageHeader(
-                        pageNo = item.pageNo,
-                        chapterNames = item.chapterNames,
-                        juzNo = item.juzNo,
-                        hizbNos = item.hizbNos,
-                    )
+                TranslationBookPageHeader(
+                    pageNo = item.pageNo,
+                    chapterNames = item.chapterNames,
+                    juzNo = item.juzNo,
+                    hizbNos = item.hizbNos,
+                )
 
-                    HorizontalDivider(
-                        color = colorScheme.outlineVariant,
-                    )
+                item.sections.forEach {
+                    when (it) {
+                        TranslationPageSection.Divider -> HorizontalDivider(
+                            modifier = Modifier.padding(vertical = 8.dp),
+                            color = colorScheme.outlineVariant,
+                        )
 
-                    item.sections.forEach {
-                        when (it) {
-                            TranslationPageSection.Divider -> HorizontalDivider(
-                                modifier = Modifier.padding(vertical = 8.dp),
-                                color = colorScheme.outlineVariant,
-                            )
-
-                            is TranslationPageSection.Title -> TranslationReaderChapterTitle(it.swl)
-                            is TranslationPageSection.Bismillah -> Bismillah()
-                            is TranslationPageSection.Text -> TranslationPageText(
-                                section = it,
-                                targetVerse = targetVerse,
-                                playingVerse = playingVerseToHighlight,
-                                verseAnchor = verseAnchor,
-                                textDirection = textDirection,
-                                visibilityTracker = visibilityTracker,
-                                trackVisibleVerses = trackVisibleVerses,
-                            )
-                        }
+                        is TranslationPageSection.Title -> TranslationReaderChapterTitle(it.swl)
+                        is TranslationPageSection.Bismillah -> Bismillah()
+                        is TranslationPageSection.Text -> TranslationPageText(
+                            section = it,
+                            targetVerse = targetVerse,
+                            playingVerse = playingVerseToHighlight,
+                            verseAnchor = verseAnchor,
+                            textDirection = textDirection,
+                            visibilityTracker = visibilityTracker,
+                            trackVisibleVerses = trackVisibleVerses,
+                        )
                     }
                 }
             }
@@ -602,7 +584,7 @@ private fun TranslationPageText(
         text = text,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(14.dp)
+            .padding(8.dp)
             .then(anchorModifier)
             .then(highlightModifier),
         style = TextStyle(textDirection = textDirection),
@@ -654,54 +636,62 @@ internal fun TranslationBookPageHeader(
             }
     val rightLabel = listOf(juzLabel, hizbLabel).filter { it.isNotBlank() }.joinToString(", ")
 
-    Row(
+    Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 12.dp, vertical = 6.dp),
-        verticalAlignment = Alignment.CenterVertically,
+            .padding(vertical = 8.dp),
+        shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
+        color = colorScheme.surfaceVariant,
     ) {
-        Box(
-            modifier = Modifier.weight(1f),
-            contentAlignment = Alignment.CenterStart,
-        ) {
-            Text(
-                text = chapterNames,
-                style = typography.labelSmall.merge(tightTextStyle),
-                color = scheme.onSurface.alpha(0.75f),
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
-                textAlign = TextAlign.Start,
-                modifier = Modifier
-                    .basicMarquee(
-                        initialDelayMillis = 900,
-                        repeatDelayMillis = 1_200,
-                    ),
-            )
-        }
-
-        Text(
-            text = formattedStringResource(R.string.strLabelPageNo, pageNo),
-            style = typography.labelMedium.merge(tightTextStyle),
-            color = scheme.onBackground.alpha(0.75f),
+        Row(
             modifier = Modifier
-                .padding(horizontal = 12.dp)
-                .background(colorScheme.background, shapes.extraLarge)
+                .fillMaxWidth()
                 .padding(horizontal = 12.dp, vertical = 6.dp),
-            maxLines = 1,
-        )
-
-        Box(
-            modifier = Modifier.weight(1f),
-            contentAlignment = Alignment.CenterEnd,
+            verticalAlignment = Alignment.CenterVertically,
         ) {
+            Box(
+                modifier = Modifier.weight(1f),
+                contentAlignment = Alignment.CenterStart,
+            ) {
+                Text(
+                    text = chapterNames,
+                    style = typography.labelSmall.merge(tightTextStyle),
+                    color = scheme.onSurface.alpha(0.75f),
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier
+                        .basicMarquee(
+                            initialDelayMillis = 900,
+                            repeatDelayMillis = 1_200,
+                        ),
+                )
+            }
+
             Text(
-                text = rightLabel,
-                style = typography.labelSmall.merge(tightTextStyle),
-                color = scheme.onSurface.alpha(0.75f),
+                text = formattedStringResource(R.string.strLabelPageNo, pageNo),
+                style = typography.labelMedium.merge(tightTextStyle),
+                color = scheme.onBackground.alpha(0.75f),
+                modifier = Modifier
+                    .padding(horizontal = 12.dp)
+                    .background(colorScheme.background, shapes.extraLarge)
+                    .padding(horizontal = 12.dp, vertical = 6.dp),
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                textAlign = TextAlign.End,
             )
+
+            Box(
+                modifier = Modifier.weight(1f),
+                contentAlignment = Alignment.CenterEnd,
+            ) {
+                Text(
+                    text = rightLabel,
+                    style = typography.labelSmall.merge(tightTextStyle),
+                    color = scheme.onSurface.alpha(0.75f),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    textAlign = TextAlign.End,
+                )
+            }
         }
     }
 }

@@ -113,3 +113,33 @@ internal suspend fun LazyListState.updateVisibleVerseWhenIdle(
                 ?.let(onVerseVisible)
         }
 }
+
+internal suspend fun LazyListState.updatePageWhenIdle(
+    pageCount: Int,
+    onPageVisible: (Int) -> Unit,
+) {
+    var lastIndex: Int? = null
+    var sawScroll = false
+
+    snapshotFlow { isScrollInProgress to firstVisibleItemIndex }
+        .distinctUntilChanged()
+        .collectLatest { (scrolling, index) ->
+            if (scrolling) {
+                sawScroll = true
+                return@collectLatest
+            }
+
+            val indexChanged = lastIndex != null && lastIndex != index
+            lastIndex = index
+            if (!sawScroll && !indexChanged) return@collectLatest
+            sawScroll = false
+
+            if (index !in 0 until pageCount) return@collectLatest
+
+            delay(180.milliseconds)
+
+            if (isScrollInProgress || firstVisibleItemIndex != index) return@collectLatest
+
+            onPageVisible(index + 1)
+        }
+}

@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -20,6 +21,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.only
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.safeDrawing
@@ -54,7 +56,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalResources
@@ -80,46 +84,39 @@ import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.db.DatabaseProvider
-import com.quranapp.android.repository.TranslationRepository
 import com.quranapp.android.utils.reader.toQuranMushafId
 import com.quranapp.android.utils.univ.Keys
 import com.quranapp.android.viewModels.ReaderUiState
 import com.quranapp.android.viewModels.ReaderViewModel
 import com.quranapp.android.viewModels.ReaderViewType
+import kotlin.math.roundToInt
 import kotlinx.coroutines.launch
 
 internal data class ReaderAppBarDimensions(
-    val barHeight: Dp,
+    val statusBarHeight: Dp,
+    val toolbarHeight: Dp,
     val headerHeight: Dp,
     val dividerHeight: Dp,
     val dividerCount: Int,
 ) {
-    val expandedHeight: Dp
-        get() = barHeight + headerHeight + (dividerHeight * dividerCount)
+    /** Toolbar, sticky header, and dividers. The status bar is not part of this range. */
+    val collapsibleHeight: Dp
+        get() = toolbarHeight + headerHeight + (dividerHeight * dividerCount)
 }
 
 @Composable
 internal fun rememberAppBarDimensions(isWideScreen: Boolean): ReaderAppBarDimensions {
     val statusBarHeight = TopAppBarDefaults.windowInsets.asPaddingValues().calculateTopPadding()
-    val barHeight = TopAppBarDefaults.TopAppBarExpandedHeight + statusBarHeight
+    val toolbarHeight = TopAppBarDefaults.TopAppBarExpandedHeight
 
-    return remember(isWideScreen)
-    {
-        if (isWideScreen) {
-            ReaderAppBarDimensions(
-                barHeight = barHeight,
-                headerHeight = 0.dp,
-                dividerHeight = 1.dp,
-                dividerCount = 1,
-            )
-        } else {
-            ReaderAppBarDimensions(
-                barHeight = barHeight,
-                headerHeight = 52.dp,
-                dividerHeight = 1.dp,
-                dividerCount = 2,
-            )
-        }
+    return remember(isWideScreen, statusBarHeight) {
+        ReaderAppBarDimensions(
+            statusBarHeight = statusBarHeight,
+            toolbarHeight = toolbarHeight,
+            headerHeight = if (isWideScreen) 0.dp else 52.dp,
+            dividerHeight = 1.dp,
+            dividerCount = if (isWideScreen) 1 else 2,
+        )
     }
 }
 
@@ -140,121 +137,133 @@ fun ReaderAppBar(
     val sheetState = rememberModalBottomSheetState(true)
 
     val density = LocalDensity.current
-    val heightOffset = scrollBehavior.state.heightOffset
-    val visibleHeight = with(density) {
-        (appBarDims.expandedHeight.toPx() + heightOffset).coerceAtLeast(0f).toDp()
-    }
+    val statusBarPx = with(density) { appBarDims.statusBarHeight.roundToPx() }
+    val collapsiblePx = with(density) { appBarDims.collapsibleHeight.roundToPx() }
 
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .height(visibleHeight),
+            .clipToBounds()
+            .readerAppBarHeight(scrollBehavior, statusBarPx, collapsiblePx),
         shadowElevation = if (isWideScreen) 4.dp else 0.dp,
         color = colorScheme.surfaceContainer
     ) {
-        Column(
-            modifier = Modifier
-                .requiredHeight(appBarDims.expandedHeight)
-        ) {
-            CenterAlignedTopAppBar(
-                modifier = Modifier.height(appBarDims.barHeight),
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = colorScheme.surfaceContainer,
-                    scrolledContainerColor = colorScheme.surfaceContainer,
-                ),
-                title = {
-                    ModeTabs(readerVm, readerMode)
-                },
-                navigationIcon = {
-                    SimpleTooltip(text = stringResource(R.string.strDescGoBack)) {
-                        IconButton(
-                            onClick = {
-                                backPressedDispatcher?.onBackPressed()
-                            }
-                        ) {
-                            Icon(
-                                painter = painterResource(R.drawable.dr_icon_chevron_left),
-                                contentDescription = stringResource(R.string.strDescGoBack),
-                            )
-                        }
-                    }
-                },
-                actions = {
-                    if (isWideScreen) {
-                        when (readerMode) {
-                            ReaderMode.Reading -> {
-                                ReadingLayoutSwitch(
-                                    Modifier.padding(end = 4.dp)
+        Box(Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier
+                    .offset(y = appBarDims.statusBarHeight)
+                    .requiredHeight(appBarDims.collapsibleHeight)
+            ) {
+                CenterAlignedTopAppBar(
+                    modifier = Modifier.height(appBarDims.toolbarHeight),
+                    windowInsets = WindowInsets(0.dp, 0.dp, 0.dp, 0.dp),
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = colorScheme.surfaceContainer,
+                        scrolledContainerColor = colorScheme.surfaceContainer,
+                    ),
+                    title = {
+                        ModeTabs(readerVm, readerMode)
+                    },
+                    navigationIcon = {
+                        SimpleTooltip(text = stringResource(R.string.strDescGoBack)) {
+                            IconButton(
+                                onClick = {
+                                    backPressedDispatcher?.onBackPressed()
+                                }
+                            ) {
+                                Icon(
+                                    painter = painterResource(R.drawable.dr_icon_chevron_left),
+                                    contentDescription = stringResource(R.string.strDescGoBack),
                                 )
                             }
-
-                            ReaderMode.Translation -> {
-                                TranslationModeTranslationButton()
-                            }
-
-                            else -> {
-                                StickyHeaderModeVbV(readerVm, uiState, true) {}
-                            }
                         }
-                    }
+                    },
+                    actions = {
+                        if (isWideScreen) {
+                            when (readerMode) {
+                                ReaderMode.Reading -> {
+                                    ReadingLayoutSwitch(
+                                        Modifier.padding(end = 4.dp)
+                                    )
+                                }
 
-                    SimpleTooltip(text = stringResource(R.string.strTitleSettings)) {
-                        IconButton(onClick = {
-                            openReaderSetting(context, null)
-                        }) {
-                            Icon(
-                                painter = painterResource(R.drawable.dr_icon_settings),
-                                contentDescription = stringResource(R.string.strTitleSettings),
-                            )
-                        }
-                    }
-                },
-            )
+                                ReaderMode.Translation -> {
+                                    TranslationModeTranslationButton()
+                                }
 
-            HorizontalDivider(
-                thickness = appBarDims.dividerHeight,
-                color = colorScheme.outlineVariant.alpha(0.5f)
-            )
-
-            if (!isWideScreen) {
-                Box(
-                    Modifier
-                        .fillMaxWidth()
-                        .height(appBarDims.headerHeight),
-                    contentAlignment = Alignment.Center
-                ) {
-                    when (readerMode) {
-                        ReaderMode.Reading -> {
-                            StickyHeaderModeMushaf(readerVm) {
-                                if (!isWideScreen) {
-                                    showNavigatorSheet = true
+                                else -> {
+                                    StickyHeaderModeVbV(readerVm, uiState, true) {}
                                 }
                             }
                         }
 
-                        ReaderMode.Translation -> {
-                            StickyHeaderModeTranslation(readerVm) {
-                                if (!isWideScreen) {
-                                    showNavigatorSheet = true
-                                }
+                        SimpleTooltip(text = stringResource(R.string.strTitleSettings)) {
+                            IconButton(
+                                onClick = {
+                                    openReaderSetting(context, null)
+                                },
+                            ) {
+                                Icon(
+                                    painter = painterResource(R.drawable.dr_icon_settings),
+                                    contentDescription = stringResource(R.string.strTitleSettings),
+                                )
                             }
                         }
-
-                        else -> {
-                            StickyHeaderModeVbV(readerVm, uiState, false) {
-                                if (!isWideScreen) {
-                                    showNavigatorSheet = true
-                                }
-                            }
-                        }
-                    }
-                }
+                    },
+                )
 
                 HorizontalDivider(
                     thickness = appBarDims.dividerHeight,
                     color = colorScheme.outlineVariant.alpha(0.5f)
                 )
+
+                if (!isWideScreen) {
+                    Box(
+                        Modifier
+                            .fillMaxWidth()
+                            .height(appBarDims.headerHeight),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        when (readerMode) {
+                            ReaderMode.Reading -> {
+                                StickyHeaderModeMushaf(readerVm) {
+                                    if (!isWideScreen) {
+                                        showNavigatorSheet = true
+                                    }
+                                }
+                            }
+
+                            ReaderMode.Translation -> {
+                                StickyHeaderModeTranslation(readerVm) {
+                                    if (!isWideScreen) {
+                                        showNavigatorSheet = true
+                                    }
+                                }
+                            }
+
+                            else -> {
+                                StickyHeaderModeVbV(readerVm, uiState, false) {
+                                    if (!isWideScreen) {
+                                        showNavigatorSheet = true
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    HorizontalDivider(
+                        thickness = appBarDims.dividerHeight,
+                        color = colorScheme.outlineVariant.alpha(0.5f)
+                    )
+                }
             }
+
+            Box(
+                Modifier
+                    .fillMaxWidth()
+                    .height(appBarDims.statusBarHeight)
+                    .background(colorScheme.surfaceContainer)
+            )
         }
     }
 
@@ -274,6 +283,34 @@ fun ReaderAppBar(
                 isInModal = true,
             ) { showNavigatorSheet = false }
         }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+private fun Modifier.readerAppBarHeight(
+    scrollBehavior: TopAppBarScrollBehavior,
+    statusBarPx: Int,
+    collapsiblePx: Int,
+): Modifier = layout { measurable, constraints ->
+    // Read during measure so scrolling does not recompose the bar.
+    val chromePx = (collapsiblePx + scrollBehavior.state.heightOffset)
+        .roundToInt()
+        .coerceIn(0, collapsiblePx)
+
+    val height = statusBarPx + chromePx
+    val width = constraints.maxWidth
+
+    val placeable = measurable.measure(
+        constraints.copy(
+            minWidth = width,
+            maxWidth = width,
+            minHeight = height,
+            maxHeight = height,
+        )
+    )
+
+    layout(width, height) {
+        placeable.place(0, 0)
     }
 }
 
@@ -310,7 +347,12 @@ private fun ModeTabs(
                     modifier = Modifier
                         .clip(RoundedCornerShape(999.dp))
                         .background(
-                            if (isSelected) colorScheme.surface else Color.Transparent,
+                            if (isSelected) colorScheme.surfaceContainer else Color.Transparent,
+                        )
+                        .border(
+                            1.dp,
+                            if (isSelected) colorScheme.outline.alpha(0.1f) else Color.Transparent,
+                            RoundedCornerShape(999.dp)
                         )
                         .clickable(
                             interactionSource = remember { MutableInteractionSource() },
@@ -707,7 +749,7 @@ fun TranslationModeTranslationButton() {
 }
 
 @Composable
-fun FullscreenMushafHeader(
+fun FullscreenReaderHeader(
     modifier: Modifier = Modifier,
     readerVm: ReaderViewModel,
 ) {
@@ -860,7 +902,12 @@ private fun ReadingLayoutSwitch(modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .clip(RoundedCornerShape(innerRadius))
                         .background(
-                            if (selected) colorScheme.surface else Color.Transparent,
+                            if (selected) colorScheme.surfaceContainer else Color.Transparent,
+                        )
+                        .border(
+                            1.dp,
+                            if (selected) colorScheme.outline.alpha(0.1f) else Color.Transparent,
+                            RoundedCornerShape(innerRadius)
                         )
                         .clickable(
                             interactionSource = remember { MutableInteractionSource() },

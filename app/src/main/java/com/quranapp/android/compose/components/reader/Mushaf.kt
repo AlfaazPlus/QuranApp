@@ -185,14 +185,27 @@ fun ReaderLayoutPageMode(
     val latestNavigateToVerse by rememberUpdatedState(navigateToVerse)
 
     LaunchedEffect(context, pagerState, pageCount, navigateToPage) {
-        snapshotFlow { pagerState.currentPage }
+        var lastSettledPage: Int? = null
+        var sawScroll = false
+
+        snapshotFlow { pagerState.isScrollInProgress to pagerState.settledPage }
             .distinctUntilChanged()
-            .collect { currentPage ->
+            .collect { (scrolling, settledPage) ->
                 // While a programmatic scroll is pending, the pager may still report page 1 until
                 // [pageCount] is ready; do not overwrite [currentPageNo] from the initial open.
+                if (scrolling) {
+                    sawScroll = true
+                    return@collect
+                }
+
+                val pageChanged = lastSettledPage != null && lastSettledPage != settledPage
+                lastSettledPage = settledPage
+                if (!sawScroll && !pageChanged) return@collect
+                sawScroll = false
+
                 if (navigateToPage != null || latestNavigateToVerse != null) return@collect
 
-                val currentPageNo = currentPage + 1
+                val currentPageNo = settledPage + 1
 
                 readerVm.updateCurrentPageNo(currentPageNo)
             }
@@ -210,7 +223,7 @@ fun ReaderLayoutPageMode(
             readerVm.updateCurrentPageNo(clamped)
 
         } finally {
-            readerVm.consumePageNavigation()
+            readerVm.consumePageNavigation(targetPage)
         }
     }
 
@@ -224,7 +237,7 @@ fun ReaderLayoutPageMode(
 
         val targetPage = readerVm.resolvePageNo(targetVerse.chapterNo, targetVerse.verseNo)
             ?: run {
-                readerVm.consumeVerseNavigation()
+                readerVm.consumeVerseNavigation(targetVerse)
                 return@LaunchedEffect
             }
 
@@ -245,7 +258,7 @@ fun ReaderLayoutPageMode(
         }
 
         if (!hasTargetVerse) {
-            readerVm.consumeVerseNavigation()
+            readerVm.consumeVerseNavigation(targetVerse)
             return@LaunchedEffect
         }
 
@@ -323,7 +336,7 @@ fun ReaderLayoutPageMode(
                         onVisibleVerse = readerVm::updateLastKnownVerse,
                         onVersePositioned = { verse ->
                             if (verseTarget?.first == verse) {
-                                readerVm.completeVerseNavigation()
+                                readerVm.completeVerseNavigation(verse)
                                 verseTarget = null
                             }
                         },
