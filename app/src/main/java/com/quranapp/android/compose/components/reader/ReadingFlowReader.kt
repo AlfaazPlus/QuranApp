@@ -1,9 +1,9 @@
 package com.quranapp.android.compose.components.reader
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.HorizontalDivider
@@ -349,22 +350,26 @@ private fun ReadingFlowPage(
         onDispose { visibilityTrackers.unregister(item.pageNo, visibilityTracker) }
     }
 
-    Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 12.dp),
-        shape = shapes.small,
-        color = colorScheme.surface,
-        border = BorderStroke(1.dp, colorScheme.outlineVariant),
-        shadowElevation = 1.dp,
-    ) {
-        Column(Modifier.fillMaxWidth()) {
-            TranslationBookPageHeader(
-                pageNo = item.pageNo,
-                chapterNames = item.chapterNames,
-                juzNo = item.juzNo,
-                hizbNos = item.hizbNos,
-            )
+    BoxWithConstraints(Modifier.fillMaxWidth()) {
+        val pageInset = (maxWidth * 0.025f).coerceIn(8.dp, 20.dp)
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = pageInset)
+        ) {
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
+                color = colorScheme.surfaceVariant,
+            ) {
+                TranslationBookPageHeader(
+                    pageNo = item.pageNo,
+                    chapterNames = item.chapterNames,
+                    juzNo = item.juzNo,
+                    hizbNos = item.hizbNos,
+                )
+            }
 
             HorizontalDivider(color = colorScheme.outlineVariant)
 
@@ -479,7 +484,7 @@ private fun ReadingFlowWords(
         FlowRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(14.dp)
+                .padding(8.dp)
                 .drawBehind {
                     val primaryAyahId = navigationAyahId ?: playingAyahId
                     if (primaryAyahId >= 0) {

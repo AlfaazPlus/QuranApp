@@ -149,10 +149,10 @@ fun ReaderScreen(
     val view = LocalView.current
     val statusBarColor = colorScheme.surfaceContainer.toArgb()
 
-    DisposableEffect(showTwoPane, isDark, statusBarColor) {
+    DisposableEffect(isDark, statusBarColor) {
         val activity = view.context as? ComponentActivity
 
-        if (showTwoPane && activity != null) {
+        if (activity != null) {
             activity.enableEdgeToEdge(
                 statusBarStyle = if (isDark) {
                     SystemBarStyle.dark(statusBarColor)
@@ -160,15 +160,15 @@ fun ReaderScreen(
                     SystemBarStyle.light(statusBarColor, statusBarColor)
                 },
                 navigationBarStyle = if (isDark) {
-                    SystemBarStyle.dark(AndroidColor.TRANSPARENT)
+                    SystemBarStyle.dark(statusBarColor)
                 } else {
-                    SystemBarStyle.light(AndroidColor.TRANSPARENT, AndroidColor.TRANSPARENT)
+                    SystemBarStyle.light(statusBarColor, statusBarColor)
                 },
             )
         }
 
         onDispose {
-            if (showTwoPane && activity != null) {
+            if (activity != null) {
                 activity.enableEdgeToEdge(
                     statusBarStyle = SystemBarStyle.auto(
                         AndroidColor.TRANSPARENT,

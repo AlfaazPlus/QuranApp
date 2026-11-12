@@ -49,6 +49,7 @@ import com.quranapp.android.utils.reader.factory.ReaderFactory
 
 const val VERSE_HIGHLIGHT_ALPHA = 0.28f
 const val VERSE_WORD_HIGHLIGHT_ALPHA = 0.38f
+const val VBV_VERSE_HIGHLIGHT_ALPHA = 0.2f
 
 enum class VerseActionBarMode {
     Full,
@@ -82,7 +83,7 @@ fun VerseView(
                 .drawBehind {
                     if (isVersePlaying || isHighlighted) {
                         val alpha = if (isHighlighted) highlightAlpha.value else 1f
-                        drawRect(colors.primary.copy(alpha = VERSE_HIGHLIGHT_ALPHA * alpha))
+                        drawRect(colors.primary.copy(alpha = VBV_VERSE_HIGHLIGHT_ALPHA * alpha))
                     }
                 }
                 .padding(horizontal = 12.dp, vertical = 16.dp)
