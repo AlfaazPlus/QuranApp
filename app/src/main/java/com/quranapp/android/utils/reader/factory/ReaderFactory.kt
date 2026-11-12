@@ -184,8 +184,7 @@ object ReaderFactory {
                     mushafCode = entity.mushafCode,
                     mushafVariant = QuranScriptVariant.fromValue(entity.mushafVariant),
                     pageNo = pageNo,
-                    fallbackChapterNo = entity.chapterNo,
-                    fallbackVerseNo = entity.fromVerseNo,
+                    initialVerse = ChapterVersePair(entity.chapterNo, entity.fromVerseNo)
                 ),
                 readerMode = readerMode,
             ).toIntent()

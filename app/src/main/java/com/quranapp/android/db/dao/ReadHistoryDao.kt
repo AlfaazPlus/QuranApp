@@ -17,6 +17,22 @@ interface ReadHistoryDao {
     @Query("SELECT * FROM read_history ORDER BY datetime DESC LIMIT 1")
     suspend fun getLatest(): ReadHistoryEntity?
 
+    @Query(
+        """
+        UPDATE read_history
+        SET from_verse_no = :fromVerseNo,
+            to_verse_no = :toVerseNo,
+            datetime = :datetime
+        WHERE id = :id
+        """
+    )
+    suspend fun updateVersePosition(
+        id: Long,
+        fromVerseNo: Int,
+        toVerseNo: Int,
+        datetime: Long,
+    )
+
     @Query("SELECT * FROM read_history ORDER BY datetime DESC LIMIT :limit")
     fun getFlow(limit: Int): Flow<List<ReadHistoryEntity>>
 

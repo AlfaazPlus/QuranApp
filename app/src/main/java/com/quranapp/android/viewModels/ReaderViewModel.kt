@@ -37,7 +37,6 @@ import com.quranapp.android.utils.reader.ReaderObserveAction
 import com.quranapp.android.utils.reader.TextBuilderParams
 import com.quranapp.android.utils.reader.TranslationPageBuilderParams
 import com.quranapp.android.utils.reader.VerseActions
-import com.quranapp.android.utils.reader.toQuranMushafId
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -328,11 +327,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
 
             is ReaderIntentData.MushafPage -> {
                 val currentPageNo = _mushafSession.value.currentPageNo
-                if (data.pageNo > 0) {
-                    currentPageNo == data.pageNo
-                } else {
-                    (currentViewType as? ReaderViewType.Chapter)?.chapterNo == data.fallbackChapterNo
-                }
+                currentPageNo == data.pageNo
             }
         }
     }
@@ -470,101 +465,53 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         pendingInitMode = targetMode.takeIf { it != this.readerMode.value }
         ReaderPreferences.setReaderMode(targetMode)
 
-        val hasFallbackVerse =
-            QuranMeta.isChapterValid(data.fallbackChapterNo) && data.fallbackVerseNo > 0
-
-        if (data.mushafCode != null) {
-            // Apply the session (layout, page, anchor verse) BEFORE writing the script pref, so
-            // that the pref observer sees layout == script and never runs switchScript(), which
-            // would otherwise navigate to page 1 and override the history position.
-            val script = QuranScript(
-                QuranScriptUtils.validatePreferredScript(data.mushafCode),
-                data.mushafVariant,
-            )
-            val mushafId = script.toMushafId()
-            val pageCount = mushafPageCount(mushafId)
-
-            val targetPage = when {
-                data.pageNo > 0 -> data.pageNo
-                hasFallbackVerse -> resolvePageNo(
-                    data.fallbackChapterNo,
-                    data.fallbackVerseNo,
-                    mushafId,
-                )
-
-                else -> null
-            }
-
-            val anchorVerse = data.initialVerse?.takeIf { it.isValid }
-                ?: if (hasFallbackVerse) {
-                    ChapterVersePair(data.fallbackChapterNo, data.fallbackVerseNo)
-                } else if (targetPage != null) {
-                    withContext(Dispatchers.IO) {
-                        repository.getFirstAyahIdOnPage(mushafId, targetPage)
-                    }?.let {
-                        QuranMeta.getVerseNoFromAyahId(it).let { (c, v) -> ChapterVersePair(c, v) }
-                    }
-                } else null
-
-            mushafSessionMutex.withLock {
-                val old = _mushafSession.value
-
-                if (old.layout != script) {
-                    _pageItems.value = emptyMap()
-                    _translationPageItems.value = emptyMap()
-                    _readingFlowPageItems.value = emptyMap()
-                    lastTranslationReaderContentKey = null
+        // Apply the session before writing the script preference so the observer cannot
+        // replace this restored page with a default page during a script switch.
+        val script = QuranScript(
+            QuranScriptUtils.validatePreferredScript(data.mushafCode),
+            data.mushafVariant,
+        )
+        val mushafId = script.toMushafId()
+        val pageCount = mushafPageCount(mushafId)
+        val anchorVerse = data.initialVerse?.takeIf { it.isValid }
+            ?: withContext(Dispatchers.IO) {
+                repository.getFirstAyahIdOnPage(mushafId, data.pageNo)
+            }?.let {
+                QuranMeta.getVerseNoFromAyahId(it).let { (chapter, verse) ->
+                    ChapterVersePair(chapter, verse)
                 }
-
-                _mushafSession.value = old.copy(
-                    layout = script,
-                    pageCount = pageCount,
-                    currentPageNo = targetPage ?: old.currentPageNo,
-                    version = if (old.layout != script) old.version + 1 else old.version,
-                )
-
-                anchorVerse?.let { lastKnownVerse = it }
-
-                ReaderPreferences.setQuranScriptWithVariant(data.mushafCode, data.mushafVariant)
             }
+
+        mushafSessionMutex.withLock {
+            val old = _mushafSession.value
+
+            if (old.layout != script) {
+                _pageItems.value = emptyMap()
+                _translationPageItems.value = emptyMap()
+                _readingFlowPageItems.value = emptyMap()
+                lastTranslationReaderContentKey = null
+            }
+
+            _mushafSession.value = old.copy(
+                layout = script,
+                pageCount = pageCount,
+                currentPageNo = data.pageNo,
+                version = if (old.layout != script) old.version + 1 else old.version,
+            )
+
+            anchorVerse?.let { lastKnownVerse = it }
+
+            ReaderPreferences.setQuranScriptWithVariant(data.mushafCode, data.mushafVariant)
         }
 
-        if (data.pageNo > 0) {
-            _uiState.update {
-                ReaderUiState(
-                    viewType = ReaderViewType.Chapter(data.fallbackChapterNo.coerceIn(QuranMeta.chapterRange)),
-                )
-            }
+        _uiState.update {
+            ReaderUiState(viewType = ReaderViewType.Chapter(anchorVerse?.chapterNo ?: 1))
+        }
 
-            requestPageNavigation(data.pageNo)
-            // explicit mushaf page wins over [initialVerse] for positioning; verse is only for
-            // history/sync — do not call [requestVerseNavigation] or translation/mushaf UI will
-            // resolve the verse to a (possibly different) page after scroll.
-            data.initialVerse?.takeIf { it.isValid }?.let { lastKnownVerse = it }
-        } else if (hasFallbackVerse) {
-            val page = resolvePageNo(
-                data.fallbackChapterNo,
-                data.fallbackVerseNo,
-                data.mushafCode?.toQuranMushafId(data.mushafVariant)
-            )
-
-            _uiState.update {
-                ReaderUiState(
-                    viewType = ReaderViewType.Chapter(data.fallbackChapterNo),
-                )
-            }
-
-            if (page != null) requestPageNavigation(page)
-
-            lastKnownVerse = data.initialVerse?.takeIf { it.isValid }
-                ?: ChapterVersePair(data.fallbackChapterNo, data.fallbackVerseNo)
+        if (anchorVerse != null) {
+            requestVerseNavigation(anchorVerse.chapterNo, anchorVerse.verseNo)
         } else {
-            _uiState.update {
-                ReaderUiState(viewType = ReaderViewType.Chapter(1))
-            }
-            data.initialVerse?.takeIf { it.isValid }?.let {
-                requestVerseNavigation(it.chapterNo, it.verseNo)
-            }
+            requestPageNavigation(data.pageNo)
         }
     }
 
@@ -826,8 +773,9 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         anchorPages: Collection<Int>,
         params: PageBuilderParams
     ) {
-        val builderKey = params.toKey()
         val session = _mushafSession.value
+        val builderKey =
+            "${session.layout.scriptCode}:${session.layout.variant?.value.orEmpty()}:${params.toKey()}"
         val totalPages = session.pageCount
         val targets = mushafPrefetchTargets(anchorPages, totalPages)
         if (targets.isEmpty()) return
@@ -852,12 +800,18 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
             ReaderItemsBuilder.buildMushafPages(
                 fontResolver,
                 missing,
-                params
+                params,
+                session.layout.scriptCode,
+                session.layout.variant,
             )
         }
 
         withContext(Dispatchers.Main.immediate) {
-            _pageItems.update { old -> old + built }
+            // A script switch clears the page cache. Ignore an older build that finishes after
+            // that clear, or its glyph placements can be reused with the newly selected atlas.
+            if (_mushafSession.value.version == session.version) {
+                _pageItems.update { old -> old + built }
+            }
         }
     }
 

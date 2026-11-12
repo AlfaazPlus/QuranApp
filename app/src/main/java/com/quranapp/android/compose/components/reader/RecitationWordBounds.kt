@@ -130,13 +130,25 @@ internal fun DrawScope.drawRecitationHighlights(
     verseColor: Color,
     wordColor: Color,
     corner: CornerRadius,
+    extendEdges: Boolean = false,
+    fullLineContainerWidthPx: Float = 0f,
 ) {
     bounds.drawVersion
     bounds.consumeDirty()
     if (ayahId < 0) return
 
     bounds.fill(words, ayahId, wordIndex = -1, splitRows = splitRows)
-    drawScratch(bounds, verseColor, corner)
+
+    val fullLineExtension = ((fullLineContainerWidthPx - size.width) / 2f).coerceAtLeast(0f)
+
+    drawScratch(
+        bounds = bounds,
+        color = verseColor,
+        corner = corner,
+        horizontalExtension = fullLineExtension,
+        extendRightToLineEdge = extendEdges && words.firstOrNull()?.ayahId == ayahId,
+        extendLeftToLineEdge = extendEdges && words.lastOrNull()?.ayahId == ayahId,
+    )
 
     if (wordIndex < 0) return
 
@@ -148,11 +160,47 @@ private fun DrawScope.drawScratch(
     bounds: RecitationWordBounds,
     color: Color,
     corner: CornerRadius,
+    horizontalExtension: Float = 0f,
+    extendRightToLineEdge: Boolean = false,
+    extendLeftToLineEdge: Boolean = false,
 ) {
+    var rightmostIndex = -1
+    var rightmost = Float.NEGATIVE_INFINITY
+    var leftmostIndex = -1
+    var leftmost = Float.POSITIVE_INFINITY
+
+    if (extendRightToLineEdge || extendLeftToLineEdge) {
+        for (index in 0 until bounds.scratchCount) {
+            val left = bounds.left(index)
+            val right = bounds.right(index)
+
+            if (right > rightmost) {
+                rightmost = right
+                rightmostIndex = index
+            }
+
+            if (left < leftmost) {
+                leftmost = left
+                leftmostIndex = index
+            }
+        }
+    }
+
     for (index in 0 until bounds.scratchCount) {
-        val left = bounds.left(index)
+        val left = when {
+            extendLeftToLineEdge && index == leftmostIndex ->
+                -horizontalExtension
+            else -> bounds.left(index)
+        }
+
         val top = bounds.top(index)
-        val right = bounds.right(index)
+
+        val right = when {
+            extendRightToLineEdge && index == rightmostIndex ->
+                size.width + horizontalExtension
+            else -> bounds.right(index)
+        }
+
         val bottom = bounds.bottom(index)
        
         drawRoundRect(

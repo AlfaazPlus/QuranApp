@@ -335,7 +335,17 @@ fun ReadHistoryEntity.subtitleLabel(chapterName: String): String? {
 
     }
     if (readerMode == ReaderMode.Reading.value || readerMode == ReaderMode.Translation.value) {
-        return mushafCode?.getQuranScriptName() ?: "-"
+        val location = if (chapterNo > 0 && fromVerseNo > 0) {
+            val chapterLabel = chapterName.ifBlank { chapterNo.toString() }
+            "$chapterLabel · $verseLabel"
+        } else null
+
+        val scriptLabel = mushafCode?.getQuranScriptName()
+
+        return listOfNotNull(location, scriptLabel)
+            .filter { it.isNotBlank() }
+            .joinToString(" · ")
+            .ifBlank { "-" }
     } else {
         return when (ReadType.fromValue(readType)) {
             ReadType.Chapter -> verseLabel

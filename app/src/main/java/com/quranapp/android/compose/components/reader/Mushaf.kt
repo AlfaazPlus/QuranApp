@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -489,7 +490,7 @@ private fun PageModePage(
                                                         line = line,
                                                         playingAyahId = playingAyahId,
                                                         playingWordIndex = playingWordIndex,
-                                                        ruledPageDecoration = ruledPageDecoration,
+                                                        ruledPageDecoration = true,
                                                         targetVerse = targetVerse,
                                                         targetWordIndex = targetWordIndex,
                                                         verseAnchor = verseAnchor,
@@ -501,7 +502,7 @@ private fun PageModePage(
                                                     line = line,
                                                     playingAyahId = playingAyahId,
                                                     playingWordIndex = playingWordIndex,
-                                                    ruledPageDecoration = ruledPageDecoration,
+                                                    ruledPageDecoration = false,
                                                     targetVerse = targetVerse,
                                                     targetWordIndex = targetWordIndex,
                                                     verseAnchor = verseAnchor,
@@ -573,8 +574,12 @@ private fun MushafLineText(
     val fittedStyle = layout.fittedStyle
     val centeredGap = layout.centeredGap
 
-    if (textLine.centered) {
-        Box(Modifier.fillMaxWidth()) {
+    BoxWithConstraints(Modifier.fillMaxWidth()) {
+        val fullLineContainerWidthPx = with(LocalDensity.current) {
+            maxWidth.toPx() + MUSHAF_PAGE_HORIZONTAL_PADDING.toPx() * 2
+        }
+
+        if (textLine.centered) {
             MushafWordsRow(
                 textLine = textLine,
                 fittedStyle = fittedStyle,
@@ -587,22 +592,24 @@ private fun MushafLineText(
                 horizontalArrangement = Arrangement.spacedBy(
                     centeredGap, Alignment.CenterHorizontally
                 ),
+                fullLineContainerWidthPx = fullLineContainerWidthPx,
                 modifier = Modifier.align(Alignment.Center),
             )
+        } else {
+            MushafWordsRow(
+                textLine = textLine,
+                fittedStyle = fittedStyle,
+                playingAyahId = playingAyahId,
+                playingWordIndex = playingWordIndex,
+                targetVerse = targetVerse,
+                targetWordIndex = targetWordIndex,
+                verseAnchor = verseAnchor,
+                visibilityTracker = visibilityTracker,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                fullLineContainerWidthPx = fullLineContainerWidthPx,
+                modifier = Modifier.fillMaxWidth(),
+            )
         }
-    } else {
-        MushafWordsRow(
-            textLine = textLine,
-            fittedStyle = fittedStyle,
-            playingAyahId = playingAyahId,
-            playingWordIndex = playingWordIndex,
-            targetVerse = targetVerse,
-            targetWordIndex = targetWordIndex,
-            verseAnchor = verseAnchor,
-            visibilityTracker = visibilityTracker,
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth(),
-        )
     }
 }
 
@@ -617,6 +624,7 @@ private fun MushafWordsRow(
     verseAnchor: VerseScrollAnchor,
     visibilityTracker: VerseVisibilityTracker?,
     horizontalArrangement: Arrangement.Horizontal,
+    fullLineContainerWidthPx: Float,
     modifier: Modifier = Modifier,
 ) {
     val words = textLine.words
@@ -636,12 +644,13 @@ private fun MushafWordsRow(
                 Modifier.onGloballyPositioned { coordinates ->
                     val pos = coordinates.positionInParent()
                     val sz = coordinates.size
+
                     bounds.update(
                         index = index,
-                        left = pos.x,
-                        top = pos.y,
-                        right = pos.x + sz.width,
-                        bottom = pos.y + sz.height,
+                        left = pos.x - 2,
+                        top = pos.y + 4,
+                        right = pos.x + sz.width + 2,
+                        bottom = pos.y + sz.height - 4,
                     )
                 }
             }
@@ -653,7 +662,6 @@ private fun MushafWordsRow(
     val highlightCorner = with(LocalDensity.current) {
         CornerRadius(8.dp.toPx(), 8.dp.toPx())
     }
-
     val wbwState = LocalWbwState.current
     val quranTextStyles = LocalQuranTextStyle.current
     val shouldShowTooltip = !wbwState.isWbwSheetOpen
@@ -688,6 +696,8 @@ private fun MushafWordsRow(
                         },
                         wordColor = wordHighlightColor,
                         corner = highlightCorner,
+                        extendEdges = true,
+                        fullLineContainerWidthPx = fullLineContainerWidthPx,
                     )
                 }
             },

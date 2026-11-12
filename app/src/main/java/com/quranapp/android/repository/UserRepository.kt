@@ -208,6 +208,17 @@ class UserRepository(
 
     // ── Read History ──
     suspend fun saveReadHistory(entity: ReadHistoryEntity): Long {
+        val latest = readHistoryDao.getLatest()
+        if (latest != null && latest.pageNo != null && latest.hasSameMushafPage(entity)) {
+            readHistoryDao.updateVersePosition(
+                id = latest.id,
+                fromVerseNo = entity.fromVerseNo,
+                toVerseNo = entity.toVerseNo,
+                datetime = entity.datetime,
+            )
+            return latest.id
+        }
+
         readHistoryDao.deleteDuplicate(
             readType = entity.readType,
             readerMode = entity.readerMode,
@@ -222,6 +233,15 @@ class UserRepository(
 
         return id
     }
+
+    private fun ReadHistoryEntity.hasSameMushafPage(other: ReadHistoryEntity): Boolean =
+        readType == other.readType &&
+            readerMode == other.readerMode &&
+            divisionNo == other.divisionNo &&
+            chapterNo == other.chapterNo &&
+            mushafCode == other.mushafCode &&
+            mushafVariant == other.mushafVariant &&
+            pageNo == other.pageNo
 
     fun getHistoriesFlow(limit: Int): Flow<List<ReadHistoryEntity>> {
         return readHistoryDao.getFlow(limit)

@@ -693,15 +693,16 @@ object ReaderItemsBuilder {
     suspend fun buildMushafPages(
         fontResolver: FontResolver,
         pageNumbers: Collection<Int>,
-        params: PageBuilderParams
+        params: PageBuilderParams,
+        scriptCode: String,
+        scriptVariant: QuranScriptVariant?,
     ): Map<Int, QuranPageItem> {
         val distinct = pageNumbers.filter { it > 0 }.distinct().sorted()
         if (distinct.isEmpty()) return emptyMap()
 
         val uiConfig = params.uiConfig
 
-        val scriptCode = ReaderPreferences.getQuranScript()
-        val mushafId = scriptCode.toQuranMushafId(ReaderPreferences.getQuranScriptVariant())
+        val mushafId = scriptCode.toQuranMushafId(scriptVariant)
 
         val quranRepository = DatabaseProvider.getQuranRepository(uiConfig.context)
         val externalQuranDb = DatabaseProvider.getExternalQuranDatabase(uiConfig.context)
@@ -810,7 +811,7 @@ object ReaderItemsBuilder {
                 pageNo = pageNo,
                 juzNo = juzByPage[pageNo] ?: -1,
                 lines = lines,
-                cacheKey = params.toKey()
+                cacheKey = "$scriptCode:${scriptVariant?.value.orEmpty()}:${params.toKey()}"
             )
         }
 
