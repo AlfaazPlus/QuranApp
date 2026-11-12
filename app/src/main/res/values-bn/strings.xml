@@ -349,6 +349,7 @@
     <string name="modeVerseByVerse">এক আয়াত করে পড়ুন</string>
     <string name="modeMushaf">কুরআনের পৃষ্ঠার মতো</string>
     <string name="readingLayoutFlow">স্ক্রল</string>
+    <string name="readingLayoutPage">কুরআনের পৃষ্ঠা</string>
     <string name="titleGlobalSearch">সবখানে খুঁজুন</string>
     <string name="searchIndexingInProgress">অনুসন্ধানের প্রস্তুতি চলছে। ইনডেক্স তৈরি সম্পূর্ণ না হওয়া পর্যন্ত কিছু ফলাফল নাও দেখা যেতে পারে।</string>
     <string name="search_match">মিলের ধরন</string>
@@ -521,4 +522,17 @@
         <item quantity="one">%dটি স্থান</item>
         <item quantity="other">%dটি স্থান</item>
     </plurals>
+
+    <string name="advanced_settings">উন্নত সেটিংস</string>
+    <string name="shareAsImage">ছবি তৈরি করুন</string>
+    <string name="customize">কাস্টমাইজ</string>
+    <string name="templates">টেমপ্লেট</string>
+    <string name="image_saved">ছবি সেভ হয়েছে</string>
+    <string name="image_save_failed">ছবি সেভ করা যায়নি</string>
+    <string name="image_share_failed">ছবি শেয়ার করা যায়নি</string>
+    <string name="content">বিষয়বস্তু</string>
+    <string name="arabic_only">শুধু আরবি</string>
+    <string name="translation_only">শুধু অনুবাদ</string>
+    <string name="arabic_and_translation">আরবি ও অনুবাদ</string>
+    <string name="shareImageFitRejected">এই আয়াতটি বেছে নেওয়া টেমপ্লেটের জন্য অনেক বড়। একটু কম বিষয়বস্তু দেখান, বা অন্য টেমপ্লেট বেছে নিন।</string>
 </resources>

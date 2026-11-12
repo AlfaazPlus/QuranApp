@@ -334,6 +334,7 @@
     <string name="modeVerseByVerse">आयत-दर-आयत मोड</string>
     <string name="modeMushaf">पृष्ठ मोड</string>
     <string name="readingLayoutFlow">स्क्रॉल</string>
+    <string name="readingLayoutPage">मुसहफ पृष्ठ</string>
     <string name="strHintSearchBy">पारा या सूरह खोजें</string>
     <string name="strHintSearchHizb">हिज़्ब या सूरह खोजें</string>
     <string name="strHintSearchPage">पृष्ठ खोजें</string>
@@ -536,4 +537,17 @@
         <item quantity="one">%d जगह</item>
         <item quantity="other">%d जगह</item>
     </plurals>
+
+    <string name="advanced_settings">उन्नत सेटिंग्स</string>
+    <string name="shareAsImage">इमेज बनाएँ</string>
+    <string name="customize">कस्टमाइज़</string>
+    <string name="templates">टेम्पलेट</string>
+    <string name="image_saved">इमेज सेव हो गई</string>
+    <string name="image_save_failed">इमेज सेव नहीं हो सकी</string>
+    <string name="image_share_failed">इमेज साझा नहीं हो सकी</string>
+    <string name="content">सामग्री</string>
+    <string name="arabic_only">केवल अरबी</string>
+    <string name="translation_only">केवल अनुवाद</string>
+    <string name="arabic_and_translation">अरबी और अनुवाद</string>
+    <string name="shareImageFitRejected">यह आयत चुने गए टेम्पलेट के लिए बहुत लंबी है। थोड़ी कम सामग्री दिखाएँ, या दूसरा टेम्पलेट चुनें।</string>
 </resources>

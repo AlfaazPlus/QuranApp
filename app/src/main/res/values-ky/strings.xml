@@ -249,6 +249,7 @@
     <string name="msgChapterRemovedFromFavourites">Сүрө сүйүктүүлөрдөн өчүрүлдү</string>
     <string name="modeMushaf">Мусхаф режими</string>
     <string name="readingLayoutFlow">Сыдыруу</string>
+    <string name="readingLayoutPage">Мусхаф барагы</string>
     <string name="strLabelOrder">Тартип</string>
     <string name="strLabelSelectedCount" formatted="false">%d тандалды</string>
     <string name="strLabelMoreTranslations" formatted="false">+%d котормо</string>
@@ -526,4 +527,17 @@
         <item quantity="one">%d жер</item>
         <item quantity="other">%d жер</item>
     </plurals>
+
+    <string name="advanced_settings">Кошумча жөндөөлөр</string>
+    <string name="shareAsImage">Сүрөт түзүү</string>
+    <string name="customize">Ыңгайлаш</string>
+    <string name="templates">Үлгүлөр</string>
+    <string name="image_saved">Сүрөт сакталды</string>
+    <string name="image_save_failed">Сүрөт сакталган жок</string>
+    <string name="image_share_failed">Сүрөт бөлүшүлгөн жок</string>
+    <string name="content">Мазмун</string>
+    <string name="arabic_only">Арабча гана</string>
+    <string name="translation_only">Котормо гана</string>
+    <string name="arabic_and_translation">Арабча жана котормо</string>
+    <string name="shareImageFitRejected">Бул аят тандалган үлгүгө өтө узун. Азыраак мазмун көрсөтүңүз же башка үлгү тандаңыз.</string>
 </resources>

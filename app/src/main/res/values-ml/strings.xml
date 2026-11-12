@@ -289,6 +289,7 @@
     <string name="modeVerseByVerse">വചനം തിരിച്ച്</string>
     <string name="modeMushaf">മുസ്ഹഫ് രീതി</string>
     <string name="readingLayoutFlow">സ്ക്രോൾ</string>
+    <string name="readingLayoutPage">മുസ്ഹഫ് പേജ്</string>
     <string name="titleGlobalSearch">സെർച്ച്</string>
     <string name="searchIndexingInProgress">തിരയൽ തയ്യാറാക്കുന്നു. ഇൻഡെക്സിംഗ് പൂർത്തിയാകുന്നതുവരെ ചില ഫലങ്ങൾ കാണാനായേക്കില്ല.</string>
     <string name="search_match">പൊരുത്തത്തിന്റെ തരം</string>
@@ -527,4 +528,17 @@
         <item quantity="one">%d സ്ഥലം</item>
         <item quantity="other">%d സ്ഥലങ്ങൾ</item>
     </plurals>
+
+    <string name="advanced_settings">വിപുലമായ ക്രമീകരണങ്ങൾ</string>
+    <string name="shareAsImage">ചിത്രം സൃഷ്ടിക്കുക</string>
+    <string name="customize">കസ്റ്റമൈസ്</string>
+    <string name="templates">ടെംപ്ലേറ്റ്</string>
+    <string name="image_saved">ചിത്രം സേവ് ചെയ്തു</string>
+    <string name="image_save_failed">ചിത്രം സേവ് ചെയ്യാനായില്ല</string>
+    <string name="image_share_failed">ചിത്രം പങ്കിടാനായില്ല</string>
+    <string name="content">ഉള്ളടക്കം</string>
+    <string name="arabic_only">അറബിക് മാത്രം</string>
+    <string name="translation_only">വിവർത്തനം മാത്രം</string>
+    <string name="arabic_and_translation">അറബിയും വിവർത്തനവും</string>
+    <string name="shareImageFitRejected">ഈ വാക്യം തിരഞ്ഞെടുത്ത ടെംപ്ലേറ്റിന് വളരെ ദൈർഘ്യമുള്ളതാണ്. കുറച്ച് ഉള്ളടക്കം കാണിക്കുക, അല്ലെങ്കിൽ മറ്റൊരു ടെംപ്ലേറ്റ് തിരഞ്ഞെടുക്കുക.</string>
 </resources>

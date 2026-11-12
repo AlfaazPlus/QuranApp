@@ -358,6 +358,7 @@
     <string name="modeVerseByVerse">شێوازی ئایەت بە ئایەت</string>
     <string name="modeMushaf">شێوازی مۆسحەف</string>
     <string name="readingLayoutFlow">سکرۆڵ</string>
+    <string name="readingLayoutPage">پەڕەی مۆسحەف</string>
     <string name="titleGlobalSearch">گەڕانی گشتگیر</string>
     <string name="searchIndexingInProgress">ئامادەکاری بۆ گەڕان بەردەوامە. تا تەواوبوونی پێڕستکردن، ڕەنگە هەموو ئەنجامەکان پیشان نەدرێن.</string>
     <string name="search_match">جۆری هاوتایی</string>
@@ -529,4 +530,17 @@
         <item quantity="one">%d شوێن</item>
         <item quantity="other">%d شوێن</item>
     </plurals>
+
+    <string name="advanced_settings">ڕێکخستنە پێشکەوتووەکان</string>
+    <string name="shareAsImage">وێنە دروست بکە</string>
+    <string name="customize">دڵخواز</string>
+    <string name="templates">قاڵبەکان</string>
+    <string name="image_saved">وێنەکە پاشەکەوت کرا</string>
+    <string name="image_save_failed">نەتوانرا وێنەکە پاشەکەوت بکرێت</string>
+    <string name="image_share_failed">نەتوانرا وێنەکە بڵاو بکرێتەوە</string>
+    <string name="content">ناوەڕۆک</string>
+    <string name="arabic_only">تەنها عەرەبی</string>
+    <string name="translation_only">تەنها وەرگێڕان</string>
+    <string name="arabic_and_translation">عەرەبی و وەرگێڕان</string>
+    <string name="shareImageFitRejected">ئەم ئایەتە زۆر درێژە بۆ قاڵبی هەڵبژێردراو. ناوەڕۆکی کەمتر پیشان بدە، یان قاڵبێکی تر هەڵبژێرە.</string>
 </resources>

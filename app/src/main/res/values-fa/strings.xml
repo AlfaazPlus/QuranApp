@@ -317,6 +317,7 @@
     <string name="modeVerseByVerse">حالت آیه به آیه</string>
     <string name="modeMushaf">حالت مصحف</string>
     <string name="readingLayoutFlow">پیمایش</string>
+    <string name="readingLayoutPage">صفحه مصحف</string>
     <string name="titleGlobalSearch">جستجوی سراسری</string>
     <string name="searchIndexingInProgress">در حال آماده‌سازی جستجو هستیم. تا پایان نمایه‌سازی ممکن است همهٔ نتایج نمایش داده نشوند.</string>
     <string name="search_match">نوع تطبیق</string>
@@ -529,4 +530,17 @@
         <item quantity="one">%d محل</item>
         <item quantity="other">%d مکان</item>
     </plurals>
+
+    <string name="advanced_settings">تنظیمات پیشرفته</string>
+    <string name="shareAsImage">ایجاد تصویر</string>
+    <string name="customize">سفارشی</string>
+    <string name="templates">قالب‌ها</string>
+    <string name="image_saved">تصویر ذخیره شد</string>
+    <string name="image_save_failed">تصویر ذخیره نشد</string>
+    <string name="image_share_failed">تصویر به اشتراک گذاشته نشد</string>
+    <string name="content">محتوا</string>
+    <string name="arabic_only">فقط عربی</string>
+    <string name="translation_only">فقط ترجمه</string>
+    <string name="arabic_and_translation">عربی و ترجمه</string>
+    <string name="shareImageFitRejected">این آیه برای قالب انتخاب‌شده خیلی طولانی است. محتوای کمتری نشان دهید یا قالب دیگری انتخاب کنید.</string>
 </resources>

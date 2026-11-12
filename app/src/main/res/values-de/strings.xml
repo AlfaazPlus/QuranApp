@@ -335,6 +335,7 @@
     <string name="modeVerseByVerse">Vers für Vers Modus</string>
     <string name="modeMushaf">Kodex Stil</string>
     <string name="readingLayoutFlow">Scrollen</string>
+    <string name="readingLayoutPage">Kodex-Seite</string>
     <string name="strHintSearchPage">Suchseite</string>
     <string name="noNoteProvided">Keine Notiz vorhanden…</string>
     <string name="dailyReminderMsg">Erhalte eine tägliche Erinnerungsbenachrichtigung.</string>
@@ -532,4 +533,17 @@
         <item quantity="one">%d Ort</item>
         <item quantity="other">%d Orte</item>
     </plurals>
+
+    <string name="advanced_settings">Erweiterte Einstellungen</string>
+    <string name="shareAsImage">Bild erstellen</string>
+    <string name="customize">Anpassen</string>
+    <string name="templates">Vorlagen</string>
+    <string name="image_saved">Bild gespeichert</string>
+    <string name="image_save_failed">Bild konnte nicht gespeichert werden</string>
+    <string name="image_share_failed">Bild konnte nicht geteilt werden</string>
+    <string name="content">Inhalt</string>
+    <string name="arabic_only">Nur Arabisch</string>
+    <string name="translation_only">Nur Übersetzung</string>
+    <string name="arabic_and_translation">Arabisch und Übersetzung</string>
+    <string name="shareImageFitRejected">Dieser Vers ist für die gewählte Vorlage zu lang. Zeig weniger Inhalt oder wähl eine andere Vorlage.</string>
 </resources>

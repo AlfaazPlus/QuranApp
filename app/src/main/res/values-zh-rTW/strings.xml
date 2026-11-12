@@ -351,6 +351,7 @@
     <string name="modeVerseByVerse">逐節模式</string>
     <string name="modeMushaf">穆斯哈夫模式</string>
     <string name="readingLayoutFlow">捲動</string>
+    <string name="readingLayoutPage">穆斯哈夫頁面</string>
     <string name="titleGlobalSearch">全局搜索</string>
     <string name="searchIndexingInProgress">正在準備搜尋。索引建立完成前，部分結果可能無法顯示。</string>
     <string name="search_match">比對方式</string>
@@ -516,4 +517,17 @@
     <plurals name="place_count">
         <item quantity="other">共 %d 處</item>
     </plurals>
+
+    <string name="advanced_settings">進階設定</string>
+    <string name="shareAsImage">建立圖片</string>
+    <string name="customize">自訂</string>
+    <string name="templates">範本</string>
+    <string name="image_saved">圖片已儲存</string>
+    <string name="image_save_failed">無法儲存圖片</string>
+    <string name="image_share_failed">無法分享圖片</string>
+    <string name="content">內容</string>
+    <string name="arabic_only">僅阿拉伯語</string>
+    <string name="translation_only">僅翻譯</string>
+    <string name="arabic_and_translation">阿拉伯語和翻譯</string>
+    <string name="shareImageFitRejected">這節經文對所選範本來說太長了。請少顯示一些內容，或換一個範本。</string>
 </resources>

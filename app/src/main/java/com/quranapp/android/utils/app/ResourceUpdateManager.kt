@@ -13,6 +13,7 @@ import com.quranapp.android.utils.reader.translation.TranslationVersionManager
 import com.quranapp.android.utils.reader.tafsir.TafsirManager
 import com.quranapp.android.utils.reader.wbw.WbwManager
 import com.quranapp.android.utils.reader.wbw.WbwVersionManager
+import com.quranapp.android.utils.share.VerseTemplateManager
 import com.quranapp.android.utils.univ.FileUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -93,7 +94,8 @@ class ResourceUpdateManager private constructor(private val ctx: Context) {
                 remote.recitationTranslationsVersion > local.recitationTranslationsVersion ||
                 remote.tafsirsVersion > local.tafsirsVersion ||
                 remote.wbwVersion > local.wbwVersion ||
-                remote.wbwAudioVersion > local.wbwAudioVersion
+                remote.wbwAudioVersion > local.wbwAudioVersion ||
+                remote.templatesVersion > local.templatesVersion
     }
 
     private suspend fun performUpdates(
@@ -170,6 +172,17 @@ class ResourceUpdateManager private constructor(private val ctx: Context) {
                         WbwAudioRepository.refreshTimingsFromRemote(ctx)
                     } catch (e: Exception) {
                         Log.saveError(e, "ResourceUpdateManager.updateWbwAudio")
+                    }
+                }
+            }
+
+            // templates
+            launch {
+                if (force || local == null || remote.templatesVersion > local.templatesVersion) {
+                    try {
+                        VerseTemplateManager.getAvailable(ctx, forceRefresh = true)
+                    } catch (e: Exception) {
+                        Log.saveError(e, "ResourceUpdateManager.updateTemplates")
                     }
                 }
             }

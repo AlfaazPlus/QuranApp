@@ -12,4 +12,5 @@ data class ResourcesVersions(
     @SerialName("tafsirs") val tafsirsVersion: Long,
     @SerialName("wbw") val wbwVersion: Long,
     @SerialName("wbw_audio") val wbwAudioVersion: Long = 0L,
+    @SerialName("templates") val templatesVersion: Long = 0L,
 )

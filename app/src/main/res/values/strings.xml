@@ -149,6 +149,17 @@
     <string name="strTitleBookmarkDeleteCount" formatted="false">Remove %d bookmarks?</string>
     <string name="strTitleTranslDelete">Delete Translation?</string>
     <string name="strTitleShareVerse">Share Verse</string>
+    <string name="shareAsImage">Create Image</string>
+    <string name="customize">Customize</string>
+    <string name="templates">Templates</string>
+    <string name="image_saved">Image saved</string>
+    <string name="image_save_failed">Could not save image</string>
+    <string name="image_share_failed">Could not share image</string>
+    <string name="content">Content</string>
+    <string name="arabic_only">Arabic only</string>
+    <string name="translation_only">Translation only</string>
+    <string name="arabic_and_translation">Arabic and translation</string>
+    <string name="shareImageFitRejected">This verse is too long for the selected template. Show less content or choose another template.</string>
     <string name="strTitleFeaturedQuran">Featured Reading</string>
     <string name="strTitleVOTD">Verse of The Day</string>
     <string name="labelRecommended">Recommended</string>

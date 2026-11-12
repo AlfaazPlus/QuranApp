@@ -334,6 +334,7 @@
     <string name="modeVerseByVerse">آیت بہ آیت موڈ</string>
     <string name="modeMushaf">صفحہ موڈ</string>
     <string name="readingLayoutFlow">سکرول</string>
+    <string name="readingLayoutPage">مصحف کا صفحہ</string>
     <string name="strHintSearchBy">پارہ یا سورہ تلاش کریں</string>
     <string name="strHintSearchHizb">حزب یا سورہ تلاش کریں</string>
     <string name="strHintSearchPage">صفحہ تلاش کریں</string>
@@ -536,4 +537,17 @@
         <item quantity="one">%d جگہ</item>
         <item quantity="other">%d جگہ</item>
     </plurals>
+
+    <string name="advanced_settings">اعلیٰ ترتیبات</string>
+    <string name="shareAsImage">تصویر بنائیں</string>
+    <string name="customize">کسٹمائز</string>
+    <string name="templates">سانچے</string>
+    <string name="image_saved">تصویر محفوظ ہو گئی</string>
+    <string name="image_save_failed">تصویر محفوظ نہیں ہو سکی</string>
+    <string name="image_share_failed">تصویر شیئر نہیں ہو سکی</string>
+    <string name="content">مواد</string>
+    <string name="arabic_only">صرف عربی</string>
+    <string name="translation_only">صرف ترجمہ</string>
+    <string name="arabic_and_translation">عربی اور ترجمہ</string>
+    <string name="shareImageFitRejected">یہ آیت منتخب سانچے کے لیے بہت لمبی ہے۔ تھوڑا کم مواد دکھائیں، یا کوئی اور سانچہ چنیں۔</string>
 </resources>

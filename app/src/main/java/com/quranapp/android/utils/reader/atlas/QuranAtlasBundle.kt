@@ -27,6 +27,9 @@ class QuranAtlasBundle(
     fun textureForGlyph(glyph: AtlasGlyphJson): ImageBitmap? =
         textureStore.cached(glyph.textureIndex)?.imageBitmap
 
+    fun cachedAndroidTextureForGlyph(glyph: AtlasGlyphJson): Bitmap? =
+        textureStore.cached(glyph.textureIndex)?.bitmap
+
     fun androidTextureForGlyph(glyph: AtlasGlyphJson): Bitmap? =
         textureStore.load(glyph.textureIndex)?.bitmap
 

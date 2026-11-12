@@ -1,5 +1,6 @@
 package com.quranapp.android.compose.components.reader.dialogs
 
+import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -40,12 +41,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.peacedesign.android.utils.AppBridge
 import com.quranapp.android.R
+import com.quranapp.android.activities.ActivityShareAsImage
 import com.quranapp.android.api.ApiConfig
 import com.quranapp.android.compose.components.dialogs.BottomSheetHeader
 import com.quranapp.android.compose.components.reader.LocalReaderViewModel
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.db.relations.VerseWithDetails
+import com.quranapp.android.utils.univ.Keys
 import com.quranapp.android.utils.univ.MessageUtils
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -179,6 +182,20 @@ private fun VodSheetContent(
                         )
                     }
                 }
+            )
+
+            VodOptionItem(
+                iconRes = R.drawable.ic_image,
+                labelRes = R.string.shareAsImage,
+                onClick = {
+                    onDismiss()
+                    context.startActivity(
+                        Intent(context, ActivityShareAsImage::class.java).apply {
+                            putExtra(Keys.READER_KEY_CHAPTER_NO, verse.chapterNo)
+                            putExtra(Keys.READER_KEY_VERSE_NO, verse.verseNo)
+                        }
+                    )
+                },
             )
 
             VodOptionItem(

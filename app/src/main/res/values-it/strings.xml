@@ -331,6 +331,7 @@
     <string name="modeVerseByVerse">Modalità versetto per versetto</string>
     <string name="modeMushaf">Modalità Mushaf</string>
     <string name="readingLayoutFlow">Scorrimento</string>
+    <string name="readingLayoutPage">Pagina del Mushaf</string>
     <string name="titleGlobalSearch">Ricerca globale</string>
     <string name="searchIndexingInProgress">Preparazione della ricerca in corso. Alcuni risultati potrebbero non essere disponibili fino al completamento dell\'indicizzazione.</string>
     <string name="search_match">Tipo di corrispondenza</string>
@@ -529,4 +530,17 @@
         <item quantity="many">%d luoghi</item>
         <item quantity="other">%d luoghi</item>
     </plurals>
+
+    <string name="advanced_settings">Impostazioni avanzate</string>
+    <string name="shareAsImage">Crea immagine</string>
+    <string name="customize">Personalizza</string>
+    <string name="templates">Modelli</string>
+    <string name="image_saved">Immagine salvata</string>
+    <string name="image_save_failed">Impossibile salvare l\'immagine</string>
+    <string name="image_share_failed">Impossibile condividere l\'immagine</string>
+    <string name="content">Contenuto</string>
+    <string name="arabic_only">Solo arabo</string>
+    <string name="translation_only">Solo traduzione</string>
+    <string name="arabic_and_translation">Arabo e traduzione</string>
+    <string name="shareImageFitRejected">Questo verso è troppo lungo per il modello scelto. Mostra meno contenuto o scegli un altro modello.</string>
 </resources>

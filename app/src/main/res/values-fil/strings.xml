@@ -311,6 +311,7 @@
     <string name="modeVerseByVerse">Bersikulo-por-bersikulo na mode</string>
     <string name="modeMushaf">Mushaf mode</string>
     <string name="readingLayoutFlow">Scroll</string>
+    <string name="readingLayoutPage">Pahina ng Mushaf</string>
     <string name="titleGlobalSearch">Pandaigdigang Paghahanap</string>
     <string name="searchIndexingInProgress">Inihahanda ang paghahanap. Maaaring hindi pa lumabas ang lahat ng resulta hangga\'t hindi tapos ang pag-index.</string>
     <string name="search_match">Uri ng pagtutugma</string>
@@ -525,4 +526,17 @@
         <item quantity="one">%d lugar</item>
         <item quantity="other">mga %d lugar</item>
     </plurals>
+
+    <string name="advanced_settings">Mga advanced na setting</string>
+    <string name="shareAsImage">Gumawa ng larawan</string>
+    <string name="customize">I-customize</string>
+    <string name="templates">Template</string>
+    <string name="image_saved">Na-save ang larawan</string>
+    <string name="image_save_failed">Hindi ma-save ang larawan</string>
+    <string name="image_share_failed">Hindi maibahagi ang larawan</string>
+    <string name="content">Nilalaman</string>
+    <string name="arabic_only">Arabic lang</string>
+    <string name="translation_only">Translation lang</string>
+    <string name="arabic_and_translation">Arabic at translation</string>
+    <string name="shareImageFitRejected">Masyadong mahaba ang taludtod na ito para sa napiling template. Magpakita ng mas kaunting nilalaman, o pumili ng ibang template.</string>
 </resources>

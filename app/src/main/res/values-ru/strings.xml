@@ -365,6 +365,7 @@
     <string name="modeVerseByVerse">Поаятный режим</string>
     <string name="modeMushaf">Режим Мусхафа</string>
     <string name="readingLayoutFlow">Прокрутка</string>
+    <string name="readingLayoutPage">Страница Мусхафа</string>
     <string name="noNoteProvided">Заметка отсутствует…</string>
     <string name="dailyReminderMsg">Получать ежедневное уведомление-напоминание.</string>
     <string name="titleGlobalSearch">Глобальный поиск</string>
@@ -552,4 +553,17 @@
         <item quantity="many">%d мест</item>
         <item quantity="other">%d места</item>
     </plurals>
+
+    <string name="advanced_settings">Дополнительные настройки</string>
+    <string name="shareAsImage">Создать изображение</string>
+    <string name="customize">Настроить</string>
+    <string name="templates">Шаблоны</string>
+    <string name="image_saved">Изображение сохранено</string>
+    <string name="image_save_failed">Не удалось сохранить изображение</string>
+    <string name="image_share_failed">Не удалось поделиться изображением</string>
+    <string name="content">Содержание</string>
+    <string name="arabic_only">Только арабский</string>
+    <string name="translation_only">Только перевод</string>
+    <string name="arabic_and_translation">Арабский и перевод</string>
+    <string name="shareImageFitRejected">Этот аят слишком длинный для выбранного шаблона. Покажите меньше текста или выберите другой шаблон.</string>
 </resources>

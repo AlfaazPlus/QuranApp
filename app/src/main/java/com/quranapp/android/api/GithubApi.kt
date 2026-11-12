@@ -35,4 +35,8 @@ interface GithubApi {
 
     @GET("inventory/wbw/available_wbw_info_v2.json")
     suspend fun getAvailableWbwInfo(): AvailableWbwInfoModel
+
+    @GET("inventory/templates/available_templates.json.gz")
+    @Streaming
+    suspend fun getAvailableTemplates(): Response<ResponseBody>
 }

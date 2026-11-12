@@ -312,6 +312,7 @@
     <string name="recitationDownloadConfirmTitle">Unduh murattal</string>
     <string name="modeMushaf">Mode mushaf</string>
     <string name="readingLayoutFlow">Gulir</string>
+    <string name="readingLayoutPage">Halaman mushaf</string>
     <string name="dailyReminderMsg">Dapatkan notifikasi pengingat harian.</string>
     <string name="strHintSearchBy">Cari juz atau surah</string>
     <string name="strHintSearchPage">Cari halaman</string>
@@ -518,4 +519,17 @@
     <plurals name="place_count">
         <item quantity="other">%d tempat</item>
     </plurals>
+
+    <string name="advanced_settings">Pengaturan lanjutan</string>
+    <string name="shareAsImage">Buat gambar</string>
+    <string name="customize">Sesuaikan</string>
+    <string name="templates">Templat</string>
+    <string name="image_saved">Gambar tersimpan</string>
+    <string name="image_save_failed">Gambar tidak dapat disimpan</string>
+    <string name="image_share_failed">Gambar tidak dapat dibagikan</string>
+    <string name="content">Konten</string>
+    <string name="arabic_only">Arab saja</string>
+    <string name="translation_only">Terjemahan saja</string>
+    <string name="arabic_and_translation">Arab dan terjemahan</string>
+    <string name="shareImageFitRejected">Ayat ini terlalu panjang untuk templat yang dipilih. Tampilkan lebih sedikit konten, atau pilih templat lain.</string>
 </resources>

@@ -313,6 +313,7 @@
     <string name="modeVerseByVerse">આયત-દર-આયત મોડ</string>
     <string name="modeMushaf">મુસહફ મોડ</string>
     <string name="readingLayoutFlow">સ્ક્રોલ</string>
+    <string name="readingLayoutPage">મુસહફ પાનું</string>
     <string name="titleGlobalSearch">વૈશ્વિક શોધ</string>
     <string name="searchIndexingInProgress">શોધ તૈયાર થઈ રહી છે. ઇન્ડેક્સ બનાવવાનું પૂર્ણ ન થાય ત્યાં સુધી કેટલાક પરિણામો દેખાય નહીં.</string>
     <string name="search_match">મેળનો પ્રકાર</string>
@@ -532,4 +533,17 @@
         <item quantity="one">%d સ્થાન</item>
         <item quantity="other">%d સ્થાનો</item>
     </plurals>
+
+    <string name="advanced_settings">અદ્યતન સેટિંગ્સ</string>
+    <string name="shareAsImage">છબી બનાવો</string>
+    <string name="customize">કસ્ટમાઇઝ</string>
+    <string name="templates">ટેમ્પલેટ</string>
+    <string name="image_saved">છબી સાચવાઈ</string>
+    <string name="image_save_failed">છબી સાચવી શકાઈ નહીં</string>
+    <string name="image_share_failed">છબી શેર કરી શકાઈ નહીં</string>
+    <string name="content">સામગ્રી</string>
+    <string name="arabic_only">ફક્ત અરબી</string>
+    <string name="translation_only">ફક્ત અનુવાદ</string>
+    <string name="arabic_and_translation">અરબી અને અનુવાદ</string>
+    <string name="shareImageFitRejected">આ આયત પસંદ કરેલા ટેમ્પલેટ માટે ઘણી લાંબી છે. થોડી ઓછી સામગ્રી બતાવો, અથવા બીજું ટેમ્પલેટ પસંદ કરો.</string>
 </resources>

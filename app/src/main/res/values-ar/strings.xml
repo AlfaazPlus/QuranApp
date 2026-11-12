@@ -361,6 +361,7 @@
     <string name="modeVerseByVerse">وضع آية بآية</string>
     <string name="modeMushaf">وضع المصحف</string>
     <string name="readingLayoutFlow">تمرير</string>
+    <string name="readingLayoutPage">صفحة المصحف</string>
     <string name="titleGlobalSearch">البحث العام</string>
     <string name="searchIndexingInProgress">جارٍ تجهيز البحث. قد لا تظهر جميع النتائج حتى يكتمل الفهرس.</string>
     <string name="search_match">مطابقة</string>
@@ -556,4 +557,17 @@
         <item quantity="many">%d موضعًا</item>
         <item quantity="other">%d موضع</item>
     </plurals>
+
+    <string name="advanced_settings">إعدادات متقدمة</string>
+    <string name="shareAsImage">إنشاء صورة</string>
+    <string name="customize">تخصيص</string>
+    <string name="templates">القوالب</string>
+    <string name="image_saved">تم حفظ الصورة</string>
+    <string name="image_save_failed">تعذّر حفظ الصورة</string>
+    <string name="image_share_failed">تعذّر مشاركة الصورة</string>
+    <string name="content">المحتوى</string>
+    <string name="arabic_only">العربية فقط</string>
+    <string name="translation_only">الترجمة فقط</string>
+    <string name="arabic_and_translation">العربية والترجمة</string>
+    <string name="shareImageFitRejected">هذه الآية أطول من القالب المختار. اعرض محتوى أقل، أو اختر قالبًا آخر.</string>
 </resources>

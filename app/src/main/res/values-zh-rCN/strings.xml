@@ -351,6 +351,7 @@
     <string name="modeVerseByVerse">逐节模式</string>
     <string name="modeMushaf">穆斯哈夫模式</string>
     <string name="readingLayoutFlow">滚动</string>
+    <string name="readingLayoutPage">穆斯哈夫页面</string>
     <string name="titleGlobalSearch">全局搜索</string>
     <string name="searchIndexingInProgress">正在准备搜索。索引建立完成前，部分结果可能无法显示。</string>
     <string name="search_match">匹配方式</string>
@@ -516,4 +517,17 @@
     <plurals name="place_count">
         <item quantity="other">共 %d 处</item>
     </plurals>
+
+    <string name="advanced_settings">高级设置</string>
+    <string name="shareAsImage">创建图片</string>
+    <string name="customize">自定义</string>
+    <string name="templates">模板</string>
+    <string name="image_saved">图片已保存</string>
+    <string name="image_save_failed">无法保存图片</string>
+    <string name="image_share_failed">无法分享图片</string>
+    <string name="content">内容</string>
+    <string name="arabic_only">仅阿拉伯语</string>
+    <string name="translation_only">仅翻译</string>
+    <string name="arabic_and_translation">阿拉伯语和翻译</string>
+    <string name="shareImageFitRejected">这节经文对所选模板来说太长了。请少显示一些内容，或换一个模板。</string>
 </resources>

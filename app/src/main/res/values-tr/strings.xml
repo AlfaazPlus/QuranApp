@@ -365,6 +365,7 @@
     <string name="modeVerseByVerse">Ayet ayet modu</string>
     <string name="modeMushaf">Mushaf modu</string>
     <string name="readingLayoutFlow">Kaydırma</string>
+    <string name="readingLayoutPage">Mushaf sayfası</string>
     <string name="titleGlobalSearch">Genel Arama</string>
     <string name="searchIndexingInProgress">Arama hazırlanıyor. Dizine ekleme tamamlanana kadar bazı sonuçlar görünmeyebilir.</string>
     <string name="search_match">Eşleşme türü</string>
@@ -529,4 +530,17 @@
         <item quantity="one">%d yer</item>
         <item quantity="other">%d yer</item>
     </plurals>
+
+    <string name="advanced_settings">Gelişmiş ayarlar</string>
+    <string name="shareAsImage">Görsel oluştur</string>
+    <string name="customize">Özelleştir</string>
+    <string name="templates">Şablonlar</string>
+    <string name="image_saved">Görsel kaydedildi</string>
+    <string name="image_save_failed">Görsel kaydedilemedi</string>
+    <string name="image_share_failed">Görsel paylaşılamadı</string>
+    <string name="content">İçerik</string>
+    <string name="arabic_only">Yalnızca Arapça</string>
+    <string name="translation_only">Yalnızca meal</string>
+    <string name="arabic_and_translation">Arapça ve meal</string>
+    <string name="shareImageFitRejected">Bu ayet seçilen şablon için çok uzun. Biraz daha az içerik gösterin veya başka bir şablon seçin.</string>
 </resources>

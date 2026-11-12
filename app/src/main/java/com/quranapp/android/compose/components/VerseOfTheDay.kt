@@ -1,5 +1,6 @@
 package com.quranapp.android.compose.components
 
+import android.content.Intent
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -49,6 +50,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.quranapp.android.R
+import com.quranapp.android.activities.ActivityShareAsImage
 import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.common.IconButton
 import com.quranapp.android.compose.components.common.Loader
@@ -67,6 +69,7 @@ import com.quranapp.android.utils.reader.QuranTextStyleParams
 import com.quranapp.android.utils.reader.atlas.LocalQuranAtlasBundle
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.reader.getQuranTextStyle
+import com.quranapp.android.utils.univ.Keys
 import com.quranapp.android.viewModels.VotdViewModel
 
 @Composable
@@ -261,6 +264,21 @@ internal fun VotdContent(
                 tint = if (votdEnabled) colorScheme.primary else iconTint,
                 small = true,
                 onClick = { showDailyReminderSheet = true }
+            )
+
+            IconButton(
+                painter = painterResource(R.drawable.ic_image),
+                contentDescription = stringResource(R.string.shareAsImage),
+                tint = iconTint,
+                small = true,
+                onClick = {
+                    context.startActivity(
+                        Intent(context, ActivityShareAsImage::class.java).apply {
+                            putExtra(Keys.READER_KEY_CHAPTER_NO, verse.chapterNo)
+                            putExtra(Keys.READER_KEY_VERSE_NO, verse.verseNo)
+                        }
+                    )
+                }
             )
 
             Spacer(Modifier.weight(1f))

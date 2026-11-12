@@ -330,6 +330,7 @@
     <string name="missingTimingData">%s لاءِ ٽائيمنگ ڊيٽا موجود ناهي – هلائي نٿو سگهجي.</string>
     <string name="modeMushaf">مصحف موڊ</string>
     <string name="readingLayoutFlow">اسڪرول</string>
+    <string name="readingLayoutPage">مصحف جو صفحو</string>
     <string name="modeVerseByVerse">آيت به آيت موڊ</string>
     <string name="msgRecitationGroupSize">چونڊيو ته ترجمو شروع ٿيڻ کان اڳ ڪيتريون قرآني آيتون هلن. مثال طور: جيڪڏهن توهان 3 چونڊيندا آهيو، ته اها 3 قرآني آيتون هلائيندي ۽ پوءِ انهن جا ترجما.</string>
     <string name="msgRepeat">سيٽ ڪريو ته هر آيت ايندڙ آيت ڏانهن وڃڻ کان اڳ ڪيترا ڀيرا هلڻ گهرجي. صرف تڏهن دستياب هوندو جڏهن آڊيو آپشنز ۾ \"صرف قرآن هلايو\" فعال هجي.</string>
@@ -522,4 +523,17 @@
         <item quantity="one">%d جڳهه</item>
         <item quantity="other">%d جڳھون</item>
     </plurals>
+
+    <string name="advanced_settings">اعلي سيٽنگون</string>
+    <string name="shareAsImage">تصوير ٺاهيو</string>
+    <string name="customize">ڪسٽمائيز</string>
+    <string name="templates">ٽيمپليٽ</string>
+    <string name="image_saved">تصوير محفوظ ٿي وئي</string>
+    <string name="image_save_failed">تصوير محفوظ نه ٿي سگهي</string>
+    <string name="image_share_failed">تصوير ورڇ نه ٿي سگهي</string>
+    <string name="content">مواد</string>
+    <string name="arabic_only">صرف عربي</string>
+    <string name="translation_only">صرف ترجمو</string>
+    <string name="arabic_and_translation">عربي ۽ ترجمو</string>
+    <string name="shareImageFitRejected">هي آيت چونڊيل ٽيمپليٽ لاءِ تمام ڊگهي آهي. ٿورو گهٽ مواد ڏيکاريو، يا ٻيو ٽيمپليٽ چونڊيو.</string>
 </resources>

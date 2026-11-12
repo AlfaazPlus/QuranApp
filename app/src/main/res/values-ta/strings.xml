@@ -310,6 +310,7 @@
     <string name="modeVerseByVerse">வசனம் வாரியாக</string>
     <string name="modeMushaf">முஸஹஃப் முறை</string>
     <string name="readingLayoutFlow">உருட்டு</string>
+    <string name="readingLayoutPage">முஸஹஃப் பக்கம்</string>
     <string name="titleGlobalSearch">பொதுத் தேடல்</string>
     <string name="searchIndexingInProgress">தேடல் தயாராகிறது. அட்டவணைப்படுத்தல் முடியும் வரை சில முடிவுகள் காட்டப்படாமல் இருக்கலாம்.</string>
     <string name="search_match">பொருத்த வகை</string>
@@ -522,4 +523,17 @@
         <item quantity="one">%d இடம்</item>
         <item quantity="other">%d இடங்கள்</item>
     </plurals>
+
+    <string name="advanced_settings">மேம்பட்ட அமைப்புகள்</string>
+    <string name="shareAsImage">படம் உருவாக்கு</string>
+    <string name="customize">தனிப்பயன்</string>
+    <string name="templates">வார்ப்பு</string>
+    <string name="image_saved">படம் சேமிக்கப்பட்டது</string>
+    <string name="image_save_failed">படத்தைச் சேமிக்க முடியவில்லை</string>
+    <string name="image_share_failed">படத்தைப் பகிர முடியவில்லை</string>
+    <string name="content">உள்ளடக்கம்</string>
+    <string name="arabic_only">அரபு மட்டும்</string>
+    <string name="translation_only">மொழிபெயர்ப்பு மட்டும்</string>
+    <string name="arabic_and_translation">அரபும் மொழிபெயர்ப்பும்</string>
+    <string name="shareImageFitRejected">இந்த வசனம் தேர்ந்தெடுத்த வார்ப்புருவுக்கு மிக நீளமானது. கொஞ்சம் குறைவான உள்ளடக்கத்தைக் காட்டுங்கள், அல்லது வேறு வார்ப்புருவைத் தேர்ந்தெடுங்கள்.</string>
 </resources>

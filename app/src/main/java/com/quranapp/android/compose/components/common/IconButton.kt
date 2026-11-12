@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
+import com.quranapp.android.compose.components.dialogs.SimpleTooltip
 import com.quranapp.android.compose.theme.alpha
 
 
@@ -32,22 +33,24 @@ fun IconButton(
     small: Boolean = false,
     onClick: () -> Unit,
 ) {
-    Button(
-        onClick = onClick,
-        modifier = Modifier.size(
-            if (small) 36.dp else 48.dp,
-        ),
-        shape = shape,
-        contentPadding = PaddingValues(0.dp),
-        enabled = enabled,
-        colors = colors,
-    ) {
-        Icon(
-            painter = painter,
-            contentDescription = contentDescription,
+    SimpleTooltip(contentDescription.orEmpty(), enabled = contentDescription != null) {
+        Button(
+            onClick = onClick,
             modifier = Modifier.size(
-                if (small) 20.dp else 24.dp,
+                if (small) 36.dp else 48.dp,
             ),
-        )
+            shape = shape,
+            contentPadding = PaddingValues(0.dp),
+            enabled = enabled,
+            colors = colors,
+        ) {
+            Icon(
+                painter = painter,
+                contentDescription = contentDescription,
+                modifier = Modifier.size(
+                    if (small) 20.dp else 24.dp,
+                ),
+            )
+        }
     }
 }
