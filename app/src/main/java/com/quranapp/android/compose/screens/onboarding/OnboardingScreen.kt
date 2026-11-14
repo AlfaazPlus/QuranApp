@@ -63,7 +63,7 @@ private val onboardingIcons = listOf(
     R.drawable.dr_icon_language,
     R.drawable.dr_icon_theme,
     R.drawable.dr_icon_translations,
-    R.drawable.ic_tafsir,
+    R.drawable.ic_book_open_text,
 )
 
 @OptIn(ExperimentalFoundationApi::class)

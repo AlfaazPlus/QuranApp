@@ -123,7 +123,7 @@ internal fun QuranicTopicsSearchRoute(
                     }
                 }
 
-                results.isEmpty() -> EmptyContent(message = "No topic matches found")
+                results.isEmpty() -> EmptyContent(message = stringResource(R.string.noResults))
 
                 else -> {
                     LazyColumn(

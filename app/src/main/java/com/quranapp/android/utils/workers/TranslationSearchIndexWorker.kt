@@ -1,6 +1,7 @@
 package com.quranapp.android.utils.workers
 
 import android.content.Context
+import android.content.pm.ServiceInfo
 import androidx.core.app.NotificationCompat
 import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
@@ -23,6 +24,8 @@ class TranslationSearchIndexWorker(
     params: WorkerParameters,
 ) : CoroutineWorker(appContext, params) {
     companion object {
+        private const val NOTIFICATION_ID = 1002
+
         const val KEY_MODE = "mode"
         const val KEY_SLUG = "slug"
         const val MODE_SLUG = "slug"
@@ -41,7 +44,11 @@ class TranslationSearchIndexWorker(
             .setOngoing(true)
             .build()
 
-        return ForegroundInfo(1001, notification)
+        return ForegroundInfo(
+            NOTIFICATION_ID,
+            notification,
+            ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC,
+        )
     }
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {

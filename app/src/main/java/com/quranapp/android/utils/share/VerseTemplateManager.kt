@@ -12,6 +12,7 @@ import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.app.AppUtils
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.univ.FileUtils
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -184,6 +185,9 @@ object VerseTemplateManager {
                 }
 
                 target
+            } catch (e: CancellationException) {
+                tmpFile.delete()
+                throw e
             } catch (e: Exception) {
                 tmpFile.delete()
                 Log.saveError(e, "VerseTemplateManager.ensureBackgroundFile")
@@ -374,6 +378,8 @@ object VerseTemplateManager {
                 pruneOrphanedImages(context, catalog.templates)
 
                 catalog
+            } catch (e: CancellationException) {
+                throw e
             } catch (e: Exception) {
                 Log.saveError(e, "VerseTemplateManager.loadNetwork")
                 null

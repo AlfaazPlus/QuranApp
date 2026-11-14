@@ -163,7 +163,9 @@ fun ReaderProvider(
                         Toast.LENGTH_LONG,
                     )
 
-                    WbwAudioPlayResult.InvalidTiming, WbwAudioPlayResult.NoChapterAudio -> MessageUtils.showRemovableToast(
+                    WbwAudioPlayResult.Unknown,
+                    WbwAudioPlayResult.InvalidTiming,
+                    WbwAudioPlayResult.NoChapterAudio -> MessageUtils.showRemovableToast(
                         context,
                         R.string.wbwAudioCouldNotPlay,
                         Toast.LENGTH_LONG,

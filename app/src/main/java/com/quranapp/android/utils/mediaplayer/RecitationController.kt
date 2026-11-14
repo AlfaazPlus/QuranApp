@@ -297,7 +297,16 @@ class RecitationController private constructor(private val appContext: Context) 
     }
 
     fun pause() {
-        mediaController?.pause()
+        val controller = mediaController
+        if (controller != null) {
+            controller.pause()
+            return
+        }
+
+        // Session may still be playing (e.g. WBW word tap) without a live controller yet.
+        if (state.value.isPlaying) {
+            ensureConnectedAndRun { mediaController?.pause() }
+        }
     }
 
     fun resume() {

@@ -1,6 +1,8 @@
 package com.quranapp.android.utils.mediaplayer
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import androidx.annotation.OptIn
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
@@ -18,6 +20,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.io.File
@@ -25,8 +28,12 @@ import java.io.File
 @OptIn(UnstableApi::class)
 object WbwAudioPlayer {
     private val mutex = Mutex()
+    private val playerLock = Any()
+    private val mainHandler = Handler(Looper.getMainLooper())
+    private val idleReleaseRunnable = Runnable { stop() }
     private var player: ExoPlayer? = null
     private const val ONE_OFF_CACHE_MAX_BYTES = 16L * 1024 * 1024
+    private const val IDLE_RELEASE_DELAY_MS = 2_000L
 
     @Volatile
     private var oneOffSimpleCache: SimpleCache? = null
@@ -53,39 +60,83 @@ object WbwAudioPlayer {
     }
 
     private fun getOrCreatePlayer(context: Context): ExoPlayer {
-        player?.let { return it }
+        synchronized(playerLock) {
+            player?.let { return it }
 
-        val app = context.applicationContext
-        val cacheDataSourceFactory = CacheDataSource.Factory()
-            .setCache(oneOffCache(app))
-            .setUpstreamDataSourceFactory(DefaultHttpDataSource.Factory())
-            .setFlags(CacheDataSource.FLAG_IGNORE_CACHE_ON_ERROR)
+            val app = context.applicationContext
+            val cacheDataSourceFactory = CacheDataSource.Factory()
+                .setCache(oneOffCache(app))
+                .setUpstreamDataSourceFactory(DefaultHttpDataSource.Factory())
+                .setFlags(CacheDataSource.FLAG_IGNORE_CACHE_ON_ERROR)
 
-        val dataSourceFactory = DefaultDataSource.Factory(app, cacheDataSourceFactory)
-        val mediaSourceFactory = DefaultMediaSourceFactory(dataSourceFactory)
+            val dataSourceFactory = DefaultDataSource.Factory(app, cacheDataSourceFactory)
+            val mediaSourceFactory = DefaultMediaSourceFactory(dataSourceFactory)
 
-        return ExoPlayer.Builder(app)
-            .setMediaSourceFactory(mediaSourceFactory)
-            .build()
-            .apply {
-                setAudioAttributes(
-                    AudioAttributes.Builder()
-                        .setUsage(C.USAGE_MEDIA)
-                        .setContentType(C.AUDIO_CONTENT_TYPE_SPEECH)
-                        .build(),
-                    true,
-                )
+            return ExoPlayer.Builder(app)
+                .setMediaSourceFactory(mediaSourceFactory)
+                .setLoadControl(RecitationExoPlayers.createAudioLoadControl())
+                .build()
+                .apply {
+                    setAudioAttributes(
+                        AudioAttributes.Builder()
+                            .setUsage(C.USAGE_MEDIA)
+                            .setContentType(C.AUDIO_CONTENT_TYPE_SPEECH)
+                            .build(),
+                        true,
+                    )
 
-                repeatMode = Player.REPEAT_MODE_OFF
+                    repeatMode = Player.REPEAT_MODE_OFF
 
-                addListener(
-                    object : Player.Listener {
-                        override fun onPlayerError(error: PlaybackException) {
-                            Log.saveError(error, "WbwWordAudioPlayer")
-                        }
-                    },
-                )
-            }.also { player = it }
+                    addListener(
+                        object : Player.Listener {
+                            override fun onPlaybackStateChanged(playbackState: Int) {
+                                if (playbackState == Player.STATE_ENDED) {
+                                    scheduleIdleRelease()
+                                }
+                            }
+
+                            override fun onPlayerError(error: PlaybackException) {
+                                Log.saveError(error, "WbwWordAudioPlayer")
+                                if (RecitationExoPlayers.isOutOfMemoryError(error)) {
+                                    mainHandler.post { stop() }
+                                }
+                            }
+                        },
+                    )
+                }.also { player = it }
+        }
+    }
+
+    /**
+     * Stops word playback and releases the ExoPlayer so it does not keep a second
+     * decoder/sink alive alongside [RecitationService].
+     */
+    fun stop() {
+        mainHandler.removeCallbacks(idleReleaseRunnable)
+
+        val exo = synchronized(playerLock) {
+            val current = player
+            player = null
+            current
+        } ?: return
+
+        try {
+            exo.playWhenReady = false
+            exo.stop()
+            exo.clearMediaItems()
+            exo.release()
+        } catch (e: Exception) {
+            Log.saveError(e, "WbwAudioPlayer.stop")
+        }
+    }
+
+    private fun scheduleIdleRelease() {
+        mainHandler.removeCallbacks(idleReleaseRunnable)
+        mainHandler.postDelayed(idleReleaseRunnable, IDLE_RELEASE_DELAY_MS)
+    }
+
+    private fun cancelIdleRelease() {
+        mainHandler.removeCallbacks(idleReleaseRunnable)
     }
 
     private fun isValidTimingWindow(startMs: Long, endMs: Long): Boolean {
@@ -134,18 +185,27 @@ object WbwAudioPlayer {
         when (source) {
             is WbwWordPlaybackSource.OneOff -> {
                 mutex.withLock {
-                    val exo = getOrCreatePlayer(context).apply {
-                        stop()
-                        clearMediaItems()
-                        setMediaItem(
-                            MediaItem.Builder()
-                                .setUri(source.uri)
-                                .build(),
-                        )
-                    }
+                    try {
+                        cancelIdleRelease()
+                        RecitationController.getInstance(app).pause()
 
-                    exo.prepare()
-                    exo.playWhenReady = true
+                        val exo = getOrCreatePlayer(context).apply {
+                            stop()
+                            clearMediaItems()
+                            setMediaItem(
+                                MediaItem.Builder()
+                                    .setUri(source.uri)
+                                    .build(),
+                            )
+                        }
+
+                        exo.prepare()
+                        exo.playWhenReady = true
+                    } catch (oom: OutOfMemoryError) {
+                        Log.saveError(oom, "WbwAudioPlayer.play.OOM")
+                        stop()
+                        return WbwAudioPlayResult.Unknown
+                    }
                 }
             }
 
@@ -180,24 +240,33 @@ object WbwAudioPlayer {
                 }
 
                 mutex.withLock {
-                    val exo = getOrCreatePlayer(context).apply {
-                        stop()
-                        clearMediaItems()
-                        setMediaItem(
-                            MediaItem.Builder()
-                                .setUri(source.uri)
-                                .setClippingConfiguration(
-                                    MediaItem.ClippingConfiguration.Builder()
-                                        .setStartPositionMs(timing.startMillis)
-                                        .setEndPositionMs(timing.endMillis)
-                                        .build(),
-                                )
-                                .build(),
-                        )
-                    }
+                    try {
+                        cancelIdleRelease()
+                        RecitationController.getInstance(app).pause()
 
-                    exo.prepare()
-                    exo.playWhenReady = true
+                        val exo = getOrCreatePlayer(context).apply {
+                            stop()
+                            clearMediaItems()
+                            setMediaItem(
+                                MediaItem.Builder()
+                                    .setUri(source.uri)
+                                    .setClippingConfiguration(
+                                        MediaItem.ClippingConfiguration.Builder()
+                                            .setStartPositionMs(timing.startMillis)
+                                            .setEndPositionMs(timing.endMillis)
+                                            .build(),
+                                    )
+                                    .build(),
+                            )
+                        }
+
+                        exo.prepare()
+                        exo.playWhenReady = true
+                    } catch (oom: OutOfMemoryError) {
+                        Log.saveError(oom, "WbwAudioPlayer.play.OOM")
+                        stop()
+                        return WbwAudioPlayResult.Unknown
+                    }
                 }
             }
         }
@@ -208,6 +277,8 @@ object WbwAudioPlayer {
     suspend fun warmUp(context: Context) {
         try {
             WbwAudioRepository.ensureTimingsAvailable(context)
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             Log.saveError(e, "WbwAudioPlayer.warmUp")
         }
@@ -220,4 +291,5 @@ sealed class WbwAudioPlayResult {
     data object TimingsNotLoaded : WbwAudioPlayResult()
     data object InvalidTiming : WbwAudioPlayResult()
     data object NoChapterAudio : WbwAudioPlayResult()
+    data object Unknown : WbwAudioPlayResult()
 }

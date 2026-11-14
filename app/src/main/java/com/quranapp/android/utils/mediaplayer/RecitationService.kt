@@ -5,6 +5,7 @@ import android.content.IntentFilter
 import android.media.AudioManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.os.Looper
 import androidx.annotation.OptIn
 import androidx.core.content.ContextCompat
@@ -19,7 +20,6 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DefaultDataSource
 import androidx.media3.datasource.DefaultHttpDataSource
 import androidx.media3.datasource.cache.CacheDataSource
-import androidx.media3.exoplayer.DefaultLoadControl
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.PlayerMessage
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
@@ -121,6 +121,7 @@ class RecitationService : MediaLibraryService() {
     private val singleTrackTimingMetadata get() = _singleTrackTimingMetadata.value
 
     private var verseTrackingJob: Job? = null
+    private var stateInitJob: Job? = null
     private var latestPlaybackRequestId: Long = 0L
     private val chapterResolutionRequests =
         mutableMapOf<AudioResolutionRequest, Deferred<ResolvedAudioResult>>()
@@ -148,7 +149,8 @@ class RecitationService : MediaLibraryService() {
         registerHeadsetReceiver()
 
         scoped {
-            initializeStateFromPreferences()
+            stateInitJob = launch { initializeStateFromPreferences() }
+            stateInitJob?.join()
 
             launch {
                 combine(
@@ -189,6 +191,7 @@ class RecitationService : MediaLibraryService() {
     override fun onDestroy() {
         unregisterReceiver(headsetReceiver)
         audioRepository.cancelAll()
+        WbwAudioPlayer.stop()
         mediaLibrarySession?.run {
             player.release()
             release()
@@ -203,13 +206,6 @@ class RecitationService : MediaLibraryService() {
     }
 
     private fun initializePlayer() {
-        val loadControl = DefaultLoadControl.Builder().setBufferDurationsMs(
-            15_000,
-            30_000,
-            1_500,
-            3_000,
-        ).build()
-
         val cache = RecitationStreamCache.get(this)
         val cacheDataSourceFactory = CacheDataSource.Factory()
             .setCache(cache)
@@ -221,7 +217,7 @@ class RecitationService : MediaLibraryService() {
 
         val basePlayer = ExoPlayer.Builder(this)
             .setMediaSourceFactory(mediaSourceFactory)
-            .setLoadControl(loadControl)
+            .setLoadControl(RecitationExoPlayers.createAudioLoadControl())
             .build().apply {
                 setAudioAttributes(
                     AudioAttributes.Builder().setUsage(C.USAGE_MEDIA)
@@ -232,6 +228,50 @@ class RecitationService : MediaLibraryService() {
             }
 
         player = SessionPlayer(this, basePlayer)
+    }
+
+    private fun reinitializePlayer() {
+        val session = mediaLibrarySession ?: return
+        val oldPlayer = if (::player.isInitialized) player else null
+
+        // Detach first so callbacks from the dying player cannot touch the replacement.
+        oldPlayer?.exoPlayer?.removeListener(playerListener)
+
+        // MediaSession.setPlayer requires a live player, so swap before release.
+        initializePlayer()
+        session.setPlayer(player)
+
+        if (oldPlayer != null) {
+            try {
+                oldPlayer.exoPlayer.release()
+            } catch (e: Throwable) {
+                Log.saveError(e, "RecitationService.reinitializePlayer.release")
+            }
+        }
+
+        _singleTrackTimingMetadata.value = null
+        _verseClipPlan.value = null
+        isRangeClipPlanLoaded = false
+        stopTrackings()
+        updatePlaybackSnapshot(isPlaying = false, isBuffering = false)
+    }
+
+    private fun recoverFromPlaybackOom(error: Throwable) {
+        Log.saveError(error, "RecitationService.OOM")
+
+        try {
+            stopMedia()
+        } catch (e: Throwable) {
+            Log.saveError(e, "RecitationService.OOM.stopMedia")
+        }
+
+        try {
+            reinitializePlayer()
+        } catch (e: Throwable) {
+            Log.saveError(e, "RecitationService.OOM.reinitializePlayer")
+        }
+
+        emitEvent(ErrorEvent("Playback failed due to low memory"))
     }
 
     private fun initializeMediaSession() {
@@ -330,6 +370,7 @@ class RecitationService : MediaLibraryService() {
     // ==================== Playback controls ====================
 
     fun playMedia() {
+        WbwAudioPlayer.stop()
         player.play()
         updateState { copy(pausedByHeadset = false) }
     }
@@ -682,69 +723,81 @@ class RecitationService : MediaLibraryService() {
         return true
     }
 
-    private suspend fun startChapterPlayback(
+    private suspend fun prepareChapterQueue(
         result: ResolvedAudioResult.Resoved,
         chapterNo: Int,
         startVerse: Int,
         boundedVersesInChapter: List<Int>? = null,
-    ) {
-        val settings = state.value.settings
+    ): MediaSession.MediaItemsWithStartPosition? {
         val plan = buildVerseClipPlan(
             chapterNo = chapterNo,
             result = result,
             boundedVerses = boundedVersesInChapter,
         )
 
+        val fallbackTrack = if (plan == null) result.quran ?: result.translation else null
+        if (plan == null && fallbackTrack == null) return null
+
         _verseClipPlan.value = plan
         isRangeClipPlanLoaded = plan != null && boundedVersesInChapter != null
-
-        val updatedSettings = settings.copy(
-            reciter = result.quran?.reciterId,
-            translationReciter = result.translation?.reciterId,
-        )
-
-        player.stop()
-        player.clearMediaItems()
-
-        if (plan != null) {
-            // Verse boundaries come from clip transitions. Retain Quran timing only
-            // for optional Quran-word highlighting.
-            _singleTrackTimingMetadata.value = result.quran?.timingMetadata
-            player.setMediaItems(plan.items)
-            player.seekTo(plan.firstIndexForVerse(startVerse), 0L)
+        _singleTrackTimingMetadata.value = if (plan != null) {
+            // Verse boundaries come from clip transitions; retain Quran timing for word highlighting.
+            result.quran?.timingMetadata
         } else {
-            // Single file fallback — store the timing of the track we actually load,
-            // so verse seeking / tracking works against its positions.
-            val primary = result.quran ?: result.translation ?: run {
-                emitEvent(ErrorEvent("No audio for this chapter"))
-                return
-            }
-
-            _singleTrackTimingMetadata.value = primary.timingMetadata
-
-            player.setMediaItem(
-                buildFullChapterMediaItem(primary, chapterNo, startVerse),
-            )
-
-            val seekMs = singleTrackTimingMetadata?.getVerseTiming(startVerse)?.startMs ?: 0L
-            player.seekTo(seekMs)
+            fallbackTrack!!.timingMetadata
         }
 
+        val queue = if (plan != null) {
+            MediaSession.MediaItemsWithStartPosition(
+                plan.items,
+                plan.firstIndexForVerse(startVerse),
+                0L,
+            )
+        } else {
+            val item = buildFullChapterMediaItem(fallbackTrack!!, chapterNo, startVerse)
+            val seekMs = fallbackTrack.timingMetadata?.getVerseTiming(startVerse)?.startMs ?: 0L
+            MediaSession.MediaItemsWithStartPosition(listOf(item), 0, seekMs)
+        }
+
+        WbwAudioPlayer.stop()
         player.repeatMode = Player.REPEAT_MODE_OFF
-
         invalidateRepeatSchedule()
-
-        player.prepare()
-        player.play()
-
         sharedWordIndex.value = -1
 
         updateState {
             copy(
-                settings = updatedSettings,
+                settings = settings.copy(
+                    reciter = result.quran?.reciterId,
+                    translationReciter = result.translation?.reciterId,
+                ),
                 currentVerse = ChapterVersePair(chapterNo, startVerse),
                 pausedByHeadset = false,
             )
+        }
+
+        return queue
+    }
+
+    private suspend fun startChapterPlayback(
+        result: ResolvedAudioResult.Resoved,
+        chapterNo: Int,
+        startVerse: Int,
+        boundedVersesInChapter: List<Int>? = null,
+    ) {
+        val queue = prepareChapterQueue(result, chapterNo, startVerse, boundedVersesInChapter)
+        if (queue == null) {
+            emitEvent(ErrorEvent("No audio for this chapter"))
+            return
+        }
+
+        try {
+            player.stop()
+            player.clearMediaItems()
+            player.setMediaItems(queue.mediaItems, queue.startIndex, queue.startPositionMs)
+            player.prepare()
+            player.play()
+        } catch (oom: OutOfMemoryError) {
+            recoverFromPlaybackOom(oom)
         }
     }
 
@@ -1382,6 +1435,14 @@ class RecitationService : MediaLibraryService() {
         override fun onPlayerError(error: PlaybackException) {
             Log.saveError(error, "RecitationService.ExoPlayer")
             error.printStackTrace()
+
+            if (RecitationExoPlayers.isOutOfMemoryError(error)) {
+                // Leave the listener callback before stopping and replacing the player.
+                Handler(Looper.getMainLooper()).post {
+                    if (mediaLibrarySession == null) return@post
+                    recoverFromPlaybackOom(error)
+                }
+            }
         }
     }
 
@@ -1624,6 +1685,57 @@ class RecitationService : MediaLibraryService() {
             }
 
             return super.onAddMediaItems(mediaSession, controller, mediaItems)
+        }
+
+        override fun onPlaybackResumption(
+            mediaSession: MediaSession,
+            controller: MediaSession.ControllerInfo,
+            isForPlayback: Boolean,
+        ): ListenableFuture<MediaSession.MediaItemsWithStartPosition> {
+            val future = SettableFuture.create<MediaSession.MediaItemsWithStartPosition>()
+
+            serviceScope.launch {
+                try {
+                    stateInitJob?.join()
+
+                    val verse = state.value.currentVerse.takeIf { it.isValid }
+                        ?: RecitationPreferences.getLastPlayedVerse()
+                        ?: ChapterVersePair(1, 1)
+
+                    if (!isForPlayback) {
+                        val metadataItem = MediaItem.Builder()
+                            .setMediaId("chapter_${verse.chapterNo}")
+                            .setMediaMetadata(buildMediaMetadata(verse.chapterNo, verse.verseNo).build())
+                            .build()
+                        future.set(MediaSession.MediaItemsWithStartPosition(listOf(metadataItem), 0, 0L))
+                        return@launch
+                    }
+
+                    clearMode()
+
+                    when (val result = resolveChapterAudio(verse.chapterNo)) {
+                        is ResolvedAudioResult.Resoved -> {
+                            val queue = prepareChapterQueue(result, verse.chapterNo, verse.verseNo)
+                            if (queue != null) {
+                                future.set(queue)
+                            } else {
+                                future.setException(IllegalStateException("No audio for this chapter"))
+                            }
+                        }
+
+                        is ResolvedAudioResult.Error -> future.setException(result.error)
+                        is ResolvedAudioResult.Downloading -> {
+                            future.setException(
+                                IllegalStateException("Audio resolution ended without terminal result")
+                            )
+                        }
+                    }
+                } catch (e: Exception) {
+                    future.setException(e)
+                }
+            }
+
+            return future
         }
     }
 

@@ -7,7 +7,6 @@ import androidx.work.BackoffPolicy
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.quranapp.android.BuildConfig
@@ -47,8 +46,6 @@ object SearchIndexScheduler {
                 backoffMs?.let {
                     setBackoffCriteria(BackoffPolicy.LINEAR, it, TimeUnit.MILLISECONDS)
                 }
-
-                setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
             }
             .build()
     }

@@ -108,7 +108,7 @@ internal fun QuranicTopicListRoute(
             isLoading -> Loader(true)
             topics.isEmpty() -> EmptyContent(
                 modifier = Modifier.padding(padding),
-                message = "No topics found",
+                message = stringResource(R.string.noItems),
             )
 
             else -> {

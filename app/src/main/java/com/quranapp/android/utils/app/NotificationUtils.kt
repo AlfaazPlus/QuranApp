@@ -9,6 +9,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ServiceInfo
 import android.graphics.Color
 import android.media.AudioAttributes
 import android.os.Build
@@ -183,7 +184,11 @@ object NotificationUtils {
     fun createForegroundInfoFallback(
         context: Context,
     ): ForegroundInfo {
-        return ForegroundInfo(1, createEmptyNotif(context, CHANNEL_ID_DEFAULT))
+        return ForegroundInfo(
+            1,
+            createEmptyNotif(context, CHANNEL_ID_DEFAULT),
+            ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC,
+        )
     }
 
     fun showCrashNotification(ctx: Context, stackTraceString: String) {

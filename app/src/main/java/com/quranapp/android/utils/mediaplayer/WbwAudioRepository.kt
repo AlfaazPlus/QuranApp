@@ -16,6 +16,7 @@ import com.quranapp.android.utils.reader.recitation.RecitationUtils
 import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.utils.univ.StringUtils
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -232,12 +233,19 @@ object WbwAudioRepository {
     }
 
     private suspend fun downloadAndImportTimings(appContext: Context) {
-        val tmp = runCatching { downloadTimingToTemp(appContext) }
-            .onFailure { Log.saveError(it, "WbwAudioRepository.downloadTimingToTemp") }
-            .getOrNull() ?: return
+        val tmp = try {
+            downloadTimingToTemp(appContext)
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            Log.saveError(e, "WbwAudioRepository.downloadTimingToTemp")
+            return
+        }
 
         try {
             importTimingFromFile(appContext, tmp)
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             Log.saveError(e, "WbwAudioRepository.importTimingFromFile")
         } finally {
@@ -249,21 +257,26 @@ object WbwAudioRepository {
         withContext(Dispatchers.IO) {
             val dest = File(appContext.cacheDir, "wbw_timing_${System.currentTimeMillis()}.tmp")
 
-            val response = fetchInventoryStreamingResponse(TIMING_URL)
+            try {
+                val response = fetchInventoryStreamingResponse(TIMING_URL)
 
-            if (!response.isSuccessful) {
-                throw IOException("WBW timing download failed: HTTP ${response.code()}")
-            }
-
-            val body = response.body() ?: throw IOException("WBW timing body is null")
-
-            body.byteStream().use { input ->
-                dest.outputStream().buffered().use { output ->
-                    input.copyTo(output)
+                if (!response.isSuccessful) {
+                    throw IOException("WBW timing download failed: HTTP ${response.code()}")
                 }
-            }
 
-            dest
+                val body = response.body() ?: throw IOException("WBW timing body is null")
+
+                body.byteStream().use { input ->
+                    dest.outputStream().buffered().use { output ->
+                        input.copyTo(output)
+                    }
+                }
+
+                dest
+            } catch (e: Exception) {
+                dest.delete()
+                throw e
+            }
         }
 
     private suspend fun importTimingFromFile(appContext: Context, file: File) =

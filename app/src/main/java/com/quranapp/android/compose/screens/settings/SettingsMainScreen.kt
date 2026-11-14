@@ -153,7 +153,7 @@ fun SettingsMainScreen(
 
             SettingsItem(
                 title = R.string.strTitleTafsir,
-                icon = R.drawable.ic_tafsir,
+                icon = R.drawable.ic_book_open_text,
                 subtitleStr = selectedTafsirName
             ) {
                 navController.navigate(SettingRoutes.TAFSIR)

@@ -157,7 +157,7 @@ private fun VerseActionBar(
             PlayControlButton(controller, isVersePlaying, iconTint, verse, onPlayClick)
 
             VerseActionIconButton(
-                painter = painterResource(R.drawable.ic_tafsir),
+                painter = painterResource(R.drawable.ic_book_open_text),
                 contentDescription = stringResource(R.string.strTitleTafsir),
                 tint = iconTint,
             ) { ReaderFactory.startTafsir(context, verse.chapterNo, verse.verseNo) }
