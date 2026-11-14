@@ -522,6 +522,9 @@
     </plurals>
 
     <string name="advanced_settings">Pengaturan lanjutan</string>
+
+    <string name="recent_history">Riwayat terbaru</string>
+    <string name="set_as_active">Jadikan aktif</string>
     <string name="shareAsImage">Buat gambar</string>
     <string name="customize">Sesuaikan</string>
     <string name="templates">Templat</string>

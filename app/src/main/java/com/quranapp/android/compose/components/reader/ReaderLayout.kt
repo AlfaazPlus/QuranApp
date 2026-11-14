@@ -244,32 +244,33 @@ private fun ReaderLayoutVerseMode(
         }.toHashSet()
     }
 
+    val navigateToVerseState = readerVm.navigateToVerse.collectAsStateWithLifecycle()
+    val navigateToVerse by navigateToVerseState
+    val isNavigating = remember(navigateToVerseState) {
+        { navigateToVerseState.value != null }
+    }
+
     LaunchedEffect(listState, items) {
-        snapshotFlow { listState.isScrollInProgress to listState.firstVisibleItemIndex }
-            .distinctUntilChanged()
-            .collectLatest { (scrolling, index) ->
-                if (scrolling) return@collectLatest
+        listState.onScrollIdle(isNavigating = isNavigating) {
+            val visibleItems = listState.layoutInfo.visibleItemsInfo
 
-                delay(180.milliseconds)
-
-                if (listState.isScrollInProgress || listState.firstVisibleItemIndex != index) {
-                    return@collectLatest
-                }
-
-                val visibleItems = listState.layoutInfo.visibleItemsInfo
-                for (visibleItem in visibleItems) {
-                    val verseItem = items.getOrNull(visibleItem.index) as? ReaderLayoutItem.VerseUI
-                        ?: continue
-                    readerVm.updateLastKnownVerse(ChapterVersePair(verseItem.verse))
-                    break
-                }
+            for (visibleItem in visibleItems) {
+                val verseItem = items.getOrNull(visibleItem.index) as? ReaderLayoutItem.VerseUI
+                    ?: continue
+                readerVm.updateLastKnownVerse(ChapterVersePair(verseItem.verse))
+                break
             }
+        }
     }
 
     LaunchedEffect(uiState.viewType) {
         snapshotFlow { uiState.viewType }
             .distinctUntilChanged()
-            .collect { listState.scrollToItem(0) }
+            .collect {
+                if (!isNavigating()) {
+                    listState.scrollToItem(0)
+                }
+            }
     }
 
     var autoScrollSpeed by readerVm.autoScrollSpeed
@@ -326,8 +327,6 @@ private fun ReaderLayoutVerseMode(
             .distinctUntilChanged()
             .collect { onSyncStateChanged(it) }
     }
-
-    val navigateToVerse by readerVm.navigateToVerse.collectAsStateWithLifecycle()
 
     LaunchedEffect(navigateToVerse, items) {
         val (chapterNo, verseNo) = navigateToVerse ?: return@LaunchedEffect

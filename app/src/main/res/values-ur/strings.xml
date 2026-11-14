@@ -540,6 +540,9 @@
     </plurals>
 
     <string name="advanced_settings">اعلیٰ ترتیبات</string>
+
+    <string name="recent_history">حالیہ سرگزشت</string>
+    <string name="set_as_active">فعال کے طور پر سیٹ کریں</string>
     <string name="shareAsImage">تصویر بنائیں</string>
     <string name="customize">کسٹمائز</string>
     <string name="templates">سانچے</string>

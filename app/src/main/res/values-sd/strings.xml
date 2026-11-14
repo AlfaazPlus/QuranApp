@@ -526,6 +526,9 @@
     </plurals>
 
     <string name="advanced_settings">اعلي سيٽنگون</string>
+
+    <string name="recent_history">تازو پڙهيل</string>
+    <string name="set_as_active">فعال طور تي سيٽ ڪريو</string>
     <string name="shareAsImage">تصوير ٺاهيو</string>
     <string name="customize">ڪسٽمائيز</string>
     <string name="templates">ٽيمپليٽ</string>

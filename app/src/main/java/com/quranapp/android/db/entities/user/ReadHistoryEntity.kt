@@ -39,4 +39,7 @@ data class ReadHistoryEntity(
 
     @ColumnInfo(name = "datetime")
     val datetime: Long = System.currentTimeMillis(),
+
+    @ColumnInfo(name = "is_main", defaultValue = "0")
+    val isMain: Boolean = false,
 )

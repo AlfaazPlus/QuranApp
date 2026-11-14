@@ -533,6 +533,9 @@
     </plurals>
 
     <string name="advanced_settings">Gelişmiş ayarlar</string>
+
+    <string name="recent_history">Son geçmiş</string>
+    <string name="set_as_active">Aktif olarak ayarla</string>
     <string name="shareAsImage">Görsel oluştur</string>
     <string name="customize">Özelleştir</string>
     <string name="templates">Şablonlar</string>

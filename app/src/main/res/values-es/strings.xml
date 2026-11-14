@@ -542,6 +542,9 @@
     </plurals>
 
     <string name="advanced_settings">Ajustes avanzados</string>
+
+    <string name="recent_history">Historial reciente</string>
+    <string name="set_as_active">Establecer como activo</string>
     <string name="shareAsImage">Crear imagen</string>
     <string name="customize">Personalizar</string>
     <string name="templates">Plantillas</string>

@@ -526,6 +526,9 @@
     </plurals>
 
     <string name="advanced_settings">மேம்பட்ட அமைப்புகள்</string>
+
+    <string name="recent_history">சமீபத்திய வரலாறு</string>
+    <string name="set_as_active">செயலில் உள்ளதாக அமை</string>
     <string name="shareAsImage">படம் உருவாக்கு</string>
     <string name="customize">தனிப்பயன்</string>
     <string name="templates">வார்ப்பு</string>

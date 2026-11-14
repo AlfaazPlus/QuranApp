@@ -530,6 +530,9 @@
     </plurals>
 
     <string name="advanced_settings">Кошумча жөндөөлөр</string>
+
+    <string name="recent_history">Акыркы тарых</string>
+    <string name="set_as_active">Активдүү кылып коюу</string>
     <string name="shareAsImage">Сүрөт түзүү</string>
     <string name="customize">Ыңгайлаш</string>
     <string name="templates">Үлгүлөр</string>

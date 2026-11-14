@@ -25,6 +25,13 @@ class ReadHistoryViewModel(private val application: Application) : AndroidViewMo
         emptyMap()
     )
 
+    val mainHistory = userRepository.getMainHistoryFlow()
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = null,
+        )
+
     val allHistories = userRepository.getHistoriesPaginated()
         .cachedIn(viewModelScope)
 
@@ -34,6 +41,10 @@ class ReadHistoryViewModel(private val application: Application) : AndroidViewMo
             started = SharingStarted.WhileSubscribed(),
             initialValue = emptyList()
         )
+
+    suspend fun setMainHistory(id: Long) {
+        userRepository.setMainHistory(id)
+    }
 
     suspend fun deleteHistory(id: Long) {
         userRepository.deleteHistory(id)

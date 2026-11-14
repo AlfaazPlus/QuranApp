@@ -234,16 +234,20 @@ fun ReaderLayoutTranslationPageMode(
             }
     }
 
-    val navigateToPage by readerVm.navigateToPage.collectAsStateWithLifecycle()
-    val navigateToVerse by readerVm.navigateToVerse.collectAsStateWithLifecycle()
-    val latestNavigateToVerse by rememberUpdatedState(navigateToVerse)
+    val navigateToPageState = readerVm.navigateToPage.collectAsStateWithLifecycle()
+    val navigateToPage by navigateToPageState
+    val navigateToVerseState = readerVm.navigateToVerse.collectAsStateWithLifecycle()
+    val navigateToVerse by navigateToVerseState
+    val isNavigating = remember(navigateToPageState, navigateToVerseState) {
+        { navigateToPageState.value != null || navigateToVerseState.value != null }
+    }
 
-    LaunchedEffect(context, listState, pageCount, navigateToPage) {
-        listState.updatePageWhenIdle(pageCount) { currentPageNo ->
-            if (navigateToPage == null && latestNavigateToVerse == null) {
-                readerVm.updateCurrentPageNo(currentPageNo)
-            }
-        }
+    LaunchedEffect(context, listState, pageCount) {
+        listState.updatePageWhenIdle(
+            pageCount = pageCount,
+            isNavigating = isNavigating,
+            onPageVisible = readerVm::updateCurrentPageNo,
+        )
     }
 
     LaunchedEffect(listState, pageCount) {
@@ -251,6 +255,7 @@ fun ReaderLayoutTranslationPageMode(
             pageCount = pageCount,
             trackers = visibilityTrackers,
             viewport = verseAnchor,
+            isNavigating = isNavigating,
             onVerseVisible = readerVm::updateLastKnownVerse,
         )
     }

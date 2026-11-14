@@ -547,6 +547,9 @@
 
     <string name="advanced_settings">Advanced settings</string>
 
+    <string name="recent_history">Recent history</string>
+    <string name="set_as_active">Set as active</string>
+
     <plurals name="verse_count">
         <item quantity="one">%d verse</item>
         <item quantity="other">%d verses</item>

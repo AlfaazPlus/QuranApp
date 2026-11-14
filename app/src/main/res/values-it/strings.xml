@@ -533,6 +533,9 @@
     </plurals>
 
     <string name="advanced_settings">Impostazioni avanzate</string>
+
+    <string name="recent_history">Cronologia recente</string>
+    <string name="set_as_active">Imposta come attivo</string>
     <string name="shareAsImage">Crea immagine</string>
     <string name="customize">Personalizza</string>
     <string name="templates">Modelli</string>

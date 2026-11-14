@@ -531,6 +531,9 @@
     </plurals>
 
     <string name="advanced_settings">വിപുലമായ ക്രമീകരണങ്ങൾ</string>
+
+    <string name="recent_history">സമീപകാല ഹിസ്റ്ററി</string>
+    <string name="set_as_active">സജീവമായി സജ്ജമാക്കുക</string>
     <string name="shareAsImage">ചിത്രം സൃഷ്ടിക്കുക</string>
     <string name="customize">കസ്റ്റമൈസ്</string>
     <string name="templates">ടെംപ്ലേറ്റ്</string>

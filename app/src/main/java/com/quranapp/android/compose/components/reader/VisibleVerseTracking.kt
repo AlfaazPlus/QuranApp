@@ -1,5 +1,6 @@
 package com.quranapp.android.compose.components.reader
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -90,56 +91,136 @@ internal class VerseVisibilityRegistry {
     fun forPage(pageNo: Int): VerseVisibilityTracker? = trackers[pageNo]
 }
 
-internal suspend fun LazyListState.updateVisibleVerseWhenIdle(
-    pageCount: Int,
-    trackers: VerseVisibilityRegistry,
-    viewport: VerseScrollAnchor,
-    onVerseVisible: (ChapterVersePair) -> Unit,
-) {
-    snapshotFlow {
-        trackers.version
-        isScrollInProgress to firstVisibleItemIndex
-    }
-        .distinctUntilChanged()
-        .collectLatest { (scrolling, index) ->
-            if (scrolling || index !in 0 until pageCount) return@collectLatest
-
-            delay(180.milliseconds)
-
-            if (isScrollInProgress || firstVisibleItemIndex != index) return@collectLatest
-
-            trackers.forPage(index + 1)
-                ?.visibleVerse(viewport.viewportTopPx, viewport.viewportBottomPx)
-                ?.let(onVerseVisible)
-        }
-}
-
-internal suspend fun LazyListState.updatePageWhenIdle(
-    pageCount: Int,
-    onPageVisible: (Int) -> Unit,
+internal suspend fun LazyListState.onScrollIdle(
+    isNavigating: () -> Boolean,
+    onIdle: (index: Int) -> Unit,
 ) {
     var lastIndex: Int? = null
     var sawScroll = false
+    var wasNavigating = false
 
-    snapshotFlow { isScrollInProgress to firstVisibleItemIndex }
+    snapshotFlow {
+        val navigating = isNavigating()
+        val scrolling = isScrollInProgress
+        val index = firstVisibleItemIndex
+
+        (index.toLong() shl 2) or
+                (if (scrolling) 2L else 0L) or
+                (if (navigating) 1L else 0L)
+    }
         .distinctUntilChanged()
-        .collectLatest { (scrolling, index) ->
+        .collectLatest { packed ->
+            val navigating = (packed and 1L) != 0L
+            val scrolling = (packed and 2L) != 0L
+            val index = (packed shr 2).toInt()
+
+            if (navigating) {
+                wasNavigating = true
+                sawScroll = false
+                lastIndex = index
+                return@collectLatest
+            }
+
             if (scrolling) {
                 sawScroll = true
                 return@collectLatest
             }
 
-            val indexChanged = lastIndex != null && lastIndex != index
+            val indexChanged = !wasNavigating && lastIndex != null && lastIndex != index
+
+            wasNavigating = false
             lastIndex = index
+
             if (!sawScroll && !indexChanged) return@collectLatest
             sawScroll = false
 
-            if (index !in 0 until pageCount) return@collectLatest
-
             delay(180.milliseconds)
 
-            if (isScrollInProgress || firstVisibleItemIndex != index) return@collectLatest
+            if (isNavigating() || isScrollInProgress || firstVisibleItemIndex != index) {
+                return@collectLatest
+            }
 
+            onIdle(index)
+        }
+}
+
+internal suspend fun LazyListState.updateVisibleVerseWhenIdle(
+    pageCount: Int,
+    trackers: VerseVisibilityRegistry,
+    viewport: VerseScrollAnchor,
+    isNavigating: () -> Boolean,
+    onVerseVisible: (ChapterVersePair) -> Unit,
+) {
+    onScrollIdle(isNavigating = isNavigating) { index ->
+        if (index !in 0 until pageCount) return@onScrollIdle
+
+        trackers.forPage(index + 1)
+            ?.visibleVerse(viewport.viewportTopPx, viewport.viewportBottomPx)
+            ?.let(onVerseVisible)
+    }
+}
+
+internal suspend fun LazyListState.updatePageWhenIdle(
+    pageCount: Int,
+    isNavigating: () -> Boolean,
+    onPageVisible: (Int) -> Unit,
+) {
+    onScrollIdle(isNavigating = isNavigating) { index ->
+        if (index in 0 until pageCount) {
             onPageVisible(index + 1)
+        }
+    }
+}
+
+internal suspend fun ScrollState.updateVisibleVerseWhenIdle(
+    tracker: VerseVisibilityTracker,
+    viewport: VerseScrollAnchor,
+    isNavigating: () -> Boolean,
+    shouldSyncOnSettle: () -> Boolean,
+    onSyncedOnSettle: () -> Unit,
+    onVerseVisible: (ChapterVersePair) -> Unit,
+) {
+    var sawScroll = false
+    var wasNavigating = false
+
+    snapshotFlow {
+        val navigating = isNavigating()
+        val scrolling = isScrollInProgress
+        val syncOnSettle = shouldSyncOnSettle()
+        (if (syncOnSettle) 4 else 0) or
+            (if (scrolling) 2 else 0) or
+            (if (navigating) 1 else 0)
+    }
+        .distinctUntilChanged()
+        .collectLatest { mask ->
+            val navigating = (mask and 1) != 0
+            val scrolling = (mask and 2) != 0
+            val syncOnSettle = (mask and 4) != 0
+
+            if (navigating) {
+                wasNavigating = true
+                sawScroll = false
+                return@collectLatest
+            }
+
+            if (scrolling) {
+                sawScroll = true
+                return@collectLatest
+            }
+
+            val shouldUpdate = (!wasNavigating && sawScroll) || syncOnSettle
+            wasNavigating = false
+            if (!shouldUpdate) return@collectLatest
+            sawScroll = false
+
+            delay(180.milliseconds)
+            if (isNavigating() || isScrollInProgress) return@collectLatest
+
+            tracker.visibleVerse(viewport.viewportTopPx, viewport.viewportBottomPx)
+                ?.let(onVerseVisible)
+
+            if (syncOnSettle) {
+                onSyncedOnSettle()
+            }
         }
 }

@@ -52,6 +52,7 @@ data class ReaderLaunchParams(
     val data: ReaderIntentData,
     val readerMode: ReaderMode? = null,
     val slugs: Set<String>? = null,
+    val mainHistoryId: Long? = null,
 ) {
     fun toIntent(): Intent {
         val d = data
@@ -98,6 +99,7 @@ data class ReaderLaunchParams(
 
             readerMode?.let { putExtra(KEY_READER_MODE, it.value) }
             slugs?.let { putExtra(KEY_TRANSL_SLUGS, it.toTypedArray()) }
+            mainHistoryId?.let { putExtra(KEY_MAIN_HISTORY_ID, it) }
         }
     }
 
@@ -109,6 +111,7 @@ data class ReaderLaunchParams(
             ?: "-"
 
         val modePart = readerMode?.value ?: "-"
+        val mainPart = mainHistoryId?.toString() ?: "-"
 
         val dataPart = when (val d = data) {
             is ReaderIntentData.FullChapter -> {
@@ -128,7 +131,7 @@ data class ReaderLaunchParams(
             }
         }
 
-        return "$dataPart|mode:$modePart|slugs:$slugsPart"
+        return "$dataPart|mode:$modePart|slugs:$slugsPart|main:$mainPart"
     }
 
 
@@ -145,12 +148,15 @@ data class ReaderLaunchParams(
 
         private const val KEY_READER_MODE = "reader.mode"
         private const val KEY_TRANSL_SLUGS = "reader.translation_slugs"
+        private const val KEY_MAIN_HISTORY_ID = "reader.main_history_id"
 
         /** Exposed for external intent builders (deep links, app intents) that add extras before [fromIntent]. */
         const val EXTERNAL_KEY_READER_MODE = KEY_READER_MODE
         const val EXTERNAL_KEY_TRANSL_SLUGS = KEY_TRANSL_SLUGS
 
         fun fromIntent(intent: Intent): ReaderLaunchParams {
+            val mainHistoryId = intent.getLongExtra(KEY_MAIN_HISTORY_ID, -1L)
+                .takeIf { it > 0L }
             val mushafCode = intent.getStringExtra(KEY_MUSHAF_CODE)
             val mushafVariant = QuranScriptVariant.fromValue(
                 intent.getStringExtra(KEY_MUSHAF_VARIANT)
@@ -178,6 +184,7 @@ data class ReaderLaunchParams(
                         ?.takeIf { it.isNotEmpty() }
                         ?.let { ReaderMode.fromValue(it) },
                     slugs = intent.getStringArrayExtra(KEY_TRANSL_SLUGS)?.toSet(),
+                    mainHistoryId = mainHistoryId,
                 )
             }
 
@@ -212,6 +219,7 @@ data class ReaderLaunchParams(
                     ?.takeIf { it.isNotEmpty() }
                     ?.let { ReaderMode.fromValue(it) },
                 slugs = intent.getStringArrayExtra(KEY_TRANSL_SLUGS)?.toSet(),
+                mainHistoryId = mainHistoryId,
             )
         }
     }

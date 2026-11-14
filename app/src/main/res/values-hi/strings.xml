@@ -540,6 +540,9 @@
     </plurals>
 
     <string name="advanced_settings">उन्नत सेटिंग्स</string>
+
+    <string name="recent_history">हाल का इतिहास</string>
+    <string name="set_as_active">सक्रिय के रूप में सेट करें</string>
     <string name="shareAsImage">इमेज बनाएँ</string>
     <string name="customize">कस्टमाइज़</string>
     <string name="templates">टेम्पलेट</string>

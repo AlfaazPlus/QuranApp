@@ -520,6 +520,9 @@
     </plurals>
 
     <string name="advanced_settings">高级设置</string>
+
+    <string name="recent_history">最近历史</string>
+    <string name="set_as_active">设为当前</string>
     <string name="shareAsImage">创建图片</string>
     <string name="customize">自定义</string>
     <string name="templates">模板</string>

@@ -536,6 +536,9 @@
     </plurals>
 
     <string name="advanced_settings">અદ્યતન સેટિંગ્સ</string>
+
+    <string name="recent_history">તાજેતરનો ઇતિહાસ</string>
+    <string name="set_as_active">સક્રિય તરીકે સેટ કરો</string>
     <string name="shareAsImage">છબી બનાવો</string>
     <string name="customize">કસ્ટમાઇઝ</string>
     <string name="templates">ટેમ્પલેટ</string>

@@ -37,7 +37,6 @@ import com.quranapp.android.compose.components.dialogs.AlertDialog
 import com.quranapp.android.compose.components.dialogs.AlertDialogAction
 import com.quranapp.android.compose.components.dialogs.AlertDialogActionStyle
 import com.quranapp.android.db.DatabaseProvider
-import com.quranapp.android.repository.TranslationRepository
 import com.quranapp.android.viewModels.TranslationEvent
 import com.quranapp.android.viewModels.TranslationViewModel
 import kotlinx.coroutines.Dispatchers

@@ -164,6 +164,8 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
 
     private var lastTranslationReaderContentKey: String? = null
     private var lastPersistedReadHistory: ReadHistoryEntity? = null
+    @Volatile
+    private var activeMainHistoryId: Long? = null
     private val readHistorySessionMutex = Mutex()
 
     private val pagesLoadingMutex = Mutex()
@@ -284,15 +286,21 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
             }
         }
 
-        if (!shouldInit && !isReaderAlreadyAt(params.data)) {
+        if (!shouldInit && !isReaderAlreadyAt(params)) {
             shouldInit = true
         }
 
         if (!shouldInit) {
+            readHistorySessionMutex.withLock {
+                activeMainHistoryId = params.mainHistoryId
+                lastPersistedReadHistory = null
+            }
+           
             val initialVerse = params.data.initialVerse
             if (initialVerse != null) {
                 requestVerseNavigation(initialVerse.chapterNo, initialVerse.verseNo)
             }
+
             return
         }
 
@@ -309,10 +317,15 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         }
     }
 
-    private fun isReaderAlreadyAt(data: ReaderIntentData): Boolean {
+    private fun isReaderAlreadyAt(params: ReaderLaunchParams): Boolean {
+        val requestedMode = params.readerMode
+        if (requestedMode != null && requestedMode != readerMode.value) {
+            return false
+        }
+
         val currentViewType = _uiState.value.viewType
 
-        return when (data) {
+        return when (val data = params.data) {
             is ReaderIntentData.FullChapter -> {
                 (currentViewType as? ReaderViewType.Chapter)?.chapterNo == data.chapterNo
             }
@@ -326,8 +339,12 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
             }
 
             is ReaderIntentData.MushafPage -> {
-                val currentPageNo = _mushafSession.value.currentPageNo
-                currentPageNo == data.pageNo
+                val session = _mushafSession.value
+                val targetScript = QuranScript(
+                    QuranScriptUtils.validatePreferredScript(data.mushafCode),
+                    data.mushafVariant,
+                )
+                session.currentPageNo == data.pageNo && session.layout == targetScript
             }
         }
     }
@@ -335,6 +352,11 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
     suspend fun initReader(params: ReaderLaunchParams) {
         Logger.d("INIT Reader with params: $params")
         Logger.d("with data: ${params.data}")
+
+        readHistorySessionMutex.withLock {
+            activeMainHistoryId = params.mainHistoryId
+            lastPersistedReadHistory = null
+        }
 
         playerVerseSync.value = true
 
@@ -551,19 +573,22 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
 
         readHistoryScope.launch {
             val mode = readerMode.value ?: ReaderPreferences.getReaderMode()
-            val mushafCode = ReaderPreferences.getQuranScript()
-            val mushafVariant = ReaderPreferences.getQuranScriptVariant()?.value
+            val isPageBasedMode = mode == ReaderMode.Reading || mode == ReaderMode.Translation
+            val mushafCode = if (isPageBasedMode) ReaderPreferences.getQuranScript() else null
+            val mushafVariant =
+                if (isPageBasedMode) ReaderPreferences.getQuranScriptVariant()?.value else null
+            val pageNo = if (isPageBasedMode) mushafSession.currentPageNo else null
 
             val entity = when (viewType) {
                 is ReaderViewType.Chapter -> ReadHistoryEntity(
                     readType = ReadType.Chapter.value,
                     readerMode = mode.value,
-                    chapterNo = viewType.chapterNo,
+                    chapterNo = verse?.chapterNo ?: viewType.chapterNo,
                     fromVerseNo = verse?.verseNo ?: 1,
                     toVerseNo = verse?.verseNo ?: 1,
                     mushafCode = mushafCode,
                     mushafVariant = mushafVariant,
-                    pageNo = mushafSession.currentPageNo,
+                    pageNo = pageNo,
                 )
 
                 is ReaderViewType.Juz -> ReadHistoryEntity(
@@ -575,7 +600,7 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
                     toVerseNo = verse?.verseNo ?: 0,
                     mushafCode = mushafCode,
                     mushafVariant = mushafVariant,
-                    pageNo = mushafSession.currentPageNo,
+                    pageNo = pageNo,
                 )
 
                 is ReaderViewType.Hizb -> ReadHistoryEntity(
@@ -587,12 +612,31 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
                     toVerseNo = verse?.verseNo ?: 0,
                     mushafCode = mushafCode,
                     mushafVariant = mushafVariant,
-                    pageNo = mushafSession.currentPageNo,
+                    pageNo = pageNo,
                 )
             }
 
             val didSave = readHistorySessionMutex.withLock {
-                if (lastPersistedReadHistory == entity) {
+                val mainId = activeMainHistoryId
+                if (mainId != null) {
+                    val mainEntity = entity.copy(id = mainId, isMain = true)
+                    if (lastPersistedReadHistory.hasSameSessionState(mainEntity)) {
+                        false
+                    } else if (userRepository.updateMainHistory(mainEntity)) {
+                        lastPersistedReadHistory = mainEntity
+                        
+                        true
+                    } else {
+                        activeMainHistoryId = null
+                       
+                        lastPersistedReadHistory?.let { userRepository.deleteHistory(it.id) }
+                       
+                        val id = userRepository.saveReadHistory(entity)
+                        lastPersistedReadHistory = entity.copy(id = id)
+                       
+                        true
+                    }
+                } else if (lastPersistedReadHistory.hasSameSessionState(entity)) {
                     false
                 } else {
                     lastPersistedReadHistory?.let { userRepository.deleteHistory(it.id) }
@@ -607,6 +651,21 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
                 ShortcutUtils.pushLastVersesShortcut(context, entity)
             }
         }
+    }
+
+    private fun ReadHistoryEntity?.hasSameSessionState(other: ReadHistoryEntity): Boolean {
+        if (this == null) return false
+        return id == other.id &&
+            readType == other.readType &&
+            readerMode == other.readerMode &&
+            divisionNo == other.divisionNo &&
+            chapterNo == other.chapterNo &&
+            fromVerseNo == other.fromVerseNo &&
+            toVerseNo == other.toVerseNo &&
+            mushafCode == other.mushafCode &&
+            mushafVariant == other.mushafVariant &&
+            pageNo == other.pageNo &&
+            isMain == other.isMain
     }
 
     suspend fun handleModeTransition(to: ReaderMode) {
@@ -965,7 +1024,9 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
             )
 
             // Without an anchor verse keep whatever navigation is already pending.
-            if (newPage != null) {
+            if (verse != null && newPage != null) {
+                requestVerseNavigation(verse.chapterNo, verse.verseNo, highlightAfterNavigation = false)
+            } else if (newPage != null) {
                 requestPageNavigation(newPage)
             } else if (_navigateToPage.value == null) {
                 requestPageNavigation(1)

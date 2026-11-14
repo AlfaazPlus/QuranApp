@@ -24,7 +24,7 @@ import com.quranapp.android.db.entities.user.ReadHistoryEntity
         CollectionEntity::class,
         CollectionItemEntity::class,
     ],
-    version = 4,
+    version = 5,
 )
 @ColumnTypeConverters(DbConverters::class)
 @DaoReturnTypeConverters(PagingSourceDaoReturnTypeConverter::class)
@@ -166,6 +166,12 @@ abstract class UserDatabase : RoomDatabase() {
                     ON `user_collections` (`stable_id`)
                     """.trimIndent()
                 )
+            }
+        }
+
+        val MIGRATION_4_5 = object : Migration(4, 5) {
+            override suspend fun migrate(connection: SQLiteConnection) {
+                connection.execSQL("ALTER TABLE read_history ADD COLUMN is_main INTEGER NOT NULL DEFAULT 0")
             }
         }
     }

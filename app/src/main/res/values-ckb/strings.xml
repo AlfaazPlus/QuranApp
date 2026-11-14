@@ -533,6 +533,9 @@
     </plurals>
 
     <string name="advanced_settings">ڕێکخستنە پێشکەوتووەکان</string>
+
+    <string name="recent_history">مێژووی دوایی</string>
+    <string name="set_as_active">وەک چالاک دایبنێ</string>
     <string name="shareAsImage">وێنە دروست بکە</string>
     <string name="customize">دڵخواز</string>
     <string name="templates">قاڵبەکان</string>

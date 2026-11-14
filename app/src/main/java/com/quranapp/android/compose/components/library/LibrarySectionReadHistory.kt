@@ -1,6 +1,7 @@
 package com.quranapp.android.compose.components.library
 
 import android.content.Intent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,16 +10,21 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -31,12 +37,13 @@ import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReadHistory
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.compose.components.reader.ReaderMode
+import com.quranapp.android.compose.screens.accentColor
+import com.quranapp.android.compose.screens.iconRes
 import com.quranapp.android.compose.screens.subtitleLabel
 import com.quranapp.android.compose.screens.titleLabel
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.theme.tightTextStyle
 import com.quranapp.android.db.entities.user.ReadHistoryEntity
-import com.quranapp.android.utils.reader.ReadType
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.viewModels.ReadHistoryViewModel
 
@@ -73,7 +80,7 @@ fun LibrarySectionReadHistory() {
                 LibraryPreviewList(items = recentHistories) { history ->
                     ItemCard(
                         history = history,
-                        chapterName = chapterNames.get(history.chapterNo).orEmpty(),
+                        chapterName = chapterNames[history.chapterNo].orEmpty(),
                         onOpen = {
                             ReaderFactory.prepareHistoryIntent(history)?.let {
                                 it.setClass(context, ActivityReader::class.java)
@@ -87,22 +94,104 @@ fun LibrarySectionReadHistory() {
     }
 }
 
-
 @Composable
 private fun ItemCard(
     history: ReadHistoryEntity,
     chapterName: String,
     onOpen: () -> Unit,
 ) {
-    val readType = ReadType.fromValue(history.readType)
+    if (history.isMain) {
+        ActiveItemCard(
+            history = history,
+            chapterName = chapterName,
+            onOpen = onOpen,
+        )
+    } else {
+        RegularItemCard(
+            history = history,
+            chapterName = chapterName,
+            onOpen = onOpen,
+        )
+    }
+}
+
+@Composable
+private fun ActiveItemCard(
+    history: ReadHistoryEntity,
+    chapterName: String,
+    onOpen: () -> Unit,
+) {
+    val readerMode = ReaderMode.fromValue(history.readerMode)
     val title = history.titleLabel(chapterName)
     val subtitle = history.subtitleLabel(chapterName)
 
-    val accentColor = when (readType) {
-        ReadType.Chapter -> colorScheme.primary
-        ReadType.Juz -> colorScheme.tertiary
-        ReadType.Hizb -> colorScheme.secondary
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth(),
+        onClick = onOpen,
+        color = colorScheme.surfaceContainer,
+        tonalElevation = 2.dp,
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 14.dp, vertical = 12.dp),
+            horizontalArrangement = Arrangement.spacedBy(14.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Surface(
+                modifier = Modifier.size(42.dp),
+                shape = shapes.medium,
+                color = colorScheme.primaryContainer,
+            ) {
+                Box(contentAlignment = Alignment.Center) {
+                    Icon(
+                        painter = painterResource(readerMode.iconRes()),
+                        contentDescription = null,
+                        tint = colorScheme.onPrimaryContainer,
+                        modifier = Modifier.size(20.dp),
+                    )
+                }
+            }
+
+            Column(
+                modifier = Modifier
+                    .weight(1f),
+                verticalArrangement = Arrangement.spacedBy(3.dp),
+            ) {
+                Text(
+                    text = title,
+                    style = typography.labelLarge.merge(tightTextStyle),
+                    fontWeight = FontWeight.Bold,
+                    color = colorScheme.onSurface,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                )
+
+                subtitle?.let {
+                    Text(
+                        text = it,
+                        style = typography.bodyMedium.merge(tightTextStyle),
+                        color = colorScheme.onSurface.alpha(0.75f),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+            }
+        }
     }
+}
+
+@Composable
+private fun RegularItemCard(
+    history: ReadHistoryEntity,
+    chapterName: String,
+    onOpen: () -> Unit,
+) {
+    val readerMode = ReaderMode.fromValue(history.readerMode)
+    val title = history.titleLabel(chapterName)
+    val subtitle = history.subtitleLabel(chapterName)
+    val accentColor = readerMode.accentColor()
 
     Column(
         modifier = Modifier
@@ -116,20 +205,14 @@ private fun ItemCard(
         ) {
             Surface(
                 modifier = Modifier.size(42.dp),
-                shape = RoundedCornerShape(12.dp),
-                color = accentColor.copy(alpha = 0.35f),
+                shape = shapes.medium,
+                color = colorScheme.surfaceVariant.alpha(0.55f),
             ) {
                 Box(contentAlignment = Alignment.Center) {
                     Icon(
-                        painter = painterResource(
-                            when (ReaderMode.fromValue(history.readerMode)) {
-                                ReaderMode.Reading -> R.drawable.ic_mode_mushaf
-                                ReaderMode.Translation -> R.drawable.ic_mode_translation
-                                else -> R.drawable.ic_mode_verse
-                            }
-                        ),
+                        painter = painterResource(readerMode.iconRes()),
                         contentDescription = null,
-                        tint = colorScheme.onSurface,
+                        tint = accentColor,
                         modifier = Modifier.size(18.dp),
                     )
                 }
@@ -153,12 +236,11 @@ private fun ItemCard(
                         text = it,
                         style = typography.bodyMedium.merge(tightTextStyle),
                         color = colorScheme.onSurface.alpha(0.75f),
-                        maxLines = 2,
+                        maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
                 }
             }
-
 
             Icon(
                 painter = painterResource(R.drawable.dr_icon_chevron_right),

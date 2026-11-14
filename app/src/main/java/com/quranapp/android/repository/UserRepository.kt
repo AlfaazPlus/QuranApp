@@ -208,30 +208,58 @@ class UserRepository(
 
     // ── Read History ──
     suspend fun saveReadHistory(entity: ReadHistoryEntity): Long {
-        val latest = readHistoryDao.getLatest()
-        if (latest != null && latest.pageNo != null && latest.hasSameMushafPage(entity)) {
+        val nonMainEntity = if (entity.isMain) entity.copy(isMain = false) else entity
+        val latest = readHistoryDao.getLatestNonMain()
+        if (latest != null && latest.pageNo != null && latest.hasSameMushafPage(nonMainEntity)) {
             readHistoryDao.updateVersePosition(
                 id = latest.id,
-                fromVerseNo = entity.fromVerseNo,
-                toVerseNo = entity.toVerseNo,
-                datetime = entity.datetime,
+                fromVerseNo = nonMainEntity.fromVerseNo,
+                toVerseNo = nonMainEntity.toVerseNo,
+                datetime = nonMainEntity.datetime,
             )
             return latest.id
         }
 
         readHistoryDao.deleteDuplicate(
+            readType = nonMainEntity.readType,
+            readerMode = nonMainEntity.readerMode,
+            divisionNo = nonMainEntity.divisionNo,
+            chapterNo = nonMainEntity.chapterNo,
+            fromVerseNo = nonMainEntity.fromVerseNo,
+            toVerseNo = nonMainEntity.toVerseNo,
+        )
+
+        val id = readHistoryDao.insert(nonMainEntity)
+        readHistoryDao.trimToSize(HISTORY_LIMIT)
+
+        return id
+    }
+
+    suspend fun updateMainHistory(entity: ReadHistoryEntity): Boolean {
+        return readHistoryDao.updateMainSession(
+            id = entity.id,
             readType = entity.readType,
             readerMode = entity.readerMode,
             divisionNo = entity.divisionNo,
             chapterNo = entity.chapterNo,
             fromVerseNo = entity.fromVerseNo,
             toVerseNo = entity.toVerseNo,
-        )
+            mushafCode = entity.mushafCode,
+            mushafVariant = entity.mushafVariant,
+            pageNo = entity.pageNo,
+            datetime = entity.datetime,
+        ) > 0
+    }
 
-        val id = readHistoryDao.insert(entity)
-        readHistoryDao.trimToSize(HISTORY_LIMIT)
+    suspend fun setMainHistory(id: Long) {
+        database.withWriteTransaction {
+            readHistoryDao.clearMain()
+            readHistoryDao.setMain(id)
+        }
+    }
 
-        return id
+    fun getMainHistoryFlow(): Flow<ReadHistoryEntity?> {
+        return readHistoryDao.getMainFlow()
     }
 
     private fun ReadHistoryEntity.hasSameMushafPage(other: ReadHistoryEntity): Boolean =
@@ -250,7 +278,7 @@ class UserRepository(
     fun getHistoriesPaginated(): Flow<PagingData<ReadHistoryEntity>> {
         return Pager(
             config = PagingConfig(pageSize = 20),
-            pagingSourceFactory = { readHistoryDao.getAllPaginated() }
+            pagingSourceFactory = { readHistoryDao.getNonMainPaginated() }
         ).flow
     }
 
@@ -259,7 +287,7 @@ class UserRepository(
     }
 
     suspend fun deleteAllHistories() {
-        readHistoryDao.deleteAll()
+        readHistoryDao.deleteAllNonMain()
     }
 
     fun getCollectionsFlow(limit: Int): Flow<List<CollectionWithCount>> {

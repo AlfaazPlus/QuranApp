@@ -529,6 +529,9 @@
     </plurals>
 
     <string name="advanced_settings">Mga advanced na setting</string>
+
+    <string name="recent_history">Kamakailang kasaysayan</string>
+    <string name="set_as_active">Itakda bilang aktibo</string>
     <string name="shareAsImage">Gumawa ng larawan</string>
     <string name="customize">I-customize</string>
     <string name="templates">Template</string>

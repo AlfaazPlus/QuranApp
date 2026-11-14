@@ -556,6 +556,9 @@
     </plurals>
 
     <string name="advanced_settings">Дополнительные настройки</string>
+
+    <string name="recent_history">Недавняя история</string>
+    <string name="set_as_active">Сделать активным</string>
     <string name="shareAsImage">Создать изображение</string>
     <string name="customize">Настроить</string>
     <string name="templates">Шаблоны</string>

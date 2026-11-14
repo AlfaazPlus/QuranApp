@@ -560,6 +560,9 @@
     </plurals>
 
     <string name="advanced_settings">إعدادات متقدمة</string>
+
+    <string name="recent_history">السجل الأخير</string>
+    <string name="set_as_active">تعيين كنشط</string>
     <string name="shareAsImage">إنشاء صورة</string>
     <string name="customize">تخصيص</string>
     <string name="templates">القوالب</string>

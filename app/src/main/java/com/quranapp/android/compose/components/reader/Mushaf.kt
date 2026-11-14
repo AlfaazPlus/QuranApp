@@ -22,6 +22,7 @@ import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
@@ -182,17 +183,27 @@ fun ReaderLayoutPageMode(
             }
     }
 
-    val navigateToPage by readerVm.navigateToPage.collectAsStateWithLifecycle()
-    val navigateToVerse by readerVm.navigateToVerse.collectAsStateWithLifecycle()
-    val latestNavigateToVerse by rememberUpdatedState(navigateToVerse)
+    val navigateToPageState = readerVm.navigateToPage.collectAsStateWithLifecycle()
+    val navigateToPage by navigateToPageState
+    val navigateToVerseState = readerVm.navigateToVerse.collectAsStateWithLifecycle()
+    val navigateToVerse by navigateToVerseState
+    val pendingVisibleVerseSyncPage = remember { mutableStateOf<Int?>(null) }
+    val isNavigating = remember(navigateToPageState, navigateToVerseState) {
+        { navigateToPageState.value != null || navigateToVerseState.value != null }
+    }
 
-    LaunchedEffect(context, pagerState, pageCount, navigateToPage) {
+    LaunchedEffect(pagerState) {
         var lastSettledPage: Int? = null
         var sawScroll = false
 
-        snapshotFlow { pagerState.isScrollInProgress to pagerState.settledPage }
+        snapshotFlow {
+            (pagerState.settledPage shl 1) or (if (pagerState.isScrollInProgress) 1 else 0)
+        }
             .distinctUntilChanged()
-            .collect { (scrolling, settledPage) ->
+            .collect { packed ->
+                val scrolling = (packed and 1) != 0
+                val settledPage = packed shr 1
+
                 // While a programmatic scroll is pending, the pager may still report page 1 until
                 // [pageCount] is ready; do not overwrite [currentPageNo] from the initial open.
                 if (scrolling) {
@@ -205,11 +216,12 @@ fun ReaderLayoutPageMode(
                 if (!sawScroll && !pageChanged) return@collect
                 sawScroll = false
 
-                if (navigateToPage != null || latestNavigateToVerse != null) return@collect
+                if (isNavigating()) return@collect
 
                 val currentPageNo = settledPage + 1
 
                 readerVm.updateCurrentPageNo(currentPageNo)
+                pendingVisibleVerseSyncPage.value = currentPageNo
             }
     }
 
@@ -352,6 +364,8 @@ fun ReaderLayoutPageMode(
                         targetVerse = verseTarget?.takeIf { it.second == pageNo }?.first,
                         verseAnchor = verseAnchor,
                         trackVisibleVerses = page == pagerState.settledPage,
+                        isNavigating = isNavigating,
+                        pendingVisibleVerseSyncPage = pendingVisibleVerseSyncPage,
                         onVisibleVerse = readerVm::updateLastKnownVerse,
                         onVersePositioned = { verse ->
                             if (verseTarget?.first == verse) {
@@ -376,6 +390,8 @@ private fun PageModePage(
     targetVerse: ChapterVersePair?,
     verseAnchor: VerseScrollAnchor,
     trackVisibleVerses: Boolean,
+    isNavigating: () -> Boolean,
+    pendingVisibleVerseSyncPage: MutableState<Int?>,
     onVisibleVerse: (ChapterVersePair) -> Unit,
     onVersePositioned: (ChapterVersePair) -> Unit,
 ) {
@@ -401,22 +417,21 @@ private fun PageModePage(
         VerseVisibilityTracker(pageAyahIds)
     }
 
-    LaunchedEffect(scrollState, trackVisibleVerses, visibilityTracker) {
+    LaunchedEffect(scrollState, trackVisibleVerses, visibilityTracker, item.pageNo) {
         if (!trackVisibleVerses) return@LaunchedEffect
 
-        snapshotFlow { scrollState.isScrollInProgress }
-            .distinctUntilChanged()
-            .collectLatest { scrolling ->
-                if (scrolling) return@collectLatest
-
-                delay(180.milliseconds)
-                if (scrollState.isScrollInProgress || !trackVisibleVerses) return@collectLatest
-
-                visibilityTracker.visibleVerse(
-                    verseAnchor.viewportTopPx,
-                    verseAnchor.viewportBottomPx,
-                )?.let(onVisibleVerse)
-            }
+        scrollState.updateVisibleVerseWhenIdle(
+            tracker = visibilityTracker,
+            viewport = verseAnchor,
+            isNavigating = isNavigating,
+            shouldSyncOnSettle = { pendingVisibleVerseSyncPage.value == item.pageNo },
+            onSyncedOnSettle = {
+                if (pendingVisibleVerseSyncPage.value == item.pageNo) {
+                    pendingVisibleVerseSyncPage.value = null
+                }
+            },
+            onVerseVisible = onVisibleVerse,
+        )
     }
 
     LaunchedEffect(targetVerse, item.pageNo) {
@@ -428,13 +443,13 @@ private fun PageModePage(
     val playingAyahId by remember(pageAyahIds, playerState) {
         derivedStateOf {
             if (!playerState.isAnyPlayingState.value) return@derivedStateOf -1
-            
+
             val playingVerse = playerState.playingVerseState.value
-            
+
             if (!playingVerse.isValid) return@derivedStateOf -1
-            
+
             val ayahId = QuranMeta.getAyahId(playingVerse.chapterNo, playingVerse.verseNo)
-            
+
             if (pageAyahIds.contains(ayahId)) ayahId else -1
         }
     }

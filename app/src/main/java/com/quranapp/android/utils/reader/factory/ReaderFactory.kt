@@ -175,6 +175,7 @@ object ReaderFactory {
         val readType = ReadType.fromValue(entity.readType)
         val readerMode = ReaderMode.fromValue(entity.readerMode)
         val pageNo = entity.pageNo
+        val mainHistoryId = if (entity.isMain && entity.id > 0L) entity.id else null
 
         if ((readerMode == ReaderMode.Reading || readerMode == ReaderMode.Translation) &&
             pageNo != null && pageNo > 0 && entity.mushafCode != null
@@ -187,6 +188,7 @@ object ReaderFactory {
                     initialVerse = ChapterVersePair(entity.chapterNo, entity.fromVerseNo)
                 ),
                 readerMode = readerMode,
+                mainHistoryId = mainHistoryId,
             ).toIntent()
         }
 
@@ -195,7 +197,12 @@ object ReaderFactory {
             readerMode = readerMode,
             verse = ChapterVersePair(entity.chapterNo, entity.fromVerseNo),
             divisionNo = entity.divisionNo,
-        )
+        )?.also { intent ->
+            if (mainHistoryId != null) {
+                val baseParams = ReaderLaunchParams.fromIntent(intent)
+                return baseParams.copy(mainHistoryId = mainHistoryId).toIntent()
+            }
+        }
     }
 
     fun startTafsir(context: Context, chapterNo: Int, verseNo: Int) {

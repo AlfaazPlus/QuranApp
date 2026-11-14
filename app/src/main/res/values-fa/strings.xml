@@ -533,6 +533,9 @@
     </plurals>
 
     <string name="advanced_settings">تنظیمات پیشرفته</string>
+
+    <string name="recent_history">سابقهٔ اخیر</string>
+    <string name="set_as_active">تنظیم به‌عنوان فعال</string>
     <string name="shareAsImage">ایجاد تصویر</string>
     <string name="customize">سفارشی</string>
     <string name="templates">قالب‌ها</string>

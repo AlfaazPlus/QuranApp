@@ -525,6 +525,9 @@
     </plurals>
 
     <string name="advanced_settings">উন্নত সেটিংস</string>
+
+    <string name="recent_history">সাম্প্রতিক ইতিহাস</string>
+    <string name="set_as_active">সক্রিয় হিসেবে সেট করুন</string>
     <string name="shareAsImage">ছবি তৈরি করুন</string>
     <string name="customize">কাস্টমাইজ</string>
     <string name="templates">টেমপ্লেট</string>
