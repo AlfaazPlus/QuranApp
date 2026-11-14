@@ -44,6 +44,8 @@ import androidx.compose.ui.semantics.Role
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.quranapp.android.R
 import com.quranapp.android.components.reader.ChapterVersePair
+import com.quranapp.android.compose.theme.grayscaleColorFilter
+import com.quranapp.android.compose.utils.ThemeUtils
 import com.quranapp.android.compose.components.ChapterIcon
 import com.quranapp.android.compose.components.reader.navigator.ChapterVerseNavigator
 import com.quranapp.android.compose.utils.formattedStringResource
@@ -58,6 +60,8 @@ fun ExtendedThumbnail(
     onOpenInReader: (() -> Unit)? = null,
 ) {
     val displayVerse = verse.takeIf { it.isValid } ?: ChapterVersePair(1, 1)
+    val isMono = ThemeUtils.observeIsMonoPalette()
+    val wallpaperFilter = remember { grayscaleColorFilter() }
     val headerShape = RoundedCornerShape(32.dp)
     val viewModel = viewModel<RecitationPlayerViewModel>()
 
@@ -73,7 +77,7 @@ fun ExtendedThumbnail(
     BoxWithConstraints(
         modifier = modifier
             .clip(headerShape)
-            .background(Color(0xFF10151C))
+            .background(if (isMono) Color(0xFF101010) else Color(0xFF10151C))
             .border(
                 width = 1.dp,
                 color = Color.White.copy(alpha = 0.08f),
@@ -85,6 +89,7 @@ fun ExtendedThumbnail(
             contentDescription = null,
             modifier = Modifier.matchParentSize(),
             contentScale = ContentScale.Crop,
+            colorFilter = if (isMono) wallpaperFilter else null,
         )
 
         // Deep tint
@@ -121,7 +126,8 @@ fun ExtendedThumbnail(
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(
-                            colorScheme.primary.copy(alpha = 0.2f),
+                            if (isMono) Color.White.copy(alpha = 0.08f)
+                            else colorScheme.primary.copy(alpha = 0.2f),
                             Color.Transparent,
                             Color.Transparent
                         )
@@ -298,12 +304,14 @@ fun MiniPlayerThumbnail(
     modifier: Modifier = Modifier,
 ) {
     val shape = RoundedCornerShape(8.dp)
+    val isMono = ThemeUtils.observeIsMonoPalette()
+    val wallpaperFilter = remember { grayscaleColorFilter() }
 
     Box(
         modifier = modifier
             .size(56.dp)
             .clip(shape)
-            .background(Color(0xFF11161D))
+            .background(if (isMono) Color(0xFF101010) else Color(0xFF11161D))
             .border(
                 width = 1.dp,
                 color = Color.White.copy(alpha = 0.08f),
@@ -315,7 +323,8 @@ fun MiniPlayerThumbnail(
             painter = painterResource(R.drawable.dr_quran_wallpaper),
             contentDescription = null,
             modifier = Modifier.matchParentSize(),
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
+            colorFilter = if (isMono) wallpaperFilter else null,
         )
 
         Box(
@@ -324,7 +333,8 @@ fun MiniPlayerThumbnail(
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(
-                            colorScheme.primary.copy(alpha = 0.3f),
+                            if (isMono) Color.White.copy(alpha = 0.1f)
+                            else colorScheme.primary.copy(alpha = 0.3f),
                             Color.Black.copy(alpha = 0.38f),
                             Color.Black.copy(alpha = 0.68f)
                         )

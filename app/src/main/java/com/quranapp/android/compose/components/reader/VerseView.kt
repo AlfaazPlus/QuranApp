@@ -20,6 +20,9 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
@@ -67,7 +70,11 @@ fun VerseView(
     val verse = verseUi.verse
 
     val recState = LocalRecitation.current
-    val isVersePlaying = recState.isAnyPlaying && recState.playingVerse.doesEqual(verse)
+    val isVersePlaying by remember(verse, recState) {
+        derivedStateOf {
+            recState.isAnyPlayingState.value && recState.playingVerseState.value.doesEqual(verse)
+        }
+    }
 
     val highlightState = LocalTransientVerseHighlight.current
     val highlightAlpha = highlightState.alpha
@@ -148,9 +155,9 @@ private fun VerseActionBar(
             PlayControlButton(controller, isVersePlaying, iconTint, verse)
 
             VerseActionIconButton(
-                painter = painterResource(R.drawable.dr_icon_tafsir),
+                painter = painterResource(R.drawable.ic_tafsir),
                 contentDescription = stringResource(R.string.strTitleTafsir),
-                tint = Color.Unspecified,
+                tint = iconTint,
             ) { ReaderFactory.startTafsir(context, verse.chapterNo, verse.verseNo) }
 
             if (actionBarMode == VerseActionBarMode.Full) {

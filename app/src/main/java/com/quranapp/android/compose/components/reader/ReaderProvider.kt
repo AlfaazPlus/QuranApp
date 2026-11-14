@@ -68,9 +68,9 @@ val LocalTransientVerseHighlight = staticCompositionLocalOf {
 
 data class LocalRecitationStateData(
     val controller: RecitationController,
-    val isAnyPlaying: Boolean,
-    val playingVerse: ChapterVersePair,
-    val playingWordIndex: Int,
+    val isAnyPlayingState: State<Boolean>,
+    val playingVerseState: State<ChapterVersePair>,
+    val playingWordIndexState: State<Int>,
 )
 
 val LocalRecitation = staticCompositionLocalOf<LocalRecitationStateData> {
@@ -104,8 +104,20 @@ fun ReaderProvider(
     val isAtlasImporting by QuranAtlasLoader.isImporting
 
     val controller = viewModel.controller
-    val recitationState by controller.state.collectAsStateWithLifecycle()
-    val isPlaying by controller.isPlayingState.collectAsStateWithLifecycle()
+
+    val playingVerseState = controller.currentVerseState.collectAsStateWithLifecycle()
+
+    val playingWordIndexState = controller.wordIndexState.collectAsStateWithLifecycle()
+    val isPlayingState = controller.isPlayingState.collectAsStateWithLifecycle()
+   
+    val localRecitationState = remember(controller) {
+        LocalRecitationStateData(
+            controller = controller,
+            isAnyPlayingState = isPlayingState,
+            playingVerseState = playingVerseState,
+            playingWordIndexState = playingWordIndexState,
+        )
+    }
 
     var bookmarkViewerData by remember { mutableStateOf<BookmarkViewerData?>(null) }
     var footnotePresenterData by remember { mutableStateOf<FootnotePresenterData?>(null) }
@@ -201,12 +213,7 @@ fun ReaderProvider(
 
                 })
         },
-        LocalRecitation provides LocalRecitationStateData(
-            controller = controller,
-            isAnyPlaying = isPlaying,
-            playingVerse = recitationState.currentVerse,
-            playingWordIndex = recitationState.currentWordIndex,
-        ),
+        LocalRecitation provides localRecitationState,
         LocalWbwState provides LocalWbwStateData(
             isWbwRtl = isWbwRtl,
             isWbwAudioLoading = { chapterNo, verseNo, wordIndex ->

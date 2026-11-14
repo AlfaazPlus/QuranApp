@@ -27,6 +27,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -150,7 +151,11 @@ internal fun VotdContent(
     val iconTint = Color.White.alpha(0.7f)
 
     val recState = LocalRecitation.current
-    val isVersePlaying = recState.isAnyPlaying && recState.playingVerse.doesEqual(verse)
+    val isVersePlaying by remember(verse, recState) {
+        derivedStateOf {
+            recState.isAnyPlayingState.value && recState.playingVerseState.value.doesEqual(verse)
+        }
+    }
 
     LaunchedEffect(verse) {
         WbwAudioPlayer.warmUp(context)

@@ -78,7 +78,6 @@ import com.quranapp.android.compose.components.JuzIcon
 import com.quranapp.android.compose.components.dialogs.SimpleTooltip
 import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.compose.components.reader.ReadingLayout
-import com.quranapp.android.compose.components.reader.dialogs.AutoScrollSheet
 import com.quranapp.android.compose.navigation.SettingRoutes
 import com.quranapp.android.compose.theme.alpha
 import com.quranapp.android.compose.utils.formattedStringResource
@@ -395,27 +394,10 @@ private fun StickyHeaderModeVbV(
 ) {
     val context = LocalContext.current
 
-    var autoScrollSheetOpen by rememberSaveable { mutableStateOf(false) }
-
     Row(
         modifier = Modifier.padding(horizontal = 4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-
-        SimpleTooltip(text = stringResource(R.string.autoScroll)) {
-            IconButton(
-                onClick = {
-                    autoScrollSheetOpen = true
-                },
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.icon_scroll_down),
-                    contentDescription = stringResource(R.string.autoScroll),
-                    tint = colorScheme.onSurface.alpha(0.75f)
-                )
-            }
-        }
-
         SimpleTooltip(text = stringResource(R.string.strLabelSelectTranslations)) {
             IconButton(
                 onClick = {
@@ -478,13 +460,6 @@ private fun StickyHeaderModeVbV(
                 }
             }
         }
-    }
-
-    AutoScrollSheet(
-        readerVm,
-        autoScrollSheetOpen,
-    ) {
-        autoScrollSheetOpen = false
     }
 }
 

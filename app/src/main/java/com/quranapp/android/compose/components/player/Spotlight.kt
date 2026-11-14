@@ -36,6 +36,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.produceState
@@ -44,9 +46,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -82,6 +87,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import verticalFadingEdge
+import kotlin.time.Duration.Companion.milliseconds
 
 
 @Composable
@@ -102,7 +108,7 @@ fun ExpandedPlayerSpotlightSection(
     }
 
     LaunchedEffect(hideEpoch) {
-        delay(3_000)
+        delay(3_000.milliseconds)
         onChromeVisibilityChanged(false)
     }
 
@@ -216,12 +222,10 @@ private fun SpotlightVersePanel(
                 } else {
                     val chapterNo = pair.chapterNo
                     val verseNo = pair.verseNo
-                    val activeWordIndex = if (
-                        recitation.isAnyPlaying && recitation.playingVerse == pair
-                    ) {
-                        recitation.playingWordIndex
-                    } else {
-                        -1
+                    val isThisVersePlaying by remember(pair, recitation) {
+                        derivedStateOf {
+                            recitation.isAnyPlayingState.value && recitation.playingVerseState.value == pair
+                        }
                     }
 
                     val verse by produceState<VerseWithDetails?>(
@@ -242,13 +246,14 @@ private fun SpotlightVersePanel(
                             val aSlug = slugs.firstOrNull() ?: TranslUtils.TRANSL_SLUG_DEFAULT
 
                             vwd.apply {
-                                translations = DatabaseProvider.getTranslationRepository(context).let {
-                                    it.getTranslations(
-                                        setOf(aSlug),
-                                        chapterNo,
-                                        verseNo,
-                                    )
-                                }
+                                translations =
+                                    DatabaseProvider.getTranslationRepository(context).let {
+                                        it.getTranslations(
+                                            setOf(aSlug),
+                                            chapterNo,
+                                            verseNo,
+                                        )
+                                    }
                             }
                         }
                     }
@@ -284,7 +289,8 @@ private fun SpotlightVersePanel(
                                     fontResolver = vm.fontResolver,
                                     scriptCode = scriptCode,
                                     arabicMultiplier = arabicMultiplier,
-                                    activeWordIndex = activeWordIndex,
+                                    isThisVersePlaying = isThisVersePlaying,
+                                    playingWordIndexState = recitation.playingWordIndexState,
                                 )
 
                                 SpotlightTranslationText(
@@ -307,7 +313,8 @@ private fun SpotlightQuranText(
     fontResolver: FontResolver,
     scriptCode: String,
     arabicMultiplier: Float,
-    activeWordIndex: Int,
+    isThisVersePlaying: Boolean,
+    playingWordIndexState: State<Int>,
 ) {
     if (!arabicEnabled) return
 
@@ -364,19 +371,22 @@ private fun SpotlightQuranText(
             ),
             verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
+            val activeWordBgColor = colorScheme.primary.alpha(0.55f)
+            val activeWordCorner = with(LocalDensity.current) {
+                CornerRadius(8.dp.toPx(), 8.dp.toPx())
+            }
+
             words.forEach { word ->
-                val isActiveWord = word.wordIndex == activeWordIndex
                 QuranWordText(
                     modifier = Modifier
-                        .then(
-                            if (isActiveWord) {
-                                Modifier
-                                    .clip(MaterialTheme.shapes.small)
-                                    .background(colorScheme.primary.alpha(0.55f))
-                            } else {
-                                Modifier
+                        .drawBehind {
+                            if (isThisVersePlaying && playingWordIndexState.value == word.wordIndex) {
+                                drawRoundRect(
+                                    color = activeWordBgColor,
+                                    cornerRadius = activeWordCorner,
+                                )
                             }
-                        )
+                        }
                         .padding(horizontal = 2.dp, vertical = 1.5.dp),
                     word = word,
                     atlasPlacements = atlasPlacements.getForWord(word),

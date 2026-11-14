@@ -406,6 +406,7 @@
     <string name="theme_violet">Mauve</string>
     <string name="theme_yellow">Jaune</string>
     <string name="theme_mono">Mono</string>
+    <string name="theme_amoled">Amoled</string>
     <string name="theme_colors">Couleurs du thème</string>
     <string name="theme_mode">Mode thème</string>
     <string name="dynamic_color">Couleur dynamique</string>

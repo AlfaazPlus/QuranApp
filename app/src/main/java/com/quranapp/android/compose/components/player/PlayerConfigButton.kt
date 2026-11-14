@@ -33,10 +33,14 @@ fun PlayerConfigButton(
     text: String,
     subtext: String? = null,
     icon: Painter,
+    enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
+    val contentAlpha = if (enabled) 1f else 0.45f
+
     Surface(
         onClick = onClick,
+        enabled = enabled,
         shape = RoundedCornerShape(12.dp),
         color = Color.White.copy(alpha = 0.06f),
         tonalElevation = 0.dp,
@@ -57,7 +61,7 @@ fun PlayerConfigButton(
             Icon(
                 painter = icon,
                 contentDescription = null,
-                tint = Color.White,
+                tint = Color.White.copy(alpha = contentAlpha),
                 modifier = Modifier.size(18.dp)
             )
 
@@ -68,7 +72,7 @@ fun PlayerConfigButton(
             ) {
                 Text(
                     text = text,
-                    color = Color.White.copy(alpha = 0.95f),
+                    color = Color.White.copy(alpha = 0.95f * contentAlpha),
                     style = MaterialTheme.typography.labelMedium,
                     fontWeight = FontWeight.SemiBold,
                     maxLines = 1,
@@ -78,7 +82,7 @@ fun PlayerConfigButton(
                 if (!subtext.isNullOrBlank()) {
                     Text(
                         text = subtext,
-                        color = Color.White.copy(alpha = 0.70f),
+                        color = Color.White.copy(alpha = 0.70f * contentAlpha),
                         style = MaterialTheme.typography.bodySmall,
                         maxLines = 1,
                         modifier = Modifier

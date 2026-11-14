@@ -412,6 +412,7 @@
     <string name="theme_violet">Фиолетовая</string>
     <string name="theme_yellow">Желтая</string>
     <string name="theme_mono">Монохромная</string>
+    <string name="theme_amoled">Амолед</string>
     <string name="theme_colors">Цвета темы</string>
     <string name="theme_mode">Режим темы</string>
     <string name="dynamic_color">Динамический цвет</string>

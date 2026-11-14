@@ -45,6 +45,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.quranapp.android.R
+import com.quranapp.android.compose.theme.grayscaleColorFilter
+import com.quranapp.android.compose.utils.ThemeUtils
 import com.quranapp.android.components.ReferenceThumbnail
 import com.quranapp.android.components.ReferenceVerseModel
 import com.quranapp.android.components.quran.QuranPropheticDua
@@ -185,6 +187,8 @@ fun PropheticDuasScreen(title: String? = null) {
 private fun PropheticDuaListItem(prophet: QuranPropheticDua.Prophet) {
     val context = LocalContext.current
     val resources = LocalResources.current
+    val isMono = ThemeUtils.observeIsMonoPalette()
+    val grayscale = remember { grayscaleColorFilter() }
 
     val nameLine = MessageFormat.format("{0} ({1})", prophet.name, prophet.honorific)
     val primaryText = resources.getString(R.string.strMsgDuaOf, nameLine)
@@ -222,6 +226,7 @@ private fun PropheticDuaListItem(prophet: QuranPropheticDua.Prophet) {
                 painter = painterResource(id = prophet.iconRes),
                 contentDescription = prophet.name,
                 modifier = Modifier.size(56.dp),
+                colorFilter = if (isMono) grayscale else null,
             )
 
             Column(

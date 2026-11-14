@@ -395,6 +395,7 @@
     <string name="theme_violet">বেগুনি আভা</string>
     <string name="theme_yellow">হলুদ</string>
     <string name="theme_mono">একরঙা</string>
+    <string name="theme_amoled">অ্যামোলেড</string>
     <string name="theme_colors">পছন্দের রঙ বেছে নিন</string>
     <string name="theme_mode">স্ক্রিনের আবহ বদলান</string>
     <string name="dynamic_color">স্বয়ংক্রিয় রঙ পরিবর্তন</string>

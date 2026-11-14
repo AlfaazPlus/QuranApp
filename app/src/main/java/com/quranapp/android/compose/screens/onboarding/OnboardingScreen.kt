@@ -63,7 +63,7 @@ private val onboardingIcons = listOf(
     R.drawable.dr_icon_language,
     R.drawable.dr_icon_theme,
     R.drawable.dr_icon_translations,
-    R.drawable.dr_icon_tafsir,
+    R.drawable.ic_tafsir,
 )
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -146,16 +146,11 @@ fun OnboardingScreen(
                         .background(colorScheme.primary.copy(alpha = 0.10f)),
                     contentAlignment = Alignment.Center,
                 ) {
-                    if (page != 3) Icon(
+                    Icon(
                         painter = painterResource(onboardingIcons[page]),
                         contentDescription = null,
                         modifier = Modifier.size(48.dp),
                         tint = colorScheme.primary,
-                    ) else Icon(
-                        painter = painterResource(onboardingIcons[page]),
-                        contentDescription = null,
-                        modifier = Modifier.size(48.dp),
-                        tint = null,
                     )
                 }
 

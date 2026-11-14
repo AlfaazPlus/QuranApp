@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
@@ -275,41 +276,43 @@ private fun ReaderLayoutVerseMode(
     var playerVerseSync by readerVm.playerVerseSync
     val playerState = LocalRecitation.current
 
-    val isPlaying = playerState.isAnyPlaying
-    val playingVerse = playerState.playingVerse
+    LaunchedEffect(listState, autoScrollSpeed, playerVerseSync, items, playerState) {
+        if (autoScrollSpeed != null || !playerVerseSync) return@LaunchedEffect
 
-    LaunchedEffect(listState, autoScrollSpeed, playerVerseSync, isPlaying, playingVerse, items) {
-        if (autoScrollSpeed == null && playerVerseSync && isPlaying && playingVerse.isValid) {
-            val currentPlayingIndex = items.indexOfFirst { item ->
-                item is ReaderLayoutItem.VerseUI &&
-                        item.verse.chapterNo == playingVerse.chapterNo &&
-                        item.verse.verseNo == playingVerse.verseNo
-            }
+        snapshotFlow {
+            playerState.isAnyPlayingState.value to playerState.playingVerseState.value
+        }
+            .distinctUntilChanged()
+            .collectLatest { (isPlaying, playingVerse) ->
+                if (!isPlaying || !playingVerse.isValid) return@collectLatest
 
-            if (currentPlayingIndex >= 0) {
-                val layoutInfo = listState.layoutInfo
-                val playingItem = layoutInfo.visibleItemsInfo
-                    .firstOrNull { it.index == currentPlayingIndex }
+                val currentPlayingIndex = items.indexOfFirst { item ->
+                    item is ReaderLayoutItem.VerseUI &&
+                            item.verse.chapterNo == playingVerse.chapterNo &&
+                            item.verse.verseNo == playingVerse.verseNo
+                }
 
-                val isFullyVisible = playingItem != null &&
-                        playingItem.offset >= layoutInfo.viewportStartOffset &&
-                        playingItem.offset + playingItem.size <= layoutInfo.viewportEndOffset
+                if (currentPlayingIndex >= 0) {
+                    val layoutInfo = listState.layoutInfo
+                    val playingItem = layoutInfo.visibleItemsInfo
+                        .firstOrNull { it.index == currentPlayingIndex }
 
-                if (!isFullyVisible) {
-                    // Keep some already-read content above the active ayah so the
-                    // transition is easier to follow than repeatedly pinning it to the top.
-                    val viewportHeight =
-                        layoutInfo.viewportEndOffset - layoutInfo.viewportStartOffset
-                    listState.animateScrollToItem(
-                        index = currentPlayingIndex
-                    )
+                    val isFullyVisible = playingItem != null &&
+                            playingItem.offset >= layoutInfo.viewportStartOffset &&
+                            playingItem.offset + playingItem.size <= layoutInfo.viewportEndOffset
+
+                    if (!isFullyVisible) {
+                        listState.animateScrollToItem(
+                            index = currentPlayingIndex
+                        )
+                    }
                 }
             }
-        }
     }
 
-    LaunchedEffect(listState, items, playingVerse) {
+    LaunchedEffect(listState, items, playerState) {
         snapshotFlow {
+            val playingVerse = playerState.playingVerseState.value
             if (!playingVerse.isValid) return@snapshotFlow false
 
             val idx = items.indexOfFirst { item ->
@@ -318,9 +321,7 @@ private fun ReaderLayoutVerseMode(
                         item.verse.verseNo == playingVerse.verseNo
             }
 
-            if (idx < 0) return@snapshotFlow false
-
-            return@snapshotFlow true
+            idx >= 0
         }
             .distinctUntilChanged()
             .collect { onSyncStateChanged(it) }
@@ -344,15 +345,6 @@ private fun ReaderLayoutVerseMode(
         }
     }
 
-    LaunchedEffect(listState, autoScrollSpeed) {
-        val speed = autoScrollSpeed
-
-        while (speed != null) {
-            listState.scrollBy(speed)
-            delay(16.milliseconds) // ~60 FPS
-        }
-    }
-
     TextStyleProvider(prepared.textStyles) {
         LazyColumn(
             state = listState,
@@ -362,16 +354,7 @@ private fun ReaderLayoutVerseMode(
                     if (nestedScrollConnection == null) Modifier
                     else Modifier.nestedScroll(nestedScrollConnection)
                 )
-                .pointerInput(autoScrollSpeed) {
-                    awaitPointerEventScope {
-                        while (true) {
-                            val event = awaitPointerEvent()
-                            if (event.changes.any { it.pressed }) {
-                                autoScrollSpeed = null
-                            }
-                        }
-                    }
-                },
+                .readerAutoScroll(listState, readerVm),
             contentPadding = PaddingValues(top = 16.dp, bottom = 240.dp)
         ) {
             items(
@@ -484,4 +467,34 @@ private fun List<ReaderLayoutItem>.findOptimalScrollIndex(targetIndex: Int): Int
     }
 
     return optimalIndex
+}
+
+@Composable
+internal fun Modifier.readerAutoScroll(
+    listState: LazyListState,
+    readerVm: ReaderViewModel,
+): Modifier {
+    var autoScrollSpeed by readerVm.autoScrollSpeed
+
+    LaunchedEffect(listState, autoScrollSpeed) {
+        val speed = autoScrollSpeed
+
+        while (speed != null) {
+            listState.scrollBy(speed)
+            delay(16.milliseconds)
+        }
+    }
+
+    if (autoScrollSpeed == null) return this
+
+    return pointerInput(autoScrollSpeed) {
+        awaitPointerEventScope {
+            while (true) {
+                val event = awaitPointerEvent()
+                if (event.changes.any { it.pressed }) {
+                    autoScrollSpeed = null
+                }
+            }
+        }
+    }
 }

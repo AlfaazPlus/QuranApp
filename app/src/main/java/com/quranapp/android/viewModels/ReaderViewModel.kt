@@ -860,7 +860,10 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         }
 
         withContext(Dispatchers.Main.immediate) {
-            _translationPageItems.update { old -> old + built }
+            // Same race as mushaf/reading-flow: a script switch clears pages mid-build.
+            if (_mushafSession.value.version == session.version) {
+                _translationPageItems.update { old -> old + built }
+            }
         }
     }
 
@@ -901,7 +904,12 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
         if (built.isEmpty()) return
 
         withContext(Dispatchers.Main.immediate) {
-            _readingFlowPageItems.update { old -> old + built }
+            // A script switch clears the page cache. Ignore an older build that finishes
+            // after that clear — stale KFQPC/PUA words painted with the new fontFamily
+            // look like reserved blank "script" with no ink.
+            if (_mushafSession.value.version == session.version) {
+                _readingFlowPageItems.update { old -> old + built }
+            }
         }
     }
 
@@ -930,6 +938,16 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
                 return
             }
 
+            // Drop pages and invalidate in-flight builds before the mushaf DB lookups.
+            // TextStyle already follows the new pref; keeping old KFQPC/PUA (or atlas)
+            // pages on screen during that wait draws reserved blank glyphs.
+            clearPageCaches()
+            _mushafSession.value = old.copy(
+                layout = newScript,
+                pageCount = 0,
+                version = old.version + 1,
+            )
+
             val verse = resolveAnchorVerse(old)
             val newCount = mushafPageCount(newScript.toMushafId())
 
@@ -937,17 +955,13 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
                 repository.getPageForVerse(verse.chapterNo, verse.verseNo, newScript.toMushafId())
             }
 
-            _pageItems.value = emptyMap()
-            _translationPageItems.value = emptyMap()
-            _readingFlowPageItems.value = emptyMap()
-
+            clearPageCaches()
             lastKnownVerse = verse
 
-            _mushafSession.value = old.copy(
-                layout = newScript,
+            _mushafSession.value = _mushafSession.value.copy(
                 pageCount = newCount,
                 currentPageNo = newPage ?: old.currentPageNo?.takeIf { it <= newCount } ?: 1,
-                version = old.version + 1,
+                version = _mushafSession.value.version + 1,
             )
 
             // Without an anchor verse keep whatever navigation is already pending.
@@ -957,6 +971,12 @@ class ReaderViewModel(application: Application) : ReaderProviderViewModel(applic
                 requestPageNavigation(1)
             }
         }
+    }
+
+    private fun clearPageCaches() {
+        _pageItems.value = emptyMap()
+        _translationPageItems.value = emptyMap()
+        _readingFlowPageItems.value = emptyMap()
     }
 
     private suspend fun resolveAnchorVerse(session: MushafSession): ChapterVersePair? {

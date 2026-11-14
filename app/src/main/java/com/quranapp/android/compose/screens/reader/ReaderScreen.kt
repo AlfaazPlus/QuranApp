@@ -71,6 +71,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.window.core.layout.WindowSizeClass
 import com.quranapp.android.R
+import com.quranapp.android.compose.components.dialogs.SimpleTooltip
+import com.quranapp.android.compose.components.dialogs.SimpleTooltipPosition
 import com.quranapp.android.compose.components.player.MINI_PLAYER_HEIGHT
 import com.quranapp.android.compose.components.player.MiniPlayerVisibility
 import com.quranapp.android.compose.components.player.RecitationPlayerSheet
@@ -80,6 +82,7 @@ import com.quranapp.android.compose.components.reader.ReaderLayout
 import com.quranapp.android.compose.components.reader.ReaderMode
 import com.quranapp.android.compose.components.reader.ReadingLayout
 import com.quranapp.android.compose.components.reader.ReaderProvider
+import com.quranapp.android.compose.components.reader.dialogs.AutoScrollSheet
 import com.quranapp.android.compose.components.reader.navigator.FullscreenReaderHeader
 import com.quranapp.android.compose.components.reader.navigator.ReaderAppBar
 import com.quranapp.android.compose.components.reader.navigator.ReaderNavigator
@@ -250,6 +253,7 @@ fun ReaderScreen(
 
 
             ReaderCollapsedChrome(
+                readerVm = readerVm,
                 scrollBehavior = scrollBehavior,
                 miniPlayerHeight = miniPlayerHeight,
                 isFullscreen = isFullscreen,
@@ -333,6 +337,7 @@ private fun readerBottomInset(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun BoxScope.ReaderCollapsedChrome(
+    readerVm: ReaderViewModel,
     scrollBehavior: TopAppBarScrollBehavior,
     miniPlayerHeight: Dp,
     isFullscreen: Boolean,
@@ -348,7 +353,8 @@ private fun BoxScope.ReaderCollapsedChrome(
     val chromeCollapsedFraction = scrollBehavior.state.collapsedFraction
 
     FloatingBar(
-        isFullscreen,
+        readerVm = readerVm,
+        isFullscreen = isFullscreen,
         onChangeFullscreen = onChangeFullscreen,
         tajweedBarVisible = tajweedBarVisible,
         onChangeTajweedBarVisible = onChangeTajweedBarVisible,
@@ -371,6 +377,7 @@ private fun BoxScope.ReaderCollapsedChrome(
 
 @Composable
 private fun BoxScope.FloatingBar(
+    readerVm: ReaderViewModel,
     isFullscreen: Boolean,
     onChangeFullscreen: (Boolean) -> Unit,
     tajweedBarVisible: Boolean,
@@ -378,10 +385,30 @@ private fun BoxScope.FloatingBar(
     chromeCollapsedFraction: Float,
     totalBottomOffset: Dp
 ) {
-    val fullscreenButtonAlpha = if (isFullscreen) if (tajweedBarVisible) 1f else 0.65f
-    else (1f - chromeCollapsedFraction).coerceIn(0f, 1f)
+    val readerMode by readerVm.readerMode.collectAsStateWithLifecycle()
+    val readingLayout = ReaderPreferences.observeReadingLayout()
+    var autoScrollSheetOpen by rememberSaveable { mutableStateOf(false) }
+    var autoScrollSpeed by readerVm.autoScrollSpeed
 
-    val tajweedSupported =
+    val hideControls = isFullscreen && autoScrollSpeed != null
+    val floatingButtonsAlpha = if (isFullscreen) {
+        if (tajweedBarVisible) 1f else 0.65f
+    } else {
+        (1f - chromeCollapsedFraction).coerceIn(0f, 1f)
+    }
+
+    val supportsAutoScroll = readerMode == ReaderMode.VerseByVerse ||
+        readerMode == ReaderMode.Translation ||
+        (readerMode == ReaderMode.Reading && readingLayout == ReadingLayout.Flow)
+
+    LaunchedEffect(supportsAutoScroll) {
+        if (!supportsAutoScroll) {
+            autoScrollSpeed = null
+            autoScrollSheetOpen = false
+        }
+    }
+
+    val tajweedSupported = readerMode != ReaderMode.Translation &&
         ReaderPreferences.observeQuranScript() == QuranScriptUtils.SCRIPT_KFQPC_V4
 
     LaunchedEffect(tajweedSupported) {
@@ -412,73 +439,69 @@ private fun BoxScope.FloatingBar(
                 vertical = 6.dp
             ),
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Box(
-                Modifier
-                    .weight(1f)
-                    .alpha(fullscreenButtonAlpha),
-            ) {
-                if (tajweedSupported) {
-                    TextButton(
-                        onClick = {
-                            onChangeTajweedBarVisible(!tajweedBarVisible)
-                        },
-                        modifier = Modifier.height(32.dp),
-                        shape = shapes.extraLarge,
-                        colors = ButtonDefaults.textButtonColors(
-                            containerColor = colorScheme.surfaceContainer,
-                            contentColor = colorScheme.onSurface
-                        ),
-                        border = BorderStroke(1.dp, colorScheme.outlineVariant),
-                        elevation = ButtonDefaults.buttonElevation(
-                            defaultElevation = 2.dp
-                        ),
-                        contentPadding = PaddingValues(vertical = 0.dp, horizontal = 16.dp)
-                    ) {
-                        Text(stringResource(R.string.tajweedColors))
-                        Icon(
-                            painterResource(R.drawable.dr_icon_chevron_down),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .rotate(if (tajweedBarVisible) 0f else 180f)
-                                .size(16.dp),
-                        )
-                    }
-                }
-            }
-
-            if (isFullscreen || fullscreenButtonAlpha > 0.01f) {
-                TextButton(
-                    onClick = {
-                        onChangeFullscreen(!isFullscreen)
-                    },
+        AnimatedVisibility(!hideControls) {
+            if (isFullscreen || floatingButtonsAlpha > 0.01f) {
+                Row(
                     modifier = Modifier
-                        .height(32.dp)
-                        .alpha(fullscreenButtonAlpha),
-                    shape = shapes.extraLarge,
-                    colors = ButtonDefaults.textButtonColors(
-                        containerColor = colorScheme.surfaceContainer,
-                        contentColor = colorScheme.onSurface
-                    ),
-                    border = BorderStroke(1.dp, colorScheme.outlineVariant),
-                    elevation = ButtonDefaults.buttonElevation(
-                        defaultElevation = 2.dp
-                    ),
-                    contentPadding = PaddingValues(vertical = 0.dp, horizontal = 16.dp)
+                        .fillMaxWidth()
+                        .alpha(floatingButtonsAlpha),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
-                    Icon(
-                        painter = painterResource(
-                            if (isFullscreen) R.drawable.ic_shrink
-                            else R.drawable.ic_expand
-                        ),
-                        contentDescription = stringResource(
+                    Box(Modifier.weight(1f)) {
+                        if (tajweedSupported) {
+                            FloatingPillButton(
+                                tooltip = stringResource(R.string.tajweedColors),
+                                onClick = {
+                                    onChangeTajweedBarVisible(!tajweedBarVisible)
+                                },
+                            ) {
+                                Text(stringResource(R.string.tajweedColors))
+                                Icon(
+                                    painterResource(R.drawable.dr_icon_chevron_down),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .rotate(if (tajweedBarVisible) 0f else 180f)
+                                        .size(16.dp),
+                                )
+                            }
+                        }
+                    }
+
+                    if (supportsAutoScroll) {
+                        FloatingPillButton(
+                            tooltip = stringResource(R.string.autoScroll),
+                            onClick = { autoScrollSheetOpen = true },
+                        ) {
+                            Icon(
+                                painter = painterResource(R.drawable.icon_scroll_down),
+                                contentDescription = stringResource(R.string.autoScroll),
+                                modifier = Modifier.size(16.dp),
+                            )
+                        }
+                    }
+
+                    FloatingPillButton(
+                        tooltip = stringResource(
                             if (isFullscreen) R.string.exitFullscreen
                             else R.string.enterFullscreen
                         ),
-                        modifier = Modifier.size(16.dp),
-                    )
+                        onClick = {
+                            onChangeFullscreen(!isFullscreen)
+                        },
+                    ) {
+                        Icon(
+                            painter = painterResource(
+                                if (isFullscreen) R.drawable.ic_shrink
+                                else R.drawable.ic_expand
+                            ),
+                            contentDescription = stringResource(
+                                if (isFullscreen) R.string.exitFullscreen
+                                else R.string.enterFullscreen
+                            ),
+                            modifier = Modifier.size(16.dp),
+                        )
+                    }
                 }
             }
         }
@@ -487,7 +510,7 @@ private fun BoxScope.FloatingBar(
             FlowRow(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 8.dp)
+                    .padding(top = if (hideControls) 0.dp else 8.dp)
                     .shadow(4.dp, shape = shapes.large)
                     .background(
                         colorScheme.surfaceContainer,
@@ -519,6 +542,43 @@ private fun BoxScope.FloatingBar(
                     }
                 }
             }
+        }
+    }
+
+    AutoScrollSheet(
+        readerVm = readerVm,
+        isOpen = autoScrollSheetOpen,
+    ) {
+        autoScrollSheetOpen = false
+    }
+}
+
+@Composable
+private fun FloatingPillButton(
+    tooltip: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit,
+) {
+    SimpleTooltip(
+        text = tooltip,
+        position = SimpleTooltipPosition.Above,
+    ) {
+        TextButton(
+            onClick = onClick,
+            modifier = modifier.height(32.dp),
+            shape = shapes.extraLarge,
+            colors = ButtonDefaults.textButtonColors(
+                containerColor = colorScheme.surfaceContainer,
+                contentColor = colorScheme.onSurface
+            ),
+            border = BorderStroke(1.dp, colorScheme.outlineVariant),
+            elevation = ButtonDefaults.buttonElevation(
+                defaultElevation = 2.dp
+            ),
+            contentPadding = PaddingValues(vertical = 0.dp, horizontal = 16.dp)
+        ) {
+            content()
         }
     }
 }

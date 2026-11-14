@@ -403,6 +403,7 @@
     <string name="theme_violet">بنفش روشن</string>
     <string name="theme_yellow">زرد</string>
     <string name="theme_mono">تک رنگ</string>
+    <string name="theme_amoled">آمولد</string>
     <string name="theme_colors">رنگ‌های تم</string>
     <string name="theme_mode">حالت تم</string>
     <string name="dynamic_color">رنگ پویا</string>

@@ -62,6 +62,7 @@ import com.quranapp.android.utils.reader.atlas.AtlasGlyphPlacement
 import com.quranapp.android.utils.reader.atlas.getForWord
 import com.quranapp.android.utils.reader.getQuranTextStyle
 import com.quranapp.android.viewModels.ReaderViewModel
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onStart
@@ -228,43 +229,61 @@ fun ReaderLayoutReadingFlow(
     }
 
     val playerState = LocalRecitation.current
-    val isPlaying = playerState.isAnyPlaying
-    val playingVerse = playerState.playingVerse
+    val autoScrollSpeed by readerVm.autoScrollSpeed
     var playerVerseSync by readerVm.playerVerseSync
 
-    LaunchedEffect(playerVerseSync, isPlaying, playingVerse, pageCount) {
-        if (!playerVerseSync || !isPlaying || !playingVerse.isValid || pageCount <= 0) {
+    LaunchedEffect(autoScrollSpeed, playerVerseSync, pageCount, playerState) {
+        if (autoScrollSpeed != null || !playerVerseSync || pageCount <= 0) {
             return@LaunchedEffect
         }
 
-        val targetPage = readerVm.resolvePageNo(playingVerse.chapterNo, playingVerse.verseNo)
-            ?: return@LaunchedEffect
-        if (targetPage !in 1..pageCount) return@LaunchedEffect
+        snapshotFlow {
+            playerState.isAnyPlayingState.value to playerState.playingVerseState.value
+        }
+            .distinctUntilChanged()
+            .collectLatest { (isPlaying, playingVerse) ->
+                if (!isPlaying || !playingVerse.isValid) {
+                    return@collectLatest
+                }
 
-        readerVm.requestVerseNavigation(
-            playingVerse.chapterNo,
-            playingVerse.verseNo,
-            highlightAfterNavigation = false,
-        )
+                val targetPage = readerVm.resolvePageNo(playingVerse.chapterNo, playingVerse.verseNo)
+                    ?: return@collectLatest
+                if (targetPage !in 1..pageCount) return@collectLatest
+
+                readerVm.requestVerseNavigation(
+                    playingVerse.chapterNo,
+                    playingVerse.verseNo,
+                    highlightAfterNavigation = false,
+                )
+            }
     }
 
-    LaunchedEffect(playingVerse, pageCount) {
-        if (!playingVerse.isValid || pageCount <= 0) {
+    LaunchedEffect(pageCount, playerState) {
+        if (pageCount <= 0) {
             onSyncStateChanged(false)
             return@LaunchedEffect
         }
 
-        val expectedPage = readerVm.resolvePageNo(playingVerse.chapterNo, playingVerse.verseNo)
-
-        if (expectedPage == null || expectedPage !in 1..pageCount) {
-            onSyncStateChanged(false)
-            return@LaunchedEffect
-        }
-
-        snapshotFlow { listState.firstVisibleItemIndex + 1 }
+        snapshotFlow { playerState.playingVerseState.value }
             .distinctUntilChanged()
-            .collect { current ->
-                onSyncStateChanged(current == expectedPage)
+            .collectLatest { playingVerse ->
+                if (!playingVerse.isValid) {
+                    onSyncStateChanged(false)
+                    return@collectLatest
+                }
+
+                val expectedPage = readerVm.resolvePageNo(playingVerse.chapterNo, playingVerse.verseNo)
+
+                if (expectedPage == null || expectedPage !in 1..pageCount) {
+                    onSyncStateChanged(false)
+                    return@collectLatest
+                }
+
+                snapshotFlow { listState.firstVisibleItemIndex + 1 }
+                    .distinctUntilChanged()
+                    .collect { current ->
+                        onSyncStateChanged(current == expectedPage)
+                    }
             }
     }
 
@@ -281,7 +300,8 @@ fun ReaderLayoutReadingFlow(
                 .then(
                     if (nestedScrollConnection == null) Modifier
                     else Modifier.nestedScroll(nestedScrollConnection)
-                ),
+                )
+                .readerAutoScroll(listState, readerVm),
             contentPadding = PaddingValues(top = 16.dp, bottom = 240.dp),
         ) {
             items(
@@ -420,18 +440,21 @@ private fun ReadingFlowWords(
     visibilityTracker: VerseVisibilityTracker?,
 ) {
     val playerState = LocalRecitation.current
-    val isPlaying = playerState.isAnyPlaying
-    val playingVerse = playerState.playingVerse
-    val playingWordIndex = playerState.playingWordIndex
+    val playingWordIndexState = playerState.playingWordIndexState
     val wbwState = LocalWbwState.current
     val shouldShowTooltip = !wbwState.isWbwSheetOpen
     val targetAyahId = targetVerse?.ayahId
     val targetWordIndex = if (targetAyahId == null) null
     else words.firstOrNull { it.ayahId == targetAyahId }?.wordIndex
 
-    val playingAyahId = remember(isPlaying, playingVerse) {
-        if (!isPlaying || !playingVerse.isValid) -1
-        else QuranMeta.getAyahId(playingVerse.chapterNo, playingVerse.verseNo)
+    val playingAyahId by remember(words, playerState) {
+        derivedStateOf {
+            if (!playerState.isAnyPlayingState.value) return@derivedStateOf -1
+            val playingVerse = playerState.playingVerseState.value
+            if (!playingVerse.isValid) return@derivedStateOf -1
+            val ayahId = QuranMeta.getAyahId(playingVerse.chapterNo, playingVerse.verseNo)
+            if (words.any { it.ayahId == ayahId }) ayahId else -1
+        }
     }
 
     val highlightState = LocalTransientVerseHighlight.current
@@ -481,7 +504,7 @@ private fun ReadingFlowWords(
                             words = words,
                             ayahId = primaryAyahId,
                             wordIndex = if (navigationAyahId == null || navigationAyahId == playingAyahId) {
-                                playingWordIndex
+                                playingWordIndexState.value
                             } else {
                                 -1
                             },

@@ -37,7 +37,7 @@ fun ListItem(
             .fillMaxWidth()
             .clip(MaterialTheme.shapes.medium)
             .shadow(2.dp)
-            .background(colorScheme.surface),
+            .background(colorScheme.surfaceContainerLow),
     ) {
         Row(
             modifier = Modifier

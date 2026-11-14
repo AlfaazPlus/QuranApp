@@ -399,6 +399,7 @@
     <string name="theme_violet">Bayolet</string>
     <string name="theme_yellow">Dilaw</string>
     <string name="theme_mono">Mono</string>
+    <string name="theme_amoled">Amoled</string>
     <string name="theme_colors">Mga Kulay ng Tema</string>
     <string name="theme_mode">Mode ng Tema</string>
     <string name="dynamic_color">Dynamic na Kulay</string>

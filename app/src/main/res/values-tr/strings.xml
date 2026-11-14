@@ -403,6 +403,7 @@
     <string name="theme_violet">Menekşe</string>
     <string name="theme_yellow">Sarı</string>
     <string name="theme_mono">Mono</string>
+    <string name="theme_amoled">Amoled</string>
     <string name="theme_colors">Tema Renkleri</string>
     <string name="theme_mode">Tema Modu</string>
     <string name="dynamic_color">Dinamik Renk</string>

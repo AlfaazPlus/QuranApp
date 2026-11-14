@@ -13,6 +13,7 @@ import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.PlaybackException
+import androidx.media3.common.PlaybackParameters
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DefaultDataSource
@@ -92,6 +93,8 @@ class RecitationService : MediaLibraryService() {
         const val EXTRA_FROM_USER = "from_user"
 
         val sharedState = MutableStateFlow(RecitationServiceState.EMPTY)
+        val sharedCurrentVerse = MutableStateFlow(ChapterVersePair(-1, -1))
+        val sharedWordIndex = MutableStateFlow(-1)
     }
 
     private var mediaLibrarySession: MediaLibrarySession? = null
@@ -188,6 +191,8 @@ class RecitationService : MediaLibraryService() {
         }
         serviceScope.cancel()
         sharedState.value = RecitationServiceState.EMPTY
+        sharedCurrentVerse.value = ChapterVersePair(-1, -1)
+        sharedWordIndex.value = -1
         super.onDestroy()
     }
 
@@ -296,7 +301,12 @@ class RecitationService : MediaLibraryService() {
     }
 
     private fun updateState(block: RecitationServiceState.() -> RecitationServiceState) {
-        _state.value = state.value.block()
+        val next = state.value.block()
+        _state.value = next
+
+        if (sharedCurrentVerse.value != next.currentVerse) {
+            sharedCurrentVerse.value = next.currentVerse
+        }
     }
 
     private fun updatePlaybackSnapshot(
@@ -357,21 +367,21 @@ class RecitationService : MediaLibraryService() {
 
     fun seekToVerse(verseNo: Int) {
         invalidateRepeatSchedule()
+        sharedWordIndex.value = -1
 
         val plan = _verseClipPlan.value
 
         if (plan != null && !plan.isEmpty) {
-            player.seekTo(plan.firstIndexForVerse(verseNo), 0L)
+            player.exoPlayer.seekTo(plan.firstIndexForVerse(verseNo), 0L)
         } else {
             val timing = singleTrackTimingMetadata?.getVerseTiming(verseNo) ?: return
             player.seekTo(timing.startMs)
+            updateNotificationMetadata(state.value.currentVerse.chapterNo, verseNo)
         }
 
         updateState {
             copy(currentVerse = ChapterVersePair(currentVerse.chapterNo, verseNo))
         }
-
-        updateNotificationMetadata(state.value.currentVerse.chapterNo, verseNo)
     }
 
     fun restartVerse() {
@@ -599,11 +609,12 @@ class RecitationService : MediaLibraryService() {
         player.prepare()
         player.play()
 
+        sharedWordIndex.value = -1
+
         updateState {
             copy(
                 settings = updatedSettings,
                 currentVerse = ChapterVersePair(chapterNo, startVerse),
-                currentWordIndex = -1,
                 pausedByHeadset = false,
             )
         }
@@ -823,49 +834,77 @@ class RecitationService : MediaLibraryService() {
             rescheduleRepeatForCurrentPosition()
         }
 
+        val quranClipPrefix = "${RecitationAudioKind.QURAN.type}:"
+
         verseTrackingJob = serviceScope.launch {
             while (isActive && player.isPlaying) {
                 val current = state.value.currentVerse
-                val vt = timing.getVerseTiming(current.verseNo)
                 val isQuranClip = !isClippedPlaylist ||
-                        player.exoPlayer.currentMediaItem?.mediaId?.startsWith("${RecitationAudioKind.QURAN.type}:") == true
-                val position = if (isClippedPlaylist && vt != null) {
+                        player.exoPlayer.currentMediaItem?.mediaId?.startsWith(quranClipPrefix) == true
+
+                if (isClippedPlaylist && !isQuranClip) {
+                    if (sharedWordIndex.value != -1) {
+                        sharedWordIndex.value = -1
+                    }
+                    break
+                }
+
+                val currentVt =
+                    if (isClippedPlaylist) timing.getVerseTiming(current.verseNo) else null
+                val position = if (isClippedPlaylist && currentVt != null) {
                     // SessionPlayer exposes a virtual position for playlists.
                     // Segment timestamps are chapter-relative, so use the raw
                     // position within the active clipped media item here.
-                    vt.startMs + player.exoPlayer.currentPosition
+                    currentVt.startMs + player.exoPlayer.currentPosition
                 } else {
                     player.currentPosition
                 }
 
-                if (hasWordTiming && isQuranClip) {
-                    val segment = vt?.getSegmentAtPosition(position)
-                    val wordIndex = segment?.index ?: -1
-                    if (wordIndex != state.value.currentWordIndex) {
-                        updateState { copy(currentWordIndex = wordIndex) }
-                    }
-                } else if (state.value.currentWordIndex != -1) {
-                    updateState { copy(currentWordIndex = -1) }
-                }
-
-                if (!isClippedPlaylist) {
+                val activeVt = if (!isClippedPlaylist) {
                     val verseAtPosition = timing.getVerseAtPosition(position)
-                    if (verseAtPosition != null) {
-                        if (verseAtPosition.verseNo != current.verseNo) {
-                            val newVerse =
-                                ChapterVersePair(timing.chapterNo, verseAtPosition.verseNo)
-                            updateState { copy(currentVerse = newVerse) }
-                            updateNotificationMetadata(timing.chapterNo, verseAtPosition.verseNo)
-                            invalidateRepeatSchedule()
-                            scheduleRepeatForVerse(verseAtPosition.startMs, verseAtPosition.endMs)
-                        }
+
+                    if (verseAtPosition != null && verseAtPosition.verseNo != current.verseNo) {
+                        val newVerse = ChapterVersePair(timing.chapterNo, verseAtPosition.verseNo)
+                        updateState { copy(currentVerse = newVerse) }
+                        updateNotificationMetadata(timing.chapterNo, verseAtPosition.verseNo)
+                        invalidateRepeatSchedule()
+                        scheduleRepeatForVerse(verseAtPosition.startMs, verseAtPosition.endMs)
                     }
+
+                    verseAtPosition ?: timing.getVerseTiming(state.value.currentVerse.verseNo)
+                } else {
+                    currentVt
                 }
 
-                // Word segments may be shorter than a verse-tracking interval.
-                // Poll more closely only when this reciter actually has them;
-                // UI state is still emitted solely at word boundaries.
-                delay(if (hasWordTiming) 50.milliseconds else 200.milliseconds)
+                if (hasWordTiming) {
+                    val wordIndex = activeVt?.getSegmentAtPosition(position)?.index ?: -1
+                    if (wordIndex != sharedWordIndex.value) {
+                        sharedWordIndex.value = wordIndex
+                    }
+                } else if (sharedWordIndex.value != -1) {
+                    sharedWordIndex.value = -1
+                }
+
+                val nextBoundaryMs = if (hasWordTiming) {
+                    activeVt?.getNextSegmentBoundaryMs(position)
+                        ?: if (!isClippedPlaylist) timing.getNextVerseStartMs(position) else null
+                } else if (!isClippedPlaylist) {
+                    activeVt?.takeIf { position < it.endMs }?.endMs
+                        ?: timing.getNextVerseStartMs(position)
+                } else {
+                    null
+                }
+
+                val delayMs = if (nextBoundaryMs != null && nextBoundaryMs > position) {
+                    val speed = player.playbackParameters.speed.coerceAtLeast(0.1f)
+                    val remainingRealMs = ((nextBoundaryMs - position) / speed).toLong()
+                    val maxPollMs = if (hasWordTiming) 250L else 500L
+                    remainingRealMs.coerceIn(1L, maxPollMs)
+                } else {
+                    if (hasWordTiming) 50L else 200L
+                }
+
+                delay(delayMs.milliseconds)
             }
         }
     }
@@ -877,8 +916,9 @@ class RecitationService : MediaLibraryService() {
         // only cancel the job without resetting state of repeat schedule
         repeatMessage?.cancel()
         repeatMessage = null
-        if (state.value.currentWordIndex != -1) {
-            updateState { copy(currentWordIndex = -1) }
+
+        if (sharedWordIndex.value != -1) {
+            sharedWordIndex.value = -1
         }
     }
 
@@ -944,8 +984,14 @@ class RecitationService : MediaLibraryService() {
 
         // Offset by 100ms to account for thread-hopping and audio-sink buffer
         // which prevents bleeding of the next verse.
+        val triggerMs = if (endMs > startMs) {
+            (endMs - 100L).coerceAtLeast(startMs + 1L)
+        } else {
+            endMs.coerceAtLeast(0L)
+        }
+
         message
-            .setPosition((endMs - 100).coerceAtLeast(0))
+            .setPosition(triggerMs)
             .setLooper(Looper.getMainLooper())
             .setDeleteAfterDelivery(true)
             .send()
@@ -994,29 +1040,42 @@ class RecitationService : MediaLibraryService() {
      */
     private fun checkVerseChanged() {
         val mediaId = player.exoPlayer.currentMediaItem?.mediaId ?: return
-        val parts = mediaId.split(':')
-        val isQuranClip = parts.size != 3 || parts[0] == RecitationAudioKind.QURAN.type
-        val (chapterText, verseText) = when (parts.size) {
-            // Supports an already-built legacy clip queue during service recreation.
-            2 -> parts[0] to parts[1]
-            3 -> parts[1] to parts[2]
-            else -> return
-        }
+        val firstColon = mediaId.indexOf(':')
+        if (firstColon <= 0 || firstColon >= mediaId.lastIndex) return
 
-        val chapter = chapterText.toIntOrNull() ?: return
-        val verse = verseText.toIntOrNull() ?: return
+        val secondColon = mediaId.indexOf(':', firstColon + 1)
+        val isQuranClip: Boolean
+        val chapter: Int
+        val verse: Int
+
+        if (secondColon == -1) {
+            // Supports an already-built legacy clip queue ("chapter:verse").
+            isQuranClip = true
+            chapter = mediaId.substring(0, firstColon).toIntOrNull() ?: return
+            verse = mediaId.substring(firstColon + 1).toIntOrNull() ?: return
+        } else {
+            if (secondColon >= mediaId.lastIndex || mediaId.indexOf(':', secondColon + 1) != -1) {
+                return
+            }
+            isQuranClip = mediaId.startsWith(RecitationAudioKind.QURAN.type) &&
+                    firstColon == RecitationAudioKind.QURAN.type.length
+            chapter = mediaId.substring(firstColon + 1, secondColon).toIntOrNull() ?: return
+            verse = mediaId.substring(secondColon + 1).toIntOrNull() ?: return
+        }
 
         val resolved = ChapterVersePair(chapter, verse)
         if (resolved != state.value.currentVerse) {
+            sharedWordIndex.value = -1
+
             updateState {
-                copy(
-                    currentVerse = resolved,
-                    currentWordIndex = -1,
-                )
+                copy(currentVerse = resolved)
             }
-            updateNotificationMetadata(chapter, verse)
-        } else if (!isQuranClip && state.value.currentWordIndex != -1) {
-            updateState { copy(currentWordIndex = -1) }
+
+            if (_verseClipPlan.value == null) {
+                updateNotificationMetadata(chapter, verse)
+            }
+        } else if (!isQuranClip && sharedWordIndex.value != -1) {
+            sharedWordIndex.value = -1
         }
     }
 
@@ -1049,6 +1108,10 @@ class RecitationService : MediaLibraryService() {
     private val playerListener = object : Player.Listener {
         override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
             checkVerseChanged()
+
+            if (player.isPlaying) {
+                startVerseTracking()
+            }
         }
 
         override fun onPositionDiscontinuity(
@@ -1058,6 +1121,16 @@ class RecitationService : MediaLibraryService() {
         ) {
             if (reason == Player.DISCONTINUITY_REASON_AUTO_TRANSITION || reason == Player.DISCONTINUITY_REASON_SEEK) {
                 checkVerseChanged()
+
+                if (player.isPlaying) {
+                    startVerseTracking()
+                }
+            }
+        }
+
+        override fun onPlaybackParametersChanged(playbackParameters: PlaybackParameters) {
+            if (player.isPlaying) {
+                startVerseTracking()
             }
         }
 

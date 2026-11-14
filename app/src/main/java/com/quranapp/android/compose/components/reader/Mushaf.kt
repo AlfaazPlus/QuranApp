@@ -22,7 +22,9 @@ import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
@@ -266,45 +268,62 @@ fun ReaderLayoutPageMode(
     }
 
     val playerState = LocalRecitation.current
-    val isPlayingMushaf = playerState.isAnyPlaying
-    val playingVerseMushaf = playerState.playingVerse
     var playerVerseSync by readerVm.playerVerseSync
 
-    LaunchedEffect(playerVerseSync, isPlayingMushaf, playingVerseMushaf, pageCount) {
-        if (!playerVerseSync || !isPlayingMushaf || !playingVerseMushaf.isValid || pageCount <= 0) {
+    LaunchedEffect(playerVerseSync, pageCount, playerState) {
+        if (!playerVerseSync || pageCount <= 0) {
             return@LaunchedEffect
         }
 
-        val targetPage =
-            readerVm.resolvePageNo(playingVerseMushaf.chapterNo, playingVerseMushaf.verseNo)
-                ?: return@LaunchedEffect
-        if (targetPage !in 1..pageCount) return@LaunchedEffect
+        snapshotFlow {
+            playerState.isAnyPlayingState.value to playerState.playingVerseState.value
+        }
+            .distinctUntilChanged()
+            .collectLatest { (isPlayingMushaf, playingVerseMushaf) ->
+                if (!isPlayingMushaf || !playingVerseMushaf.isValid) {
+                    return@collectLatest
+                }
 
-        readerVm.requestVerseNavigation(
-            playingVerseMushaf.chapterNo,
-            playingVerseMushaf.verseNo,
-            highlightAfterNavigation = false,
-        )
+                val targetPage =
+                    readerVm.resolvePageNo(playingVerseMushaf.chapterNo, playingVerseMushaf.verseNo)
+                        ?: return@collectLatest
+                if (targetPage !in 1..pageCount) return@collectLatest
+
+                readerVm.requestVerseNavigation(
+                    playingVerseMushaf.chapterNo,
+                    playingVerseMushaf.verseNo,
+                    highlightAfterNavigation = false,
+                )
+            }
     }
 
-    LaunchedEffect(playingVerseMushaf, pageCount) {
-        if (!playingVerseMushaf.isValid || pageCount <= 0) {
+    LaunchedEffect(pageCount, playerState) {
+        if (pageCount <= 0) {
             onSyncStateChanged(false)
             return@LaunchedEffect
         }
 
-        val expectedPage =
-            readerVm.resolvePageNo(playingVerseMushaf.chapterNo, playingVerseMushaf.verseNo)
-
-        if (expectedPage == null || expectedPage !in 1..pageCount) {
-            onSyncStateChanged(false)
-            return@LaunchedEffect
-        }
-
-        snapshotFlow { pagerState.settledPage + 1 }
+        snapshotFlow { playerState.playingVerseState.value }
             .distinctUntilChanged()
-            .collect { current ->
-                onSyncStateChanged(current == expectedPage)
+            .collectLatest { playingVerseMushaf ->
+                if (!playingVerseMushaf.isValid) {
+                    onSyncStateChanged(false)
+                    return@collectLatest
+                }
+
+                val expectedPage =
+                    readerVm.resolvePageNo(playingVerseMushaf.chapterNo, playingVerseMushaf.verseNo)
+
+                if (expectedPage == null || expectedPage !in 1..pageCount) {
+                    onSyncStateChanged(false)
+                    return@collectLatest
+                }
+
+                snapshotFlow { pagerState.settledPage + 1 }
+                    .distinctUntilChanged()
+                    .collect { current ->
+                        onSyncStateChanged(current == expectedPage)
+                    }
             }
     }
 
@@ -367,19 +386,19 @@ private fun PageModePage(
     val scrollState = rememberScrollState()
 
     val playerState = LocalRecitation.current
-    val isPlaying = playerState.isAnyPlaying
-    val playingVerse = playerState.playingVerse
-    val playingWordIndex = if (isPlaying) playerState.playingWordIndex else -1
+    val playingWordIndexState = playerState.playingWordIndexState
     val targetWordIndex = targetVerse?.let { item.firstWordIndexForAyah(it.ayahId) }
-    val visibilityTracker = remember(item) {
-        val ayahIds = item.lines.asSequence()
+    val pageAyahIds = remember(item) {
+        item.lines.asSequence()
             .filterIsInstance<QuranPageLineItem.Text>()
             .flatMap { it.words.asSequence() }
             .map { it.ayahId }
             .distinct()
             .toList()
             .toIntArray()
-        VerseVisibilityTracker(ayahIds)
+    }
+    val visibilityTracker = remember(item, pageAyahIds) {
+        VerseVisibilityTracker(pageAyahIds)
     }
 
     LaunchedEffect(scrollState, trackVisibleVerses, visibilityTracker) {
@@ -406,9 +425,18 @@ private fun PageModePage(
         onVersePositioned(verse)
     }
 
-    val playingAyahId = remember(isPlaying, playingVerse) {
-        if (!isPlaying || !playingVerse.isValid) -1
-        else QuranMeta.getAyahId(playingVerse.chapterNo, playingVerse.verseNo)
+    val playingAyahId by remember(pageAyahIds, playerState) {
+        derivedStateOf {
+            if (!playerState.isAnyPlayingState.value) return@derivedStateOf -1
+            
+            val playingVerse = playerState.playingVerseState.value
+            
+            if (!playingVerse.isValid) return@derivedStateOf -1
+            
+            val ayahId = QuranMeta.getAyahId(playingVerse.chapterNo, playingVerse.verseNo)
+            
+            if (pageAyahIds.contains(ayahId)) ayahId else -1
+        }
     }
 
     TextStyleProvider(emptyMap()) {
@@ -502,7 +530,7 @@ private fun PageModePage(
                                                     MushafLineContent(
                                                         line = line,
                                                         playingAyahId = playingAyahId,
-                                                        playingWordIndex = playingWordIndex,
+                                                        playingWordIndexState = playingWordIndexState,
                                                         ruledPageDecoration = true,
                                                         targetVerse = targetVerse,
                                                         targetWordIndex = targetWordIndex,
@@ -514,7 +542,7 @@ private fun PageModePage(
                                                 MushafLineContent(
                                                     line = line,
                                                     playingAyahId = playingAyahId,
-                                                    playingWordIndex = playingWordIndex,
+                                                    playingWordIndexState = playingWordIndexState,
                                                     ruledPageDecoration = false,
                                                     targetVerse = targetVerse,
                                                     targetWordIndex = targetWordIndex,
@@ -550,7 +578,7 @@ private fun QuranPageItem.firstWordIndexForAyah(ayahId: Int): Int? {
 private fun MushafLineContent(
     line: QuranPageLineItem,
     playingAyahId: Int,
-    playingWordIndex: Int,
+    playingWordIndexState: State<Int>,
     ruledPageDecoration: Boolean,
     targetVerse: ChapterVersePair?,
     targetWordIndex: Int?,
@@ -564,7 +592,7 @@ private fun MushafLineContent(
             textLine = line,
             layout = line.layout,
             playingAyahId = playingAyahId,
-            playingWordIndex = playingWordIndex,
+            playingWordIndexState = playingWordIndexState,
             targetVerse = targetVerse,
             targetWordIndex = targetWordIndex,
             verseAnchor = verseAnchor,
@@ -578,7 +606,7 @@ private fun MushafLineText(
     textLine: QuranPageLineItem.Text,
     layout: MushafLineLayout,
     playingAyahId: Int,
-    playingWordIndex: Int,
+    playingWordIndexState: State<Int>,
     targetVerse: ChapterVersePair?,
     targetWordIndex: Int?,
     verseAnchor: VerseScrollAnchor,
@@ -597,7 +625,7 @@ private fun MushafLineText(
                 textLine = textLine,
                 fittedStyle = fittedStyle,
                 playingAyahId = playingAyahId,
-                playingWordIndex = playingWordIndex,
+                playingWordIndexState = playingWordIndexState,
                 targetVerse = targetVerse,
                 targetWordIndex = targetWordIndex,
                 verseAnchor = verseAnchor,
@@ -613,7 +641,7 @@ private fun MushafLineText(
                 textLine = textLine,
                 fittedStyle = fittedStyle,
                 playingAyahId = playingAyahId,
-                playingWordIndex = playingWordIndex,
+                playingWordIndexState = playingWordIndexState,
                 targetVerse = targetVerse,
                 targetWordIndex = targetWordIndex,
                 verseAnchor = verseAnchor,
@@ -631,7 +659,7 @@ private fun MushafWordsRow(
     textLine: QuranPageLineItem.Text,
     fittedStyle: TextStyle,
     playingAyahId: Int,
-    playingWordIndex: Int,
+    playingWordIndexState: State<Int>,
     targetVerse: ChapterVersePair?,
     targetWordIndex: Int?,
     verseAnchor: VerseScrollAnchor,
@@ -697,7 +725,7 @@ private fun MushafWordsRow(
                         words = words,
                         ayahId = primaryAyahId,
                         wordIndex = if (navigationAyahId == null || navigationAyahId == playingAyahId) {
-                            playingWordIndex
+                            playingWordIndexState.value
                         } else {
                             -1
                         },

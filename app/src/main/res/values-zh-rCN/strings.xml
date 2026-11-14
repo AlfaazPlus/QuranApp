@@ -396,6 +396,7 @@
     <string name="theme_violet">紫罗兰色</string>
     <string name="theme_yellow">黄色</string>
     <string name="theme_mono">单色</string>
+    <string name="theme_amoled">AMOLED</string>
     <string name="theme_colors">主题颜色</string>
     <string name="theme_mode">主题模式</string>
     <string name="dynamic_color">动态颜色</string>

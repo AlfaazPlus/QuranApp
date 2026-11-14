@@ -527,6 +527,7 @@ private fun Configurations(
             PlayerConfigButton(
                 text = stringResource(R.string.playbackCount),
                 icon = painterResource(R.drawable.ic_repeat),
+                enabled = repeatSupported,
                 subtext = when {
                     !repeatSupported -> stringResource(R.string.notSupported)
                     repeatCount == 0 -> stringResource(R.string.once)

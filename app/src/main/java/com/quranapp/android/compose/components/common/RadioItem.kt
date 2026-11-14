@@ -43,6 +43,7 @@ fun RadioItem(
                 .padding(start = 16.dp)
                 .size(24.dp),
             selected = selected,
+            enabled = enabled,
             onClick = onClick,
         )
     }

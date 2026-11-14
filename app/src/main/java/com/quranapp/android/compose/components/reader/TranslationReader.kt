@@ -93,6 +93,7 @@ import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.TranslationPageBuilderParams
 import com.quranapp.android.utils.univ.StringUtils
 import com.quranapp.android.viewModels.ReaderViewModel
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onStart
@@ -313,45 +314,63 @@ fun ReaderLayoutTranslationPageMode(
     }
 
     val playerState = LocalRecitation.current
-    val isPlayingMushaf = playerState.isAnyPlaying
-    val playingVerseMushaf = playerState.playingVerse
+    val autoScrollSpeed by readerVm.autoScrollSpeed
     var playerVerseSync by readerVm.playerVerseSync
 
-    LaunchedEffect(playerVerseSync, isPlayingMushaf, playingVerseMushaf, pageCount) {
-        if (!playerVerseSync || !isPlayingMushaf || !playingVerseMushaf.isValid || pageCount <= 0) {
+    LaunchedEffect(autoScrollSpeed, playerVerseSync, pageCount, playerState) {
+        if (autoScrollSpeed != null || !playerVerseSync || pageCount <= 0) {
             return@LaunchedEffect
         }
 
-        val targetPage =
-            readerVm.resolvePageNo(playingVerseMushaf.chapterNo, playingVerseMushaf.verseNo)
-                ?: return@LaunchedEffect
-        if (targetPage !in 1..pageCount) return@LaunchedEffect
+        snapshotFlow {
+            playerState.isAnyPlayingState.value to playerState.playingVerseState.value
+        }
+            .distinctUntilChanged()
+            .collectLatest { (isPlayingMushaf, playingVerseMushaf) ->
+                if (!isPlayingMushaf || !playingVerseMushaf.isValid) {
+                    return@collectLatest
+                }
 
-        readerVm.requestVerseNavigation(
-            playingVerseMushaf.chapterNo,
-            playingVerseMushaf.verseNo,
-            highlightAfterNavigation = false,
-        )
+                val targetPage =
+                    readerVm.resolvePageNo(playingVerseMushaf.chapterNo, playingVerseMushaf.verseNo)
+                        ?: return@collectLatest
+                if (targetPage !in 1..pageCount) return@collectLatest
+
+                readerVm.requestVerseNavigation(
+                    playingVerseMushaf.chapterNo,
+                    playingVerseMushaf.verseNo,
+                    highlightAfterNavigation = false,
+                )
+            }
     }
 
-    LaunchedEffect(playingVerseMushaf, pageCount) {
-        if (!playingVerseMushaf.isValid || pageCount <= 0) {
+    LaunchedEffect(pageCount, playerState) {
+        if (pageCount <= 0) {
             onSyncStateChanged(false)
             return@LaunchedEffect
         }
 
-        val expectedPage =
-            readerVm.resolvePageNo(playingVerseMushaf.chapterNo, playingVerseMushaf.verseNo)
-
-        if (expectedPage == null || expectedPage !in 1..pageCount) {
-            onSyncStateChanged(false)
-            return@LaunchedEffect
-        }
-
-        snapshotFlow { listState.firstVisibleItemIndex + 1 }
+        snapshotFlow { playerState.playingVerseState.value }
             .distinctUntilChanged()
-            .collect { current ->
-                onSyncStateChanged(current == expectedPage)
+            .collectLatest { playingVerseMushaf ->
+                if (!playingVerseMushaf.isValid) {
+                    onSyncStateChanged(false)
+                    return@collectLatest
+                }
+
+                val expectedPage =
+                    readerVm.resolvePageNo(playingVerseMushaf.chapterNo, playingVerseMushaf.verseNo)
+
+                if (expectedPage == null || expectedPage !in 1..pageCount) {
+                    onSyncStateChanged(false)
+                    return@collectLatest
+                }
+
+                snapshotFlow { listState.firstVisibleItemIndex + 1 }
+                    .distinctUntilChanged()
+                    .collect { current ->
+                        onSyncStateChanged(current == expectedPage)
+                    }
             }
     }
 
@@ -369,7 +388,8 @@ fun ReaderLayoutTranslationPageMode(
                 .then(
                     if (nestedScrollConnection == null) Modifier
                     else Modifier.nestedScroll(nestedScrollConnection)
-                ),
+                )
+                .readerAutoScroll(listState, readerVm),
             contentPadding = PaddingValues(top = 16.dp, bottom = 240.dp),
         ) {
             items(
@@ -411,17 +431,25 @@ private fun TranslationModePage(
     }
 
     val playerState = LocalRecitation.current
-    val isPlaying = playerState.isAnyPlaying
-    val playingVerse = playerState.playingVerse
     val isRtl = StringUtils.isRtlLanguage(item.translationSlug)
-    val playingVerseToHighlight = playingVerse.takeIf { isPlaying && it.isValid }
-    val visibilityTracker = remember(item) {
-        VerseVisibilityTracker(
-            item.sections.asSequence()
-                .filterIsInstance<TranslationPageSection.Text>()
-                .flatMap { it.verses.asSequence() }
-                .map { QuranMeta.getAyahId(it.chapterNo, it.verseNo) }
-                .distinct().toList().toIntArray())
+    val pageAyahIds = remember(item) {
+        item.sections.asSequence()
+            .filterIsInstance<TranslationPageSection.Text>()
+            .flatMap { it.verses.asSequence() }
+            .map { QuranMeta.getAyahId(it.chapterNo, it.verseNo) }
+            .distinct().toList().toIntArray()
+    }
+    val playingVerseToHighlight by remember(pageAyahIds, playerState) {
+        derivedStateOf {
+            if (!playerState.isAnyPlayingState.value) return@derivedStateOf null
+            val playingVerse = playerState.playingVerseState.value
+            if (!playingVerse.isValid) return@derivedStateOf null
+            val ayahId = QuranMeta.getAyahId(playingVerse.chapterNo, playingVerse.verseNo)
+            if (pageAyahIds.contains(ayahId)) playingVerse else null
+        }
+    }
+    val visibilityTracker = remember(item, pageAyahIds) {
+        VerseVisibilityTracker(pageAyahIds)
     }
     androidx.compose.runtime.DisposableEffect(item.pageNo, visibilityTracker, visibilityTrackers) {
         visibilityTrackers.register(item.pageNo, visibilityTracker)

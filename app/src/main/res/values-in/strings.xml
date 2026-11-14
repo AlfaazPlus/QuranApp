@@ -344,6 +344,7 @@
     <string name="labelHizbNo" formatted="false">Hizb %d</string>
     <string name="sortBy">Urutkan</string>
     <string name="theme_mono">Mono</string>
+    <string name="theme_amoled">Amoled</string>
     <string name="learnMore">Pelajari selengkapnya</string>
     <string name="recitationBulkEnqueueNotifTitle">Memulai unduhan murattal</string>
     <string name="strHintSearchHizb">Cari hizb atau surah</string>

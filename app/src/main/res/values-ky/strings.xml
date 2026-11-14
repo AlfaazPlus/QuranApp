@@ -349,6 +349,7 @@
     <string name="missingTimingData">%s үчүн убакыт маалыматтары жок — ойнотуу мүмкүн эмес.</string>
     <string name="expandedPlayerModeControls">Башкаруу</string>
     <string name="theme_mono">Моно (бир түстүү)</string>
+    <string name="theme_amoled">Амолед</string>
     <string name="theme_colors">Теманын түстөрү</string>
     <string name="theme_mode">Теманын режими</string>
     <string name="dynamic_color">Динамикалык түс</string>

@@ -113,6 +113,7 @@ object SettingsContract {
                 ThemeUtils.THEME_COLOR_RED,
                 ThemeUtils.THEME_COLOR_PURPLE,
                 ThemeUtils.THEME_COLOR_MONO,
+                ThemeUtils.THEME_COLOR_AMOLED,
                 ThemeUtils.THEME_COLOR_VIOLET,
                 ThemeUtils.THEME_COLOR_YELLOW,
             ),

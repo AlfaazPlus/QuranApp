@@ -366,6 +366,7 @@
     <string name="theme_violet">वायलेट</string>
     <string name="theme_yellow">पीला</string>
     <string name="theme_mono">मोनो</string>
+    <string name="theme_amoled">एमोलड</string>
     <string name="theme_colors">थीम के रंग</string>
     <string name="theme_mode">थीम मोड</string>
     <string name="dynamic_color">गतिशील रंग</string>

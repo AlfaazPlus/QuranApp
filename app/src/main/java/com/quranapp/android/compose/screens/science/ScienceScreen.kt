@@ -43,6 +43,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.quranapp.android.R
+import com.quranapp.android.compose.theme.grayscaleColorFilter
+import com.quranapp.android.compose.utils.ThemeUtils
 import com.quranapp.android.activities.reference.ActivityQuranScienceContent
 import com.quranapp.android.api.safeInt
 import com.quranapp.android.api.safeJsonObject
@@ -174,6 +176,8 @@ fun ScienceScreen() {
 @Composable
 fun ItemCard(item: QuranScienceItem) {
     val context = LocalContext.current
+    val isMono = ThemeUtils.observeIsMonoPalette()
+    val grayscale = remember { grayscaleColorFilter() }
 
     Card(
         onClick = {
@@ -206,7 +210,8 @@ fun ItemCard(item: QuranScienceItem) {
                 Image(
                     painter = painterResource(item.drawableRes),
                     contentDescription = null,
-                    modifier = Modifier.size(74.dp)
+                    modifier = Modifier.size(74.dp),
+                    colorFilter = if (isMono) grayscale else null,
                 )
             }
 

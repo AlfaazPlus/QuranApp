@@ -11,11 +11,14 @@ import com.quranapp.android.db.ExternalQuranDatabase
 import com.quranapp.android.utils.reader.isPrebuiltAtlas
 import com.quranapp.android.utils.reader.isQuranAtlasScript
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import java.util.concurrent.ConcurrentHashMap
 
 object QuranAtlasLoader {
     private val bundleCache = ConcurrentHashMap<String, QuranAtlasBundle>()
+    private val bundleMutex = Mutex()
     val isImporting = mutableStateOf(false)
 
     internal fun decodePlacementsJson(placementsJson: String): List<AtlasGlyphPlacement> {
@@ -42,65 +45,74 @@ object QuranAtlasLoader {
         db: ExternalQuranDatabase,
         bundleKey: String,
     ): QuranAtlasBundle? =
-        withContext(Dispatchers.IO) {
-            bundleCache[bundleKey]?.let { return@withContext it }
+        // Single-flight so LocalQuranAtlasBundle and page builders share one instance.
+        // Parallel loads used to install a second twin and clear the first's textures,
+        // leaving reserved glyph advance with no ink.
+        bundleMutex.withLock {
+            withContext(Dispatchers.IO) {
+                bundleCache[bundleKey]?.let { return@withContext it }
 
-            var ent = db.atlasWordShapeDao().getBundleByKey(bundleKey)
+                var ent = db.atlasWordShapeDao().getBundleByKey(bundleKey)
 
-            if (ent == null && bundleKey.isPrebuiltAtlas()) {
-                try {
-                    withContext(Dispatchers.Main) { isImporting.value = true }
+                if (ent == null && bundleKey.isPrebuiltAtlas()) {
+                    try {
+                        withContext(Dispatchers.Main) { isImporting.value = true }
 
-                    val assetPath = AtlasManager.getPrebuiltAtlasAssetPath(bundleKey)
+                        val assetPath = AtlasManager.getPrebuiltAtlasAssetPath(bundleKey)
 
-                    context.assets.open(assetPath).use {
-                        ent = AtlasManager.importAtlasFromZip(context, it, bundleKey, db)
+                        context.assets.open(assetPath).use {
+                            ent = AtlasManager.importAtlasFromZip(context, it, bundleKey, db)
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    } finally {
+                        withContext(Dispatchers.Main) { isImporting.value = false }
                     }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                } finally {
-                    withContext(Dispatchers.Main) { isImporting.value = false }
                 }
-            }
 
-            val entity = ent
-            if (entity == null) return@withContext null
+                val entity = ent
+                if (entity == null) return@withContext null
 
-            try {
-                val meta = atlasJson.decodeFromString<AtlasMetaRoot>(entity.metaJson)
-                val layer = atlasJson.decodeFromString<AtlasLayerJson>(entity.layerJson)
+                try {
+                    val meta = atlasJson.decodeFromString<AtlasMetaRoot>(entity.metaJson)
+                    val layer = atlasJson.decodeFromString<AtlasLayerJson>(entity.layerJson)
 
-                val textureFiles = linkedMapOf<Int, java.io.File>()
+                    val textureFiles = linkedMapOf<Int, java.io.File>()
 
-                for (t in layer.textures.sortedBy { it.index }) {
-                    val imageFile = AtlasManager.atlasTextureFile(context, bundleKey, t.index)
+                    for (t in layer.textures.sortedBy { it.index }) {
+                        val imageFile = AtlasManager.atlasTextureFile(context, bundleKey, t.index)
 
-                    if (!imageFile.isFile || imageFile.length() == 0L) {
+                        if (!imageFile.isFile || imageFile.length() == 0L) {
+                            return@withContext null
+                        }
+
+                        textureFiles[t.index] = imageFile
+                    }
+
+                    if (textureFiles.isEmpty()) {
                         return@withContext null
                     }
 
-                    textureFiles[t.index] = imageFile
+                    val bundle = QuranAtlasBundle(
+                        db,
+                        key = bundleKey,
+                        meta = meta,
+                        layer = layer,
+                        textureStore = QuranAtlasTextureStore(textureFiles),
+                    )
+
+                    // Release bitmaps for other scripts only — never clear the bundle we
+                    // are installing (or a cache-hit of this key).
+                    bundleCache.forEach { (key, cached) ->
+                        if (key != bundleKey) {
+                            cached.clearTextureCache()
+                        }
+                    }
+                    bundleCache[bundleKey] = bundle
+                    bundle
+                } catch (e: Exception) {
+                    null
                 }
-
-                if (textureFiles.isEmpty()) {
-                    return@withContext null
-                }
-
-                val bundle = QuranAtlasBundle(
-                    db,
-                    key = bundleKey,
-                    meta = meta,
-                    layer = layer,
-                    textureStore = QuranAtlasTextureStore(textureFiles),
-                )
-
-                // Keep parsed metadata for previous scripts, but release their native bitmap
-                // allocations before retaining another atlas bundle.
-                bundleCache.values.forEach { it.clearTextureCache() }
-                bundleCache[bundleKey] = bundle
-                bundle
-            } catch (e: Exception) {
-                null
             }
         }
 

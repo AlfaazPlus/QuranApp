@@ -401,6 +401,7 @@
     <string name="theme_violet">വയലറ്റ്</string>
     <string name="theme_yellow">മഞ്ഞ</string>
     <string name="theme_mono">മോണോ</string>
+    <string name="theme_amoled">അമോലെഡ്</string>
     <string name="theme_colors">നിറങ്ങൾ</string>
     <string name="theme_mode">ദൃശ്യ രീതി</string>
     <string name="dynamic_color">ഡൈനാമിക് കളർ</string>

@@ -1,7 +1,6 @@
 package com.quranapp.android.compose.screens.settings
 
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -19,7 +18,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.R
@@ -27,7 +25,6 @@ import com.quranapp.android.compose.components.common.AppBar
 import com.quranapp.android.compose.components.common.SwitchItem
 import com.quranapp.android.compose.components.settings.DailyReminderSheet
 import com.quranapp.android.compose.components.settings.ListItemCategoryLabel
-import com.quranapp.android.compose.components.settings.ResourceDownloadSrcSheet
 import com.quranapp.android.compose.components.settings.SettingsItem
 import com.quranapp.android.compose.components.settings.TextSizeSheet
 import com.quranapp.android.compose.navigation.SettingRoutes
@@ -37,7 +34,6 @@ import com.quranapp.android.compose.utils.formatString
 import com.quranapp.android.compose.utils.formattedStringResource
 import com.quranapp.android.compose.utils.preferences.ReaderPreferences
 import com.quranapp.android.compose.utils.preferences.VersePreferences
-import com.quranapp.android.utils.app.DownloadSourceUtils
 import com.quranapp.android.utils.extensions.getStringArray
 import com.quranapp.android.utils.reader.ReaderTextSizeUtils
 import com.quranapp.android.utils.reader.getQuranScriptName
@@ -117,12 +113,7 @@ fun SettingsMainScreen(
                 SettingsItem(
                     title = R.string.strTitleVOTD,
                     subtitle = if (votdEnabled) R.string.strLabelOn else R.string.strLabelOff,
-                    iconImage = {
-                        Image(
-                            painter = painterResource(R.drawable.dr_icon_heart_filled),
-                            contentDescription = null,
-                        )
-                    },
+                    icon = if (votdEnabled) R.drawable.ic_bell_ring else R.drawable.ic_bell,
                 ) { showDailyReminderSheet = true }
 
                 SwitchItem(
@@ -162,12 +153,7 @@ fun SettingsMainScreen(
 
             SettingsItem(
                 title = R.string.strTitleTafsir,
-                iconImage = {
-                    Image(
-                        painter = painterResource(R.drawable.dr_icon_tafsir),
-                        contentDescription = null,
-                    )
-                },
+                icon = R.drawable.ic_tafsir,
                 subtitleStr = selectedTafsirName
             ) {
                 navController.navigate(SettingRoutes.TAFSIR)

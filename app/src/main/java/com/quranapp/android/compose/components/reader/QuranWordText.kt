@@ -17,7 +17,7 @@ fun QuranWordText(
 ) {
     val bundle = LocalQuranAtlasBundle.current
 
-    if (bundle != null && atlasPlacements != null) {
+    if (bundle != null && !atlasPlacements.isNullOrEmpty()) {
         QuranAtlasText(
             modifier = modifier,
             placements = atlasPlacements,

@@ -74,7 +74,7 @@ fun RepeatOptionsSheet(
                     enabled = repeatSupported,
                     selected = repeatCount == currentRepeatCount,
                     onClick = {
-                        if (repeatCount == currentRepeatCount) return@RadioItem
+                        if (!repeatSupported || repeatCount == currentRepeatCount) return@RadioItem
 
                         coroutineScope.launch {
                             RecitationPreferences.setRepeatCount(repeatCount)

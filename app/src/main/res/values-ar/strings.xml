@@ -406,6 +406,7 @@
     <string name="theme_violet">بنفسجي</string>
     <string name="theme_yellow">أصفر</string>
     <string name="theme_mono">أحادي</string>
+    <string name="theme_amoled">أموليد</string>
     <string name="theme_colors">ألوان السمة</string>
     <string name="theme_mode">وضع السمة</string>
     <string name="dynamic_color">لون ديناميكي</string>

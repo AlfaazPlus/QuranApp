@@ -52,6 +52,8 @@ class RecitationController private constructor(private val appContext: Context) 
     val isLoading: Boolean get() = state.value.resolvingChapterNo != null || _isBuffering.value
 
     val state: StateFlow<RecitationServiceState> = RecitationService.sharedState
+    val currentVerseState: StateFlow<ChapterVersePair> = RecitationService.sharedCurrentVerse
+    val wordIndexState: StateFlow<Int> = RecitationService.sharedWordIndex
 
     val currentPositionMs: Long
         get() {

@@ -21,6 +21,7 @@ import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
@@ -34,9 +35,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.quranapp.android.compose.theme.grayscaleColorFilter
 import com.quranapp.android.compose.theme.tightTextStyle
 import com.quranapp.android.R
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.utils.ThemeUtils
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.viewModels.FeaturedQuranModel
 import com.quranapp.android.viewModels.HomepageViewModel
@@ -48,6 +51,7 @@ fun HomeSectionFeaturedReading(
     val featuredItems by vm.featured.collectAsStateWithLifecycle()
 
     if (featuredItems == null) return
+    val isMono = ThemeUtils.observeIsMonoPalette()
     val wallpaperPainter = painterResource(R.drawable.dr_quran_wallpaper)
 
     Column(
@@ -59,7 +63,7 @@ fun HomeSectionFeaturedReading(
         HomeSectionHeader(
             icon = R.drawable.dr_icon_feature,
             title = R.string.strTitleFeaturedQuran,
-            iconTint = null
+            iconTint = if (isMono) colorScheme.onSurface else null,
         )
 
         LazyRow(
@@ -80,6 +84,8 @@ private fun FeaturedQuranCard(
     wallpaperPainter: Painter,
 ) {
     val context = LocalContext.current
+    val isMono = ThemeUtils.observeIsMonoPalette()
+    val wallpaperFilter = remember { grayscaleColorFilter() }
 
     Box(
         modifier = Modifier
@@ -95,17 +101,20 @@ private fun FeaturedQuranCard(
             painter = wallpaperPainter,
             contentDescription = null,
             contentScale = ContentScale.Crop,
+            colorFilter = if (isMono) wallpaperFilter else null,
             modifier = Modifier
                 .fillMaxSize()
                 .alpha(0.6f)
         )
+
+        val overlayTop = if (isMono) Color.Black.alpha(0.2f) else colorScheme.primary.alpha(0.1f)
 
         Box(
             modifier = Modifier
                 .matchParentSize()
                 .background(
                     Brush.verticalGradient(
-                        0.5f to colorScheme.primary.alpha(0.1f),
+                        0.5f to overlayTop,
                         1f to Color.Black.alpha(0.9f)
                     )
                 )

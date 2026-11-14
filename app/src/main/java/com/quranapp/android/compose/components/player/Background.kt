@@ -11,12 +11,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import com.quranapp.android.compose.utils.ThemeUtils
 
 @Composable
 fun Background(
     modifier: Modifier = Modifier,
     content: @Composable BoxScope.() -> Unit
 ) {
+    val isMono = ThemeUtils.observeIsMonoPalette()
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -27,22 +30,22 @@ fun Background(
             val w = size.width
             val h = size.height
 
-            // Deep base gradient
             drawRect(
                 brush = Brush.verticalGradient(
                     colors = listOf(
                         PlayerBgColor,
-                        Color(0xFF101020),
+                        if (isMono) Color(0xFF101010) else Color(0xFF101020),
                         PlayerBgColor
                     )
                 )
             )
 
-            // Glow 1 - purple
+            val glow = if (isMono) Color.White else null
+
             drawCircle(
                 brush = Brush.radialGradient(
                     colors = listOf(
-                        Color(0xFF7C4DFF).copy(alpha = 0.28f),
+                        (glow ?: Color(0xFF7C4DFF)).copy(alpha = if (isMono) 0.08f else 0.28f),
                         Color.Transparent
                     )
                 ),
@@ -50,11 +53,10 @@ fun Background(
                 center = Offset(w * 0.18f, h * 0.22f)
             )
 
-            // Glow 2 - pink
             drawCircle(
                 brush = Brush.radialGradient(
                     colors = listOf(
-                        Color(0xFFFF4FC3).copy(alpha = 0.22f),
+                        (glow ?: Color(0xFFFF4FC3)).copy(alpha = if (isMono) 0.06f else 0.22f),
                         Color.Transparent
                     )
                 ),
@@ -62,11 +64,10 @@ fun Background(
                 center = Offset(w * 0.82f, h * 0.28f)
             )
 
-            // Glow 3 - cyan
             drawCircle(
                 brush = Brush.radialGradient(
                     colors = listOf(
-                        Color(0xFF00D1FF).copy(alpha = 0.18f),
+                        (glow ?: Color(0xFF00D1FF)).copy(alpha = if (isMono) 0.05f else 0.18f),
                         Color.Transparent
                     )
                 ),

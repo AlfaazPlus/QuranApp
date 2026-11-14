@@ -13,6 +13,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.quranapp.android.R
 import com.quranapp.android.compose.theme.colors.BaseColors
+import com.quranapp.android.compose.theme.colors.ThemeAmoledColors
 import com.quranapp.android.compose.theme.colors.ThemeBlueColors
 import com.quranapp.android.compose.theme.colors.ThemeDefaultColors
 import com.quranapp.android.compose.theme.colors.ThemeMonoColors
@@ -40,6 +41,7 @@ object ThemeUtils {
     const val THEME_COLOR_RED = "red"
     const val THEME_COLOR_PURPLE = "purple"
     const val THEME_COLOR_MONO = "mono"
+    const val THEME_COLOR_AMOLED = "amoled"
     const val THEME_COLOR_VIOLET = "violet"
     const val THEME_COLOR_YELLOW = "yellow"
 
@@ -103,6 +105,11 @@ object ThemeUtils {
         return DataStoreManager.observe(KEY_THEME_DYNAMIC_COLOR, DEFAULT_DYNAMIC_COLOR)
     }
 
+    @Composable
+    fun observeIsMonoPalette(): Boolean {
+        return observeThemeColor() == THEME_COLOR_MONO && !observeIsDynamicColor()
+    }
+
     suspend fun setDynamicColor(isDynamicColor: Boolean) {
         DataStoreManager.write(KEY_THEME_DYNAMIC_COLOR, isDynamicColor)
     }
@@ -154,6 +161,7 @@ object ThemeUtils {
             THEME_COLOR_RED -> ThemeRedColors()
             THEME_COLOR_PURPLE -> ThemePurpleColors()
             THEME_COLOR_MONO -> ThemeMonoColors()
+            THEME_COLOR_AMOLED -> ThemeAmoledColors()
             THEME_COLOR_VIOLET -> ThemeVioletColors()
             THEME_COLOR_YELLOW -> ThemeYellowColors()
             else -> ThemeDefaultColors()

@@ -522,7 +522,11 @@ private fun CollectionVerseView(
     val verse = verseUi.verse
 
     val recState = LocalRecitation.current
-    val isVersePlaying = recState.isAnyPlaying && recState.playingVerse.doesEqual(verse)
+    val isVersePlaying by remember(verse, recState) {
+        derivedStateOf {
+            recState.isAnyPlayingState.value && recState.playingVerseState.value.doesEqual(verse)
+        }
+    }
 
     Box {
         Column(
@@ -584,9 +588,9 @@ private fun CollectionVerseActionBar(
             PlayControlButton(controller, isVersePlaying, iconTint, verse)
 
             VerseActionIconButton(
-                painter = painterResource(R.drawable.dr_icon_tafsir),
+                painter = painterResource(R.drawable.ic_tafsir),
                 contentDescription = stringResource(R.string.strTitleTafsir),
-                tint = Color.Unspecified,
+                tint = iconTint,
             ) { ReaderFactory.startTafsir(context, verse.chapterNo, verse.verseNo) }
 
             VerseActionIconButton(

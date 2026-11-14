@@ -428,6 +428,7 @@
     <string name="theme_violet">Violet</string>
     <string name="theme_yellow">Yellow</string>
     <string name="theme_mono">Mono</string>
+    <string name="theme_amoled">Amoled</string>
     <string name="theme_colors">Theme Colors</string>
     <string name="theme_mode">Theme Mode</string>
     <string name="dynamic_color">Dynamic Color</string>

@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.compose.theme.colors.BaseColors
+import com.quranapp.android.compose.theme.colors.ThemeAmoledColors
 import com.quranapp.android.compose.theme.colors.ThemeBlueColors
 import com.quranapp.android.compose.theme.colors.ThemeDefaultColors
 import com.quranapp.android.compose.theme.colors.ThemeMonoColors
@@ -44,6 +45,7 @@ data class ThemeItem(
 fun themeColorItems(): List<ThemeItem> {
     return listOf(
         ThemeItem(ThemeUtils.THEME_COLOR_DEFAULT, R.string.theme_default, ThemeDefaultColors()),
+        ThemeItem(ThemeUtils.THEME_COLOR_AMOLED, R.string.theme_amoled, ThemeAmoledColors()),
         ThemeItem(ThemeUtils.THEME_COLOR_BLUE, R.string.theme_blue, ThemeBlueColors()),
         ThemeItem(ThemeUtils.THEME_COLOR_RED, R.string.theme_red, ThemeRedColors()),
         ThemeItem(ThemeUtils.THEME_COLOR_PURPLE, R.string.theme_purple, ThemePurpleColors()),

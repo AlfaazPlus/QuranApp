@@ -36,6 +36,8 @@ import com.quranapp.android.activities.reference.ActivityQuranicTopics
 import com.quranapp.android.compose.screens.quranictopics.QuranicTopicsStart
 import com.quranapp.android.compose.screens.reference.ExclusiveVersesScreenKind
 import com.quranapp.android.compose.theme.alpha
+import com.quranapp.android.compose.theme.grayscaleColorFilter
+import com.quranapp.android.compose.utils.ThemeUtils
 
 @Composable
 fun HomeSectionVersesCollections() {
@@ -169,6 +171,9 @@ private fun CollectionCard(
     entry: VersesCollectionCard,
     modifier: Modifier = Modifier
 ) {
+    val isMono = ThemeUtils.observeIsMonoPalette()
+    val grayscale = remember { grayscaleColorFilter() }
+
     Card(
         onClick = entry.onClick,
         modifier = modifier.height(120.dp),
@@ -189,9 +194,11 @@ private fun CollectionCard(
                 contentDescription = null,
                 modifier = Modifier.size(32.dp),
                 alpha = 0.9f,
-                colorFilter = if (entry.tint) {
-                    ColorFilter.tint(colorScheme.onSurface)
-                } else null
+                colorFilter = when {
+                    entry.tint -> ColorFilter.tint(colorScheme.onSurface)
+                    isMono -> grayscale
+                    else -> null
+                }
             )
 
             Text(

@@ -17,6 +17,9 @@ import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
@@ -48,6 +51,16 @@ fun QuranTextWbw(
 
     val withinWbwSheet = onWordClick != null
     val shouldShowTooltip = !withinWbwSheet && !wbwState.isWbwSheetOpen
+    val isThisVersePlaying by remember(verseUi.verse, recitationState) {
+        derivedStateOf {
+            recitationState.isAnyPlayingState.value && recitationState.playingVerseState.value.doesEqual(verseUi.verse)
+        }
+    }
+    val playingWordIndex = if (isThisVersePlaying) {
+        recitationState.playingWordIndexState.value
+    } else {
+        -1
+    }
 
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         FlowRow(
@@ -58,10 +71,7 @@ fun QuranTextWbw(
         ) {
             for (word in verseUi.verse.words) {
                 val wbwForWord = wbwMap[word.wordIndex]
-                val playing =
-                    recitationState.isAnyPlaying && recitationState.playingVerse.doesEqual(
-                        verseUi.verse
-                    ) && recitationState.playingWordIndex == word.wordIndex
+                val playing = isThisVersePlaying && playingWordIndex == word.wordIndex
 
                 if (wbwState.activeTooltipWord == word && shouldShowTooltip) {
                     WbwTooltip(

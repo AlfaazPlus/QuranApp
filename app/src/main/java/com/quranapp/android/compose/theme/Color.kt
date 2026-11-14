@@ -2,12 +2,18 @@ package com.quranapp.android.compose.theme
 
 import androidx.compose.material3.ColorScheme
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.toAndroidColorSpace
 import androidx.compose.ui.graphics.toArgb
 import com.quranapp.android.utils.univ.StringUtils
 
 fun Color.alpha(alpha: Float): Color {
     return copy(alpha = alpha)
+}
+
+fun grayscaleColorFilter(): ColorFilter {
+    return ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0f) })
 }
 
 

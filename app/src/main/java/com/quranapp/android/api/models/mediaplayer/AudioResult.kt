@@ -79,6 +79,35 @@ data class VerseTiming(
 
         return null
     }
+
+    fun getNextSegmentBoundaryMs(positionMs: Long): Long? {
+        val list = seg
+        if (list.isEmpty()) {
+            return if (positionMs < endMs) endMs else null
+        }
+
+        var lo = 0
+        var hi = list.lastIndex
+
+        while (lo <= hi) {
+            val mid = (lo + hi) ushr 1
+            val segment = list[mid]
+
+            when {
+                positionMs < segment.startMs -> hi = mid - 1
+                positionMs >= segment.endMs -> lo = mid + 1
+                else -> return segment.endMs
+            }
+        }
+
+        return if (lo < list.size) {
+            list[lo].startMs
+        } else if (positionMs < endMs) {
+            endMs
+        } else {
+            null
+        }
+    }
 }
 
 @Serializable
@@ -118,6 +147,25 @@ data class ChapterTimingMetadata(
         }
 
         return null
+    }
+
+    fun getNextVerseStartMs(positionMs: Long): Long? {
+        val list = verses ?: return null
+        var lo = 0
+        var hi = list.size - 1
+
+        while (lo <= hi) {
+            val mid = (lo + hi) ushr 1
+            val v = list[mid]
+
+            when {
+                positionMs < v.startMs -> hi = mid - 1
+                positionMs >= v.endMs -> lo = mid + 1
+                else -> return if (mid + 1 < list.size) list[mid + 1].startMs else null
+            }
+        }
+
+        return if (lo < list.size) list[lo].startMs else null
     }
 
     fun getVerseTiming(verseNo: Int): VerseTiming? = verseByNo[verseNo]
