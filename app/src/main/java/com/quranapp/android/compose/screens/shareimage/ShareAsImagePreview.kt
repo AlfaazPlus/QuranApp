@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -69,21 +70,24 @@ fun ShareAsImagePreview(
                 session.onPreviewWidthPx(cardWidthPx)
             }
 
+            val shape = shapes.small
+
             Box(
                 modifier = Modifier
                     .size(width = cardW, height = cardH)
-                    .shadow(elevation = 6.dp, shape = RectangleShape)
+                    .shadow(elevation = 6.dp, shape = shape)
+                    .clip(shape)
                     .background(colorScheme.surfaceContainerHighest)
                     .border(
                         width = 1.dp,
                         color = colorScheme.outlineVariant.copy(alpha = 0.5f),
-                        shape = RectangleShape,
+                        shape = shape,
                     ),
                 contentAlignment = Alignment.Center,
             ) {
                 when {
                     (session.isTemplatesLoading && template == null) ||
-                        (template != null && scene == null && session.verse == null) -> {
+                            (template != null && scene == null && session.verse == null) -> {
                         Loader()
                     }
 

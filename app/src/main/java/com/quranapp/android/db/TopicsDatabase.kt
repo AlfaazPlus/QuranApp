@@ -11,6 +11,9 @@ import com.quranapp.android.db.entities.topics.TopicAyahEntity
 import com.quranapp.android.db.entities.topics.TopicEntity
 import com.quranapp.android.db.entities.topics.TopicLocalizationEntity
 
+const val TOPICS_DATABASE_NAME = "topics"
+const val TOPICS_DATABASE_VERSION = 2
+
 @Database(
     entities = [
         TopicEntity::class,
@@ -18,7 +21,7 @@ import com.quranapp.android.db.entities.topics.TopicLocalizationEntity
         TopicAyahEntity::class,
         RelationshipEntity::class,
     ],
-    version = 1,
+    version = TOPICS_DATABASE_VERSION,
     exportSchema = false
 )
 @ColumnTypeConverters(QuranConverters::class, TopicsDbConverters::class)

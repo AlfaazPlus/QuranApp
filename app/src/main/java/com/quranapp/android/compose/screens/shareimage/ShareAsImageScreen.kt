@@ -60,7 +60,10 @@ fun ShareAsImageScreen(
     ) {
         Scaffold(
             topBar = {
-                AppBar(title = stringResource(R.string.shareAsImage))
+                AppBar(
+                    title = stringResource(R.string.shareAsImage),
+                    shadowElevation = 0.dp,
+                )
             },
             containerColor = colorScheme.background,
         ) { padding ->

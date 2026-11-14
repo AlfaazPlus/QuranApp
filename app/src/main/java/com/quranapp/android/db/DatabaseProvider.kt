@@ -10,198 +10,158 @@ import com.quranapp.android.repository.TopicsRepository
 import com.quranapp.android.repository.TranslationRepository
 import com.quranapp.android.repository.UserRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
 
 object DatabaseProvider {
 
-    @Volatile
-    private var userDatabase: UserDatabase? = null
+    private class LazySingleton<T>(private val factory: (Context) -> T) {
+        @Volatile
+        private var instance: T? = null
 
-    @Volatile
-    private var userRepository: UserRepository? = null
-
-    @Volatile
-    private var quranDatabase: QuranDatabase? = null
-
-    @Volatile
-    private var quranRepository: QuranRepository? = null
-
-    @Volatile
-    private var externalQuranDatabase: ExternalQuranDatabase? = null
-
-    @Volatile
-    private var searchIndexDatabase: SearchIndexDatabase? = null
-
-    @Volatile
-    private var topicsDatabase: TopicsDatabase? = null
-
-    @Volatile
-    private var topicsRepository: TopicsRepository? = null
-
-    @Volatile
-    private var translationsReady = false
-
-    private val translationPrepareLock = Any()
-
-    fun getUserDatabase(context: Context): UserDatabase {
-        return userDatabase ?: synchronized(this) {
-            userDatabase ?: Room.databaseBuilder(
-                context.applicationContext,
-                UserDatabase::class.java,
-                "user_db"
-            )
-                .addMigrations(
-                    UserDatabase.MIGRATION_1_2,
-                    UserDatabase.MIGRATION_2_3,
-                    UserDatabase.MIGRATION_3_4,
-                )
-                .fallbackToDestructiveMigration(false)
-                .build()
-                .also { userDatabase = it }
-        }
-    }
-
-    fun getUserRepository(context: Context): UserRepository {
-        return userRepository ?: synchronized(this) {
-            userRepository ?: UserRepository(
-                context.applicationContext,
-                getUserDatabase(context)
-            ).also { userRepository = it }
-        }
-    }
-
-    private fun getQuranDatabase(context: Context): QuranDatabase {
-        return quranDatabase ?: synchronized(this) {
-            quranDatabase ?: run {
-                val appContext = context.applicationContext
-
-                replaceQuranDatabaseIfStale(appContext)
-
-                Room.databaseBuilder(
-                    appContext,
-                    QuranDatabase::class.java,
-                    QURAN_DATABASE_NAME
-                )
-                    .createFromAsset("db/quranapp.db")
-                    .setDriver(BundledSQLiteDriver())
-                    .setQueryCoroutineContext(Dispatchers.IO)
-                    .fallbackToDestructiveMigration(true)
-                    .build()
-                    .also { quranDatabase = it }
+        fun get(context: Context): T {
+            return instance ?: synchronized(this) {
+                instance ?: factory(context.applicationContext).also { instance = it }
             }
         }
     }
 
-    fun getExternalQuranDatabase(context: Context): ExternalQuranDatabase {
-        val appContext = context.applicationContext
-        val db = externalQuranDatabase ?: synchronized(this) {
-            externalQuranDatabase ?: Room.databaseBuilder(
-                appContext,
-                ExternalQuranDatabase::class.java,
-                "quranapp_external"
+    private val userDatabase = LazySingleton { appContext ->
+        Room.databaseBuilder(
+            appContext,
+            UserDatabase::class.java,
+            "user_db"
+        )
+            .addMigrations(
+                UserDatabase.MIGRATION_1_2,
+                UserDatabase.MIGRATION_2_3,
+                UserDatabase.MIGRATION_3_4,
             )
-                .addMigrations(
-                    ExternalQuranDatabaseMigrations.MIGRATION_1_2,
-                    ExternalQuranDatabaseMigrations.MIGRATION_2_3,
-                    ExternalQuranDatabaseMigrations.MIGRATION_3_4,
-                    ExternalQuranDatabaseMigrations.MIGRATION_4_5,
-                )
-                .fallbackToDestructiveMigration(false)
-                .build()
-                .also { externalQuranDatabase = it }
-        }
-
-        ensureTranslations(appContext, db)
-        return db
+            .fallbackToDestructiveMigration(false)
+            .build()
     }
 
-    fun getTranslationRepository(context: Context): TranslationRepository {
-        return TranslationRepository(getExternalQuranDatabase(context))
+    private val userRepository = LazySingleton { appContext ->
+        UserRepository(appContext, getUserDatabase(appContext))
     }
 
-    private fun ensureTranslations(context: Context, db: ExternalQuranDatabase) {
-        if (translationsReady) return
+    private val quranDatabase = LazySingleton { appContext ->
+        replaceDatabaseIfStale(
+            appContext,
+            QURAN_DATABASE_NAME,
+            QURAN_DATABASE_VERSION,
+        )
 
-        synchronized(translationPrepareLock) {
-            if (translationsReady) return
-
-            runBlocking(Dispatchers.IO) {
-                TranslationRepository(db).prepare(context)
-            }
-            
-            translationsReady = true
-        }
+        Room.databaseBuilder(
+            appContext,
+            QuranDatabase::class.java,
+            QURAN_DATABASE_NAME
+        )
+            .createFromAsset("db/quranapp.db")
+            .setDriver(BundledSQLiteDriver())
+            .setQueryCoroutineContext(Dispatchers.IO)
+            .fallbackToDestructiveMigration(true)
+            .build()
     }
 
-    fun getQuranRepository(context: Context): QuranRepository {
-        return quranRepository ?: synchronized(this) {
-            quranRepository ?: QuranRepository(
-                getQuranDatabase(context),
-                getExternalQuranDatabase(context)
-            ).also { quranRepository = it }
-        }
-    }
-
-    fun getSearchIndexDatabase(context: Context): SearchIndexDatabase {
-        return searchIndexDatabase ?: synchronized(this) {
-            searchIndexDatabase ?: Room.databaseBuilder(
-                context.applicationContext,
-                SearchIndexDatabase::class.java,
-                "SearchIndex.db",
+    private val externalQuranDatabase = LazySingleton { appContext ->
+        Room.databaseBuilder(
+            appContext,
+            ExternalQuranDatabase::class.java,
+            "quranapp_external"
+        )
+            .addMigrations(
+                ExternalQuranDatabaseMigrations.MIGRATION_1_2,
+                ExternalQuranDatabaseMigrations.MIGRATION_2_3,
+                ExternalQuranDatabaseMigrations.MIGRATION_3_4,
+                ExternalQuranDatabaseMigrations.MIGRATION_4_5,
             )
-                .setDriver(BundledSQLiteDriver())
-                .setQueryCoroutineContext(Dispatchers.IO)
-                .fallbackToDestructiveMigration(true)
-                .build()
-                .also { searchIndexDatabase = it }
-        }
+            .fallbackToDestructiveMigration(false)
+            .build()
     }
 
-    private fun getTopicsDatabase(context: Context): TopicsDatabase {
-        return topicsDatabase ?: synchronized(this) {
-            topicsDatabase ?: Room.databaseBuilder(
-                context.applicationContext,
-                TopicsDatabase::class.java,
-                "topics"
-            )
-                .createFromAsset("db/topics.db")
-                .fallbackToDestructiveMigration(true)
-                .build()
-                .also { topicsDatabase = it }
-        }
+    private val translationRepository = LazySingleton { appContext ->
+        TranslationRepository(appContext, getExternalQuranDatabase(appContext))
     }
 
-    fun getTopicsRepository(context: Context): TopicsRepository {
-        return topicsRepository ?: synchronized(this) {
-            topicsRepository ?: TopicsRepository(
-                context.applicationContext,
-                getTopicsDatabase(context),
-            ).also { topicsRepository = it }
-        }
+    private val quranRepository = LazySingleton { appContext ->
+        QuranRepository(
+            getQuranDatabase(appContext),
+            getExternalQuranDatabase(appContext)
+        )
     }
+
+    private val searchIndexDatabase = LazySingleton { appContext ->
+        Room.databaseBuilder(
+            appContext,
+            SearchIndexDatabase::class.java,
+            "SearchIndex.db",
+        )
+            .setDriver(BundledSQLiteDriver())
+            .setQueryCoroutineContext(Dispatchers.IO)
+            .fallbackToDestructiveMigration(true)
+            .build()
+    }
+
+    private val topicsDatabase = LazySingleton { appContext ->
+        replaceDatabaseIfStale(
+            appContext,
+            TOPICS_DATABASE_NAME,
+            TOPICS_DATABASE_VERSION,
+        )
+
+        Room.databaseBuilder(
+            appContext,
+            TopicsDatabase::class.java,
+            TOPICS_DATABASE_NAME
+        )
+            .setDriver(BundledSQLiteDriver())
+            .setQueryCoroutineContext(Dispatchers.IO)
+            .createFromAsset("db/topics.db")
+            .fallbackToDestructiveMigration(true)
+            .build()
+    }
+
+    private val topicsRepository = LazySingleton { appContext ->
+        TopicsRepository(appContext, getTopicsDatabase(appContext))
+    }
+
+    fun getUserDatabase(context: Context): UserDatabase = userDatabase.get(context)
+
+    fun getUserRepository(context: Context): UserRepository = userRepository.get(context)
+
+    private fun getQuranDatabase(context: Context): QuranDatabase = quranDatabase.get(context)
+
+    fun getExternalQuranDatabase(context: Context): ExternalQuranDatabase =
+        externalQuranDatabase.get(context)
+
+    fun getTranslationRepository(context: Context): TranslationRepository =
+        translationRepository.get(context)
+
+    fun getQuranRepository(context: Context): QuranRepository = quranRepository.get(context)
+
+    fun getSearchIndexDatabase(context: Context): SearchIndexDatabase =
+        searchIndexDatabase.get(context)
+
+    private fun getTopicsDatabase(context: Context): TopicsDatabase = topicsDatabase.get(context)
+
+    fun getTopicsRepository(context: Context): TopicsRepository = topicsRepository.get(context)
 
     /**
-     * Deletes an older installed quranapp file, including its WAL, before Room opens it.
+     * Deletes an older destructible db file, including its WAL, before Room opens it.
      */
-    private fun replaceQuranDatabaseIfStale(context: Context) {
-        val dbFile = context.getDatabasePath(QURAN_DATABASE_NAME)
+    private fun replaceDatabaseIfStale(context: Context, dbName: String, newVersion: Int) {
+        val dbFile = context.getDatabasePath(dbName)
+        val dbFilePath = dbFile.path
 
         if (!dbFile.exists()) return
-        if (readSqliteUserVersion(dbFile) == QURAN_DATABASE_VERSION) return
+        if (readSqliteUserVersion(dbFile) == newVersion) return
 
-        deleteDatabaseFiles(context, QURAN_DATABASE_NAME)
-    }
-
-    private fun deleteDatabaseFiles(context: Context, name: String) {
-        context.deleteDatabase(name)
-
-        val dbFile = context.getDatabasePath(name)
+        context.deleteDatabase(dbName)
 
         listOf("", "-wal", "-shm", "-journal").forEach { suffix ->
-            File(dbFile.path + suffix).delete()
+            File(dbFilePath + suffix).delete()
         }
     }
 

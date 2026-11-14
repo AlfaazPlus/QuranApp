@@ -21,10 +21,15 @@ import com.quranapp.android.utils.quran.QuranConstants
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.univ.FileUtils
 import com.quranapp.android.utils.univ.StringUtils
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.io.File
 
 class TranslationRepository(
+    context: Context,
     private val database: ExternalQuranDatabase,
 ) {
     companion object {
@@ -38,19 +43,40 @@ class TranslationRepository(
         }
     }
 
-    private val dao: TranslationDao = database.translationDao()
+    private val appContext = context.applicationContext
+    private val rawDao: TranslationDao = database.translationDao()
 
-    suspend fun prepare(context: Context) {
-        val appContext = context.applicationContext
+    @Volatile
+    private var prepared = false
+    private val prepareMutex = Mutex()
 
-        TranslationLegacyCopy(database).copyIfPresent(appContext)
+    private suspend fun dao(): TranslationDao {
+        if (!prepared) {
+            prepareMutex.withLock {
+                if (!prepared) {
+                    withContext(Dispatchers.IO) {
+                        TranslationLegacyCopy(database).copyIfPresent(appContext)
+                        importLegacyFiles(appContext)
+                        syncPrebuilt(appContext)
+                    }
 
-        importLegacyFiles(appContext)
+                    prepared = true
+                }
+            }
+        }
 
-        syncPrebuilt(appContext)
+        return rawDao
     }
 
     suspend fun store(bookInfo: TranslationBookInfoModel, translData: String) {
+        storeParsed(dao(), bookInfo, translData)
+    }
+
+    private suspend fun storeParsed(
+        targetDao: TranslationDao,
+        bookInfo: TranslationBookInfoModel,
+        translData: String,
+    ) {
         val parsed = try {
             parseTranslation(bookInfo.slug, translData)
         } catch (error: Exception) {
@@ -58,32 +84,32 @@ class TranslationRepository(
             return
         }
 
-        dao.replaceSlug(bookInfo.toEntity(), parsed.verses, parsed.footnotes)
+        targetDao.replaceSlug(bookInfo.toEntity(), parsed.verses, parsed.footnotes)
     }
 
     suspend fun delete(slug: String) {
-        dao.deleteSlug(slug)
+        dao().deleteSlug(slug)
     }
 
     suspend fun isDownloaded(slug: String): Boolean {
-        return dao.bookExists(slug)
+        return dao().bookExists(slug)
     }
 
     suspend fun getDownloadedSlugs(): Set<String> {
-        return dao.getSlugs().toSet()
+        return dao().getSlugs().toSet()
     }
 
     suspend fun getBook(slug: String): TranslationBookInfoModel {
-        return dao.getBook(slug)?.toModel() ?: TranslationBookInfoModel("")
+        return dao().getBook(slug)?.toModel() ?: TranslationBookInfoModel("")
     }
 
     suspend fun getBooks(slugs: Set<String>? = null): Map<String, TranslationBookInfoModel> {
         if (slugs?.isEmpty() == true) return emptyMap()
 
         val books = if (slugs == null) {
-            dao.getAllBooks()
+            dao().getAllBooks()
         } else {
-            dao.getBooks(slugs.toList())
+            dao().getBooks(slugs.toList())
         }
 
         return books.associate { it.slug to it.toModel() }
@@ -107,10 +133,9 @@ class TranslationRepository(
         verseNo: Int,
     ): List<Translation> {
         val ordered = orderedSlugs(slugs)
-
         if (ordered.isEmpty()) return emptyList()
 
-        val slice = dao.getAyahSlice(ordered, QuranMeta.getAyahId(chapterNo, verseNo))
+        val slice = dao().getAyahSlice(ordered, QuranMeta.getAyahId(chapterNo, verseNo))
 
         return orderBySlug(ordered, join(slice))
     }
@@ -126,7 +151,7 @@ class TranslationRepository(
 
         if (ordered.isEmpty() || fromVerse > toVerse) return slots
 
-        val slice = dao.getRangeSlice(
+        val slice = dao().getRangeSlice(
             ordered,
             QuranMeta.getAyahId(chapterNo, fromVerse),
             QuranMeta.getAyahId(chapterNo, toVerse),
@@ -152,7 +177,7 @@ class TranslationRepository(
         if (ordered.isEmpty() || verses.isEmpty()) return slots
 
         val orderedVerses = verses.sorted()
-        val slice = dao.getAyahsSlice(
+        val slice = dao().getAyahsSlice(
             ordered,
             orderedVerses.map { QuranMeta.getAyahId(chapterNo, it) },
         )
@@ -176,6 +201,7 @@ class TranslationRepository(
         if (ordered.isEmpty() || ayahIds.isEmpty()) return emptyMap()
 
         val grouped = LinkedHashMap<Int, MutableList<Translation>>()
+        val dao = dao()
 
         ayahIds.distinct().chunked(AYAH_QUERY_CHUNK).forEach { chunk ->
             val slice = dao.getAyahsSlice(ordered, chunk)
@@ -195,28 +221,28 @@ class TranslationRepository(
     ): Map<Int, Footnote> {
         val ayahId = QuranMeta.getAyahId(chapterNo, verseNo)
 
-        return dao.getFootnotes(slug, ayahId).toFootnoteMap()
+        return dao().getFootnotes(slug, ayahId).toFootnoteMap()
     }
 
     suspend fun countVerses(slug: String): Int {
-        return dao.countVerses(slug)
+        return dao().countVerses(slug)
     }
 
     suspend fun getVerseTexts(slug: String): List<TranslationVerseText> {
-        return dao.getVerseTexts(slug)
+        return dao().getVerseTexts(slug)
     }
 
     private suspend fun syncPrebuilt(context: Context) {
         for (bookInfo in TranslUtils.preBuiltTranslBooksInfo(context)) {
             val required = if (bookInfo.version > 0) bookInfo.version else 1L
-            val current = dao.getBook(bookInfo.slug)?.version
+            val current = rawDao.getBook(bookInfo.slug)?.version
 
             if (current != null && current >= required) continue
 
             val path = TranslUtils.getPrebuiltTranslPath(bookInfo.slug) ?: continue
             val text = StringUtils.readInputStream(context.assets.open(path))
 
-            store(bookInfo, text)
+            storeParsed(rawDao, bookInfo, text)
         }
     }
 
@@ -229,7 +255,7 @@ class TranslationRepository(
         val pairs = TranslUtils.getTranslInfosAndFilesForMigration(fileUtils, translDir) ?: return
 
         for (pair in pairs) {
-            store(pair.first, pair.second.readText())
+            storeParsed(rawDao, pair.first, pair.second.readText())
         }
 
         translDir.deleteRecursively()
