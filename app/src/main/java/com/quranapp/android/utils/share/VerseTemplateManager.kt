@@ -85,6 +85,15 @@ object VerseTemplateManager {
         return resolveInventoryUrl(template.bgSrc)
     }
 
+    /**
+     * Picker/list thumb: prefer inline catalog WebP (`thumbBase64`), else full bg.
+     * Never use this for export/render backgrounds.
+     */
+    fun resolveTemplateThumbModel(context: Context, template: VerseTemplate): Any {
+        template.thumbBytes?.let { return it }
+        return resolveTemplateImageModel(context, template)
+    }
+
     suspend fun getAvailable(
         context: Context,
         forceRefresh: Boolean = false,

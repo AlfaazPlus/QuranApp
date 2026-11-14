@@ -99,8 +99,8 @@ private fun TemplateThumb(
     val downloadProxy = AppPreferences.observeResourceDownloadProxy()
     val thumbPx = with(density) { 112.dp.roundToPx() }.coerceIn(96, 256)
 
-    val imageData = remember(template.id, template.bgSrc, downloadProxy, context) {
-        VerseTemplateManager.resolveTemplateImageModel(context, template)
+    val imageData = remember(template.id, template.thumbBytes, template.bgSrc, downloadProxy, context) {
+        VerseTemplateManager.resolveTemplateThumbModel(context, template)
     }
 
     val imageRequest = remember(imageData, thumbPx, context) {

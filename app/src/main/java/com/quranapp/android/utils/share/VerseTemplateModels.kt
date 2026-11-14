@@ -1,5 +1,6 @@
 package com.quranapp.android.utils.share
 
+import android.util.Base64
 import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.safeFloat
 import com.quranapp.android.api.safeInt
@@ -22,8 +23,29 @@ data class VerseTemplate(
     val id: String,
     val name: String,
     val bgSrc: String,
+    /** Decoded WebP thumb bytes from catalog `thumbBase64`; null if missing/invalid. */
+    val thumbBytes: ByteArray? = null,
     val layout: VerseTemplateLayout,
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VerseTemplate) return false
+        return id == other.id &&
+            name == other.name &&
+            bgSrc == other.bgSrc &&
+            layout == other.layout &&
+            thumbBytes.contentEquals(other.thumbBytes)
+    }
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + name.hashCode()
+        result = 31 * result + bgSrc.hashCode()
+        result = 31 * result + (thumbBytes?.contentHashCode() ?: 0)
+        result = 31 * result + layout.hashCode()
+        return result
+    }
+}
 
 enum class TemplateHorizontalAlignment {
     START,
@@ -208,13 +230,35 @@ object VerseTemplateParser {
         val name = obj.safeString("name")?.trim()?.ifEmpty { id } ?: id
         val layoutObj = obj.safeJsonObject("layout") ?: return null
         val layout = parseLayout(layoutObj) ?: return null
+        val thumbBytes = decodeThumbBase64(obj.safeString("thumbBase64"))
 
         return VerseTemplate(
             id = id,
             name = name,
             bgSrc = bgSrc,
+            thumbBytes = thumbBytes,
             layout = layout,
         )
+    }
+
+    /**
+     * Catalog stores raw Base64 WebP (no data-URL prefix). Accept a prefix if present.
+     */
+    private fun decodeThumbBase64(raw: String?): ByteArray? {
+        val trimmed = raw?.trim()?.takeIf { it.isNotEmpty() } ?: return null
+        val payload = if (trimmed.startsWith("data:", ignoreCase = true)) {
+            val comma = trimmed.indexOf(',')
+            if (comma < 0) return null
+            trimmed.substring(comma + 1)
+        } else {
+            trimmed
+        }
+
+        return try {
+            Base64.decode(payload, Base64.DEFAULT)?.takeIf { it.isNotEmpty() }
+        } catch (_: IllegalArgumentException) {
+            null
+        }
     }
 
     /**
