@@ -35,6 +35,7 @@ data class RecitationServiceState(
     val pausedByHeadset: Boolean = false,
     /** False when single-file chapter audio has no timing and no verse clip playlist is in use. */
     val isVerseSyncAvailable: Boolean = true,
+    val playbackScope: PlaybackScopeType = PlaybackScopeType.CONTINUOUS,
     val settings: PlayerSettings = PlayerSettings(),
 ) {
     suspend fun getPreviousVerse(repository: QuranRepository): ChapterVersePair? {
@@ -115,6 +116,7 @@ data class RecitationServiceState(
         putBoolean(KEY_IS_PLAYING, isPlaying)
         putBoolean(KEY_IS_BUFFERING, isBuffering)
         putBoolean(KEY_IS_VERSE_SYNC_AVAILABLE, isVerseSyncAvailable)
+        putString(KEY_PLAYBACK_SCOPE, playbackScope.value)
         putBoolean(KEY_PAUSED_BY_HEADSET, pausedByHeadset)
         putString(KEY_CURRENT_RECITER, settings.reciter)
         putString(KEY_CURRENT_TRANSLATION_RECITER, settings.translationReciter)
@@ -134,6 +136,7 @@ data class RecitationServiceState(
         private const val KEY_IS_PLAYING = "state_is_playing"
         private const val KEY_IS_BUFFERING = "state_is_buffering"
         private const val KEY_IS_VERSE_SYNC_AVAILABLE = "state_is_verse_sync_available"
+        private const val KEY_PLAYBACK_SCOPE = "state_playback_scope"
         private const val KEY_PAUSED_BY_HEADSET = "state_paused_by_headset"
         private const val KEY_PLAYBACK_SPEED = "state_playback_speed"
         private const val KEY_REPEAT_COUNT = "state_repeat_count"
@@ -154,6 +157,8 @@ data class RecitationServiceState(
                 isPlaying = bundle.getBoolean(KEY_IS_PLAYING, false),
                 isBuffering = bundle.getBoolean(KEY_IS_BUFFERING, false),
                 isVerseSyncAvailable = bundle.getBoolean(KEY_IS_VERSE_SYNC_AVAILABLE, true),
+                playbackScope = bundle.getString(KEY_PLAYBACK_SCOPE)
+                    ?.let { PlaybackScopeType.fromValue(it) } ?: PlaybackScopeType.CONTINUOUS,
                 pausedByHeadset = bundle.getBoolean(KEY_PAUSED_BY_HEADSET, false),
                 settings = PlayerSettings(
                     speed = bundle.getFloat(KEY_PLAYBACK_SPEED, 1.0f),

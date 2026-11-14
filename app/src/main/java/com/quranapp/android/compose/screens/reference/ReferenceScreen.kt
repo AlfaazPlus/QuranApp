@@ -39,6 +39,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -77,6 +78,7 @@ import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.api.resolveInventoryUrl
 import com.quranapp.android.components.ReferenceThumbnail
 import com.quranapp.android.components.ReferenceVerseModel
+import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.common.Chip
 import com.quranapp.android.compose.components.common.IconButton
 import com.quranapp.android.compose.components.common.Loader
@@ -86,6 +88,7 @@ import com.quranapp.android.compose.components.player.MiniPlayerVisibility
 import com.quranapp.android.compose.components.player.RecitationPlayerSheet
 import com.quranapp.android.compose.components.player.rememberMiniPlayerVisibilityState
 import com.quranapp.android.compose.components.reader.LocalReaderViewModel
+import com.quranapp.android.compose.components.reader.LocalRecitation
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.ReaderProvider
 import com.quranapp.android.compose.components.reader.TextStyleProvider
@@ -130,6 +133,7 @@ private sealed class ReferenceRow {
 
     data class VerseRow(
         val verseUi: ReaderLayoutItem.VerseUI,
+        val ref: QuickReferenceVerses.Range,
         val quranTextStyle: TextStyle? = null,
     ) : ReferenceRow()
 }
@@ -193,6 +197,13 @@ private fun ReferenceScreenContent(
     var chapterNames by remember { mutableStateOf<Map<Int, String>>(emptyMap()) }
 
     val verseActions = LocalVerseActions.current
+    val recState = LocalRecitation.current
+
+    DisposableEffect(recState.controller) {
+        onDispose {
+            recState.controller.clearMode()
+        }
+    }
 
     val allBookmarks by vm.userRepository.getBookmarksFlow()
         .collectAsStateWithLifecycle(initialValue = emptyList())
@@ -436,6 +447,13 @@ private fun ReferenceScreenContent(
                                                         row.verseUi.verse.verseNo,
                                                     ),
                                                 ),
+                                                onPlayClick = {
+                                                    recState.controller.playControlRange(
+                                                        verse = ChapterVersePair(row.verseUi.verse),
+                                                        fromVerse = row.ref.range.first,
+                                                        toVerse = row.ref.range.last,
+                                                    )
+                                                },
                                             )
                                         }
                                     }
@@ -740,12 +758,14 @@ private fun ReferenceSectionTitle(
 private fun ReferenceVerseViewWrapped(
     verseUi: ReaderLayoutItem.VerseUI,
     isBookmarked: Boolean,
+    onPlayClick: () -> Unit,
 ) {
     Surface {
         VerseView(
             verseUi = verseUi,
             isBookmarked = isBookmarked,
             showDivider = verseUi.showDivider,
+            onPlayClick = onPlayClick,
         )
     }
 }
@@ -834,6 +854,7 @@ private suspend fun buildReferenceRows(
                             key = "ref-${req.segment.segmentIndex}-${verseUi.key}",
                             showDivider = showDivider,
                         ),
+                        ref = req.segment.ref,
                         quranTextStyle = textStyles[verseUi.verse.pageNo],
                     ),
                 )

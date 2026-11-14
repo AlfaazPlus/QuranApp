@@ -34,6 +34,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -59,6 +60,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.quranapp.android.R
+import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.collections.CreateUpdateCollectionSheet
 import com.quranapp.android.compose.components.collections.EditCollectionItemNoteSheet
 import com.quranapp.android.compose.components.collections.collectionColor
@@ -70,6 +72,9 @@ import com.quranapp.android.compose.components.common.Loader
 import com.quranapp.android.compose.components.dialogs.AlertDialog
 import com.quranapp.android.compose.components.dialogs.AlertDialogAction
 import com.quranapp.android.compose.components.dialogs.AlertDialogActionStyle
+import com.quranapp.android.compose.components.player.MiniPlayerVisibility
+import com.quranapp.android.compose.components.player.RecitationPlayerSheet
+import com.quranapp.android.compose.components.player.rememberMiniPlayerVisibilityState
 import com.quranapp.android.compose.components.reader.LocalReaderViewModel
 import com.quranapp.android.compose.components.reader.LocalRecitation
 import com.quranapp.android.compose.components.reader.PlayControlButton
@@ -249,8 +254,19 @@ private fun CollectionDetailContent(
     var collectionToUpdate by remember { mutableStateOf<CollectionEntity?>(null) }
     var showMoreMenu by remember { mutableStateOf(false) }
     var showDeleteAlert by remember { mutableStateOf(false) }
+    val recState = LocalRecitation.current
+    val playerVisibilityState = rememberMiniPlayerVisibilityState(
+        visibility = MiniPlayerVisibility.HIDDEN_BY_DEFAULT,
+    )
 
-    Scaffold(
+    DisposableEffect(recState.controller) {
+        onDispose {
+            recState.controller.clearMode()
+        }
+    }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        Scaffold(
         containerColor = colorScheme.background,
         topBar = {
             AppBar(
@@ -349,10 +365,22 @@ private fun CollectionDetailContent(
                         vm = vm,
                         item = item,
                         prepared = preparedItems[item.id],
+                        onPlayVerse = { verse ->
+                            recState.controller.playControlRange(
+                                verse = verse,
+                                fromVerse = verse.verseNo,
+                                toVerse = verse.verseNo,
+                            )
+                        },
                     )
                 }
             }
         }
+    }
+
+        RecitationPlayerSheet(
+            playerVisibilityState = playerVisibilityState,
+        )
     }
 
     CreateUpdateCollectionSheet(
@@ -487,6 +515,7 @@ private fun CollectionVerseItem(
     vm: CollectionsViewModel,
     item: CollectionItemEntity,
     prepared: ReaderPreparedData?,
+    onPlayVerse: (ChapterVersePair) -> Unit,
 ) {
     val data = prepared ?: return
 
@@ -507,6 +536,7 @@ private fun CollectionVerseItem(
                     onRemove = {
                         vm.removeItem(item.id)
                     },
+                    onPlayVerse = onPlayVerse,
                 )
                 NoteContainer(item)
             }
@@ -517,7 +547,8 @@ private fun CollectionVerseItem(
 @Composable
 private fun CollectionVerseView(
     verseUi: ReaderLayoutItem.VerseUI,
-    onRemove: () -> Unit
+    onRemove: () -> Unit,
+    onPlayVerse: (ChapterVersePair) -> Unit,
 ) {
     val verse = verseUi.verse
 
@@ -537,7 +568,7 @@ private fun CollectionVerseView(
                 )
                 .padding(horizontal = 12.dp, vertical = 16.dp)
         ) {
-            CollectionVerseActionBar(verse, isVersePlaying, onRemove)
+            CollectionVerseActionBar(verse, isVersePlaying, onRemove, onPlayVerse)
 
             QuranTextWbw(
                 verseUi = verseUi,
@@ -554,7 +585,8 @@ private fun CollectionVerseView(
 private fun CollectionVerseActionBar(
     verse: VerseWithDetails,
     isVersePlaying: Boolean,
-    onRemove: () -> Unit
+    onRemove: () -> Unit,
+    onPlayVerse: (ChapterVersePair) -> Unit,
 ) {
     val context = LocalContext.current
     val recitationState = LocalRecitation.current
@@ -585,7 +617,13 @@ private fun CollectionVerseActionBar(
                 moreMenuOpen = true
             }
 
-            PlayControlButton(controller, isVersePlaying, iconTint, verse)
+            PlayControlButton(
+                controller = controller,
+                isVersePlaying = isVersePlaying,
+                iconTint = iconTint,
+                verse = verse,
+                onPlayClick = { onPlayVerse(ChapterVersePair(verse)) },
+            )
 
             VerseActionIconButton(
                 painter = painterResource(R.drawable.ic_tafsir),

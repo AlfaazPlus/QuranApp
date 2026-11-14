@@ -66,6 +66,7 @@ fun VerseView(
     showDivider: Boolean = false,
     onWordClick: ((AyahWordEntity) -> Unit)? = null,
     actionBarMode: VerseActionBarMode = VerseActionBarMode.Full,
+    onPlayClick: (() -> Unit)? = null,
 ) {
     val verse = verseUi.verse
 
@@ -95,7 +96,7 @@ fun VerseView(
                 }
                 .padding(horizontal = 12.dp, vertical = 16.dp)
         ) {
-            VerseActionBar(verse, isVersePlaying, isBookmarked, actionBarMode)
+            VerseActionBar(verse, isVersePlaying, isBookmarked, actionBarMode, onPlayClick)
 
             QuranTextWbw(
                 verseUi = verseUi,
@@ -121,6 +122,7 @@ private fun VerseActionBar(
     isVersePlaying: Boolean,
     isBookmarked: Boolean,
     actionBarMode: VerseActionBarMode,
+    onPlayClick: (() -> Unit)? = null,
 ) {
     val context = LocalContext.current
     val verseActions = LocalVerseActions.current
@@ -152,7 +154,7 @@ private fun VerseActionBar(
                 }
             }
 
-            PlayControlButton(controller, isVersePlaying, iconTint, verse)
+            PlayControlButton(controller, isVersePlaying, iconTint, verse, onPlayClick)
 
             VerseActionIconButton(
                 painter = painterResource(R.drawable.ic_tafsir),
@@ -189,7 +191,8 @@ fun PlayControlButton(
     controller: RecitationController,
     isVersePlaying: Boolean,
     iconTint: Color,
-    verse: VerseWithDetails
+    verse: VerseWithDetails,
+    onPlayClick: (() -> Unit)? = null,
 ) {
     val label = stringResource(R.string.strTitleVerseRecitation)
 
@@ -205,7 +208,11 @@ fun PlayControlButton(
                 .size(32.dp)
                 .clip(CircleShape)
                 .clickable {
-                    controller.playControl(ChapterVersePair(verse))
+                    if (onPlayClick != null) {
+                        onPlayClick()
+                    } else {
+                        controller.playControl(ChapterVersePair(verse))
+                    }
                 },
             contentAlignment = Alignment.Center,
         ) {

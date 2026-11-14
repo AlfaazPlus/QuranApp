@@ -57,6 +57,12 @@ class VerseClipPlan private constructor(
     }
 
     /**
+     * Returns true if any clip in this plan belongs to [verseNo].
+     */
+    fun hasVerse(verseNo: Int): Boolean =
+        items.any { it.mediaId.endsWith(":$verseNo") }
+
+    /**
      * Returns the playlist index of the first clip whose mediaId contains [verseNo].
      */
     fun firstIndexForVerse(verseNo: Int): Int {

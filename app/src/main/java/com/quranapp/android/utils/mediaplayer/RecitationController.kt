@@ -54,6 +54,7 @@ class RecitationController private constructor(private val appContext: Context) 
     val state: StateFlow<RecitationServiceState> = RecitationService.sharedState
     val currentVerseState: StateFlow<ChapterVersePair> = RecitationService.sharedCurrentVerse
     val wordIndexState: StateFlow<Int> = RecitationService.sharedWordIndex
+    val playbackModeState: StateFlow<RecitationPlaybackMode> = RecitationService.sharedPlaybackMode
 
     val currentPositionMs: Long
         get() {
@@ -218,7 +219,8 @@ class RecitationController private constructor(private val appContext: Context) 
         if (
             controller == null ||
             controller.playbackState == Player.STATE_IDLE ||
-            !state.value.currentVerse.doesEqual(verse.chapterNo, verse.verseNo)
+            !state.value.currentVerse.doesEqual(verse.chapterNo, verse.verseNo) ||
+            playbackModeState.value != RecitationPlaybackMode.Continuous
         ) {
             start(verse)
             return
@@ -229,8 +231,54 @@ class RecitationController private constructor(private val appContext: Context) 
 
     fun start(verse: ChapterVersePair? = null) {
         ensureConnectedAndSend(
-            StartCommand(verse)
+            StartCommand(verse = verse, mode = RecitationPlaybackMode.Continuous)
         )
+    }
+
+    fun startRange(
+        chapterNo: Int,
+        fromVerse: Int,
+        toVerse: Int,
+        startVerse: Int = fromVerse,
+    ) {
+        ensureConnectedAndSend(
+            StartCommand(
+                verse = ChapterVersePair(chapterNo, startVerse),
+                mode = RecitationPlaybackMode.Range(chapterNo, fromVerse, toVerse),
+            )
+        )
+    }
+
+    fun playControlRange(
+        verse: ChapterVersePair,
+        fromVerse: Int,
+        toVerse: Int,
+    ) {
+        val controller = mediaController
+        val targetMode = RecitationPlaybackMode.Range(verse.chapterNo, fromVerse, toVerse)
+
+        if (
+            controller == null ||
+            controller.playbackState == Player.STATE_IDLE ||
+            !state.value.currentVerse.doesEqual(verse.chapterNo, verse.verseNo) ||
+            playbackModeState.value != targetMode
+        ) {
+            startRange(
+                chapterNo = verse.chapterNo,
+                fromVerse = fromVerse,
+                toVerse = toVerse,
+                startVerse = verse.verseNo,
+            )
+            return
+        }
+
+        playPause()
+    }
+
+    fun clearMode() {
+        if (playbackModeState.value !is RecitationPlaybackMode.Continuous) {
+            ensureConnectedAndSend(ClearModeCommand)
+        }
     }
 
     /**

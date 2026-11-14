@@ -17,12 +17,24 @@ sealed class BasePlayerCommand(
 }
 
 data class StartCommand(
-    val verse: ChapterVersePair?
+    val verse: ChapterVersePair? = null,
+    val mode: RecitationPlaybackMode = RecitationPlaybackMode.Continuous,
 ) : BasePlayerCommand(ACTION) {
     override fun toBundle(): Bundle = Bundle().apply {
         if (verse != null) {
             putInt(KEY_CHAPTER, verse.chapterNo)
             putInt(KEY_VERSE, verse.verseNo)
+        }
+
+        putString(KEY_MODE, mode.scopeType.value)
+
+        when (mode) {
+            is RecitationPlaybackMode.Continuous -> Unit
+            is RecitationPlaybackMode.Range -> {
+                putInt(KEY_RANGE_CHAPTER, mode.chapterNo)
+                putInt(KEY_RANGE_FROM_VERSE, mode.fromVerse)
+                putInt(KEY_RANGE_TO_VERSE, mode.toVerse)
+            }
         }
     }
 
@@ -30,11 +42,33 @@ data class StartCommand(
         const val ACTION = "START"
         private const val KEY_CHAPTER = "chapterNo"
         private const val KEY_VERSE = "verseNo"
+        private const val KEY_MODE = "playbackMode"
+        private const val KEY_RANGE_CHAPTER = "rangeChapter"
+        private const val KEY_RANGE_FROM_VERSE = "rangeFromVerse"
+        private const val KEY_RANGE_TO_VERSE = "rangeToVerse"
 
         fun fromBundle(bundle: Bundle): StartCommand? {
             val chapterNo = bundle.getInt(KEY_CHAPTER, -1)
             val verseNo = bundle.getInt(KEY_VERSE, -1)
-            return StartCommand(ChapterVersePair(chapterNo, verseNo).takeIf { it.isValid })
+            val verse = ChapterVersePair(chapterNo, verseNo).takeIf { it.isValid }
+
+            val mode = when (bundle.getString(KEY_MODE)?.let { PlaybackScopeType.fromValue(it) }) {
+                PlaybackScopeType.RANGE -> {
+                    val range = RecitationPlaybackMode.Range(
+                        chapterNo = bundle.getInt(KEY_RANGE_CHAPTER, -1),
+                        fromVerse = bundle.getInt(KEY_RANGE_FROM_VERSE, -1),
+                        toVerse = bundle.getInt(KEY_RANGE_TO_VERSE, -1),
+                    )
+                    if (range.isValid) range else RecitationPlaybackMode.Continuous
+                }
+
+                else -> RecitationPlaybackMode.Continuous
+            }
+
+            return StartCommand(
+                verse = verse,
+                mode = mode,
+            )
         }
     }
 }
@@ -187,6 +221,10 @@ object NextVerseCommand : BasePlayerCommand("NEXT_VERSE") {
     override fun toBundle(): Bundle = Bundle()
 }
 
+object ClearModeCommand : BasePlayerCommand("CLEAR_MODE") {
+    override fun toBundle(): Bundle = Bundle()
+}
+
 
 val ALL_PLAYER_ACTIONS = arrayOf(
     StartCommand.ACTION,
@@ -200,4 +238,5 @@ val ALL_PLAYER_ACTIONS = arrayOf(
     StopCommand.ACTION,
     PreviousVerseCommand.ACTION,
     NextVerseCommand.ACTION,
+    ClearModeCommand.ACTION,
 )

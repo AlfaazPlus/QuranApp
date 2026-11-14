@@ -25,6 +25,7 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -45,9 +46,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.quranapp.android.R
+import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.compose.components.dialogs.AlertDialog
 import com.quranapp.android.compose.components.dialogs.AlertDialogAction
 import com.quranapp.android.compose.components.dialogs.AlertDialogActionStyle
+import com.quranapp.android.compose.components.reader.LocalRecitation
 import com.quranapp.android.compose.components.reader.ReaderLayoutItem
 import com.quranapp.android.compose.components.reader.ReaderPreparedData
 import com.quranapp.android.compose.components.reader.ReaderProvider
@@ -212,6 +215,13 @@ private fun QuickReferenceContent(
     val density = LocalDensity.current
 
     val verseActions = LocalVerseActions.current
+    val recState = LocalRecitation.current
+
+    DisposableEffect(recState.controller) {
+        onDispose {
+            recState.controller.clearMode()
+        }
+    }
 
     val verseNos = remember(parsed) { parsedVersesToList(parsed) }
     val verseRange = remember(parsed) { parsedVersesToIntRange(parsed) }
@@ -305,6 +315,31 @@ private fun QuickReferenceContent(
                             viewModel.userRepository,
                             verseUi = verseUi,
                             showDivier = index < verseRows.lastIndex,
+                            onPlayClick = {
+                                val verse = ChapterVersePair(verseUi.verse)
+
+                                val (fromVerse, toVerse) = when (parsed) {
+                                    is QuickReferenceVerses.Range -> {
+                                        parsed.range.first to parsed.range.last
+                                    }
+
+                                    is QuickReferenceVerses.ChapterOnly -> {
+                                        val first = verseNos.firstOrNull() ?: verse.verseNo
+                                        val last = verseNos.lastOrNull() ?: verse.verseNo
+                                        first to last
+                                    }
+
+                                    is QuickReferenceVerses.Discrete -> {
+                                        verse.verseNo to verse.verseNo
+                                    }
+                                }
+
+                                recState.controller.playControlRange(
+                                    verse = verse,
+                                    fromVerse = fromVerse,
+                                    toVerse = toVerse,
+                                )
+                            },
                         )
                     }
                 }
@@ -317,7 +352,8 @@ private fun QuickReferenceContent(
 private fun VerseViewWrapped(
     bookmarksRepo: UserRepository,
     verseUi: ReaderLayoutItem.VerseUI,
-    showDivier: Boolean
+    showDivier: Boolean,
+    onPlayClick: () -> Unit,
 ) {
     val verse = verseUi.verse
 
@@ -329,6 +365,7 @@ private fun VerseViewWrapped(
         verseUi = verseUi,
         isBookmarked = isBookmarked,
         showDivider = showDivier,
+        onPlayClick = onPlayClick,
     )
 }
 
