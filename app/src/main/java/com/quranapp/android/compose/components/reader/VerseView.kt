@@ -290,8 +290,8 @@ fun VerseSerial(
         modifier = Modifier
             .semantics { this.contentDescription = contentDescription }
             .clip(RoundedCornerShape(5.dp))
-            .background(colorScheme.surface)
-            .clickable { context.copyToClipboard(verse.id.toString()) }
+            .background(colorScheme.surfaceContainerLow)
+            .clickable { context.copyToClipboard(contentDescription) }
             .padding(horizontal = 8.dp, vertical = 4.dp),
         color = colorScheme.onSurface,
         style = typography.labelLarge,

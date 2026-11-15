@@ -171,13 +171,5 @@ private fun TemplateThumb(
                 }
             }
         }
-
-        Text(
-            text = template.name,
-            style = typography.labelSmall,
-            color = if (selected) colorScheme.primary else colorScheme.onSurfaceVariant,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-        )
     }
 }

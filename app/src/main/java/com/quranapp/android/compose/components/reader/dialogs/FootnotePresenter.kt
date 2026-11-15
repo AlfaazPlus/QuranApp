@@ -233,7 +233,7 @@ fun AuthorChips(
     }
 
     Box(
-        modifier = Modifier.horizontalFadingEdge(scrollState, color = colorScheme.surface)
+        modifier = Modifier.horizontalFadingEdge(scrollState)
     ) {
         Row(
             modifier = Modifier
@@ -301,7 +301,6 @@ fun FootnoteContent(
         Box(
             modifier = Modifier.verticalFadingEdge(
                 scrollState,
-                color = colorScheme.surface,
                 length = 48.dp
             )
         ) {

@@ -279,8 +279,8 @@ private fun TafsirTopBar(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable(onClick = onOpenChapterVerseNavigator)
-                    .padding(horizontal = 16.dp),
+                    .clickable(onClick = onOpenChapterVerseNavigator),
+                horizontalAlignment = Alignment.Start,
             ) {
                 Text(
                     text = uiState.tafsirInfo?.name ?: "",

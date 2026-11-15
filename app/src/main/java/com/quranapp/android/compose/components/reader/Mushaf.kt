@@ -69,13 +69,11 @@ import com.quranapp.android.utils.reader.atlas.AtlasGlyphPlacement
 import com.quranapp.android.utils.reader.atlas.getForWord
 import com.quranapp.android.utils.reader.mushafShowsRuledPageDecoration
 import com.quranapp.android.viewModels.ReaderViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onStart
 import verticalFadingEdge
-import kotlin.time.Duration.Companion.milliseconds
 
 
 data class MushafLineLayout(
@@ -472,7 +470,7 @@ private fun PageModePage(
                             verseAnchor.viewportBottomPx = top + coordinates.size.height
                         }
                     )
-                    .verticalFadingEdge(scrollState, color = colorScheme.surface, length = 24.dp),
+                    .verticalFadingEdge(scrollState, length = 24.dp),
             ) {
                 CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
                     Column(

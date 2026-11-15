@@ -116,7 +116,7 @@
             },
             "colorId": {
               "type": "string",
-              "enum": ["default", "blue", "red", "purple", "mono", "violet", "yellow"]
+              "enum": ["default", "amoled", "blue", "red", "purple", "mono", "violet", "yellow"]
             },
             "dynamicColor": { "type": "boolean" }
           }

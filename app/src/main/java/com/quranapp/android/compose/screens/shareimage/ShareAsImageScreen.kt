@@ -157,7 +157,7 @@ fun ShareCustomizeControls(
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         SettingsItem(
-            icon = R.drawable.dr_icon_read_quran,
+            icon = R.drawable.ic_image,
             title = R.string.content,
             subtitle = session.contentOption.labelRes,
             onClick = session.onOpenContent,

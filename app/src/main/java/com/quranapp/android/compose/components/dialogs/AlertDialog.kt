@@ -119,7 +119,7 @@ fun AlertDialog(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f, fill = false)
-                        .verticalFadingEdge(scrollState, color = colorScheme.surface)
+                        .verticalFadingEdge(scrollState)
                 ) {
                     Column(
                         modifier = Modifier

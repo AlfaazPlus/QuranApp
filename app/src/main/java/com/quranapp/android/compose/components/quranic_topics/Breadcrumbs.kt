@@ -38,7 +38,7 @@ fun BreadcrumbTrail(
     }
 
     Box(
-        Modifier.horizontalFadingEdge(scrollState, color = colorScheme.surfaceContainer)
+        Modifier.horizontalFadingEdge(scrollState)
     ) {
         LazyRow(
             state = scrollState,

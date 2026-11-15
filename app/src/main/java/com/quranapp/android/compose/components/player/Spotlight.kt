@@ -80,7 +80,6 @@ import com.quranapp.android.utils.reader.atlas.LocalQuranAtlasBundle
 import com.quranapp.android.utils.reader.atlas.getForWord
 import com.quranapp.android.utils.reader.buildTranslationAnnotatedString
 import com.quranapp.android.db.DatabaseProvider
-import com.quranapp.android.repository.TranslationRepository
 import com.quranapp.android.utils.reader.getQuranTextStyle
 import com.quranapp.android.utils.reader.getTranslationTextStyle
 import kotlinx.coroutines.Dispatchers
@@ -270,8 +269,7 @@ private fun SpotlightVersePanel(
                             Modifier
                                 .verticalFadingEdge(
                                     scrollState,
-                                    color = PlayerBgColor,
-                                    length = 48.dp
+                                    length = 48.dp,
                                 ),
                             contentAlignment = Alignment.Center
                         ) {

@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -171,18 +172,6 @@ fun ExpandedPlayer(
     val showPlaybackSpeedOptions = rememberSaveable { mutableStateOf(false) }
     val showEndBehaviorOptions = rememberSaveable { mutableStateOf(false) }
 
-    val configurations = @Composable {
-        Configurations(
-            controller,
-            showReciterSelector,
-            showAudioOptions,
-            showRepeatOptions,
-            showMoreMenu,
-            showPlaybackSpeedOptions,
-            showEndBehaviorOptions,
-        )
-    }
-
     Background(
         modifier = Modifier
             .navigationBarsPadding()
@@ -224,70 +213,103 @@ fun ExpandedPlayer(
                         BoxWithConstraints(
                             modifier = Modifier.fillMaxSize()
                         ) {
-                            val isWideLayout = maxWidth >= 600.dp && maxWidth > maxHeight
+                            val wide = maxWidth > maxHeight
+                            val shorterSide = minOf(maxWidth, maxHeight)
+                            val gutter = shorterSide * 0.045f
+                            val blockGap = gutter * 0.65f
+                            val controlsPane = maxWidth * 0.6f
+                            val playSize = if (wide) controlsPane * 0.1f else shorterSide * 0.16f
+                            val sideControlSize = playSize * 0.7f
 
-                            if (isWideLayout) {
-                                Column(
-                                    modifier = Modifier.fillMaxSize(),
-                                    horizontalAlignment = Alignment.CenterHorizontally,
+                            if (wide) {
+                                val shortLandscape = maxHeight < maxWidth * 0.55f
+                                val playbackColumn: @Composable () -> Unit = {
+                                    PlayerConfigurations(
+                                        controller = controller,
+                                        showReciterSelector = showReciterSelector,
+                                        showAudioOptions = showAudioOptions,
+                                        showRepeatOptions = showRepeatOptions,
+                                        showMoreMenu = showMoreMenu,
+                                        showPlaybackSpeedOptions = showPlaybackSpeedOptions,
+                                        showEndBehaviorOptions = showEndBehaviorOptions,
+                                        horizontalPadding = 0.dp,
+                                        verticalPadding = blockGap,
+                                        gap = blockGap,
+                                    )
+
+                                    ProgressSeekBar(
+                                        isPlaying = isPlaying,
+                                        isLoading = isLoading,
+                                        controller = controller,
+                                        horizontalPadding = 0.dp,
+                                    )
+
+                                    Spacer(Modifier.height(blockGap))
+
+                                    ExpandedTransportControls(
+                                        isPlaying = isPlaying,
+                                        isLoading = isLoading,
+                                        controller = controller,
+                                        bottomPadding = 0.dp,
+                                        playSize = playSize,
+                                        sideSize = sideControlSize,
+                                    )
+                                }
+
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(gutter),
+                                    verticalAlignment = Alignment.CenterVertically,
                                 ) {
-                                    Row(
+                                    LandscapePlayerIdentity(
+                                        verse = verse,
                                         modifier = Modifier
-                                            .weight(1f)
-                                            .fillMaxWidth(),
-                                    ) {
-                                        ExtendedThumbnail(
-                                            verse = verse,
-                                            modifier = Modifier
-                                                .weight(0.4f)
-                                                .fillMaxHeight()
-                                                .padding(16.dp),
-                                        )
+                                            .weight(0.4f)
+                                            .fillMaxHeight(),
+                                    )
 
-                                        Column(
-                                            modifier = Modifier
-                                                .weight(0.6f)
-                                                .fillMaxHeight(),
-                                            horizontalAlignment = Alignment.CenterHorizontally,
-                                            verticalArrangement = Arrangement.Center,
-                                        ) {
+                                    Column(
+                                        modifier = Modifier
+                                            .weight(0.6f)
+                                            .fillMaxHeight()
+                                            .padding(start = gutter),
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                    ) {
+                                        if (shortLandscape) {
+                                            PlayerMessages(
+                                                state,
+                                                isPlaying,
+                                            )
+                                            Spacer(Modifier.weight(1f))
+                                            playbackColumn()
+                                        } else {
                                             Box(
                                                 modifier = Modifier
                                                     .weight(1f)
                                                     .fillMaxWidth(),
-                                                contentAlignment = Alignment.Center,
+                                                contentAlignment = Alignment.BottomCenter,
                                             ) {
                                                 PlayerMessages(
                                                     state,
                                                     isPlaying,
                                                 )
                                             }
-
-                                            configurations()
-
-                                            ExpandedTransportControls(
-                                                isPlaying = isPlaying,
-                                                isLoading = isLoading,
-                                                controller = controller,
-                                                bottomPadding = 8.dp,
-                                            )
+                                            playbackColumn()
+                                            Spacer(Modifier.weight(1f))
                                         }
                                     }
-
-                                    ProgressSeekBar(
-                                        isPlaying = isPlaying,
-                                        isLoading = isLoading,
-                                        controller = controller,
-                                    )
-
-                                    Spacer(Modifier.height(12.dp))
                                 }
                             } else {
-                                val thumbnailHeight: Dp =
-                                    (maxHeight * 0.32f).coerceIn(150.dp, 340.dp)
+                                val thumbnailSize = minOf(
+                                    maxWidth - gutter * 2,
+                                    maxHeight * 0.36f,
+                                )
 
                                 Column(
-                                    modifier = Modifier.fillMaxSize(),
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(horizontal = gutter, vertical = blockGap),
                                     horizontalAlignment = Alignment.CenterHorizontally,
                                 ) {
                                     Box(
@@ -296,12 +318,7 @@ fun ExpandedPlayer(
                                     ) {
                                         ExtendedThumbnail(
                                             verse = verse,
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .padding(
-                                                    start = 16.dp, end = 16.dp, bottom = 16.dp
-                                                )
-                                                .height(thumbnailHeight),
+                                            modifier = Modifier.size(thumbnailSize),
                                         )
                                     }
 
@@ -310,20 +327,35 @@ fun ExpandedPlayer(
                                         isPlaying,
                                     )
 
-                                    configurations()
+                                    PlayerConfigurations(
+                                        controller = controller,
+                                        showReciterSelector = showReciterSelector,
+                                        showAudioOptions = showAudioOptions,
+                                        showRepeatOptions = showRepeatOptions,
+                                        showMoreMenu = showMoreMenu,
+                                        showPlaybackSpeedOptions = showPlaybackSpeedOptions,
+                                        showEndBehaviorOptions = showEndBehaviorOptions,
+                                        horizontalPadding = 0.dp,
+                                        verticalPadding = blockGap,
+                                        gap = blockGap,
+                                    )
 
                                     ProgressSeekBar(
                                         isPlaying = isPlaying,
                                         isLoading = isLoading,
                                         controller = controller,
+                                        horizontalPadding = 0.dp,
                                     )
 
-                                    Spacer(Modifier.height(20.dp))
+                                    Spacer(Modifier.height(blockGap))
 
                                     ExpandedTransportControls(
                                         isPlaying = isPlaying,
                                         isLoading = isLoading,
                                         controller = controller,
+                                        bottomPadding = blockGap,
+                                        playSize = playSize,
+                                        sideSize = sideControlSize,
                                     )
                                 }
                             }
@@ -451,7 +483,7 @@ private fun RowScope.ModeTabs(
 }
 
 @Composable
-private fun Configurations(
+private fun PlayerConfigurations(
     controller: RecitationController,
     showReciterSelector: MutableState<Boolean>,
     showAudioOptions: MutableState<Boolean>,
@@ -459,6 +491,9 @@ private fun Configurations(
     showMoreMenu: MutableState<Boolean>,
     showPlaybackSpeedOptions: MutableState<Boolean>,
     showEndBehaviorOptions: MutableState<Boolean>,
+    horizontalPadding: Dp,
+    verticalPadding: Dp,
+    gap: Dp,
 ) {
     val appLocale = LocalAppLocale.current
     val context = LocalContext.current
@@ -486,15 +521,15 @@ private fun Configurations(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 24.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+            .padding(vertical = verticalPadding),
+        verticalArrangement = Arrangement.spacedBy(gap),
     ) {
         Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+            horizontalArrangement = Arrangement.spacedBy(gap, Alignment.CenterHorizontally),
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp),
+                .padding(horizontal = horizontalPadding),
         ) {
             PlayerConfigButton(
                 text = stringResource(R.string.strTitleSelectReciter),
@@ -518,11 +553,11 @@ private fun Configurations(
         }
 
         Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+            horizontalArrangement = Arrangement.spacedBy(gap, Alignment.CenterHorizontally),
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp),
+                .padding(horizontal = horizontalPadding),
         ) {
             PlayerConfigButton(
                 text = stringResource(R.string.playbackCount),
@@ -549,6 +584,7 @@ private fun Configurations(
                     onClick = {
                         showMoreMenu.value = true
                     },
+                    modifier = Modifier.fillMaxWidth(),
                 )
 
                 DropdownMenu(
@@ -679,6 +715,7 @@ private fun ProgressSeekBar(
     isPlaying: Boolean,
     isLoading: Boolean,
     controller: RecitationController,
+    horizontalPadding: Dp,
 ) {
     var positionMs by remember { mutableLongStateOf(controller.currentPositionMs) }
     var durationMs by remember { mutableLongStateOf(controller.durationMs) }
@@ -728,7 +765,7 @@ private fun ProgressSeekBar(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 24.dp)
+            .padding(horizontal = horizontalPadding)
     ) {
         Slider(
             value = sliderValue,
@@ -815,37 +852,40 @@ private fun ExpandedTransportControls(
     isPlaying: Boolean,
     isLoading: Boolean,
     controller: RecitationController,
-    bottomPadding: Dp = 48.dp,
+    bottomPadding: Dp,
+    playSize: Dp,
+    sideSize: Dp,
 ) {
+    val sideIconSize = sideSize * 0.62f
+    val playIconSize = playSize * 0.48f
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 8.dp, end = 8.dp, bottom = bottomPadding),
+            .padding(bottom = bottomPadding),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         IconButton(
             onClick = { controller.previousVerse() },
-            modifier = Modifier.size(48.dp),
+            modifier = Modifier.size(sideSize),
         ) {
             Icon(
                 painterResource(R.drawable.ic_skip_back),
                 contentDescription = stringResource(R.string.strLabelPreviousVerse),
-                modifier = Modifier.size(30.dp),
+                modifier = Modifier.size(sideIconSize),
                 tint = PlayerContentColor.alpha(.7f),
             )
         }
 
         IconButton(
-            onClick = {
-                controller.seekLeft()
-            },
-            modifier = Modifier.size(48.dp),
+            onClick = { controller.seekLeft() },
+            modifier = Modifier.size(sideSize),
         ) {
             Icon(
                 painterResource(R.drawable.ic_replay_5),
                 contentDescription = null,
-                modifier = Modifier.size(30.dp),
+                modifier = Modifier.size(sideIconSize),
                 tint = PlayerContentColor.alpha(.7f),
             )
         }
@@ -853,9 +893,9 @@ private fun ExpandedTransportControls(
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
-                .size(74.dp)
+                .size(playSize)
                 .shadow(
-                    elevation = 12.dp,
+                    elevation = playSize * 0.16f,
                     shape = CircleShape,
                     ambientColor = colorScheme.primary.copy(alpha = 0.35f),
                     spotColor = colorScheme.primary.copy(alpha = 0.45f),
@@ -863,15 +903,13 @@ private fun ExpandedTransportControls(
                 .clip(CircleShape)
                 .background(colorScheme.primary)
                 .clickable(
-                    onClick = {
-                        controller.playPause()
-                    },
+                    onClick = { controller.playPause() },
                 ),
         ) {
             if (isLoading) {
                 CircularProgressIndicator(
-                    modifier = Modifier.size(44.dp),
-                    strokeWidth = 3.dp,
+                    modifier = Modifier.size(playIconSize),
+                    strokeWidth = playSize * 0.04f,
                     color = colorScheme.onPrimary,
                 )
             } else {
@@ -882,7 +920,7 @@ private fun ExpandedTransportControls(
                     ),
                     contentDescription = if (isPlaying) stringResource(R.string.strLabelPause)
                     else stringResource(R.string.strLabelPlay),
-                    modifier = Modifier.size(36.dp),
+                    modifier = Modifier.size(playIconSize),
                     tint = colorScheme.onPrimary,
                 )
             }
@@ -890,24 +928,24 @@ private fun ExpandedTransportControls(
 
         IconButton(
             onClick = { controller.seekRight() },
-            modifier = Modifier.size(48.dp),
+            modifier = Modifier.size(sideSize),
         ) {
             Icon(
                 painterResource(R.drawable.ic_forward_5),
                 contentDescription = null,
-                modifier = Modifier.size(30.dp),
+                modifier = Modifier.size(sideIconSize),
                 tint = PlayerContentColor.alpha(.7f),
             )
         }
 
         IconButton(
             onClick = { controller.nextVerse() },
-            modifier = Modifier.size(48.dp),
+            modifier = Modifier.size(sideSize),
         ) {
             Icon(
                 painterResource(R.drawable.ic_skip_forward),
                 contentDescription = stringResource(R.string.strLabelNextVerse),
-                modifier = Modifier.size(30.dp),
+                modifier = Modifier.size(sideIconSize),
                 tint = PlayerContentColor.alpha(.7f),
             )
         }

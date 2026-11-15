@@ -517,7 +517,7 @@ private fun ReferenceChapterChipsTopBar(
     Box(
         Modifier
             .fillMaxWidth()
-            .horizontalFadingEdge(listState, color = colorScheme.surface)
+            .horizontalFadingEdge(listState)
     ) {
         LazyRow(
             state = listState,

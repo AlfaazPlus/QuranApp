@@ -479,7 +479,7 @@ internal fun Modifier.readerAutoScroll(
         val speed = autoScrollSpeed
 
         while (speed != null) {
-            listState.scrollBy(speed)
+            listState.scrollBy(speed / 2f)
             delay(16.milliseconds)
         }
     }

@@ -265,7 +265,7 @@ fun IndexMenuContent(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .verticalFadingEdge(scrollState, color = colorScheme.surface)
+                .verticalFadingEdge(scrollState)
         ) {
             Column(
                 modifier = Modifier
