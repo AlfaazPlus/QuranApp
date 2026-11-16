@@ -60,7 +60,7 @@ jobs:
             echo "::error::Missing one or more signing secrets (QURANAPP_KEYSTORE_PASSWORD, QURANAPP_KEY_ALIAS, QURANAPP_KEY_PASSWORD)"
             exit 1
           fi
-          ./gradlew --no-daemon --stacktrace assembleRelease
+          ./gradlew clean assembleRelease --no-build-cache --no-configuration-cache --no-daemon --stacktrace
 
       - name: Prepare release artifacts
         run: |

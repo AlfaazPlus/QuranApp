@@ -19,11 +19,13 @@ android {
 
         resValue("string", "app_name", "QuranApp")
 
+        // Rasterizing vectors during the build is not reproducible.
+        vectorDrawables.generatedDensities()
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildFeatures {
-        viewBinding = true
         dataBinding = true
         compose = true
         buildConfig = true
@@ -74,19 +76,23 @@ android {
 
         release {
             isDebuggable = false
-            isMinifyEnabled = true
-            isShrinkResources = true
+
+            // Code shrinking, resource shrinking, and R8 optimization.
+            // Default Android keep rules (proguard-android-optimize.txt) are included.
+            optimization {
+                enable = true
+            }
 
             isCrunchPngs = false
+
+            // Commit id in META-INF/version-control-info.textproto, for failed RB diffs.
+            vcsInfo.include = true
 
             if (canSignRelease) {
                 signingConfig = signingConfigs.getByName("release")
             }
 
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            proguardFiles("proguard-rules.pro")
 
             /* ---------------------------------------------------------------- */
             resValue("string", "cleartextTrafficPermitted", "false")

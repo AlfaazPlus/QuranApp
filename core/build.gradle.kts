@@ -18,6 +18,9 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
 
+        // Rasterizing vectors during the build is not reproducible.
+        vectorDrawables.generatedDensities()
+
         // Same values as :app. :core cannot read the application BuildConfig.
         val appVersionCode = providers.gradleProperty("quranapp.versionCode").get()
         val appVersionName = providers.gradleProperty("quranapp.versionName").get()
@@ -38,7 +41,6 @@ android {
     buildFeatures {
         buildConfig = true
         compose = true
-        viewBinding = true
     }
 
     compileOptions {

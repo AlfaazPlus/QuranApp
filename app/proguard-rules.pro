@@ -20,6 +20,10 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+# Shrink and optimize, but keep original class and member names.
+# Obfuscation hurts reproducible-build diffs and is unnecessary for FOSS.
+-dontobfuscate
+
 # Keep file names and line numbers.
 -keepattributes SourceFile,LineNumberTable
 # Keep custom exceptions.
