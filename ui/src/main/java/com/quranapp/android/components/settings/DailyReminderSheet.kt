@@ -28,6 +28,7 @@ import com.quranapp.android.components.common.dialogs.BottomSheet
 import com.quranapp.android.core.R
 import com.quranapp.android.navigation.NavigationHelper
 import com.quranapp.android.preferences.VersePreferences
+import com.quranapp.android.preferences.observeVOTDReminderEnabled
 import com.quranapp.android.scheduling.RecommendedReminderScheduler
 import com.quranapp.android.scheduling.VerseOfTheDayScheduler
 import kotlinx.coroutines.launch

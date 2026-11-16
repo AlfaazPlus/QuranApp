@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.quranapp.android.reader.ReaderLayoutItem
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.alpha
+import com.quranapp.android.theme.observeDarkTheme
 import com.quranapp.android.utils.miscellenous.StringUtils
 
 @Composable

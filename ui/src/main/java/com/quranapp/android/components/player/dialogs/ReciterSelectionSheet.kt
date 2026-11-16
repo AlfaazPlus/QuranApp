@@ -44,6 +44,8 @@ import com.quranapp.android.core.R
 import com.quranapp.android.extensions.appViewModel
 import com.quranapp.android.navigation.SettingRoutes
 import com.quranapp.android.preferences.RecitationPreferences
+import com.quranapp.android.preferences.observeReciterId
+import com.quranapp.android.preferences.observeTranslationReciterId
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.utils.app.AppDestinations
 import com.quranapp.android.utils.mediaplayer.RecitationController

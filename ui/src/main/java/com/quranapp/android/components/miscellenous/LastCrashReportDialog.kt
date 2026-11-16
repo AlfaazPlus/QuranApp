@@ -75,7 +75,10 @@ fun LastCrashReportDialog() {
 
                     dismiss()
                     context.copyToClipboard(log)
-                    PlatformServices.messages.show(R.string.pasteCrashLogGithubIssue, long = true)
+                    PlatformServices.messages.show(
+                        context.getString(R.string.pasteCrashLogGithubIssue),
+                        long = true
+                    )
                     PlatformServices.links.browse(ApiConfig.GITHUB_ISSUES_BUG_REPORT_URL)
                 },
             ),

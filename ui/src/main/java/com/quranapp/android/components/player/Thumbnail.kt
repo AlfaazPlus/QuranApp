@@ -50,6 +50,7 @@ import com.quranapp.android.extensions.appViewModel
 import com.quranapp.android.locale.formattedStringResource
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.grayscaleColorFilter
+import com.quranapp.android.theme.observeIsMonoPalette
 import com.quranapp.android.viewmodel.RecitationPlayerViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

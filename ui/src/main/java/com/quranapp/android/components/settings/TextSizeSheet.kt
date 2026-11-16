@@ -38,7 +38,11 @@ import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.locale.LocalAppLocale
 import com.quranapp.android.preferences.ReaderPreferences
+import com.quranapp.android.preferences.observeArabicTextSizeMultiplier
+import com.quranapp.android.preferences.observeQuranScript
+import com.quranapp.android.preferences.observeTranlationTextSizeMultiplier
 import com.quranapp.android.theme.ThemeUtils
+import com.quranapp.android.theme.observeDarkTheme
 import com.quranapp.android.utils.reader.FontResolver
 import com.quranapp.android.utils.reader.ReaderTextSizeUtils
 import com.quranapp.android.utils.reader.ReaderTextSizeUtils.TEXT_SIZE_MAX_PROGRESS
@@ -198,48 +202,49 @@ private fun ArabicTextPreview(textSizeMult: Float) {
 
     val previewData = loaded
 
-    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-        CompositionLocalProvider(LocalQuranAtlasBundle provides atlasBundle) {
-            when {
-                previewData == null -> {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        CircularProgressIndicator()
-                    }
+    CompositionLocalProvider(
+        LocalLayoutDirection provides LayoutDirection.Rtl,
+        LocalQuranAtlasBundle provides atlasBundle,
+    ) {
+        when {
+            previewData == null -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    CircularProgressIndicator()
                 }
+            }
 
-                previewData.words.isEmpty() -> {
-                    Text(
-                        text = "…",
-                        style = style,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center,
-                    )
-                }
+            previewData.words.isEmpty() -> {
+                Text(
+                    text = "…",
+                    style = style,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                )
+            }
 
-                else -> {
-                    FlowRow(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(6.dp),
-                        verticalArrangement = Arrangement.spacedBy(10.dp),
-                    ) {
-                        for (word in previewData.words) {
-                            val placements = if (script.isQuranAtlasScript()) {
-                                previewData.atlasPlacements.getForWord(word)
-                                    ?.takeIf { it.isNotEmpty() }
-                            } else {
-                                null
-                            }
-                            QuranWordText(
-                                word = word,
-                                atlasPlacements = placements,
-                                style = style,
-                            )
+            else -> {
+                FlowRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                ) {
+                    for (word in previewData.words) {
+                        val placements = if (script.isQuranAtlasScript()) {
+                            previewData.atlasPlacements.getForWord(word)
+                                ?.takeIf { it.isNotEmpty() }
+                        } else {
+                            null
                         }
+                        QuranWordText(
+                            word = word,
+                            atlasPlacements = placements,
+                            style = style,
+                        )
                     }
                 }
             }

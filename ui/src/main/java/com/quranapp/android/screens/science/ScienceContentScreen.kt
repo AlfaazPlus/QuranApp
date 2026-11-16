@@ -32,6 +32,9 @@ import com.quranapp.android.core.R
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.locale.appFallbackLanguageCodes
 import com.quranapp.android.preferences.ReaderPreferences
+import com.quranapp.android.preferences.observeArabicTextEnabled
+import com.quranapp.android.preferences.observeQuranScript
+import com.quranapp.android.preferences.observeTranslations
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.toCssVariables
 import com.quranapp.android.utils.Log

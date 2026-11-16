@@ -33,7 +33,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastCoerceAtLeast
 import com.quranapp.android.core.R
 import com.quranapp.android.extensions.verticalFadingEdge
-import com.quranapp.android.utils.reader.rememberQuranMushafId
+import com.quranapp.android.preferences.ReaderPreferences
+import com.quranapp.android.preferences.observeQuranScript
+import com.quranapp.android.preferences.observeQuranScriptVariant
+import com.quranapp.android.utils.reader.toQuranMushafId
 import com.quranapp.android.viewmodel.ReaderViewModel
 
 @Composable
@@ -43,7 +46,9 @@ fun PageNavigationList(
 ) {
     val currentPageNo = readerVm.mushafSession.collectAsState().value.currentPageNo
 
-    val mushafId = rememberQuranMushafId()
+    val scriptCode = ReaderPreferences.observeQuranScript()
+    val scriptVariant = ReaderPreferences.observeQuranScriptVariant()
+    val mushafId = scriptCode.toQuranMushafId(scriptVariant)
     val pageCount by produceState(0, mushafId) {
         value = readerVm.mushafPageCount(mushafId).takeIf { it > 0 } ?: 0
     }

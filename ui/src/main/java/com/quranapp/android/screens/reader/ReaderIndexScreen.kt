@@ -81,6 +81,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.components.common.CenteredSecondaryScrollableTabRow
 import com.quranapp.android.components.common.Chip
 import com.quranapp.android.components.common.Loader
@@ -441,7 +442,7 @@ private fun ReaderIndexChaptersList(
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val favChapters = viewModel.getFavouriteChapters()
+    val favChapters by viewModel.favouriteChapters.collectAsStateWithLifecycle()
 
     val chapterFilters by viewModel.chapterIndexFilters.collectAsState()
     val surahNosWithSajdah by viewModel.surahNosWithSajdah.collectAsState()
@@ -864,7 +865,7 @@ private fun ReaderIndexFavChaptersList(
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val favChapters = viewModel.getFavouriteChapters()
+    val favChapters by viewModel.favouriteChapters.collectAsStateWithLifecycle()
 
     val favSurahs = remember(surahs, favChapters) {
         favChapters.mapNotNull { chapterNo ->

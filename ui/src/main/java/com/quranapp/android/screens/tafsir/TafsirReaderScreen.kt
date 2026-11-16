@@ -70,7 +70,12 @@ import com.quranapp.android.locale.LocalAppLocale
 import com.quranapp.android.navigation.SettingRoutes
 import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.preferences.ReaderPreferences
+import com.quranapp.android.preferences.observeArabicTextSizeMultiplier
+import com.quranapp.android.preferences.observeQuranScript
+import com.quranapp.android.preferences.observeTranlationTextSizeMultiplier
+import com.quranapp.android.preferences.observeTranslations
 import com.quranapp.android.theme.ThemeUtils
+import com.quranapp.android.theme.observeDarkTheme
 import com.quranapp.android.theme.toCssVariables
 import com.quranapp.android.utils.app.AppDestinations
 import com.quranapp.android.utils.miscellenous.Keys

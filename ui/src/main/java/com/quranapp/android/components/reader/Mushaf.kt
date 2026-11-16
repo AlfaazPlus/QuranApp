@@ -64,6 +64,7 @@ import com.quranapp.android.reader.QuranPageItem
 import com.quranapp.android.reader.QuranPageLineItem
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.alpha
+import com.quranapp.android.theme.observeDarkTheme
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.ComposeUiConfig
 import com.quranapp.android.utils.reader.MUSHAF_PAGE_HORIZONTAL_PADDING

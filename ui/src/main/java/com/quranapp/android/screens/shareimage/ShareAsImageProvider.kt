@@ -29,7 +29,7 @@ import com.quranapp.android.locale.formattedStringResource
 import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.preferences.AppPreferences
 import com.quranapp.android.preferences.ReaderPreferences
-import com.quranapp.android.repository.TranslationRepository
+import com.quranapp.android.preferences.observeResourceDownloadProxy
 import com.quranapp.android.utils.reader.FontResolver
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.atlas.AtlasGlyphPlacement
@@ -99,7 +99,7 @@ fun ShareAsImageProvider(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val fontResolver = remember { FontResolver.getInstance(context) }
-    val translRepo = TranslationRepository.remember(context)
+    val translRepo = remember(context) { DatabaseProvider.getTranslationRepository(context) }
     val downloadProxy = AppPreferences.observeResourceDownloadProxy()
 
     var templates by remember { mutableStateOf<List<VerseTemplate>>(emptyList()) }
@@ -447,7 +447,7 @@ fun ShareAsImageProvider(
         scope.launch {
             val bitmap = buildExportBitmap()
             if (bitmap == null) {
-                PlatformServices.messages.show(R.string.image_share_failed)
+                PlatformServices.messages.show(context.getString(R.string.image_share_failed))
                 isExporting = false
                 return@launch
             }
@@ -458,7 +458,7 @@ fun ShareAsImageProvider(
                 context.getString(R.string.strLabelShare),
             )
             if (!ok) {
-                PlatformServices.messages.show(R.string.image_share_failed)
+                PlatformServices.messages.show(context.getString(R.string.image_share_failed))
             }
             isExporting = false
         }
@@ -470,13 +470,13 @@ fun ShareAsImageProvider(
         scope.launch {
             val bitmap = buildExportBitmap()
             if (bitmap == null) {
-                PlatformServices.messages.show(R.string.image_save_failed)
+                PlatformServices.messages.show(context.getString(R.string.image_save_failed))
                 isExporting = false
                 return@launch
             }
 
             val ok = ShareImageExporter.saveToGallery(context, bitmap)
-            PlatformServices.messages.show(if (ok) R.string.image_saved else R.string.image_save_failed)
+            PlatformServices.messages.show(context.getString(if (ok) R.string.image_saved else R.string.image_save_failed))
             isExporting = false
         }
     }

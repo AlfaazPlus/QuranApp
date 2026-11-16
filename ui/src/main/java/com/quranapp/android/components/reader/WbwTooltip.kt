@@ -35,6 +35,7 @@ import com.quranapp.android.core.R
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.db.entities.wbw.WbwWordEntity
 import com.quranapp.android.preferences.ReaderPreferences
+import com.quranapp.android.preferences.observeWbwId
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

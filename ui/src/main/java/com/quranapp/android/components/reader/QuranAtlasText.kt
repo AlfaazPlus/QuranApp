@@ -1,5 +1,6 @@
 package com.quranapp.android.components.reader
 
+import android.graphics.Bitmap
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -7,20 +8,32 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.drawscope.translate
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.isUnspecified
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.withTranslation
 import com.quranapp.android.utils.reader.atlas.AtlasGlyphPlacement
-import com.quranapp.android.utils.reader.atlas.AtlasPreparedGlyph
 import com.quranapp.android.utils.reader.atlas.QuranAtlasBundle
+import com.quranapp.android.utils.reader.atlas.drawSignal
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
+
+private class DrawnGlyph(
+    val pageIndex: Int,
+    val srcL: Int,
+    val srcT: Int,
+    val srcR: Int,
+    val srcB: Int,
+    val dstL: Int,
+    val dstT: Int,
+    val dstR: Int,
+    val dstB: Int,
+)
 
 @Composable
 fun QuranAtlasText(
@@ -32,7 +45,9 @@ fun QuranAtlasText(
     color: Color,
 ) {
     val density = LocalDensity.current
-    val colorFilter = remember(color) { ColorFilter.tint(color) }
+    val signal = remember(bundle) { bundle.drawSignal() }
+    val atlasReady = signal.epoch
+    val tintArgb = color.toArgb()
 
     val layout = remember(placements, bundle, fontSize, lineHeight, density) {
         val fontSizePx = with(density) {
@@ -54,32 +69,47 @@ fun QuranAtlasText(
         val baselineY =
             if (ascenderFu > 0) ascenderFu * fontScale else fallbackHeightPx * 0.8f
 
-        val prepared = ArrayList<AtlasPreparedGlyph>(placements.size)
+        val prepared = ArrayList<DrawnGlyph>(placements.size)
         var currentX = 0f
+        var minY = Float.POSITIVE_INFINITY
+        var maxY = Float.NEGATIVE_INFINITY
 
         for (p in placements) {
-            val glyph = bundle.layer.glyphs[p.gid.toString()]
-
-            if (glyph != null) {
-                val x = currentX + p.xOffsetFu * fontScale + glyph.bearingX * glyphScale
-                val y = baselineY - p.yOffsetFu * fontScale - glyph.bearingY * glyphScale
-                prepared.add(AtlasPreparedGlyph(x.toFloat(), y.toFloat(), glyph))
+            val glyph = bundle.glyphFor(p.gid) ?: run {
+                currentX += p.xAdvanceFu.toFloat() * fontScale
+                continue
             }
 
+            val x = (currentX + p.xOffsetFu * fontScale + glyph.bearingX * glyphScale).toFloat()
+            val y = (baselineY - p.yOffsetFu * fontScale - glyph.bearingY * glyphScale).toFloat()
+            val dstW = (glyph.w * glyphScale).roundToInt().coerceAtLeast(1)
+            val dstH = (glyph.h * glyphScale).roundToInt().coerceAtLeast(1)
+            val dstL = x.roundToInt()
+            val dstT = y.roundToInt()
+
+            prepared.add(
+                DrawnGlyph(
+                    pageIndex = glyph.textureIndex,
+                    srcL = glyph.x,
+                    srcT = glyph.y,
+                    srcR = glyph.x + glyph.w,
+                    srcB = glyph.y + glyph.h,
+                    dstL = dstL,
+                    dstT = dstT,
+                    dstR = dstL + dstW,
+                    dstB = dstT + dstH,
+                )
+            )
+
+            val bottom = y + glyph.h * glyphScale
+            minY = min(minY, y)
+            maxY = max(maxY, bottom)
             currentX += p.xAdvanceFu.toFloat() * fontScale
         }
 
         val (tightMinY, tightHeightPx) = if (prepared.isEmpty()) {
             0f to fallbackHeightPx
         } else {
-            var minY = Float.POSITIVE_INFINITY
-            var maxY = Float.NEGATIVE_INFINITY
-            for (d in prepared) {
-                val top = d.y
-                val bottom = d.y + d.glyph.h * glyphScale
-                minY = min(minY, top)
-                maxY = max(maxY, bottom)
-            }
             minY to (maxY - minY).coerceAtLeast(1f)
         }
 
@@ -100,7 +130,6 @@ fun QuranAtlasText(
             val boxHeightPx = boxHeightPx
             val verticalInsetPx = verticalInsetPx
             val tightMinY = tightMinY
-            val glyphScale = glyphScale
             val prepared = prepared
         }
     }
@@ -110,34 +139,50 @@ fun QuranAtlasText(
             .width(with(density) { layout.totalWidthPx.roundToInt().toDp() })
             .height(with(density) { layout.boxHeightPx.toDp() })
     ) {
-        translate(0f, layout.verticalInsetPx - layout.tightMinY) {
-            for (d in layout.prepared) {
-                val g = d.glyph
-                val page = bundle.textureForGlyph(g) ?: continue
+        if (atlasReady < 0 || layout.prepared.isEmpty()) return@Canvas
 
-                if (
-                    g.w <= 0 ||
-                    g.h <= 0 ||
-                    g.x < 0 ||
-                    g.y < 0 ||
-                    g.x + g.w > page.width ||
-                    g.y + g.h > page.height
-                ) {
-                    continue
+        val onlyPage = bundle.onlyTextureIndex
+        val sharedPage = if (onlyPage != null) bundle.cachedBitmap(onlyPage) else null
+        val paint = signal.paintFor(tintArgb)
+        val src = signal.src
+        val dst = signal.dst
+
+        drawIntoCanvas { canvas ->
+            val native = canvas.nativeCanvas
+            native.withTranslation(0f, layout.verticalInsetPx - layout.tightMinY) {
+                val glyphs = layout.prepared
+
+                for (i in glyphs.indices) {
+                    val glyph = glyphs[i]
+                    val page = pageFor(sharedPage, onlyPage, bundle, glyph.pageIndex) ?: continue
+
+                    if (
+                        glyph.srcL < 0 ||
+                        glyph.srcT < 0 ||
+                        glyph.srcR > page.width ||
+                        glyph.srcB > page.height ||
+                        glyph.srcL >= glyph.srcR ||
+                        glyph.srcT >= glyph.srcB
+                    ) {
+                        continue
+                    }
+
+                    src.set(glyph.srcL, glyph.srcT, glyph.srcR, glyph.srcB)
+                    dst.set(glyph.dstL, glyph.dstT, glyph.dstR, glyph.dstB)
+                    drawBitmap(page, src, dst, paint)
                 }
 
-                drawImage(
-                    image = page,
-                    srcOffset = IntOffset(g.x, g.y),
-                    srcSize = IntSize(g.w, g.h),
-                    dstOffset = IntOffset(d.x.roundToInt(), d.y.roundToInt()),
-                    dstSize = IntSize(
-                        (g.w * layout.glyphScale).roundToInt().coerceAtLeast(1),
-                        (g.h * layout.glyphScale).roundToInt().coerceAtLeast(1),
-                    ),
-                    colorFilter = colorFilter,
-                )
             }
         }
     }
+}
+
+private fun pageFor(
+    shared: Bitmap?,
+    onlyPage: Int?,
+    bundle: QuranAtlasBundle,
+    index: Int,
+): Bitmap? {
+    if (shared != null && index == onlyPage) return shared
+    return bundle.cachedBitmap(index)
 }

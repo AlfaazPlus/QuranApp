@@ -24,6 +24,10 @@ import com.quranapp.android.core.R
 import com.quranapp.android.extensions.verticalFadingEdge
 import com.quranapp.android.screens.settings.themeColorItems
 import com.quranapp.android.theme.ThemeUtils
+import com.quranapp.android.theme.observeDarkTheme
+import com.quranapp.android.theme.observeIsDynamicColor
+import com.quranapp.android.theme.observeThemeColor
+import com.quranapp.android.theme.observeThemeMode
 import kotlinx.coroutines.launch
 
 @Composable

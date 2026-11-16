@@ -68,6 +68,7 @@ import com.quranapp.android.locale.formattedStringResource
 import com.quranapp.android.navigation.SettingRoutes
 import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.preferences.ReaderPreferences
+import com.quranapp.android.preferences.observeWbwRecitationEnabled
 import com.quranapp.android.reader.ReaderLayoutItem
 import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.repository.UserRepository

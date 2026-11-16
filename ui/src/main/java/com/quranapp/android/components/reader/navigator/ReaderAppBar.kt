@@ -78,6 +78,10 @@ import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.locale.formattedStringResource
 import com.quranapp.android.navigation.SettingRoutes
 import com.quranapp.android.preferences.ReaderPreferences
+import com.quranapp.android.preferences.observePrimaryTranslationSlug
+import com.quranapp.android.preferences.observeQuranScript
+import com.quranapp.android.preferences.observeQuranScriptVariant
+import com.quranapp.android.preferences.observeReadingLayout
 import com.quranapp.android.reader.ReaderMode
 import com.quranapp.android.reader.ReadingLayout
 import com.quranapp.android.theme.alpha

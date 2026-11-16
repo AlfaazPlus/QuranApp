@@ -16,6 +16,8 @@ import androidx.compose.ui.unit.sp
 import com.quranapp.android.api.models.wbw.WbwLanguageInfo
 import com.quranapp.android.locale.isUrduLanguageCode
 import com.quranapp.android.preferences.ReaderPreferences
+import com.quranapp.android.preferences.observeWbwId
+import com.quranapp.android.preferences.observeWbwTextSizeMultiplier
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.appFontFamily
 import com.quranapp.android.theme.fontUrdu

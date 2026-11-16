@@ -52,9 +52,11 @@ import com.quranapp.android.components.common.BottomSheetMenuItem
 import com.quranapp.android.components.common.dialogs.SimpleTooltip
 import com.quranapp.android.components.quran.QuranProphet
 import com.quranapp.android.core.R
+import com.quranapp.android.locale.rememberLocalized
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.grayscaleColorFilter
+import com.quranapp.android.theme.observeIsMonoPalette
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import kotlinx.coroutines.delay
 import java.text.MessageFormat
@@ -63,7 +65,7 @@ import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun ProphetsScreen() {
-    val allProphets = QuranProphet.observe()
+    val allProphets = rememberLocalized { QuranProphet.load(it).prophets }
 
     var searchQuery by remember { mutableStateOf("") }
     var debouncedQuery by remember { mutableStateOf("") }

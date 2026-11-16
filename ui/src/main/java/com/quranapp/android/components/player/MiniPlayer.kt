@@ -32,6 +32,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -51,6 +52,10 @@ import com.quranapp.android.components.reader.ChapterVersePair
 import com.quranapp.android.core.R
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.locale.formattedStringResource
+import com.quranapp.android.preferences.RecitationPreferences
+import com.quranapp.android.preferences.observeAudioOption
+import com.quranapp.android.preferences.observeReciterId
+import com.quranapp.android.preferences.observeTranslationReciterId
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
@@ -321,4 +326,22 @@ fun rememberTimestamp(
     }
 
     return positionMs.fastCoerceIn(0, durationMs) to durationMs
+}
+
+@Composable
+fun RecitationModelManager.rememberCurrentReciterNameForAudioOption(): String {
+    val audioOption = RecitationPreferences.observeAudioOption()
+    val reciterId = RecitationPreferences.observeReciterId()
+    val translationReciterId = RecitationPreferences.observeTranslationReciterId()
+
+    val reciterName by produceState(
+        initialValue = "",
+        audioOption,
+        reciterId,
+        translationReciterId,
+    ) {
+        value = getCurrentReciterNameForAudioOption()
+    }
+
+    return reciterName
 }

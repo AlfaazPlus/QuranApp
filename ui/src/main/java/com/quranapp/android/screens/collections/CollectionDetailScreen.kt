@@ -89,6 +89,11 @@ import com.quranapp.android.db.entities.user.CollectionWithCount
 import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.preferences.ReaderPreferences
+import com.quranapp.android.preferences.observeArabicTextEnabled
+import com.quranapp.android.preferences.observeArabicTextSizeMultiplier
+import com.quranapp.android.preferences.observeQuranScript
+import com.quranapp.android.preferences.observeTranlationTextSizeMultiplier
+import com.quranapp.android.preferences.observeTranslations
 import com.quranapp.android.reader.ReaderLayoutItem
 import com.quranapp.android.reader.ReaderPreparedData
 import com.quranapp.android.theme.alpha
@@ -399,7 +404,7 @@ private fun CollectionDetailContent(
                     scope.launch {
                         vm.deleteCollection(collectionId)
 
-                        PlatformServices.messages.show(R.string.msg_collection_deleted)
+                        PlatformServices.messages.show(context.getString(R.string.msg_collection_deleted))
 
                         onBackPressedDispatcher?.onBackPressed()
                     }

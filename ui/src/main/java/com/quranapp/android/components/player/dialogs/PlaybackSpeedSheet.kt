@@ -12,6 +12,7 @@ import com.quranapp.android.components.common.dialogs.BottomSheet
 import com.quranapp.android.core.R
 import com.quranapp.android.locale.LocalAppLocale
 import com.quranapp.android.preferences.RecitationPreferences
+import com.quranapp.android.preferences.observeSpeed
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import kotlinx.coroutines.launch
 

@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import com.quranapp.android.theme.ThemeUtils
+import com.quranapp.android.theme.observeColorScheme
 import kotlin.math.max
 
 @Composable

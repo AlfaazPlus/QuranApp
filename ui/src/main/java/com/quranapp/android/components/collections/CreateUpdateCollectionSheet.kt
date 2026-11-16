@@ -42,7 +42,6 @@ import com.quranapp.android.core.R
 import com.quranapp.android.db.entities.user.CollectionEntity
 import com.quranapp.android.extensions.appViewModel
 import com.quranapp.android.viewmodel.CollectionsViewModel
-import java.util.Date
 
 private val COLOR_PRESETS = listOf(
     "#000000",
@@ -208,7 +207,7 @@ private fun ColumnScope.Content(
                             description = descriptionValue,
                             icon_key = iconKey,
                             color = color,
-                            updatedAt = Date(),
+                            updatedAt = System.currentTimeMillis(),
                         )
                     )
                 } else {

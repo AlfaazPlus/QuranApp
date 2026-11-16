@@ -12,6 +12,7 @@ import com.quranapp.android.components.common.RadioItem
 import com.quranapp.android.components.common.dialogs.BottomSheet
 import com.quranapp.android.core.R
 import com.quranapp.android.theme.ThemeUtils
+import com.quranapp.android.theme.observeThemeMode
 import kotlinx.coroutines.launch
 
 @Composable

@@ -52,9 +52,11 @@ import com.quranapp.android.components.common.BottomSheetMenuItem
 import com.quranapp.android.components.common.dialogs.SimpleTooltip
 import com.quranapp.android.components.quran.QuranPropheticDua
 import com.quranapp.android.core.R
+import com.quranapp.android.locale.rememberLocalized
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.grayscaleColorFilter
+import com.quranapp.android.theme.observeIsMonoPalette
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import kotlinx.coroutines.delay
 import java.text.MessageFormat
@@ -62,7 +64,7 @@ import java.util.regex.Pattern
 
 @Composable
 fun PropheticDuasScreen(title: String? = null) {
-    val allProphets = QuranPropheticDua.observe()
+    val allProphets = rememberLocalized { QuranPropheticDua.load(it).prophets }
 
     val barTitle = title?.takeIf { it.isNotBlank() }
         ?: stringResource(R.string.strTitleFeaturedDuas)

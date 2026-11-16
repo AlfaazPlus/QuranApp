@@ -46,6 +46,7 @@ import com.quranapp.android.components.quran.ExclusiveVersesDataset
 import com.quranapp.android.components.quran.ExclusiveVersesScreenKind
 import com.quranapp.android.components.quran.QuranExclusiveVerses
 import com.quranapp.android.core.R
+import com.quranapp.android.locale.rememberLocalized
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.tightTextStyle
 import com.quranapp.android.utils.reader.ExclusiveVerseNavigator
@@ -53,7 +54,9 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun ExclusiveVersesListScreen(kind: ExclusiveVersesScreenKind) {
-    val verses = QuranExclusiveVerses.observe(kind.dataset)
+    val verses = rememberLocalized(kind.dataset) {
+        QuranExclusiveVerses.get(it, kind.dataset)
+    }
 
     var searchQuery by remember { mutableStateOf("") }
     var debouncedQuery by remember { mutableStateOf("") }

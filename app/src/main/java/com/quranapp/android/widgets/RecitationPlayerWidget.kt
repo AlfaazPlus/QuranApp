@@ -61,6 +61,7 @@ import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.preferences.RecitationPreferences
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.alpha
+import com.quranapp.android.theme.colorSchemeFromPreferences
 import com.quranapp.android.utils.extensions.dp2px
 import com.quranapp.android.utils.mediaplayer.RecitationChapterArtwork
 import com.quranapp.android.utils.mediaplayer.RecitationController

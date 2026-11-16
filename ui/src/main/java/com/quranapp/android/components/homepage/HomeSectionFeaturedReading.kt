@@ -39,6 +39,7 @@ import com.quranapp.android.extensions.appViewModel
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.grayscaleColorFilter
+import com.quranapp.android.theme.observeIsMonoPalette
 import com.quranapp.android.theme.tightTextStyle
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.viewmodel.FeaturedQuranModel

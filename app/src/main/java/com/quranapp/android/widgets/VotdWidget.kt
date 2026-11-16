@@ -68,6 +68,7 @@ import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.preferences.VersePreferences
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.alpha
+import com.quranapp.android.theme.colorSchemeFromPreferences
 import com.quranapp.android.utils.extensions.dp2px
 import com.quranapp.android.utils.extensions.getFont
 import com.quranapp.android.utils.extensions.sp2px

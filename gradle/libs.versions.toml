@@ -14,6 +14,7 @@ browser = "1.10.0"
 media3 = "1.11.1"
 retrofit = "3.0.0"
 ktor = "3.6.1"
+okio = "3.18.2"
 composeMultiplatform = "1.12.2"
 kotlinxSerialization = "1.13.0"
 kotlinxRetrofit = "1.0.0"
@@ -44,6 +45,7 @@ kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", v
 
 lifecycle-service = { group = "androidx.lifecycle", name = "lifecycle-service", version.ref = "lifecycle" }
 lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
@@ -95,6 +97,10 @@ androidx-room3-paging = { module = "androidx.room3:room3-paging", version.ref = 
 androidx-sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
 
 paging = { module = "androidx.paging:paging-runtime-ktx", version.ref = "paging" }
+paging-common = { module = "androidx.paging:paging-common", version.ref = "paging" }
+okio = { module = "com.squareup.okio:okio", version = "okio" }
+datastore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "dataStore" }
+datastore-core-okio = { module = "androidx.datastore:datastore-core-okio", version.ref = "dataStore" }
 pagingCompose = { module = "androidx.paging:paging-compose", version.ref = "paging" }
 
 compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }

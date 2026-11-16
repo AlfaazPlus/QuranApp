@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Build
 import android.webkit.WebView
 import androidx.appcompat.app.AppCompatDelegate
+import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.bookmark.UserDataMigrationManager
 import com.quranapp.android.locale.refreshAppLocale
 import com.quranapp.android.platform.installAndroidFileSystem
@@ -21,8 +22,17 @@ import com.quranapp.android.utils.mediaplayer.WbwAudioRepository
 import com.quranapp.android.viewmodel.ReaderIndexViewModel
 import com.quranapp.android.widgets.startRecitationPlayerWidgetObserver
 import com.quranapp.android.widgets.startVotdWidgetPreferenceObserver
+import com.quranapp.android.core.BuildConfig as CoreBuildConfig
 
 class QuranApp : Application() {
+    init {
+        CoreBuildConfig.DEBUG = BuildConfig.DEBUG
+
+        if (BuildConfig.DEBUG) {
+            CoreBuildConfig.VERSION_NAME = "${CoreBuildConfig.VERSION_NAME}-debug"
+        }
+    }
+
     override fun attachBaseContext(base: Context) {
         initBeforeBaseAttach(base)
         super.attachBaseContext(base)
@@ -38,6 +48,7 @@ class QuranApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        DatabaseProvider.install(this)
         installAndroidPlatform(this)
         DataStoreManager.init(this)
         refreshAppLocale(applicationContext)

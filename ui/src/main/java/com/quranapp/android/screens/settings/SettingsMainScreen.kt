@@ -32,7 +32,17 @@ import com.quranapp.android.locale.formattedStringResource
 import com.quranapp.android.navigation.SettingRoutes
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.preferences.VersePreferences
+import com.quranapp.android.preferences.observeArabicTextEnabled
+import com.quranapp.android.preferences.observeArabicTextSizeMultiplier
+import com.quranapp.android.preferences.observeKeepScreenOn
+import com.quranapp.android.preferences.observeQuranScript
+import com.quranapp.android.preferences.observeQuranScriptVariant
+import com.quranapp.android.preferences.observeTafsirId
+import com.quranapp.android.preferences.observeTranlationTextSizeMultiplier
+import com.quranapp.android.preferences.observeTranslations
+import com.quranapp.android.preferences.observeVOTDReminderEnabled
 import com.quranapp.android.theme.ThemeUtils
+import com.quranapp.android.theme.observeThemeMode
 import com.quranapp.android.utils.extensions.getStringArray
 import com.quranapp.android.utils.reader.ReaderTextSizeUtils
 import com.quranapp.android.utils.reader.getQuranScriptName

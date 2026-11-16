@@ -31,6 +31,7 @@ import com.quranapp.android.db.relations.VerseWithDetails
 import com.quranapp.android.extensions.appViewModel
 import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.preferences.ReaderPreferences
+import com.quranapp.android.preferences.observeWbwId
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.WbwAudioPlayResult
@@ -98,7 +99,7 @@ fun ReaderProvider(
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val bundle by viewModel.atlasBundle.collectAsStateWithLifecycle()
-    val isAtlasImporting by QuranAtlasLoader.isImporting
+    val isAtlasImporting by QuranAtlasLoader.isImporting.collectAsStateWithLifecycle()
 
     val controller = viewModel.controller
 
@@ -152,19 +153,19 @@ fun ReaderProvider(
                 )) {
                     WbwAudioPlayResult.Success -> Unit
                     WbwAudioPlayResult.NoInternet -> PlatformServices.messages.show(
-                        R.string.strMsgNoInternetLong,
+                        context.getString(R.string.strMsgNoInternetLong),
                         long = true,
                     )
 
                     WbwAudioPlayResult.TimingsNotLoaded -> PlatformServices.messages.show(
-                        R.string.wbwAudioTimingsCouldNotLoad,
+                        context.getString(R.string.wbwAudioTimingsCouldNotLoad),
                         long = true,
                     )
 
                     WbwAudioPlayResult.Unknown,
                     WbwAudioPlayResult.InvalidTiming,
                     WbwAudioPlayResult.NoChapterAudio -> PlatformServices.messages.show(
-                        R.string.wbwAudioCouldNotPlay,
+                        context.getString(R.string.wbwAudioCouldNotPlay),
                         long = true,
                     )
                 }
@@ -207,7 +208,7 @@ fun ReaderProvider(
                             val message = viewModel.userRepository.addToBookmark(
                                 chapterNo = chapterNo, verseRange, note = null
                             )
-                            PlatformServices.messages.show(message.messageRes)
+                            PlatformServices.messages.show(context.getString(message.messageRes))
                         }
                     }
 

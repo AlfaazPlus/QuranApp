@@ -186,7 +186,7 @@ private fun CrashLogs() {
                     .toMutableList()
                     .apply { remove(it) }
 
-                PlatformServices.messages.show(R.string.logRemoved)
+                PlatformServices.messages.show(context.getString(R.string.logRemoved))
             }
         }
     }
@@ -268,7 +268,7 @@ private fun SuppressedLogs() {
                     .toMutableList()
                     .apply { remove(it) }
 
-                PlatformServices.messages.show(R.string.logRemoved)
+                PlatformServices.messages.show(context.getString(R.string.logRemoved))
             }
         }
     }
@@ -355,7 +355,7 @@ private fun AppLogItem(log: AppLogModel, isCrash: Boolean, handleDelete: (AppLog
                         onClick = {
                             context.copyToClipboard(log.log)
                             PlatformServices.messages.show(
-                                R.string.pasteCrashLogGithubIssue,
+                                context.getString(R.string.pasteCrashLogGithubIssue),
                                 long = true
                             )
                             PlatformServices.links.browse(ApiConfig.GITHUB_ISSUES_BUG_REPORT_URL)

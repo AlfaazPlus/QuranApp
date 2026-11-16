@@ -51,6 +51,7 @@ import com.quranapp.android.locale.formattedStringResource
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.grayscaleColorFilter
+import com.quranapp.android.theme.observeIsMonoPalette
 import com.quranapp.android.utils.app.AppDestinations
 import com.quranapp.android.utils.miscellenous.Keys
 import com.quranapp.android.utils.quranScience.loadScienceItems

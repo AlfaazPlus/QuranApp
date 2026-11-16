@@ -54,6 +54,7 @@ import com.quranapp.android.core.R
 import com.quranapp.android.extensions.appViewModel
 import com.quranapp.android.locale.LocalAppLocale
 import com.quranapp.android.preferences.ReaderPreferences
+import com.quranapp.android.preferences.observeTranslations
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.Logger
 import com.quranapp.android.utils.chapterInfo.ChapterInfoJSInterface

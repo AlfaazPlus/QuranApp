@@ -16,6 +16,7 @@ import com.quranapp.android.components.common.RadioItem
 import com.quranapp.android.components.common.dialogs.BottomSheet
 import com.quranapp.android.core.R
 import com.quranapp.android.preferences.RecitationPreferences
+import com.quranapp.android.preferences.observeAudioEndBehaviour
 import com.quranapp.android.utils.mediaplayer.AudioEndBehaviour
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import kotlinx.coroutines.launch

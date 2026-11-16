@@ -155,7 +155,7 @@ private fun VodSheetContent(
                         onFootnotes(verse)
                     } else {
                         PlatformServices.messages.show(
-                            R.string.noFootnotesForThisVerse,
+                            context.getString(R.string.noFootnotesForThisVerse),
                             long = true
                         )
                     }
@@ -171,7 +171,10 @@ private fun VodSheetContent(
                         onDismiss()
                         onSimilarVerses(verse)
                     } else {
-                        PlatformServices.messages.show(R.string.noSimilarVerses, long = true)
+                        PlatformServices.messages.show(
+                            context.getString(R.string.noSimilarVerses),
+                            long = true
+                        )
                     }
                 }
             )

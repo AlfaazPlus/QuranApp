@@ -66,5 +66,7 @@ dependencies {
     implementation(libs.coil.network.okhttp)
     implementation(libs.androidx.webkit)
     implementation(libs.androidx.room3.runtime)
+    implementation(libs.dataStore)
+    implementation(libs.kotlinxSerialization)
 }
 

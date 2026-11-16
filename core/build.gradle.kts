@@ -1,62 +1,139 @@
+import com.android.build.api.variant.KotlinMultiplatformAndroidComponentsExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    id("com.android.library")
+    id("org.jetbrains.kotlin.multiplatform")
+    id("com.android.kotlin.multiplatform.library")
     id("kotlinx-serialization")
     id("com.google.devtools.ksp")
     alias(libs.plugins.androidx.room3)
-    id("kotlin-parcelize")
-    alias(libs.plugins.kotlin.compose.compiler)
 }
 
-android {
-    namespace = "com.quranapp.android.core"
-    compileSdk = 37
+val coreBuildConfigDir = layout.buildDirectory.dir("generated/coreBuildConfig/kotlin")
 
-    defaultConfig {
-        minSdk = 24
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
+val generateCoreBuildConfig = tasks.register("generateCoreBuildConfig") {
+    val versionCode = providers.gradleProperty("quranapp.versionCode")
+    val versionName = providers.gradleProperty("quranapp.versionName")
 
-        // Rasterizing vectors during the build is not reproducible.
-        vectorDrawables.generatedDensities()
+    inputs.property("versionCode", versionCode)
+    inputs.property("versionName", versionName)
 
-        // Same values as :app. :core cannot read the application BuildConfig.
-        val appVersionCode = providers.gradleProperty("quranapp.versionCode").get()
-        val appVersionName = providers.gradleProperty("quranapp.versionName").get()
-        buildConfigField("int", "VERSION_CODE", appVersionCode)
-        buildConfigField("String", "VERSION_NAME", "\"$appVersionName\"")
-    }
+    outputs.dir(coreBuildConfigDir)
 
-    buildTypes {
-        debug {
-            buildConfigField(
-                "String",
-                "VERSION_NAME",
-                "\"${providers.gradleProperty("quranapp.versionName").get()}-debug\"",
-            )
-        }
-    }
+    doLast {
+        val dir = coreBuildConfigDir.get().asFile.resolve("com/quranapp/android/core")
+        dir.mkdirs()
+        dir.resolve("BuildConfig.kt").writeText(
+            """
+            package com.quranapp.android.core
 
-    buildFeatures {
-        buildConfig = true
-        compose = true
-    }
+            object BuildConfig {
+                @JvmField
+                val VERSION_CODE: Int = ${versionCode.get()}
 
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
+                @JvmField
+                var VERSION_NAME: String = "${versionName.get()}"
 
-    sourceSets.named("main") {
-        assets.directories.add(rootProject.file("backup").absolutePath)
+                @JvmField
+                var DEBUG: Boolean = false
+            }
+            """.trimIndent() + "\n",
+        )
     }
 }
 
 kotlin {
-    compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_17)
+    // AGP 9 cannot combine com.android.library with androidTarget().
+    // This is the Android-only target. Apple targets stay behind the Mac gate.
+    android {
+        namespace = "com.quranapp.android.core"
+        compileSdk = 37
+        minSdk = 24
+        withJava()
+        enableCoreLibraryDesugaring = true
+
+        androidResources {
+            enable = true
+        }
+
+        optimization {
+            consumerKeepRules.file("consumer-rules.pro")
+        }
+
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
+
+        withHostTest { }
+    }
+
+    if (System.getProperty("os.name").startsWith("Mac")) {
+        iosArm64()
+        iosSimulatorArm64()
+    }
+
+    sourceSets {
+        commonMain.dependencies {
+            implementation(libs.kotlinxSerialization)
+            implementation(libs.ktor.client.core)
+            implementation(libs.androidx.room3.common)
+            implementation(libs.androidx.room3.runtime)
+            implementation(libs.androidx.room3.paging)
+            implementation(libs.androidx.sqlite.bundled)
+            implementation(libs.paging.common)
+            implementation(libs.okio)
+            implementation(libs.datastore.preferences.core)
+            implementation(libs.datastore.core.okio)
+        }
+
+        androidMain.dependencies {
+            implementation(libs.lifecycle.viewmodel)
+            implementation(libs.lifecycle.runtime)
+            implementation(libs.lifecycle.service)
+
+            implementation(libs.androidx.coreKtx)
+            implementation(libs.androidx.annotation)
+            implementation(libs.androidx.appcompat)
+            implementation(libs.androidx.webkit)
+            implementation(libs.androidx.browser)
+            implementation(libs.androidx.activityKtx)
+            implementation(libs.androidx.fragmentKtx)
+
+            implementation(libs.media3ExoPlayer)
+            implementation(libs.media3Datasource)
+            implementation(libs.media3Database)
+            implementation(libs.media3Session)
+            implementation(libs.media3UI)
+
+            implementation(libs.material)
+            implementation(libs.guava)
+
+            implementation(libs.ktor.client.okhttp)
+
+            implementation(libs.commons.lang)
+            implementation(libs.commons.compress)
+            implementation("com.github.erosb:json-sKema:0.32.0")
+            implementation(libs.workManager)
+            implementation(libs.dataStore)
+
+            implementation(libs.paging)
+        }
+
+        named("androidHostTest") {
+            dependencies {
+                implementation("junit:junit:4.13.2")
+            }
+        }
+
+        named("androidMain") {
+            kotlin.srcDir(generateCoreBuildConfig)
+        }
+    }
+}
+
+tasks.configureEach {
+    if (name == "kspAndroid" || name.startsWith("compileAndroid")) {
+        dependsOn(generateCoreBuildConfig)
     }
 }
 
@@ -65,54 +142,12 @@ room3 {
 }
 
 dependencies {
-    testImplementation("junit:junit:4.13.2")
-
-    implementation(platform(libs.compose.bom))
-    implementation(libs.compose.runtime)
-    implementation(libs.compose.ui)
-    implementation(libs.compose.foundation)
-    implementation(libs.compose.foundation.layout)
-    implementation(libs.compose.material3)
-    implementation(libs.lifecycle.viewmodel.compose)
-    implementation(libs.lifecycle.runtime)
-    implementation(libs.lifecycle.service)
-
-    implementation(libs.androidx.coreKtx)
-    implementation(libs.androidx.annotation)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.webkit)
-    implementation(libs.androidx.browser)
-    implementation(libs.androidx.activityKtx)
-    implementation(libs.androidx.fragmentKtx)
-
-    implementation(libs.media3ExoPlayer)
-    implementation(libs.media3Datasource)
-    implementation(libs.media3Database)
-    implementation(libs.media3Session)
-    implementation(libs.media3UI)
-
+    add("kspAndroid", libs.androidx.room3.compiler)
     coreLibraryDesugaring(libs.desugaring)
-    implementation(libs.material)
-    implementation(libs.guava)
+}
 
-    implementation(libs.kotlinxSerialization)
-    implementation(libs.ktor.client.core)
-    implementation(libs.ktor.client.okhttp)
-
-    implementation(libs.commons.lang)
-    implementation(libs.commons.compress)
-    implementation("com.github.erosb:json-sKema:0.32.0")
-    implementation(libs.workManager)
-    implementation(libs.dataStore)
-
-    implementation(libs.androidx.room3.common)
-    implementation(libs.androidx.room3.runtime)
-    ksp(libs.androidx.room3.compiler)
-    implementation(libs.paging)
-    implementation(libs.androidx.room3.paging)
-    implementation(libs.androidx.sqlite.bundled)
-
-    implementation(libs.compose.navigation)
-    implementation(libs.coil.compose)
-    implementation(libs.coil.network.okhttp)
+extensions.configure<KotlinMultiplatformAndroidComponentsExtension>("androidComponents") {
+    onVariants { variant ->
+        variant.sources.assets?.addStaticSourceDirectory(rootProject.file("backup").absolutePath)
+    }
 }

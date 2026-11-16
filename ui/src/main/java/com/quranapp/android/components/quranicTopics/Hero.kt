@@ -42,6 +42,7 @@ import com.quranapp.android.components.reader.dialogs.QuickReferenceData
 import com.quranapp.android.core.R
 import com.quranapp.android.extensions.bottomBorder
 import com.quranapp.android.preferences.AppPreferences
+import com.quranapp.android.preferences.observeResourceDownloadProxy
 import com.quranapp.android.screens.quranicTopics.QuranicTopicRoutes
 import com.quranapp.android.screens.quranicTopics.topicsNavOptions
 import com.quranapp.android.theme.alpha

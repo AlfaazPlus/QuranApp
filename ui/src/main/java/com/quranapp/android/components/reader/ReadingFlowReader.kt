@@ -49,10 +49,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.quranapp.android.components.reader.dialogs.WbwSheetData
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.preferences.ReaderPreferences
+import com.quranapp.android.preferences.observeArabicTextSizeMultiplier
+import com.quranapp.android.preferences.observeQuranScript
 import com.quranapp.android.reader.ReadingFlowPageItem
 import com.quranapp.android.reader.ReadingFlowSection
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.alpha
+import com.quranapp.android.theme.observeDarkTheme
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.atlas.AtlasGlyphPlacement
 import com.quranapp.android.utils.reader.atlas.getForWord

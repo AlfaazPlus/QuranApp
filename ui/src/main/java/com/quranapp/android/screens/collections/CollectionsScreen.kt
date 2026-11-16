@@ -65,7 +65,6 @@ import com.quranapp.android.theme.alpha
 import com.quranapp.android.utils.miscellenous.Keys
 import com.quranapp.android.viewmodel.CollectionsViewModel
 import kotlinx.coroutines.delay
-import java.util.Date
 import java.util.concurrent.TimeUnit
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -331,12 +330,12 @@ fun CollectionCard(
 }
 
 @Composable
-fun updatedLabel(updatedAt: Date): String {
+fun updatedLabel(updatedAt: Long): String {
     var nowMillis by remember(updatedAt) { mutableLongStateOf(System.currentTimeMillis()) }
 
     LaunchedEffect(updatedAt) {
         while (true) {
-            val elapsed = (System.currentTimeMillis() - updatedAt.time).coerceAtLeast(0)
+            val elapsed = (System.currentTimeMillis() - updatedAt).coerceAtLeast(0)
             val wait = when {
                 elapsed < TimeUnit.MINUTES.toMillis(1) -> TimeUnit.MINUTES.toMillis(1) - elapsed
                 elapsed < TimeUnit.HOURS.toMillis(1) -> TimeUnit.MINUTES.toMillis(1)
@@ -347,7 +346,7 @@ fun updatedLabel(updatedAt: Date): String {
         }
     }
 
-    val delta = (nowMillis - updatedAt.time).coerceAtLeast(0)
+    val delta = (nowMillis - updatedAt).coerceAtLeast(0)
     val minutes = TimeUnit.MILLISECONDS.toMinutes(delta).toInt()
     val hours = TimeUnit.MILLISECONDS.toHours(delta).toInt()
     val days = TimeUnit.MILLISECONDS.toDays(delta).toInt()

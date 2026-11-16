@@ -82,6 +82,7 @@ import com.quranapp.android.db.relations.SurahWithLocalizations
 import com.quranapp.android.locale.LocalAppLocale
 import com.quranapp.android.locale.formattedStringResource
 import com.quranapp.android.preferences.ReaderPreferences
+import com.quranapp.android.preferences.observeTranlationTextSizeMultiplier
 import com.quranapp.android.reader.TranslationPageItem
 import com.quranapp.android.reader.TranslationPageSection
 import com.quranapp.android.reader.TranslationPageVerse

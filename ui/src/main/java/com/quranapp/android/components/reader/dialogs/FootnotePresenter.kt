@@ -49,10 +49,12 @@ import com.quranapp.android.extensions.horizontalFadingEdge
 import com.quranapp.android.extensions.verticalFadingEdge
 import com.quranapp.android.locale.formattedStringResource
 import com.quranapp.android.preferences.ReaderPreferences
+import com.quranapp.android.preferences.observeTranlationTextSizeMultiplier
 import com.quranapp.android.repository.TranslationRepository
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.fontUrdu
+import com.quranapp.android.theme.observeDarkTheme
 import com.quranapp.android.utils.miscellenous.ResUtils
 import com.quranapp.android.utils.miscellenous.StringUtils
 import com.quranapp.android.utils.reader.LocalVerseActions
@@ -94,7 +96,7 @@ fun FootnotePresenter(
 @Composable
 private fun SheetContent(data: FootnotePresenterData) {
     val context = LocalContext.current
-    val translationRepo = TranslationRepository.remember(context)
+    val translationRepo = remember(context) { DatabaseProvider.getTranslationRepository(context) }
 
     val verse = data.verse
     val singleFootnote = data.singleFootnote

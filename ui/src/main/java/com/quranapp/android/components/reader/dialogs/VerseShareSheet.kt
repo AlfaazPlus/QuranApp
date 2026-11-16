@@ -88,7 +88,7 @@ fun VerseShareSheet(
 
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
-    val translRepo = TranslationRepository.remember(context)
+    val translRepo = remember(context) { DatabaseProvider.getTranslationRepository(context) }
 
     val translationBooks by produceState<Map<String, TranslationBookInfoModel>>(
         emptyMap(),

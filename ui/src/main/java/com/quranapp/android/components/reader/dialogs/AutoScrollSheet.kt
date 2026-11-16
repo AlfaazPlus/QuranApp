@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.quranapp.android.components.common.dialogs.BottomSheet
 import com.quranapp.android.core.R
 import com.quranapp.android.preferences.ReaderPreferences
+import com.quranapp.android.preferences.observeAutoScrollSpeed
 import com.quranapp.android.viewmodel.ReaderViewModel
 import kotlinx.coroutines.launch
 

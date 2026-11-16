@@ -66,6 +66,8 @@ import com.quranapp.android.components.common.dialogs.BottomSheet
 import com.quranapp.android.components.common.dialogs.SimpleTooltip
 import com.quranapp.android.core.R
 import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.preferences.observeDocumentUri
+import com.quranapp.android.preferences.observeEnabled
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -210,7 +212,10 @@ private fun AutoBackupSheet(
         if (result.resultCode != Activity.RESULT_OK) return@rememberLauncherForActivityResult
         val uri = result.data?.data ?: return@rememberLauncherForActivityResult
         if (!persistBackupFile(context, uri, result.data?.flags ?: 0)) {
-            PlatformServices.messages.show(R.string.autoBackupFailed, long = true)
+            PlatformServices.messages.show(
+                context.getString(R.string.autoBackupFailed),
+                long = true
+            )
             return@rememberLauncherForActivityResult
         }
 
@@ -232,7 +237,10 @@ private fun AutoBackupSheet(
     val viewFile = {
         val opened = documentUri.isNotBlank() && AutoBackup.openFile(context, documentUri.toUri())
         if (!opened) {
-            PlatformServices.messages.show(R.string.autoBackupOpenFailed, long = true)
+            PlatformServices.messages.show(
+                context.getString(R.string.autoBackupOpenFailed),
+                long = true
+            )
         }
     }
 

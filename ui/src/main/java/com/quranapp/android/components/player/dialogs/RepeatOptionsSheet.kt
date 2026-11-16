@@ -17,6 +17,8 @@ import com.quranapp.android.components.common.dialogs.BottomSheet
 import com.quranapp.android.core.R
 import com.quranapp.android.locale.formattedStringResource
 import com.quranapp.android.preferences.RecitationPreferences
+import com.quranapp.android.preferences.observeAudioOption
+import com.quranapp.android.preferences.observeRepeatCount
 import com.quranapp.android.utils.mediaplayer.AudioOption
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import kotlinx.coroutines.launch

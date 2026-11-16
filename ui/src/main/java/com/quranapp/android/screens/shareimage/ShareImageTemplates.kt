@@ -40,6 +40,7 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.quranapp.android.core.R
 import com.quranapp.android.preferences.AppPreferences
+import com.quranapp.android.preferences.observeResourceDownloadProxy
 import com.quranapp.android.utils.share.VerseTemplate
 import com.quranapp.android.utils.share.VerseTemplateManager
 

@@ -25,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.backup.BackupPreferences
 import com.quranapp.android.core.R
+import com.quranapp.android.preferences.observeFileDeletedAlert
 import com.quranapp.android.utils.app.AppDestinations
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

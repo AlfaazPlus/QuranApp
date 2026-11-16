@@ -53,8 +53,11 @@ import com.quranapp.android.core.R
 import com.quranapp.android.extensions.appViewModel
 import com.quranapp.android.locale.LocalAppLocale
 import com.quranapp.android.preferences.ReaderPreferences
+import com.quranapp.android.preferences.observeQuranScript
+import com.quranapp.android.preferences.observeQuranScriptVariant
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.alpha
+import com.quranapp.android.theme.observeDarkTheme
 import com.quranapp.android.utils.managers.ResourceDownloadStatus
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.QuranScriptVariant

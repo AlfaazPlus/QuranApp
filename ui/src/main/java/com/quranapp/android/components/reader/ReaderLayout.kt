@@ -48,6 +48,7 @@ import com.quranapp.android.components.reader.navigator.ReaderFooterNavigator
 import com.quranapp.android.core.R
 import com.quranapp.android.db.entities.user.BookmarkKey
 import com.quranapp.android.preferences.ReaderPreferences
+import com.quranapp.android.preferences.observeReadingLayout
 import com.quranapp.android.reader.ReaderLayoutItem
 import com.quranapp.android.reader.ReaderMode
 import com.quranapp.android.reader.ReadingLayout

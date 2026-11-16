@@ -28,9 +28,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.LayoutDirection
@@ -203,7 +206,7 @@ private fun TextSearchResultCard(result: SearchResult, onClick: (SearchResult) -
                                 )
 
                                 Text(
-                                    text = match.preview,
+                                    text = match.preview.highlighted(),
                                     style = typography.bodyMedium,
                                     color = colorScheme.onSurface,
                                     fontFamily = fontFamily,
@@ -217,7 +220,7 @@ private fun TextSearchResultCard(result: SearchResult, onClick: (SearchResult) -
                         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
                             Text(
                                 modifier = Modifier.fillMaxWidth(),
-                                text = match.preview,
+                                text = match.preview.highlighted(),
                                 style = typography.bodyLarge.copy(
                                     textDirection = TextDirection.Rtl,
                                     fontFamily = fontArabic
@@ -230,5 +233,15 @@ private fun TextSearchResultCard(result: SearchResult, onClick: (SearchResult) -
                 }
             }
         }
+    }
+}
+
+private fun com.quranapp.android.search.SearchSnippet.highlighted() = buildAnnotatedString {
+    append(text)
+
+    val style = SpanStyle(background = Color(0x66FFD858))
+
+    for (range in highlights) {
+        addStyle(style, range.first, range.last + 1)
     }
 }

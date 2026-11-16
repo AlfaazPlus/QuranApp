@@ -75,6 +75,7 @@ import com.quranapp.android.core.R
 import com.quranapp.android.extensions.appViewModel
 import com.quranapp.android.locale.LocalAppLocale
 import com.quranapp.android.preferences.AppPreferences
+import com.quranapp.android.preferences.observeDeveloperModeEnabled
 import com.quranapp.android.utils.managers.ResourceDownloadStatus
 import com.quranapp.android.utils.reader.importing.ImportFieldId
 import com.quranapp.android.utils.reader.tafsir.CustomTafsirImporter

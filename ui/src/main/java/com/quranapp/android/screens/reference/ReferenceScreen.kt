@@ -98,6 +98,8 @@ import com.quranapp.android.extensions.horizontalFadingEdge
 import com.quranapp.android.locale.readAppLocale
 import com.quranapp.android.preferences.AppPreferences
 import com.quranapp.android.preferences.ReaderPreferences
+import com.quranapp.android.preferences.observeResourceDownloadProxy
+import com.quranapp.android.preferences.observeTranslations
 import com.quranapp.android.reader.ReaderLayoutItem
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.utils.Log

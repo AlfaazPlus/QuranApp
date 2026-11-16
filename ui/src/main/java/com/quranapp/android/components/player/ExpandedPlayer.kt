@@ -79,6 +79,10 @@ import com.quranapp.android.core.R
 import com.quranapp.android.locale.LocalAppLocale
 import com.quranapp.android.locale.formattedStringResource
 import com.quranapp.android.preferences.RecitationPreferences
+import com.quranapp.android.preferences.observeAudioEndBehaviour
+import com.quranapp.android.preferences.observeAudioOption
+import com.quranapp.android.preferences.observeRepeatCount
+import com.quranapp.android.preferences.observeSpeed
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.utils.mediaplayer.AudioEndBehaviour
 import com.quranapp.android.utils.mediaplayer.AudioOption

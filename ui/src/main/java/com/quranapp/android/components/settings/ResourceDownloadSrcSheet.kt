@@ -15,6 +15,7 @@ import com.quranapp.android.components.common.RadioItem
 import com.quranapp.android.components.common.dialogs.BottomSheet
 import com.quranapp.android.core.R
 import com.quranapp.android.preferences.AppPreferences
+import com.quranapp.android.preferences.observeResourceDownloadProxy
 import com.quranapp.android.utils.app.DownloadSourceUtils
 import com.quranapp.android.utils.app.ResourceDownloadProxy
 import kotlinx.coroutines.launch

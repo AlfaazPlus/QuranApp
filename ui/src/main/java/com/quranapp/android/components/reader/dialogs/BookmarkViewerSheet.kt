@@ -218,7 +218,7 @@ private fun BookmarkViewerSheetContent(
                     onClick = {
                         coroutineScope.launch {
                             val message = repo.removeFromBookmark(chapterNo, fromVerseNo, toVerseNo)
-                            PlatformServices.messages.show(message.messageRes)
+                            PlatformServices.messages.show(context.getString(message.messageRes))
                             onClose()
                         }
                     },

@@ -76,6 +76,7 @@ import com.quranapp.android.core.R
 import com.quranapp.android.extensions.appViewModel
 import com.quranapp.android.navigation.SettingRoutes
 import com.quranapp.android.preferences.AppPreferences
+import com.quranapp.android.preferences.observeDeveloperModeEnabled
 import com.quranapp.android.utils.miscellenous.StringUtils
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.importing.ImportFieldId

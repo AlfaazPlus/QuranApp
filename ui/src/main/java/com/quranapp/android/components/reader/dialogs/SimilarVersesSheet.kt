@@ -58,8 +58,14 @@ import com.quranapp.android.extensions.bottomBorder
 import com.quranapp.android.locale.LocalAppLocale
 import com.quranapp.android.locale.formattedStringResource
 import com.quranapp.android.preferences.ReaderPreferences
+import com.quranapp.android.preferences.observeArabicTextEnabled
+import com.quranapp.android.preferences.observeArabicTextSizeMultiplier
+import com.quranapp.android.preferences.observePrimaryTranslationSlug
+import com.quranapp.android.preferences.observeQuranScript
+import com.quranapp.android.preferences.observeTranlationTextSizeMultiplier
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.alpha
+import com.quranapp.android.theme.observeDarkTheme
 import com.quranapp.android.theme.tightTextStyle
 import com.quranapp.android.utils.reader.TranslationTextStyleParams
 import com.quranapp.android.utils.reader.atlas.AtlasGlyphPlacement

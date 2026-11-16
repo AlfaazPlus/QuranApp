@@ -111,7 +111,7 @@ fun BookmarksScreen(vm: BookmarksViewModel = appViewModel()) {
                     }
                 }
                 if (message != null) {
-                    PlatformServices.messages.show(message.messageRes)
+                    PlatformServices.messages.show(context.getString(message.messageRes))
                 }
             }
         })
@@ -332,7 +332,7 @@ private fun BookmarkItemCard(
                     )
 
                     Text(
-                        formatBookmarkDate(context, bookmark.dateTime),
+                        formatBookmarkDate(context, java.util.Date(bookmark.dateTime)),
                         style = MaterialTheme.typography.labelMedium.copy(
                             fontWeight = FontWeight.Light
                         ),

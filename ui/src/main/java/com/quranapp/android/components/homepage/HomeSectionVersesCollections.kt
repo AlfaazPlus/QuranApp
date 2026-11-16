@@ -33,6 +33,7 @@ import com.quranapp.android.core.R
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.grayscaleColorFilter
+import com.quranapp.android.theme.observeIsMonoPalette
 import com.quranapp.android.utils.app.AppDestinations
 import com.quranapp.android.utils.miscellenous.Keys
 

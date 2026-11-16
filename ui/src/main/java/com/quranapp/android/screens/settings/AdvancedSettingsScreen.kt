@@ -23,6 +23,8 @@ import com.quranapp.android.components.settings.SettingsItem
 import com.quranapp.android.core.R
 import com.quranapp.android.navigation.SettingRoutes
 import com.quranapp.android.preferences.AppPreferences
+import com.quranapp.android.preferences.observeDeveloperModeEnabled
+import com.quranapp.android.preferences.observeResourceDownloadProxy
 import com.quranapp.android.utils.app.DownloadSourceUtils
 import kotlinx.coroutines.launch
 
@@ -47,7 +49,9 @@ fun AdvancedSettingsScreen() {
             SettingsItem(
                 title = R.string.titleResourceDownloadSource,
                 icon = R.drawable.dr_icon_download,
-                subtitleStr = DownloadSourceUtils.observeCurrentSourceName(),
+                subtitleStr = DownloadSourceUtils.getDownloadSourceName(
+                    AppPreferences.observeResourceDownloadProxy(),
+                ),
             ) {
                 showResourceDownloadSrcSheet = true
             }

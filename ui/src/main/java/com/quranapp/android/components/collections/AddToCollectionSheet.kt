@@ -175,7 +175,7 @@ private fun Content(
                 scope.launch {
                     repository.applyVerseMembership(chapterNo, verseNo, current)
 
-                    PlatformServices.messages.show(R.string.collection_updated)
+                    PlatformServices.messages.show(context.getString(R.string.collection_updated))
 
                     onDismiss()
                 }

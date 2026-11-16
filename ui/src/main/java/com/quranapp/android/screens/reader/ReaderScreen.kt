@@ -86,10 +86,14 @@ import com.quranapp.android.components.reader.navigator.rememberAppBarDimensions
 import com.quranapp.android.core.R
 import com.quranapp.android.extensions.appViewModel
 import com.quranapp.android.preferences.ReaderPreferences
+import com.quranapp.android.preferences.observeKeepScreenOn
+import com.quranapp.android.preferences.observeQuranScript
+import com.quranapp.android.preferences.observeReadingLayout
 import com.quranapp.android.reader.ReaderMode
 import com.quranapp.android.reader.ReadingLayout
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.alpha
+import com.quranapp.android.theme.observeDarkTheme
 import com.quranapp.android.utils.reader.ComposeUiConfig
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.QuranScriptUtils
