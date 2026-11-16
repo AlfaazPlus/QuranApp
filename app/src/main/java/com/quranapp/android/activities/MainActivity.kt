@@ -5,17 +5,15 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.compose.setContent
 import com.quranapp.android.activities.base.BaseActivity
-import com.quranapp.android.compose.screens.main.MainScreen
-import com.quranapp.android.compose.theme.QuranAppTheme
-import com.quranapp.android.utils.app.AppActions.checkForCrashLogs
+import com.quranapp.android.components.homepage.AppUpdateRequiredDialog
+import com.quranapp.android.screens.main.MainScreen
+import com.quranapp.android.theme.QuranAppTheme
 import com.quranapp.android.utils.app.AppActions.scheduleActions
 import com.quranapp.android.utils.app.UpdateManager
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
-import com.quranapp.android.views.reader.updateAllVotdWidgets
+import com.quranapp.android.widgets.updateAllVotdWidgets
 
 class MainActivity : BaseActivity() {
-    private var mUpdateManager: UpdateManager? = null
-
     override fun getLayoutResource() = 0
 
     override fun onResume() {
@@ -26,6 +24,11 @@ class MainActivity : BaseActivity() {
 
     override fun initCreate(savedInstanceState: Bundle?) {
         if (UpdateManager.getInstance(this).check4CriticalUpdate()) {
+            setContent {
+                QuranAppTheme {
+                    AppUpdateRequiredDialog()
+                }
+            }
             return
         }
 
@@ -54,7 +57,6 @@ class MainActivity : BaseActivity() {
 
     private fun initActions() {
         scheduleActions(this)
-        checkForCrashLogs(this)
     }
 
 

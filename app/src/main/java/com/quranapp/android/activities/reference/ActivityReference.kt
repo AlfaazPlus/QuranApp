@@ -9,8 +9,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import com.quranapp.android.activities.base.BaseActivity
 import com.quranapp.android.components.ReferenceVerseModel
-import com.quranapp.android.compose.screens.reference.ReferenceScreen
-import com.quranapp.android.compose.theme.QuranAppTheme
+import com.quranapp.android.screens.reference.ReferenceScreen
+import com.quranapp.android.theme.QuranAppTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class ActivityReference : BaseActivity() {

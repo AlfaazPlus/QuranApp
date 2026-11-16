@@ -4,29 +4,24 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.compose.setContent
 import com.quranapp.android.activities.base.BaseActivity
-import com.quranapp.android.compose.screens.quranictopics.QuranicTopicsScreen
-import com.quranapp.android.compose.screens.quranictopics.QuranicTopicsStart
-import com.quranapp.android.compose.theme.QuranAppTheme
+import com.quranapp.android.components.quran.QuranicTopicsStart
+import com.quranapp.android.screens.quranicTopics.QuranicTopicsScreen
+import com.quranapp.android.theme.QuranAppTheme
+import com.quranapp.android.utils.miscellenous.Keys
 
 class ActivityQuranicTopics : BaseActivity() {
-
-    companion object {
-        const val KEY_SCREEN_TYPE = "screen_type"
-        const val KEY_TOPIC_ID = "topic_id"
-        const val KEY_TOPIC_TRAIL = "topic_trail"
-    }
 
     override fun getLayoutResource() = 0
 
     override fun shouldInflateAsynchronously() = false
 
     override fun onActivityInflated(activityView: View, savedInstanceState: Bundle?) {
-        val screenType = intent.getStringExtra(KEY_SCREEN_TYPE)?.let {
+        val screenType = intent.getStringExtra(Keys.KEY_QURANIC_TOPICS_SCREEN_TYPE)?.let {
             runCatching { QuranicTopicsStart.valueOf(it) }.getOrNull()
         } ?: QuranicTopicsStart.Ontology
-        val initialTopicId = intent.getIntExtra(KEY_TOPIC_ID, -1)
+        val initialTopicId = intent.getIntExtra(Keys.KEY_QURANIC_TOPICS_TOPIC_ID, -1)
             .takeIf { it > 0 }
-        val initialTrail = intent.getStringExtra(KEY_TOPIC_TRAIL)
+        val initialTrail = intent.getStringExtra(Keys.KEY_QURANIC_TOPICS_TOPIC_TRAIL)
             .orEmpty()
             .split(',')
             .mapNotNull { it.toIntOrNull() }

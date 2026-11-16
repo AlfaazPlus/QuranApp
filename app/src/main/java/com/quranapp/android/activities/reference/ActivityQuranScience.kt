@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.compose.setContent
 import com.quranapp.android.activities.base.BaseActivity
-import com.quranapp.android.compose.screens.science.ScienceScreen
-import com.quranapp.android.compose.theme.QuranAppTheme
+import com.quranapp.android.screens.science.ScienceScreen
+import com.quranapp.android.theme.QuranAppTheme
 
 class ActivityQuranScience : BaseActivity() {
     override fun getLayoutResource() = 0

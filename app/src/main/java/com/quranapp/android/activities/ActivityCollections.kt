@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.compose.setContent
 import com.quranapp.android.activities.base.BaseActivity
-import com.quranapp.android.compose.screens.collections.CollectionsScreen
-import com.quranapp.android.compose.theme.QuranAppTheme
-import com.quranapp.android.utils.univ.Keys.COLLECTION_ID
+import com.quranapp.android.screens.collections.CollectionsScreen
+import com.quranapp.android.theme.QuranAppTheme
+import com.quranapp.android.utils.miscellenous.Keys.COLLECTION_ID
 
 class ActivityCollections : BaseActivity() {
     override fun getLayoutResource() = 0

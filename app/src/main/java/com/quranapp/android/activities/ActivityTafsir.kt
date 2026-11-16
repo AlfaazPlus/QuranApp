@@ -6,12 +6,12 @@ import android.view.View
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import com.quranapp.android.activities.base.BaseActivity
-import com.quranapp.android.compose.screens.tafsir.TafsirReaderScreen
-import com.quranapp.android.compose.theme.QuranAppTheme
+import com.quranapp.android.screens.tafsir.TafsirReaderScreen
+import com.quranapp.android.theme.QuranAppTheme
+import com.quranapp.android.utils.miscellenous.Keys
 import com.quranapp.android.utils.reader.tafsir.TafsirManager
-import com.quranapp.android.utils.univ.Keys
-import com.quranapp.android.viewModels.TafsirReaderEvent
-import com.quranapp.android.viewModels.TafsirReaderViewModel
+import com.quranapp.android.viewmodel.TafsirReaderEvent
+import com.quranapp.android.viewmodel.TafsirReaderViewModel
 
 class ActivityTafsir : BaseActivity() {
 

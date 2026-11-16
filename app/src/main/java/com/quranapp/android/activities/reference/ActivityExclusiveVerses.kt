@@ -1,15 +1,13 @@
 package com.quranapp.android.activities.reference
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.compose.setContent
 import com.quranapp.android.activities.base.BaseActivity
-import com.quranapp.android.compose.screens.reference.ExclusiveVersesListScreen
-import com.quranapp.android.compose.screens.reference.ExclusiveVersesScreenKind
-import com.quranapp.android.compose.theme.QuranAppTheme
-import com.quranapp.android.utils.univ.Keys
+import com.quranapp.android.components.quran.ExclusiveVersesScreenKind
+import com.quranapp.android.screens.reference.ExclusiveVersesListScreen
+import com.quranapp.android.theme.QuranAppTheme
+import com.quranapp.android.utils.miscellenous.Keys
 
 class ActivityExclusiveVerses : BaseActivity() {
     override fun getLayoutResource() = 0
@@ -27,10 +25,4 @@ class ActivityExclusiveVerses : BaseActivity() {
         }
     }
 
-    companion object {
-        fun intent(context: Context, kind: ExclusiveVersesScreenKind): Intent =
-            Intent(context, ActivityExclusiveVerses::class.java).apply {
-                putExtra(Keys.KEY_EXCLUSIVE_VERSES_KIND, kind.name)
-            }
-    }
 }

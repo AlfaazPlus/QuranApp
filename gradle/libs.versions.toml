@@ -8,13 +8,14 @@ annotation = "1.11.0"
 legacySupport = "1.0.0"
 appcompat = "1.8.0"
 material = "1.14.0"
-guava = "33.7.2-jre"
+guava = "33.8.0-jre"
 webkit = "1.18.0"
-viewbinding = "9.4.1"
 browser = "1.10.0"
 media3 = "1.11.1"
 retrofit = "3.0.0"
-kotlinxSerialization = "1.4.1"
+ktor = "3.6.1"
+composeMultiplatform = "1.12.2"
+kotlinxSerialization = "1.13.0"
 kotlinxRetrofit = "1.0.0"
 commonsLang = "3.12.0"
 commonsCompress = "1.24.0"
@@ -52,7 +53,6 @@ androidx-webkit = { group = "androidx.webkit", name = "webkit", version.ref = "w
 desugaring = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugaring" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 guava = { group = "com.google.guava", name = "guava", version.ref = "guava" }
-viewbinding = { group = "com.android.databinding", name = "viewbinding", version.ref = "viewbinding" }
 androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "browser" }
 androidx-activityKtx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtx" }
 androidx-activityCompose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityKtx" }
@@ -68,6 +68,8 @@ media3UI = { module = "androidx.media3:media3-ui", version.ref = "media3" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 kotlinxSerialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 kotlinxRetrofit = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "kotlinxRetrofit" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 
 commons-lang = { group = "org.apache.commons", name = "commons-lang3", version.ref = "commonsLang" }
 commons-compress = { group = "org.apache.commons", name = "commons-compress", version.ref = "commonsCompress" }
@@ -107,4 +109,6 @@ coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version
 
 [plugins]
 kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinGradlePlugin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlinGradlePlugin" }
+jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
 androidx-room3 = { id = "androidx.room3", version.ref = "room3" }

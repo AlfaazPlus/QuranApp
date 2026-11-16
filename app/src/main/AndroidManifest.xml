@@ -40,7 +40,7 @@
                 android:resource="@xml/automotive_app_desc" />
 
         <receiver
-                android:name=".views.reader.VotdWidgetReceiver"
+                android:name=".widgets.VotdWidgetReceiver"
                 android:description="@string/desc_votd_widget"
                 android:exported="true"
                 android:label="@string/strTitleVOTD">
@@ -54,7 +54,7 @@
         </receiver>
 
         <receiver
-                android:name=".views.player.RecitationPlayerWidgetReceiver"
+                android:name=".widgets.RecitationPlayerWidgetReceiver"
                 android:description="@string/desc_recitation_player_widget"
                 android:exported="true"
                 android:label="@string/recitationPlayer">

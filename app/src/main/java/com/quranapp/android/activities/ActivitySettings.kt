@@ -7,8 +7,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.quranapp.android.activities.base.BaseActivity
-import com.quranapp.android.compose.screens.settings.SettingsScreen
-import com.quranapp.android.compose.theme.QuranAppTheme
+import com.quranapp.android.screens.settings.SettingsScreen
+import com.quranapp.android.theme.QuranAppTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class ActivitySettings : BaseActivity() {

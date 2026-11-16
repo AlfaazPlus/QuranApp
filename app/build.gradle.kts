@@ -2,10 +2,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     id("com.android.application")
-    id("kotlinx-serialization")
-    id("com.google.devtools.ksp")
-    alias(libs.plugins.androidx.room3)
-    id("kotlin-parcelize")
     alias(libs.plugins.kotlin.compose.compiler)
 }
 
@@ -18,17 +14,12 @@ android {
         minSdk = 24
         targetSdk = 36
 
-        // I don't know why I've used such a weird versioning scheme in the beginning,
-        // but I can't change it now as the app is already in the Play Store
-        // now just incrementing from there
-        versionCode = 23_11_11_147
-        versionName = "2026.11.16.1"
+        versionCode = providers.gradleProperty("quranapp.versionCode").get().toInt()
+        versionName = providers.gradleProperty("quranapp.versionName").get()
 
         resValue("string", "app_name", "QuranApp")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        vectorDrawables.generatedDensities()
     }
 
     buildFeatures {
@@ -108,35 +99,22 @@ android {
         }
     }
 
-    sourceSets.named("main") {
-        assets.directories.add(rootProject.file("backup").absolutePath)
-    }
-
     compileOptions {
-        // Flag to enable support for the new language APIs
         isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
 
     dependenciesInfo {
-        // Disables dependency metadata when building APKs (for IzzyOnDroid/F-Droid)
         includeInApk = false
-        // Disables dependency metadata when building Android App Bundles (for Google Play)
         includeInBundle = false
     }
 }
 
 kotlin {
     compilerOptions {
-        jvmTarget.set(
-            JvmTarget.JVM_17
-        )
+        jvmTarget.set(JvmTarget.JVM_17)
     }
-}
-
-room3 {
-    schemaDirectory("$projectDir/schemas")
 }
 
 dependencies {
@@ -144,73 +122,36 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.3.0")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
 
-    implementation(project(":peacedesign"))
+    implementation(project(":ui"))
+    implementation(project(":core"))
 
     implementation(platform(libs.compose.bom))
-
     implementation(libs.compose.runtime)
     implementation(libs.compose.ui)
     implementation(libs.compose.foundation)
-    implementation(libs.compose.foundation.layout)
     implementation(libs.compose.material3)
-    implementation(libs.compose.material3.windowSizeClass)
-    implementation(libs.compose.material3.adaptive)
-    implementation(libs.compose.runtime.livedata)
-    implementation(libs.compose.ui.tooling)
     implementation(libs.lifecycle.viewmodel.compose)
-
-    implementation(libs.androidx.coreKtx)
     implementation(libs.lifecycle.runtime)
     implementation(libs.lifecycle.service)
-    implementation(libs.androidx.annotation)
-    implementation(libs.androidx.legacySupport)
+
+    implementation(libs.androidx.coreKtx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.webkit)
-    implementation(libs.androidx.browser)
+    implementation("androidx.asynclayoutinflater:asynclayoutinflater:1.1.0")
     implementation(libs.androidx.activityKtx)
     implementation(libs.androidx.activityCompose)
     implementation(libs.androidx.fragmentKtx)
 
-    implementation(libs.media3ExoPlayer)
-    implementation(libs.media3Datasource)
-    implementation(libs.media3Database)
-    implementation(libs.media3Session)
-    implementation(libs.media3UI)
-
     coreLibraryDesugaring(libs.desugaring)
     implementation(libs.material)
-    implementation(libs.guava)
-    implementation(libs.viewbinding)
 
-    /* kotlinx serialization */
-    implementation(libs.retrofit)
-    implementation(libs.kotlinxSerialization)
-    implementation(libs.kotlinxRetrofit)
-
-    implementation(libs.commons.lang)
-    implementation(libs.commons.compress)
-    implementation("com.github.erosb:json-sKema:0.32.0")
     implementation(libs.workManager)
     implementation(libs.dataStore)
+    implementation(libs.media3Session)
+    implementation(libs.media3ExoPlayer)
 
-    // Room
-    implementation(libs.androidx.room3.common)
-    implementation(libs.androidx.room3.runtime)
-    ksp(libs.androidx.room3.compiler)
-
-    implementation(libs.paging)
-    implementation(libs.pagingCompose)
-    implementation(libs.androidx.room3.paging)
-    implementation(libs.androidx.sqlite.bundled)
-
-
-    implementation(libs.compose.navigation)
-    implementation(libs.navigation.fragment.ktx)
-    implementation(libs.navigation.ui.ktx)
-
-    implementation(libs.accompanist.permissions)
     implementation(libs.glance)
     implementation(libs.glance.appwidget)
-    implementation(libs.coil.compose)
-    implementation(libs.coil.network.okhttp)
+
+    implementation(libs.navigation.fragment.ktx)
+    implementation(libs.navigation.ui.ktx)
 }

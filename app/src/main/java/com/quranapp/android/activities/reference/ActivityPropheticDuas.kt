@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.compose.setContent
 import com.quranapp.android.activities.base.BaseActivity
-import com.quranapp.android.compose.screens.reference.PropheticDuasScreen
-import com.quranapp.android.compose.theme.QuranAppTheme
-import com.quranapp.android.utils.univ.Keys
+import com.quranapp.android.screens.reference.PropheticDuasScreen
+import com.quranapp.android.theme.QuranAppTheme
+import com.quranapp.android.utils.miscellenous.Keys
 
 class ActivityPropheticDuas : BaseActivity() {
     override fun getLayoutResource() = 0

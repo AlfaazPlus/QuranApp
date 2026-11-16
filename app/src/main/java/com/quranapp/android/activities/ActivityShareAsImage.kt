@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.compose.setContent
 import com.quranapp.android.activities.base.BaseActivity
-import com.quranapp.android.activities.reference.ActivityExclusiveVerses.Companion.intent
-import com.quranapp.android.compose.screens.shareimage.ShareAsImageScreen
-import com.quranapp.android.compose.theme.QuranAppTheme
-import com.quranapp.android.utils.univ.Keys
+import com.quranapp.android.screens.shareimage.ShareAsImageScreen
+import com.quranapp.android.theme.QuranAppTheme
+import com.quranapp.android.utils.miscellenous.Keys
 
 class ActivityShareAsImage : BaseActivity() {
     override fun getLayoutResource() = 0

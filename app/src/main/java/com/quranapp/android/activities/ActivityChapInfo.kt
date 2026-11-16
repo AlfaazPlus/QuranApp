@@ -8,11 +8,11 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.quranapp.android.activities.base.BaseActivity
-import com.quranapp.android.compose.screens.chapterInfo.ChapterInfoScreen
-import com.quranapp.android.compose.theme.QuranAppTheme
-import com.quranapp.android.compose.utils.appPlatformLocale
+import com.quranapp.android.locale.appPlatformLocale
+import com.quranapp.android.screens.chapterInfo.ChapterInfoScreen
+import com.quranapp.android.theme.QuranAppTheme
 import com.quranapp.android.utils.IntentUtils.INTENT_ACTION_OPEN_CHAPTER_INFO
-import com.quranapp.android.utils.univ.Keys
+import com.quranapp.android.utils.miscellenous.Keys
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class ActivityChapInfo : BaseActivity() {

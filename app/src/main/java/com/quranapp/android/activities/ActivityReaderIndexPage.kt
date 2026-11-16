@@ -5,8 +5,8 @@ import android.view.View
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import com.quranapp.android.activities.base.BaseActivity
-import com.quranapp.android.compose.screens.reader.ReaderIndexScreen
-import com.quranapp.android.compose.theme.QuranAppTheme
+import com.quranapp.android.screens.reader.ReaderIndexScreen
+import com.quranapp.android.theme.QuranAppTheme
 
 class ActivityReaderIndexPage : BaseActivity() {
 

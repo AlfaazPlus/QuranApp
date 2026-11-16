@@ -8,9 +8,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.quranapp.android.activities.base.BaseActivity
 import com.quranapp.android.components.quran.QuranScienceItem
-import com.quranapp.android.compose.screens.science.ScienceContentScreen
-import com.quranapp.android.compose.theme.QuranAppTheme
+import com.quranapp.android.screens.science.ScienceContentScreen
+import com.quranapp.android.theme.QuranAppTheme
 import com.quranapp.android.utils.extensions.serializableExtra
+import com.quranapp.android.utils.miscellenous.Keys
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class ActivityQuranScienceContent : BaseActivity() {
@@ -23,7 +24,8 @@ class ActivityQuranScienceContent : BaseActivity() {
 
         setContent {
             val currentIntent by intentFlow.collectAsState()
-            val item = currentIntent?.serializableExtra<QuranScienceItem>("item")
+            val item =
+                currentIntent?.serializableExtra<QuranScienceItem>(Keys.KEY_QURAN_SCIENCE_ITEM)
 
             QuranAppTheme {
                 ScienceContentScreen(item = item)

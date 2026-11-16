@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.compose.setContent
 import com.quranapp.android.activities.base.BaseActivity
-import com.quranapp.android.compose.components.reader.dialogs.QuickReference
-import com.quranapp.android.compose.components.reader.dialogs.QuickReferenceData
-import com.quranapp.android.compose.theme.QuranAppTheme
+import com.quranapp.android.components.reader.dialogs.QuickReference
+import com.quranapp.android.components.reader.dialogs.QuickReferenceData
+import com.quranapp.android.theme.QuranAppTheme
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 

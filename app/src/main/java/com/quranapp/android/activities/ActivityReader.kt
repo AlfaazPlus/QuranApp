@@ -10,15 +10,15 @@ import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.quranapp.android.activities.base.BaseActivity
-import com.quranapp.android.compose.components.reader.ReaderMode
-import com.quranapp.android.compose.screens.reader.ReaderScreen
-import com.quranapp.android.compose.theme.QuranAppTheme
+import com.quranapp.android.reader.ReaderMode
+import com.quranapp.android.screens.reader.ReaderScreen
+import com.quranapp.android.theme.QuranAppTheme
 import com.quranapp.android.utils.IntentUtils.INTENT_ACTION_OPEN_READER
 import com.quranapp.android.utils.Log
 import com.quranapp.android.utils.reader.ReaderIntentData
 import com.quranapp.android.utils.reader.ReaderLaunchParams
 import com.quranapp.android.utils.reader.factory.ReaderFactory
-import com.quranapp.android.viewModels.ReaderViewModel
+import com.quranapp.android.viewmodel.ReaderViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class ActivityReader : BaseActivity() {

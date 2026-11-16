@@ -1,7 +1,8 @@
 rootProject.name = "QuranApp"
 
 include(":app")
-include(":peacedesign")
+include(":core")
+include(":ui")
 
 pluginManagement {
     repositories {
