@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="strTitleFootnote">Dipnot</string>
+    <string name="strTitleFootnotes">Dipnotlar</string>
+    <string name="strTitleVOTD">Günün ayeti</string>
+    <string name="strHintSearch">Ara</string>
+    <string name="desc_votd_widget">Her gün yeni bir ayet alın</string>
+    <string name="recitationPlayer">Kıraat oynatıcı</string>
+    <string name="desc_recitation_player_widget">Ana ekrandan Kur\'an kıraatini yönetin</string>
+</resources>

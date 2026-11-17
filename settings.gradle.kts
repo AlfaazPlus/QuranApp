@@ -1,9 +1,5 @@
 rootProject.name = "QuranApp"
 
-include(":app")
-include(":core")
-include(":ui")
-
 pluginManagement {
     repositories {
         google()
@@ -20,3 +16,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
+include(":androidApp")
+include(":shared")

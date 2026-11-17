@@ -1,21 +1,10 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 plugins {
-    id("com.google.devtools.ksp") version "2.3.6" apply false
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.kotlin.multiplatform.library) apply false
+    alias(libs.plugins.kotlin.multiplatform) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
+    alias(libs.plugins.kotlin.compose.compiler) apply false
+    alias(libs.plugins.jetbrains.compose) apply false
+    alias(libs.plugins.ksp) apply false
     alias(libs.plugins.androidx.room3) apply false
-}
-
-buildscript {
-    extra["kotlin_version"] = "2.3.21"
-
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath(libs.gradle)
-        classpath(libs.kotlin.gradle.plugin)
-        classpath(libs.kotlin.serialization)
-    }
 }

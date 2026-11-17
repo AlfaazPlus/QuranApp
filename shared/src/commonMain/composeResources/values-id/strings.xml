@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="honorificMuhammad">saw.</string>
+    <string name="honorificProphet">a.s.</string>
+    <string name="prophetAdam">Adam</string>
+    <string name="prophetAlyasaa">Ilyasa</string>
+    <string name="prophetAyyub">Ayub</string>
+    <string name="prophetDawud">Daud</string>
+    <string name="prophetDhulkifl">Zulkifli</string>
+    <string name="prophetHarun">Harun</string>
+    <string name="prophetHud">Hud</string>
+    <string name="prophetIbrahim">Ibrahim</string>
+    <string name="prophetIdrees">Idris</string>
+    <string name="prophetIliyas">Ilyas</string>
+    <string name="prophetIsa">Isa</string>
+    <string name="prophetIshaq">Ishaq</string>
+    <string name="prophetIsmail">Ismail</string>
+    <string name="prophetLut">Lut</string>
+    <string name="prophetMuhammad">Muhammad</string>
+    <string name="prophetMusa">Musa</string>
+    <string name="prophetNuh">Nuh</string>
+    <string name="prophetSaleh">Soleh</string>
+    <string name="prophetShuaib">Syuaib</string>
+    <string name="prophetSulayman">Sulaiman</string>
+    <string name="prophetYahya">Yahya</string>
+    <string name="prophetYaqub">Yaqub</string>
+    <string name="prophetYunus">Yunus</string>
+    <string name="prophetYusuf">Yusuf</string>
+    <string name="prophetZakariyya">Zakaria</string>
+    <string name="strLabelThemeLight">Terang</string>
+    <string name="strLabelNext">Berikutnya</string>
+    <string name="strLabelGotIt">Mengerti</string>
+    <string name="strLabelCancel">Batal</string>
+    <string name="strTitleAppVersion">Versi aplikasi</string>
+    <string name="strLabelClose">Tutup</string>
+    <string name="strLabelApply">Terapkan</string>
+    <string name="strLabelRemove">Hapus</string>
+    <string name="strLabelDelete">Hapus</string>
+    <string name="strLabelRemoveAll">Hapus semua</string>
+    <string name="strLabelBack">Kembali</string>
+    <string name="strLabelCopy">Salin</string>
+    <string name="strLabelTop">Atas</string>
+    <string name="strLabelRetry">Ulangi</string>
+    <string name="strLabelDone">Selesai</string>
+    <string name="strLabelOff">Mati</string>
+    <string name="strLabelThemeDark">Gelap</string>
+    <string name="strLabelEdit">Ubah</string>
+    <string name="strLabelSkip">Lewati</string>
+    <string name="strLabelOpen">Buka</string>
+    <string name="strLabelOpenInReader">Buka di Pembaca</string>
+    <string name="strLabelRead">Baca »</string>
+    <string name="strLabelViewAll">Lihat semua</string>
+    <string name="strLabelStart">Mulai</string>
+    <string name="strLabelUpdate">Perbarui</string>
+    <string name="strLabelSystemDefault">Sistem Bawaan</string>
+    <string name="strLabelPreviousVerse">Ayat sebelumnya</string>
+    <string name="strLabelNextVerse">Ayat selanjutnya</string>
+    <string name="strLabelSurah" formatted="false">Surat %1$s</string>
+    <string name="strLabelVerseNo" formatted="false">Ayat %1$d</string>
+    <string name="strLabelVerses" formatted="false">Ayat %1$d–%2$d</string>
+    <string name="strLabelVersesWithColon" formatted="false">Ayat : %1$d–%2$d</string>
+    <string name="strLabelVerseWithChapNo" formatted="false">Ayat %1$d:%2$d</string>
+    <string name="strLabelVerseWithChapNameAndNo" formatted="false">Surah %1$s %2$d: Ayat %3$d</string>
+    <string name="strLabelVerseWithChapNameWithBar" formatted="false">Surah %1$s │ Ayat %2$d</string>
+    <string name="strTitleHolyQuran">Kitab suci Al Quran</string>
+    <string name="strTitleQuran">Al Quran</string>
+    <string name="strTitleMakki">Makkiyah</string>
+    <string name="strTitleMadani">Madaniyah</string>
+    <string name="strTitleFootnote">Catatan Kaki</string>
+    <string name="strTitleVerseOptions">Pilihan ayat</string>
+    <string name="strTitleVerseRecitation">Pelafalan Ayat</string>
+    <string name="strTitleReaderVerseInformation" formatted="false">Surat %1$s : %2$d</string>
+    <string name="strTitleGotoVerseNo" formatted="false">Pergi ke ayat %1$d</string>
+    <string name="strTitleReadVerseRange" formatted="false">Baca Ayat %1$d - %2$d</string>
+    <string name="strTitleReaderTextSizeArabic">Ukuran teks Bahasa Arab</string>
+    <string name="strTitleReaderTextSizeTransl">Ukuran teks terjemahan</string>
+    <string name="strTitleSettings">Pengaturan</string>
+    <string name="strTitleBookmark">Penanda Buku</string>
+    <string name="strTitleHelpSupport">Bantu &amp; Dukung</string>
+    <string name="strTitleAboutUs">Tentang Kami</string>
+    <string name="strTitleBookmarks">Bookmark</string>
+    <string name="strTitleShareApp">Berbagi Aplikasi</string>
+    <string name="strTitleAddNote">Tambahkan catatan</string>
+    <string name="strTitleNote">Catatan</string>
+    <string name="strTitleRateApp">Beri Rating</string>
+    <string name="strTitleFilters">Filter</string>
+    <string name="strTitleMenu">Menu</string>
+    <string name="strTitleTafsir">Tafsir</string>
+    <string name="strTitleAboutSurah">Tentang Surah</string>
+    <string name="strTitleTranslations">Terjemahan</string>
+    <string name="strTitleDownloadTranslations">Unduh</string>
+    <string name="strTitleSelectReciter">Pilih Pembaca</string>
+    <string name="strTitleBookmarkDeleteThis">Hapus bookmark ini\?</string>
+    <string name="strTitleBookmarkDeleteAll">Hapus semua bookmark\?</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">Hapus bookmark %1$d \?</string>
+    <string name="strTitleShareVerse">Bagikan Ayat</string>
+    <string name="strTitleProphets">Nabi dan Rasul</string>
+    <string name="strTitleFeaturedProphets">Nabi dan Rasul dalam Al Quran</string>
+    <string name="strLabelPageNo" formatted="false">Halaman %1$d</string>
+    <string name="strLabelJuzNo" formatted="false">Bagian %1$d</string>
+    <string name="strLabelVerseNoWithColon" formatted="false">Ayat : %1$d</string>
+    <string name="strTitleFootnotes">Catatan Kaki</string>
+    <string name="strTitleSendFeedback">Beri Umpan Balik</string>
+    <string name="strTitleFeaturedQuran">Bacaan Unggulan</string>
+    <string name="strTitleTranslDelete">Hapus terjemahan\?</string>
+    <string name="strTitleVOTD">Ayat Hari Ini</string>
+    <string name="strTitleFeaturedDuas">Doa dalam Al Quran</string>
+    <string name="strTitlePrivacyPolicy">Kebijakan Privasi</string>
+    <string name="strTitleFailed">Gagal</string>
+    <string name="strTitleSuccess">Berhasil</string>
+    <string name="strChapInfoSeeMore">Lihat info selengkapnya ›</string>
+    <string name="strTitleChapInfoJuzNo">Nomor Juz</string>
+    <string name="verses">Ayat</string>
+    <string name="strTitleChapInfoPages">Halaman</string>
+    <string name="strMsgChapInfoFailedLoad">Gagal memuat informasi surah. Silakan coba lagi nanti.</string>
+    <string name="strTitleAppSettings">Pengaturan Aplikasi</string>
+    <string name="strTitleReaderSettings">Pengaturan Pembaca</string>
+    <string name="strTitleAppLanguage">Bahasa</string>
+    <string name="strTitleTheme">Tema</string>
+    <string name="strTitleNoInternet">Tidak ada internet</string>
+    <string name="strLabelPlay">Putar</string>
+    <string name="strLabelRemoveBookmark">Hapus Bookmark</string>
+    <string name="strLabelShare">Bagikan</string>
+    <string name="strLabelReport">Laporkan</string>
+    <string name="strLabelSelectedCount" formatted="false">%1$d dipilih</string>
+    <string name="strLabelSelectVerse">Pilih Ayat</string>
+    <string name="strLabelVerseRange">Rentang ayat</string>
+    <string name="strLabelSelectTranslations">Pilih terjemahan</string>
+    <string name="strLabelSelectTranslation">Pilih terjemahan</string>
+    <string name="strLabelWhatsappStyling">Gaya Whatsapp</string>
+    <string name="strLabelIncludeArabic">Sertakan Bahasa Arab</string>
+    <string name="strLabelIncludeFootnotes">Sertakan catatan kaki</string>
+    <string name="includeBookmarkNote">Sertakan catatan bookmark (jika ada)</string>
+    <string name="strLabelQuickLinks">Tautan cepat</string>
+    <string name="strLabelLater">Nanti</string>
+    <string name="strHintSearchQuran">Ketik kata kunci (contoh: \"Kehidupan\")</string>
+    <string name="strHintSearch">Pencarian</string>
+    <string name="strHintSearchProphet">Cari Nabi</string>
+    <string name="strHintSearchChapter">Cari surah</string>
+    <string name="strHintFromVerse">Dari ayat</string>
+    <string name="strHintToVerse">Ke ayat</string>
+    <string name="strHintBookmarkViewerNote">Tulis catatan tambahan di bookmark ini…</string>
+    <string name="strMsgThemeDark">Mode gelap mengurangi konsumsi daya.</string>
+    <string name="strMsgThemeDefault">Menyesuaikan dengan pengaturan sistem.</string>
+    <string name="strMsgInvalidChapterNo" formatted="false">Surah nomor %1$d tidak valid</string>
+    <string name="strMsgInvalidJuzNo" formatted="false">Juz nomor %1$d tidak valid</string>
+    <string name="strMsgBookmarkAdded">Ayat berhasil ditambahkan ke Bookmark</string>
+    <string name="strMsgBookmarkAddFailed">Ayat gagal ditambahkan ke Bookmark</string>
+    <string name="strMsgBookmarkAddedAlready">Ayat sudah ditambahkan ke Bookmark</string>
+    <string name="strMsgBookmarkRemoved">Ayat berhasil dihapus dari Bookmark</string>
+    <string name="strMsgBookmarkRemoveFailed">Ayat gagal dihapus dari Bookmark</string>
+    <string name="continue_reading_2">Lanjutkan membaca »</string>
+    <string name="strLabelOrder">Urutan</string>
+    <string name="strLabelMoreTranslations" formatted="false">+%1$d lebih banyak terjemahan</string>
+    <string name="strLabelBookmark">Bookmark</string>
+    <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
+    <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
+    <string name="strLabelFeatureQuranMiniInfo" formatted="false">Surah No. %1$d │ Ayat %2$d–%3$d</string>
+    <string name="strTitleReaderJuz">Juz</string>
+    <string name="strTitleChapInfoRevOrder">Urutan Wahyu</string>
+    <string name="strLabelOn">Hidup</string>
+    <string name="strTitleReaderChapters">Surah</string>
+    <string name="strTitleChapInfoChapterNo">Nomor Surah</string>
+    <string name="strTitleChapInfoRukus">Tanda ruku\'</string>
+    <string name="strTitleChapInfoRevType">Jenis Wahyu</string>
+    <string name="strLabelPause">Pause</string>
+    <string name="strLabelCurrentVerse">Ayat saat ini</string>
+    <string name="strMsgBookmarkDeleteSelected">Bookmark yang dipilih akan dihapus.</string>
+    <string name="strMsgBookmarkNoItems">Tidak ada bookmark</string>
+    <string name="strTitleReadHistory">Histori Bacaan</string>
+    <string name="strMsgReadShowupHere">Histori bacaan Anda akan muncul disini.</string>
+    <string name="strMsgBookmarkDate" formatted="false">%1$s di %2$s</string>
+    <string name="strMsgReadHistoryDeleteAll">Semua histori bacaan akan dihapus.</string>
+    <string name="strMsgSearchMultResultsFound" formatted="false">Total hasil ditemukan dalam %1$s: %2$d</string>
+    <string name="strMsgHistoryRemoved" formatted="false">\"%1$s\" dihapus dari histori</string>
+    <string name="strMsgHistoryRemove">Hapus histori ini\?</string>
+    <string name="strMsgBookmarkDateToday" formatted="false">Hari ini di %1$s</string>
+    <string name="strMsgSearchNoResultsFound">Hasil tidak ditemukan. Mohon cek filter pencarian atau cari di terjemahan lain.</string>
+    <string name="strMsgSearchNoResultsFoundIn" formatted="false">Hasil tidak ditemukan dalam %1$s. Mohon cek filter pencarian atau cari di terjemahan lain.</string>
+    <string name="strMsgSearchOneResultFoundIn" formatted="false">Hanya satu hasil ditemukan dalam %1$s</string>
+    <string name="strMsgSearchWordPart">Cari bagian kata</string>
+    <string name="strMsgSearchNoResultsFoundAbsolute">Hasil tidak ditemukan. Mohon cek filter pencarian.</string>
+    <string name="strMsgSearchWordPartExample">Contoh : \'manusia\' dalam \'umat manusia\'</string>
+    <string name="strMsgEnterValidRange">Mohon masukkan rentang ayat yang valid</string>
+    <string name="strMsgShareRange" formatted="false">Ketik rentangan ayat diantara %1$d–%2$d</string>
+    <string name="strMsgTranslDownloaded" formatted="false">Terunduh: \"%1$s\".</string>
+    <string name="strMsgTranslFailedToDownload" formatted="false">Gagal mengunduh \"%1$s\".</string>
+    <string name="strMsgTranslNoneSelected">Tidak ada terjemahan yang dipilih. Pergi ke pengaturan untuk menemukan terjemahan.</string>
+    <string name="strMsgTranslSelectionLimit" formatted="false">%1$d maksimum terjemahan yang bisa dipilih. Mohon batalkan satu pilihan sebelum memilih yang lain untuk menghindari kehilangan performa.</string>
+    <string name="strDescGoBack">Kembali</string>
+    <string name="strDescAddToBookmarks">Tambahkan ke bookmark</string>
+    <string name="strDescClose">Tutup</string>
+    <string name="strDescVerseNoWithChapter" formatted="false">Surah %1$s, ayat %2$d.</string>
+    <string name="strMsgSomethingWrong">Terjadi kesalahan!</string>
+    <string name="strMsgNoInternetLong">Tidak ada koneksi internet. Pastikan Wi-Fi dan data seluler anda hidup, dan coba kembali.</string>
+    <string name="strMsgNoInternet">Mohon periksa koneksi internet anda.</string>
+    <string name="strLabelNavHome">Beranda</string>
+    <string name="strMsgCouldNotOpenPage">Tidak dapat memuat halaman.</string>
+    <string name="strMsgTryLater">Mohon coba lagi nanti.</string>
+    <string name="strTextPleaseWait">Mohon tunggu…</string>
+    <string name="strLabelNavSearch">Pencarian</string>
+    <string name="library">Pustaka</string>
+    <string name="strTitleOops">Ups!</string>
+    <string name="strTitleInfo">Informasi!</string>
+    <string name="strAyatulKursi">Ayat Kursi</string>
+    <string name="strMsgUpdateAvailable">PEMBARUAN TERSEDIA! Tolong perbarui aplikasi untuk mendapatkan fitur terbaru.</string>
+    <string name="strMsgUpdateAvailable4Dialog">PEMBARUAN TERSEDIA!\nTolong perbarui aplikasi.</string>
+    <string name="strMsgUpdateAvailable2Continue">PEMBARUAN DIPERLUKAN!\nTolong perbarui aplikasi untuk melanjutkan.</string>
+    <string name="strLabelAllChapters">Semua Surah</string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false">Menemukan ayat yang sesuai %1$s dengan total %2$d lokasi.</string>
+    <string name="strMsgReferenceInQuran" formatted="false">%1$s di Al Quran</string>
+    <string name="strMsgReferenceDuas">Mengumpulkan doa-doa dari Al Quran.</string>
+    <string name="strMsgReadHistoryNoItems">Tidak ada histori bacaan</string>
+    <string name="strMsgBookmarkDeleteAll">Semua bookmark akan dihapus.</string>
+    <string name="strTitleRecitations">Murattal</string>
+    <string name="labelDownload">Unduh</string>
+    <string name="tafseerCanBeFreedUp" formatted="false">%1$d Tafsir yang tersimpan bisa di bersihkan.</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s \n%2$s \n \nAnda harus mengunduh ulang lagi.</string>
+    <string name="labelFreeUpSpace">Kosongkan ruang</string>
+    <string name="titleDownloadScriptResources">Unduh sumber daya untuk cetakan ini?</string>
+    <string name="msgDownloadKFQPCResources">Sumber daya berikut perlu diunduh sebelum Anda dapat menggunakan cetakan ini:</string>
+    <string name="textDownloading">Mengunduh…</string>
+    <string name="lastCrashLog">Log error terakhir</string>
+    <string name="msgDownloadingFonts">Mengunduh font</string>
+    <string name="msgDownloadFontsSize" formatted="false">Ukuran unduhan: ~%1$dMB\nSetelah diunduh, aplikasi akan menggunakan sekitar ~%2$dMB.</string>
+    <string name="strTitleScripts">Skrip</string>
+    <string name="titleStorageCleanup">Pembersihan penyimpanan</string>
+    <string name="scriptCanBeFreedUp" formatted="false">%1$d Jenis penulisan dan jenis font nya yang terunduh bisa dibersihkan.</string>
+    <string name="storageCleanupMessage">Kosongkan ruang dengan menghapus unduhan yang tidak terpakai. Ini tidak akan menghapus bookmark atau pengaturan.
+    \n
+    \nSumber daya yang bisa dibersihkan:</string>
+    <string name="recitationCanBeFreedUp" formatted="false">%1$d file murattal yang tersimpan %2$d qori murattal bisa dibersihkan.</string>
+    <string name="translationCanBeFreedUp" formatted="false">%1$d terjemahan yang terunduh bisa dibersihkan.</string>
+    <string name="msgVerseReminderNotifPermission">Izin notifikasi diperlukan untuk mengaktifkan pengingat ayat.</string>
+    <string name="pasteCrashLogGithubIssue">Log kerusakan telah disalin ke clipboard. Silakan tempelkan di permasalahan GitHub.</string>
+    <string name="createIssue">Buat permasalahan</string>
+    <string name="copiedToClipboard">Disalin ke papan klip.</string>
+    <string name="github">GitHub</string>
+    <string name="verseSyncOn">Sinkronisasi ayat : ON</string>
+    <string name="verseSyncOff">Sinkronisasi ayat : OFF</string>
+    <string name="titleScriptCleanup">Hapus jenis cetakan?</string>
+    <string name="msgRecitationCleanup" formatted="false">Semua Murattal yang tersimpan dari %1$s akan dihapus. Untuk menghapus Murattal satu per satu berdasarkan surah, buka pengaturan.</string>
+    <string name="titleRecitationCleanup">Hapus Murattal\?</string>
+    <string name="strPreviewTextTransl">Dengan nama Allah Yang Maha Pengasih, Maha Penyayang</string>
+    <string name="msgScriptCleanup" formatted="false">%1$s cetakan dan seluruh font yang tersimpan akan dihapus. Anda perlu mengunduh ulang untuk menggunakannya kembali.</string>
+    <string name="nFiles" formatted="false">%1$d file</string>
+    <string name="nScriptsAndFonts" formatted="false">%1$d cetakan dan %2$d font</string>
+    <string name="nothingToCleanup">Tidak ada yang perlu dibersihkan.</string>
+    <string name="inPlaces" formatted="false">dalam %1$s</string>
+    <string name="inPlacesMore" formatted="false">di %1$s dan %2$d lainnya</string>
+    <string name="onboardDescTheme">Anda selalu dapat mengubahnya nanti.</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">Baca tafsir ayat ke%1$d</string>
+    <string name="strTitleSelectTafsir">Pilih tafsir</string>
+    <string name="onboardDescTranslations">Anda selalu dapat mengubahnya nanti. Anda dapat mengunduh banyak terjemahan lainnya dari pengaturan.</string>
+    <string name="noFootnotesForThisVerse">Tidak ada catatan kaki untuk ayat ini.</string>
+    <string name="onboardDescLanguage">Atur aplikasi dalam bahasa anda. Anda selalu bisa mengubahnya nanti.</string>
+    <string name="noItems">Tidak ada item</string>
+    <string name="titleRemoveFromFavourites">Hapus dari favorit</string>
+    <string name="textNoLogsFound">Log tidak ditemukan</string>
+    <string name="playbackSpeed">Kecepatan pemutaran</string>
+    <string name="audioOnlyTranslation">Hanya putar terjemahan</string>
+    <string name="titleReaderTextSizeTafsir">Ukuran teks tafsir</string>
+    <string name="downloadRecitations">Unduh Murattal</string>
+    <string name="titleOtherSettings">Pengaturan Lainnya</string>
+    <string name="appLogs">Log aplikasi</string>
+    <string name="suppressedLogs">Log yang ditekan</string>
+    <string name="audioOption">Pilihan audio</string>
+    <string name="audioOnlyArabic">Hanya putar Al Quran</string>
+    <string name="audioBothArabicTranslation">Putar Al Quran dan terjemahan</string>
+    <string name="crashLogs">Log error</string>
+    <string name="msgNoFavouriteChapters">Tambah sebuah ayat ke favorit untuk melihat disini.</string>
+    <string name="msgChapterRemovedFromFavourites">Surah telah dihapus dari favorit.</string>
+    <string name="logRemoved">Log dihapus</string>
+    <string name="labelArabic">Bahasa Arab</string>
+    <string name="labelTranslation">Terjemahan</string>
+    <string name="msgChapterAddedToFavourites">Surah telah ditambah ke favorit.</string>
+    <string name="strMsgDuaFor" formatted="false">Doa untuk %1$s</string>
+    <string name="labelNextTafsir">Tafsir selanjutnya</string>
+    <string name="labelPreviousTafsir">Tafsir sebelumnya</string>
+    <string name="titleSolutionVerses">Solusi dari Al Quran</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp adalah aplikasi sumber terbuka dan gratis untuk membaca dan menjelajahi Al Quran dengan terjemahan. Aplikasi ini memiliki antarmuka yang bagus dan bersih dengan fitur-fitur seperti tafsir, murattal, pengingat, dan banyak lagi. \n \nUNDUH SEKARANG: \n%1$s</string>
+    <string name="titleEtiquetteVerses">Adab dalam Al Quran</string>
+    <string name="strMsgDuaOf" formatted="false">Dua dari %1$s</string>
+    <string name="strMsgPropheticDuaInQuran" formatted="false">Dua dari %1$s di Al Quran</string>
+    <string name="msgClearSearchHistory">Hapus riwayat pencarian</string>
+    <string name="titleResourceDownloadSource">Sumber unduhan materi</string>
+    <string name="msgResourceDownloadSource">Gunakan opsi ini untuk mengunduh data Al Quran dari sumber lain jika sumber yang satu tidak berfungsi</string>
+    <string name="msgClearReadHistory">Hapus riwayat bacaan</string>
+    <string name="titleArabicTextToggle">Tampilkan Teks Ayat Arab</string>
+    <string name="msgArabicTextToggle">Menonaktifkan fitur ini akan menyembunyikan teks ayat Arab di seluruh aplikasi.</string>
+    <string name="titleKeepScreenOnWhileReading">Biarkan layar tetap menyala saat membaca</string>
+    <string name="msgKeepScreenOnWhileReading">Mencegah layar mati selama pembaca terbuka. Matikan untuk menghemat baterai.</string>
+    <string name="autoScrollSpeed">Atur kecepatan</string>
+    <string name="startAutoScroll">Mulai gulir otomatis</string>
+    <string name="autoScroll">Menggulir otomatis</string>
+    <string name="desc_votd_widget">Dapatkan ayat baru setiap hari</string>
+    <string name="labelExport">Ekspor</string>
+    <string name="titleExportData">Ekspor &amp; Impor</string>
+    <string name="labelImport">Impor</string>
+    <string name="msgExportSuccess">Sukses mengekspor</string>
+    <string name="autoBackup">Cadangan otomatis</string>
+    <string name="autoBackupDetails">Markah, koleksi, dan pengaturan disimpan ke file yang Anda pilih. File itu diperbarui sekitar sekali sehari.</string>
+    <string name="labelBackupFile">File</string>
+    <string name="labelBackupSchedule">Seberapa sering</string>
+    <string name="autoBackupSchedule">Sekitar sekali sehari</string>
+    <string name="autoBackupNoFile">Belum ada file dipilih</string>
+    <string name="viewFile">Lihat file</string>
+    <string name="changeFile">Ganti file</string>
+    <string name="autoBackupOpenFailed">File tidak bisa dibuka</string>
+    <string name="autoBackupSaved">Cadangan tersimpan</string>
+    <string name="autoBackupFailed">Cadangan tidak bisa disimpan</string>
+    <string name="autoBackupFileDeleted">File yang Anda pilih untuk cadangan otomatis dihapus. Markah, koleksi, dan pengaturan tidak akan disimpan sampai Anda memilih file baru.</string>
+    <string name="importSummary" formatted="false">Impor selesai. %1$d ditambahkan, %2$d diperbarui, %3$d tidak berubah, %4$d dilewati, %5$d bentrok, dan %6$d pengaturan tidak didukung.</string>
+    <string name="backupFailed">Cadangan ini tidak bisa dibaca.</string>
+    <string name="backupUnsupportedVersion">Cadangan ini dari versi aplikasi yang lebih baru.</string>
+    <string name="backupTooLarge">File cadangan ini terlalu besar untuk dibuka.</string>
+    <string name="msgExtractingFonts">Mengekstrak font</string>
+    <string name="warnImportSettings">Mengimpor pengaturan akan mengganti pengaturan Anda saat ini.</string>
+    <string name="labelExportSelected" formatted="false">Ekspor yang dipilih (%1$d)</string>
+    <string name="labelImportSelected" formatted="false">Impor yang dipilih (%1$d)</string>
+    <string name="labelCollections">Koleksi</string>
+    <string name="msgExportSettings">Tema, pembaca, dan tilawah</string>
+    <string name="msgImportSettings">Mengganti tema, pembaca, dan tilawah Anda</string>
+    <string name="msgExportBookmarks">Bookmark dan catatannya</string>
+    <string name="msgImportBookmarks">Menambahkan bookmark dan catatannya</string>
+    <string name="msgExportCollections">Koleksi, ayat, dan catatan Anda</string>
+    <string name="msgImportCollections">Menggabungkan koleksi bernama sama dan mempertahankan ayat serta catatan yang ada</string>
+    <string name="labelSelectFile">Pilih file</string>
+    <string name="titleConfirmImport">Impor yang dipilih?</string>
+    <string name="strLabelDownloaded">Terunduh</string>
+    <string name="strTitleDeleteTafsir">Hapus Tafsir?</string>
+    <string name="strMsgDeleteTafsir" formatted="false">Apakah Anda yakin ingin menghapus \"%1$s\"? Pilihan ini akan menghapus data tafsir yang diunduh dari perangkat Anda.</string>
+    <string name="strTitleMajorSins">Dosa Besar dalam Al Quran</string>
+    <string name="titleCancelDownload">Batalkan unduhan?</string>
+    <string name="yesCancelDownload">Ya, batalkan</string>
+    <string name="noContinueDownload">Tidak, lanjutkan</string>
+    <string name="readingTafsirMultiVerses">Membaca tafsir untuk beberapa ayat:</string>
+    <string name="textSizes">Ukuran Teks</string>
+    <string name="recitationDownloadConfirmTitle">Unduh murattal</string>
+    <string name="modeMushaf">Mode mushaf</string>
+    <string name="readingLayoutFlow">Gulir</string>
+    <string name="readingLayoutPage">Halaman mushaf</string>
+    <string name="dailyReminderMsg">Dapatkan notifikasi pengingat harian.</string>
+    <string name="strHintSearchBy">Cari juz atau surah</string>
+    <string name="strHintSearchPage">Cari halaman</string>
+    <string name="theme_blue">Biru</string>
+    <string name="theme_red">Merah</string>
+    <string name="theme_purple">Ungu</string>
+    <string name="theme_violet">Violet</string>
+    <string name="theme_yellow">Kuning</string>
+    <string name="theme_colors">Warna Tema</string>
+    <string name="theme_mode">Mode Tema</string>
+    <string name="dynamic_color_description">Ubah warna tema berdasarkan warna sistem</string>
+    <string name="quran_and_science">Quran dan Sains</string>
+    <string name="topics">Topik</string>
+    <string name="stopAutoScroll">Hentikan gulir otomatis</string>
+    <string name="once">Sekali</string>
+    <string name="twice">Dua kali</string>
+    <string name="nTimes" formatted="false">%1$d kali</string>
+    <string name="notSupported">Tidak didukung</string>
+    <string name="expandedPlayerModeControls">Kontrol</string>
+    <string name="favourites">Favorit</string>
+    <string name="noNoteProvided">Tidak ada catatan tersedia…</string>
+    <string name="recitationDownloadChaptersProgress" formatted="false">%1$d /%2$d surah</string>
+    <string name="alphabetically">Abjad</string>
+    <string name="dynamic_color">Warna Dinamis</string>
+    <string name="notification_permission">Ijin Notifikasi</string>
+    <string name="recitationDownloadAllComplete">Seluruh surah telah terunduh</string>
+    <string name="recitationBulkDownloadNotifProgress" formatted="false">%1$d /%2$d surah terunduh</string>
+    <string name="strTitleReaderHizb">Hizb</string>
+    <string name="labelHizbNo" formatted="false">Hizb %1$d</string>
+    <string name="sortBy">Urutkan</string>
+    <string name="theme_mono">Mono</string>
+    <string name="theme_amoled">Amoled</string>
+    <string name="learnMore">Pelajari selengkapnya</string>
+    <string name="recitationBulkEnqueueNotifTitle">Memulai unduhan murattal</string>
+    <string name="strHintSearchHizb">Cari hizb atau surah</string>
+    <string name="strMsgNoVerseTiming">Memutar seluruh audio surah tanpa sinkronisasi ayat</string>
+    <string name="msgRecitationGroupSize">Pilih jumlah ayat Al Quran yang diputar sebelum terjemahan dimulai. Contoh: jika Anda memilih 3, maka 3 ayat Al Quran akan diputar kemudian dilanjut oleh terjemahannya.</string>
+    <string name="onboardDescTafsir">Pilih komentar untuk dibaca bersamaan dengan ayat. Anda dapat mengunduh dan mengelola tafsir di dalam pengaturan.</string>
+    <string name="theme_default">Standar</string>
+    <string name="translationHelp">Bahasa Anda tidak ada? Bantu terjemahkan atau kembangkan dan buat aplikasi ini mudah diakses untuk lebih banyak orang!</string>
+    <string name="playbackCount">Jumlah pemutaran</string>
+    <string name="recitationDownloadWaitForOtherReciter">Sedang mengunduh murattal Qari lain. Tunggu hingga selesai atau batalkan sebelum memulai unduhan baru</string>
+    <string name="modeVerseByVerse">Mode ayat per ayat</string>
+    <string name="donate">Donasi kepada kami</string>
+    <string name="about_this_page">Tentang halaman ini</string>
+    <string name="about_quran_science_msg">Konten pada halaman ini diambil dari buku karya Dr. Zakir Naik berjudul \"The Quran and Modern Science: Compatible or Incompatible\"\n\nGambar yang ditampilkan hanya untuk tujuan ilustrasi.</string>
+    <string name="msgRepeat">Atur berapa kali setiap ayat harus diputar sebelum beralih ke ayat berikutnya. Tersedia hanya jika \"Putar hanya Al-Qur\'an\" diaktifkan di Opsi Audio.</string>
+    <string name="textSizeVerseByVerseOnly">Pengaturan ini tidak diterapkan pada mode mushaf.</string>
+    <string name="chronological">Urutan Kronologis</string>
+    <string name="recitationDownloadSomeFailed">Beberapa surah gagal diunduh. Ketuk ulangi untuk mengantrekan surah yang belum berhasil.</string>
+    <string name="clear">Bersihkan</string>
+    <string name="strLabelAll">Semua</string>
+    <string name="strLabelPrevious">Sebelumnya</string>
+    <string name="nextChapter">Surah berikutnya</string>
+    <string name="previousChapter">Surah sebelumnya</string>
+    <string name="nextJuz">Juz berikutnya</string>
+    <string name="previousJuz">Juz sebelumnya</string>
+    <string name="nextHizb">Hizb berikutnya</string>
+    <string name="previousHizb">Hizb sebelumnya</string>
+    <string name="strLabelRukuNo" formatted="false">Rukuk %1$d</string>
+    <string name="endOfPageNo" formatted="false">Akhir Halaman %1$d</string>
+    <string name="endOfRukuNo" formatted="false">Akhir Rukuk %1$d</string>
+    <string name="endOfRubNo" formatted="false">Akhir Rub %1$d</string>
+    <string name="endOfManzilNo" formatted="false">Akhir Manzil %1$d</string>
+    <string name="tafsirForVerse" formatted="false">Tafsir ayat %1$d:%2$d</string>
+    <string name="sajda">Sajda</string>
+    <string name="filterSectionLength">Panjang surah</string>
+    <string name="any">Semua</string>
+    <string name="withSajda">Dengan sajda</string>
+    <string name="withoutSajda">Tanpa sajda</string>
+    <string name="chapterFilterLengthShort">Pendek (&lt;50 ayat)</string>
+    <string name="chapterFilterLengthMedium">Sedang (50–150 ayat)</string>
+    <string name="chapterFilterLengthLong">Panjang (150+ ayat)</string>
+    <string name="clearFilters">Hapus filter</string>
+    <string name="chapterFilters">Filter surah</string>
+    <string name="strMsgReciterDownloadHint">Unduh audio murattal untuk mendengarkan secara offline dan pemutaran yang lebih lancar.</string>
+    <string name="recitationDownloadConfirmMessage">Unduh seluruh murattal oleh Qari ini? Ini mungkin menggunakan penyimpanan dan data yang signifikan.</string>
+    <string name="recitationBulkEnqueueNotifText" formatted="false">%1$s — mengantrekan %2$d dari %3$d</string>
+    <string name="titleRecitationGroupSize">Ukuran Grup Ayat Al Quran</string>
+    <string name="labelRecommended">Disarankan</string>
+    <string name="titleGlobalSearch">Pencarian Global</string>
+    <string name="searchIndexingInProgress">Menyiapkan pencarian. Beberapa hasil mungkin belum muncul hingga proses pengindeksan selesai.</string>
+    <string name="search_match">Jenis kecocokan</string>
+    <string name="search_match_any_words">Kata apa saja</string>
+    <string name="search_match_any_words_desc">Temukan hasil yang mengandung satu atau beberapa kata pencarian.</string>
+    <string name="search_match_all_words">Semua kata</string>
+    <string name="search_match_all_words_desc">Temukan hasil yang mengandung semua kata pencarian.</string>
+    <string name="search_match_exact_phrase">Frasa persis</string>
+    <string name="search_match_exact_phrase_desc">Temukan kata-kata dengan urutan yang sama, seperti “hari kebangkitan”.</string>
+    <string name="textPreparingAudio">Mempersiapkan audio…</string>
+    <string name="noResults">Tidak ada hasil</string>
+    <string name="labelTransliteration">Transliterasi</string>
+    <string name="strMsgSearchHistoryDeleteAll">Semua riwayat pencarian akan dihapus.</string>
+    <string name="strLabelScienceReferences" formatted="false">%1$d referensi</string>
+    <string name="missingTimingData" formatted="false">Data waktu untuk %1$s tidak tersedia — tidak dapat diputar.</string>
+    <string name="expandedPlayerModeSpotlight">Sorotan</string>
+    <string name="wordByWord">Kata per Kata</string>
+    <string name="selectWbwLanguage">Pilih bahasa</string>
+    <string name="wbwShowTranslation">Tampilkan terjemahan</string>
+    <string name="wbwShowTransliteration">Tampilkan transliterasi</string>
+    <string name="wbwShowTransliterationMgs">Jika tersedia untuk bahasa yang dipilih</string>
+    <string name="wbwRecitation">Murattal</string>
+    <string name="wbwRecitationMsg">Putar audio saat kata diklik</string>
+    <string name="wbwTextSize">Ukuran teks</string>
+    <string name="noWbwAvailable">Unduh paket bahasa di bawah ini untuk mengaktifkan fitur kata per kata.</string>
+    <string name="deleteData">Hapus data?</string>
+    <string name="wordNo" formatted="false">Kata %1$d</string>
+    <string name="playWord">Putar kata</string>
+    <string name="previousWord">Kata sebelumnya</string>
+    <string name="nextWord">Kata berikutnya</string>
+    <string name="wbwSelectLanguage">Pilih bahasa kata per kata</string>
+    <string name="results">Hasil</string>
+    <string name="titleRecentSearches">Pencarian terkini</string>
+    <string name="searchInQuran">Cari dalam Al Quran</string>
+    <string name="searchTipsTitle">Tips pencarian</string>
+    <string name="searchTipDirectVerse">Baca ayat atau tafsir secara langsung</string>
+    <string name="searchTipChapter">Cari surah</string>
+    <string name="searchTipDirectJuz">Loncat ke \"Surah 30\", \"Juz 30\" atau \"Hizb 30\"</string>
+    <string name="searchTipTranslation">Cari dalam terjemahan</string>
+    <string name="searchTipArabic">Cari dalam teks Al Quran</string>
+    <string name="enterFullscreen">Layar penuh</string>
+    <string name="exitFullscreen">Keluar layar penuh</string>
+    <string name="belowWord">Di bawah kata</string>
+    <string name="inTooltip">Di tooltip</string>
+    <string name="discord">Discord</string>
+    <string name="strTitleDownloadSunnahApp">Unduh SunnahApp</string>
+    <string name="tajweedColors">Warna Tajwid</string>
+    <string name="similarVerses">Ayat serupa</string>
+    <string name="noSimilarVerses">Tidak ada ayat serupa untuk ayat ini.</string>
+    <string name="countSimilarVerses" formatted="false">%1$s memiliki %2$d ayat serupa</string>
+    <string name="similarVerseRowMeta" formatted="false">%1$d%% cocok · skor %2$d</string>
+    <string name="moreOptions">Opsi lainnya</string>
+    <string name="whenChapterEnds">Saat surah berakhir</string>
+    <string name="whenChapterEndsDesc">Pilih apa yang terjadi setelah surah saat ini selesai diputar.</string>
+    <string name="stopPlayback">Hentikan pemutaran</string>
+    <string name="playNextSurah">Putar surah berikutnya</string>
+    <string name="repeatCurrentSurah">Ulangi surah saat ini</string>
+    <string name="reset">Atur ulang</string>
+    <string name="selectAll">Pilih semua</string>
+    <string name="filterTranslationsDisabledNote">Terjemahan tidak dicari saat pencarian Arab diaktifkan.</string>
+    <string name="filterTranslationsEmpty">Belum ada terjemahan yang diunduh.</string>
+    <string name="wbwAudioTimingsCouldNotLoad">Timing per kata tidak dapat dimuat. Periksa koneksi Anda lalu coba lagi.</string>
+    <string name="wbwAudioCouldNotPlay">Audio kata tidak dapat diputar.</string>
+    <string name="wbwAudioDownloadHint">Unduh audio kata-per-kata untuk didengarkan offline dan pemutaran yang lebih lancar.</string>
+    <string name="wbwAudio">Audio kata-per-kata</string>
+    <string name="wbwAudioDownloadAll">Unduh semua</string>
+    <string name="wbwAudioDownloadAllConfirm">Unduh audio tilawah kata-per-kata untuk semua surah? Ini dapat menggunakan banyak penyimpanan dan data seluler.</string>
+    <string name="wbwAudioBulkWaitForChapterDownloads">Tunggu unduhan surah satuan selesai sebelum mengunduh semuanya.</string>
+    <string name="wbwAudioChapterWaitForBulk">Tunggu unduhan penuh selesai sebelum mengunduh satu surah.</string>
+    <string name="ontologyExplorer">Penjelajah Topik</string>
+    <string name="thematicTopics">Topik berdasarkan tema</string>
+    <string name="englishContentOnly">Konten di halaman ini hanya tersedia dalam bahasa Inggris.</string>
+    <string name="estimatedSize" formatted="false">Perkiraan ukuran: %1$s</string>
+    <string name="msgPreparingPrebuiltAtlas">Sedang menyiapkan teks Al-Qur\'an untuk pertama kali. Ini akan memakan beberapa detik.</string>
+    <string name="create">Buat</string>
+    <string name="strLabelManage">Kelola</string>
+    <string name="update_note">Perbarui catatan</string>
+    <string name="updateAvailable">Pembaruan tersedia</string>
+    <string name="recitationDownloadUpdateConfirmTitle">Perbarui murattal</string>
+    <string name="recitationDownloadUpdateConfirmMessage">Ada audio terbaru untuk qari ini. Memperbarui akan mengganti surah yang sudah diunduh.</string>
+    <string name="recitationDownloadBannerUpdateAvailable">Audio murattal yang diunduh punya pembaruan.</string>
+    <string name="continue_reading">Lanjutkan membaca</string>
+    <string name="recitationPlayer">Pemutar murattal</string>
+    <string name="desc_recitation_player_widget">Kendalikan murattal Al-Qur\'an dari layar utama</string>
+    <string name="my_collections">Koleksi saya</string>
+    <string name="add_to_collection">Tambahkan ke koleksi</string>
+    <string name="remove_from_collection">Hapus dari koleksi</string>
+    <string name="msg_remove_from_collection">Ayat ini akan dihapus dari koleksi. Catatannya juga akan terhapus.</string>
+    <string name="no_collections">Belum ada koleksi.</string>
+    <string name="no_collection_items">Koleksi ini masih kosong. Kumpulkan ayat favorit agar mudah ditemukan.</string>
+    <string name="create_collection">Buat koleksi</string>
+    <string name="update_collection">Ubah koleksi</string>
+    <string name="select_color">Pilih warna</string>
+    <string name="select_icon">Pilih ikon</string>
+    <string name="create_new_collection">Buat koleksi baru</string>
+    <string name="collection_name">Nama koleksi</string>
+    <string name="collection_name_hint">Masukkan nama koleksi</string>
+    <string name="description">Deskripsi</string>
+    <string name="collection_description_hint">Masukkan deskripsi</string>
+    <string name="msg_collection_deleted">Koleksi berhasil dihapus.</string>
+    <string name="delete_collection">Hapus koleksi</string>
+    <string name="msg_delete_collection">Koleksi beserta ayat di dalamnya akan dihapus. Bookmark tidak terpengaruh.</string>
+    <string name="collection_note_hint">Tulis catatan tambahan untuk ayat ini di sini…</string>
+    <string name="collection_updated">Koleksi diperbarui</string>
+    <string name="updated_just_now">Baru saja diperbarui</string>
+    <plurals name="verse_count">
+            <item quantity="other">%1$d ayat</item>
+        </plurals>
+    <plurals name="updated_minutes">
+            <item quantity="other">Diperbarui %1$d menit yang lalu</item>
+        </plurals>
+    <plurals name="updated_hours">
+            <item quantity="other">Diperbarui %1$d jam yang lalu</item>
+        </plurals>
+    <plurals name="updated_days">
+            <item quantity="other">Diperbarui %1$d hari yang lalu</item>
+        </plurals>
+    <plurals name="item_count">
+            <item quantity="other">%1$d item</item>
+        </plurals>
+    <plurals name="place_count">
+            <item quantity="other">%1$d tempat</item>
+        </plurals>
+    <string name="advanced_settings">Pengaturan lanjutan</string>
+    <string name="recent_history">Riwayat terbaru</string>
+    <string name="set_as_active">Jadikan aktif</string>
+    <string name="shareAsImage">Buat gambar</string>
+    <string name="customize">Sesuaikan</string>
+    <string name="templates">Templat</string>
+    <string name="image_saved">Gambar tersimpan</string>
+    <string name="image_save_failed">Gambar tidak dapat disimpan</string>
+    <string name="image_share_failed">Gambar tidak dapat dibagikan</string>
+    <string name="content">Konten</string>
+    <string name="arabic_only">Arab saja</string>
+    <string name="translation_only">Terjemahan saja</string>
+    <string name="arabic_and_translation">Arab dan terjemahan</string>
+    <string name="shareImageFitRejected">Ayat ini terlalu panjang untuk templat yang dipilih. Tampilkan lebih sedikit konten, atau pilih templat lain.</string>
+    <string name="tajweed_silent_letter">Idgham</string>
+    <string name="tajweed_normal_madd">Panjang bacaan Maad 2 harakat</string>
+    <string name="tajweed_separated_madd">Diperbolehkan Maad 2 atau 4 atau 6 harakat</string>
+    <string name="tajweed_connected_madd">Panjang bacaan Maad 4 atau 5 harakat</string>
+    <string name="tajweed_necessary_madd">Panjang bacaan Maad  6 harakat</string>
+    <string name="tajweed_ghunna">Ikhfa/Ghunnah\'</string>
+    <string name="tajweed_qalqala">Qalqalah</string>
+    <string name="tajweed_tafkhim">Tafkhim</string>
+</resources>

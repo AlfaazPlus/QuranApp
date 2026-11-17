@@ -1,0 +1,556 @@
+package com.quranapp.android.components.player
+
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.quranapp.android.components.common.Loader
+import com.quranapp.android.components.reader.LocalReaderViewModel
+import com.quranapp.android.components.reader.LocalRecitation
+import com.quranapp.android.components.reader.QuranWordText
+import com.quranapp.android.components.reader.ReaderProvider
+import com.quranapp.android.db.DatabaseProvider
+import com.quranapp.android.db.relations.VerseWithDetails
+import com.quranapp.android.extensions.verticalFadingEdge
+import com.quranapp.android.generated.resources.Res
+import com.quranapp.android.generated.resources.ic_forward_5
+import com.quranapp.android.generated.resources.ic_pause
+import com.quranapp.android.generated.resources.ic_play
+import com.quranapp.android.generated.resources.ic_replay_5
+import com.quranapp.android.generated.resources.ic_skip_back
+import com.quranapp.android.generated.resources.ic_skip_forward
+import com.quranapp.android.generated.resources.strLabelNextVerse
+import com.quranapp.android.generated.resources.strLabelPause
+import com.quranapp.android.generated.resources.strLabelPlay
+import com.quranapp.android.generated.resources.strLabelPreviousVerse
+import com.quranapp.android.models.ChapterVersePair
+import com.quranapp.android.preferences.DataStoreManager
+import com.quranapp.android.preferences.ReaderPreferences
+import com.quranapp.android.theme.alpha
+import com.quranapp.android.utils.mediaplayer.RecitationController
+import com.quranapp.android.utils.reader.FontResolver
+import com.quranapp.android.utils.reader.QuranScriptUtils
+import com.quranapp.android.utils.reader.TranslUtils
+import com.quranapp.android.utils.reader.TranslationTextStyleParams
+import com.quranapp.android.utils.reader.atlas.LocalQuranAtlasBundle
+import com.quranapp.android.utils.reader.atlas.getForWord
+import com.quranapp.android.utils.reader.buildTranslationAnnotatedString
+import com.quranapp.android.utils.reader.getQuranTextStyle
+import com.quranapp.android.utils.reader.getTranslationTextStyle
+import com.quranapp.android.utils.reader.quranTextStyleParams
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+import kotlin.time.Duration.Companion.milliseconds
+
+@Composable
+fun ExpandedPlayerSpotlightSection(
+    modifier: Modifier = Modifier,
+    verse: ChapterVersePair,
+    isPlaying: Boolean,
+    isLoading: Boolean,
+    controller: RecitationController,
+    chromeVisible: Boolean,
+    onChromeVisibilityChanged: (Boolean) -> Unit,
+) {
+    var hideEpoch by remember { mutableIntStateOf(0) }
+
+    fun bumpChrome() {
+        onChromeVisibilityChanged(true)
+        hideEpoch++
+    }
+
+    LaunchedEffect(hideEpoch) {
+        delay(3_000.milliseconds)
+        onChromeVisibilityChanged(false)
+    }
+
+    Column(
+        modifier = modifier
+    ) {
+        SpotlightVersePanel(
+            modifier = Modifier
+                .weight(1f)
+                .pointerInput(chromeVisible) {
+                    detectTapGestures {
+                        if (chromeVisible) {
+                            onChromeVisibilityChanged(false)
+                        } else {
+                            bumpChrome()
+                        }
+                    }
+                },
+            versePair = verse,
+        )
+
+        Box(
+            Modifier
+                .fillMaxWidth()
+                .height(100.dp)
+                .navigationBarsPadding(),
+            contentAlignment = Alignment.Center,
+        ) {
+            androidx.compose.animation.AnimatedVisibility(
+                visible = chromeVisible,
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .fillMaxSize(),
+                enter = fadeIn(tween(220)) + slideInVertically(
+                    animationSpec = tween(280),
+                    initialOffsetY = { it / 2 },
+                ),
+                exit = fadeOut(tween(180)) + slideOutVertically(
+                    animationSpec = tween(220),
+                    targetOffsetY = { it / 2 },
+                ),
+            ) {
+                SpotlightPlaybackBar(
+                    isPlaying = isPlaying,
+                    isLoading = isLoading,
+                    controller = controller,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun SpotlightVersePanel(
+    versePair: ChapterVersePair,
+    modifier: Modifier = Modifier,
+) {
+    val context = LocalContext.current
+    val prefs by DataStoreManager.flowMultiple(
+        ReaderPreferences.KEY_TRANSLATIONS,
+        ReaderPreferences.KEY_SCRIPT,
+        ReaderPreferences.KEY_ARABIC_TEXT_ENABLED,
+        ReaderPreferences.KEY_TEXT_SIZE_MULT_ARABIC,
+        ReaderPreferences.KEY_TEXT_SIZE_MULT_TRANSL,
+    ).collectAsStateWithLifecycle(null)
+
+    if (prefs == null) {
+        return
+    }
+
+    val preferences = prefs!!
+    val slugs = preferences.get(ReaderPreferences.KEY_TRANSLATIONS)
+
+    val scriptCode = QuranScriptUtils.validatePreferredScript(
+        preferences.get(ReaderPreferences.KEY_SCRIPT)
+    )
+
+    val arabicEnabled = preferences.get(ReaderPreferences.KEY_ARABIC_TEXT_ENABLED)
+    val arabicMultiplier = preferences.get(ReaderPreferences.KEY_TEXT_SIZE_MULT_ARABIC)
+    val translationMultiplier = preferences.get(ReaderPreferences.KEY_TEXT_SIZE_MULT_TRANSL)
+
+    ReaderProvider {
+        val vm = LocalReaderViewModel.current
+        val recitation = LocalRecitation.current
+
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .navigationBarsPadding(),
+            contentAlignment = Alignment.Center,
+        ) {
+            AnimatedContent<ChapterVersePair>(
+                modifier = Modifier.fillMaxSize(),
+                targetState = versePair,
+                transitionSpec = {
+                    fadeIn(
+                        animationSpec = tween(
+                            durationMillis = 500,
+                            delayMillis = 200,
+                            easing = FastOutSlowInEasing,
+                        ),
+                    ) togetherWith fadeOut(
+                        animationSpec = tween(500, easing = FastOutSlowInEasing),
+                    )
+                },
+                contentAlignment = Alignment.Center,
+                label = "spotlightVerse",
+            ) { pair ->
+                if (!pair.isValid) {
+                    Box(modifier = Modifier.fillMaxSize())
+                } else {
+                    val chapterNo = pair.chapterNo
+                    val verseNo = pair.verseNo
+                    val isThisVersePlaying by remember(pair, recitation) {
+                        derivedStateOf {
+                            recitation.isAnyPlayingState.value && recitation.playingVerseState.value == pair
+                        }
+                    }
+
+                    val verse by produceState<VerseWithDetails?>(
+                        initialValue = null,
+                        chapterNo,
+                        verseNo,
+                        scriptCode,
+                        slugs,
+                    ) {
+                        value = withContext(Dispatchers.IO) {
+                            val vwd = vm.repository.getVerseWithDetails(
+                                chapterNo,
+                                verseNo,
+                                scriptCode,
+                                arabicEnabled
+                            )
+                                ?: return@withContext null
+                            val aSlug = slugs.firstOrNull() ?: TranslUtils.TRANSL_SLUG_DEFAULT
+
+                            vwd.apply {
+                                translations =
+                                    DatabaseProvider.getTranslationRepository(context).let {
+                                        it.getTranslations(
+                                            setOf(aSlug),
+                                            chapterNo,
+                                            verseNo,
+                                        )
+                                    }
+                            }
+                        }
+                    }
+
+                    val scrollState = rememberScrollState()
+
+                    LaunchedEffect(pair) {
+                        scrollState.scrollTo(0)
+                    }
+
+                    when (val v = verse) {
+                        null -> Loader(true)
+                        else -> Box(
+                            Modifier
+                                .verticalFadingEdge(
+                                    scrollState,
+                                    length = 48.dp,
+                                ),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .verticalScroll(scrollState)
+                                    .padding(horizontal = 24.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center,
+                            ) {
+                                SpotlightQuranText(
+                                    vwd = v,
+                                    arabicEnabled = arabicEnabled,
+                                    fontResolver = vm.fontResolver,
+                                    scriptCode = scriptCode,
+                                    arabicMultiplier = arabicMultiplier,
+                                    isThisVersePlaying = isThisVersePlaying,
+                                    playingWordIndexState = recitation.playingWordIndexState,
+                                )
+
+                                SpotlightTranslationText(
+                                    vwd = v,
+                                    translationMultiplier = translationMultiplier,
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun SpotlightQuranText(
+    vwd: VerseWithDetails,
+    arabicEnabled: Boolean,
+    fontResolver: FontResolver,
+    scriptCode: String,
+    arabicMultiplier: Float,
+    isThisVersePlaying: Boolean,
+    playingWordIndexState: State<Int>,
+) {
+    if (!arabicEnabled) return
+
+    val context = LocalContext.current
+    val colors = MaterialTheme.colorScheme
+    val type = MaterialTheme.typography
+
+    val style = remember(
+        vwd.pageNo,
+        scriptCode,
+        arabicMultiplier,
+        fontResolver,
+        colors,
+        type,
+    ) {
+        getQuranTextStyle(
+            quranTextStyleParams(
+                context = context,
+                fontResolver = fontResolver,
+                colors = colors,
+                type = type,
+                pageNo = vwd.pageNo,
+                script = scriptCode,
+                sizeMultiplier = arabicMultiplier,
+                useSmallSize = false,
+                isDark = true
+            ),
+        ).copy(
+            color = PlayerContentColor,
+            textAlign = TextAlign.Center
+        )
+    }
+
+    val words = vwd.words
+    val atlasBundle = LocalQuranAtlasBundle.current
+
+    val atlasPlacements by produceState(
+        initialValue = emptyMap(),
+        atlasBundle,
+        words,
+        vwd.pageNo,
+    ) {
+        value = atlasBundle?.getPlacementsForWords(words, vwd.pageNo) ?: emptyMap()
+    }
+
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp, vertical = 4.dp),
+            horizontalArrangement = Arrangement.spacedBy(
+                4.dp,
+                Alignment.CenterHorizontally
+            ),
+            verticalArrangement = Arrangement.spacedBy(2.dp)
+        ) {
+            val activeWordBgColor = colorScheme.primary.alpha(0.55f)
+            val activeWordCorner = with(LocalDensity.current) {
+                CornerRadius(8.dp.toPx(), 8.dp.toPx())
+            }
+
+            words.forEach { word ->
+                QuranWordText(
+                    modifier = Modifier
+                        .drawBehind {
+                            if (isThisVersePlaying && playingWordIndexState.value == word.wordIndex) {
+                                drawRoundRect(
+                                    color = activeWordBgColor,
+                                    cornerRadius = activeWordCorner,
+                                )
+                            }
+                        }
+                        .padding(horizontal = 2.dp, vertical = 1.5.dp),
+                    word = word,
+                    atlasPlacements = atlasPlacements.getForWord(word),
+                    style = style,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun SpotlightTranslationText(
+    vwd: VerseWithDetails,
+    translationMultiplier: Float,
+) {
+    val translations = vwd.translations
+    if (translations.isEmpty()) return
+
+    val type = MaterialTheme.typography
+
+    SelectionContainer {
+        Column(
+            modifier = Modifier.padding(8.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            translations.forEach { translation ->
+                val tStyle = remember(translation.bookSlug, translationMultiplier) {
+                    getTranslationTextStyle(
+                        TranslationTextStyleParams(
+                            translation.bookSlug,
+                            type,
+                            translationMultiplier
+                        ),
+                    ).copy(color = PlayerContentColor.alpha(0.85f))
+                }
+
+                Text(
+                    text = buildTranslationAnnotatedString(
+                        translation,
+                        colorScheme,
+                        actions = null,
+                    ),
+                    style = tStyle,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun SpotlightPlaybackBar(
+    isPlaying: Boolean,
+    isLoading: Boolean,
+    controller: RecitationController,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp),
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        IconButton(
+            onClick = {
+                controller.previousVerse()
+            },
+            modifier = Modifier.size(48.dp),
+        ) {
+            Icon(
+                painterResource(Res.drawable.ic_skip_back),
+                contentDescription = stringResource(Res.string.strLabelPreviousVerse),
+                modifier = Modifier.size(30.dp),
+                tint = PlayerContentColor.alpha(.7f),
+            )
+        }
+
+        IconButton(
+            onClick = {
+                controller.seekLeft()
+            },
+            modifier = Modifier.size(48.dp),
+        ) {
+            Icon(
+                painterResource(Res.drawable.ic_replay_5),
+                contentDescription = null,
+                modifier = Modifier.size(30.dp),
+                tint = PlayerContentColor.alpha(.7f),
+            )
+        }
+
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .size(64.dp)
+                .shadow(
+                    elevation = 10.dp,
+                    shape = CircleShape,
+                    ambientColor = colorScheme.primary.copy(alpha = 0.35f),
+                    spotColor = colorScheme.primary.copy(alpha = 0.45f),
+                )
+                .clip(CircleShape)
+                .background(colorScheme.primary)
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                    onClick = {
+                        controller.playPause()
+                    },
+                ),
+        ) {
+            if (isLoading) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(38.dp),
+                    strokeWidth = 3.dp,
+                    color = colorScheme.onPrimary,
+                )
+            } else {
+                Icon(
+                    painterResource(
+                        if (isPlaying) Res.drawable.ic_pause
+                        else Res.drawable.ic_play,
+                    ),
+                    contentDescription = if (isPlaying) stringResource(Res.string.strLabelPause)
+                    else stringResource(Res.string.strLabelPlay),
+                    modifier = Modifier.size(32.dp),
+                    tint = colorScheme.onPrimary,
+                )
+            }
+        }
+
+        IconButton(
+            onClick = { controller.seekRight() },
+            modifier = Modifier.size(48.dp),
+        ) {
+            Icon(
+                painterResource(Res.drawable.ic_forward_5),
+                contentDescription = null,
+                modifier = Modifier.size(30.dp),
+                tint = PlayerContentColor.alpha(.7f),
+            )
+        }
+
+        IconButton(
+            onClick = {
+                controller.nextVerse()
+            },
+            modifier = Modifier.size(48.dp),
+        ) {
+            Icon(
+                painterResource(Res.drawable.ic_skip_forward),
+                contentDescription = stringResource(Res.string.strLabelNextVerse),
+                modifier = Modifier.size(30.dp),
+                tint = PlayerContentColor.alpha(.7f),
+            )
+        }
+    }
+}

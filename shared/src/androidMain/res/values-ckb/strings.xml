@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="strTitleVOTD">ئایەتی ڕۆژانە</string>
+    <string name="strHintSearch">گەڕان</string>
+    <string name="strTitleFootnotes">زانیارییەکان</string>
+    <string name="strTitleFootnote">زانیاری</string>
+    <string name="desc_votd_widget">هەموو ڕۆژێک ئایەتێکی نوێ فێربە</string>
+    <string name="recitationPlayer">لێدەری خوێندنەوە</string>
+    <string name="desc_recitation_player_widget">خوێندنەوەی قورئان لە شاشەی سەرەکییەوە کۆنترۆڵ بکە</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="strTitleFootnote">حاشيو</string>
+    <string name="strTitleVOTD">اڄ جي آيت</string>
+    <string name="strHintSearch">کوجنا</string>
+    <string name="desc_votd_widget">هر روز هڪ نئين آيت حاصل ڪريو</string>
+    <string name="strTitleFootnotes">حاشيہ</string>
+    <string name="recitationPlayer">تلاوت پليئر</string>
+    <string name="desc_recitation_player_widget">هوم اسڪرين تان قرآن جي تلاوت هلايو</string>
+</resources>

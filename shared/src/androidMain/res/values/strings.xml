@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="strTitleFootnote">Footnote</string>
+    <string name="strTitleFootnotes">Footnotes</string>
+    <string name="strTitleVOTD">Verse of The Day</string>
+    <string name="strHintSearch">Search</string>
+    <string name="desc_votd_widget">Get a new verse every day</string>
+    <string name="recitationPlayer">Recitation Player</string>
+    <string name="desc_recitation_player_widget">Control Quran recitation from your home screen</string>
+
+    <string name="app_name">QuranApp</string>
+</resources>

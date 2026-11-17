@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="strTitleFootnote">Note de bas de page</string>
+    <string name="strTitleFootnotes">Notes de bas de page</string>
+    <string name="strTitleVOTD">Verset du jour</string>
+    <string name="strHintSearch">Recherche</string>
+    <string name="desc_votd_widget">Obtenez un nouveau verset quotidiennement</string>
+    <string name="recitationPlayer">Lecteur de récitation</string>
+    <string name="desc_recitation_player_widget">Contrôlez la récitation du Coran depuis l\'écran d\'accueil</string>
+</resources>

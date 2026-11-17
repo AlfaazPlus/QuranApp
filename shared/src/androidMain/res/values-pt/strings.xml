@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="strTitleVOTD">Versículo do dia</string>
+    <string name="strHintSearch">Procurar</string>
+    <string name="strTitleFootnote">Nota de rodapé</string>
+    <string name="strTitleFootnotes">Notas de rodapé</string>
+    <string name="desc_votd_widget">Receba um novo versículo todos os dias</string>
+    <string name="recitationPlayer">Leitor de recitação</string>
+    <string name="desc_recitation_player_widget">Controle a recitação do Alcorão a partir do ecrã inicial</string>
+</resources>

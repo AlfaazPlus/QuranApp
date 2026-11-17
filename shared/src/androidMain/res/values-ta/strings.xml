@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="strTitleFootnote">அடிக்குறிப்பு</string>
+    <string name="strTitleFootnotes">அடிக்குறிப்புகள்</string>
+    <string name="strTitleVOTD">அன்றைய உரையாடல்</string>
+    <string name="strHintSearch">தேடல்</string>
+    <string name="desc_votd_widget">தினமும் ஒரு புதிய வசனத்தைப் பெறுக</string>
+    <string name="recitationPlayer">பாராயண இயக்கி</string>
+    <string name="desc_recitation_player_widget">முகப்புத் திரையிலிருந்து குர்ஆன் பாராயணத்தை இயக்குங்கள்</string>
+</resources>

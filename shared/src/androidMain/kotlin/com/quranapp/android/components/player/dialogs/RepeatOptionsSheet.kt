@@ -1,0 +1,94 @@
+package com.quranapp.android.components.player.dialogs
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.MaterialTheme.typography
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.quranapp.android.components.common.AlertCard
+import com.quranapp.android.components.common.RadioItem
+import com.quranapp.android.components.common.dialogs.BottomSheet
+import com.quranapp.android.generated.resources.Res
+import com.quranapp.android.generated.resources.ic_repeat
+import com.quranapp.android.generated.resources.msgRepeat
+import com.quranapp.android.generated.resources.nTimes
+import com.quranapp.android.generated.resources.once
+import com.quranapp.android.generated.resources.playbackCount
+import com.quranapp.android.generated.resources.twice
+import com.quranapp.android.locale.formattedStringResource
+import com.quranapp.android.preferences.RecitationPreferences
+import com.quranapp.android.utils.mediaplayer.AudioOption
+import com.quranapp.android.utils.mediaplayer.RecitationController
+import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.stringResource
+
+@Composable
+fun RepeatOptionsSheet(
+    controller: RecitationController,
+    isOpen: Boolean,
+    onClose: () -> Unit,
+) {
+    val selectedAudioOption = RecitationPreferences.observeAudioOption()
+    val repeatSupported = selectedAudioOption == AudioOption.ONLY_QURAN
+
+    val currentRepeatCount = RecitationPreferences.observeRepeatCount()
+    val coroutineScope = rememberCoroutineScope()
+    val repeatOptions = listOf(0, 1, 2, 4, 9)
+
+    BottomSheet(
+        isOpen = isOpen,
+        onDismiss = onClose,
+        icon = Res.drawable.ic_repeat,
+        title = stringResource(Res.string.playbackCount),
+    ) {
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(2.dp),
+            contentPadding = PaddingValues(
+                start = 8.dp,
+                end = 8.dp,
+                top = 12.dp,
+                bottom = 48.dp
+            ),
+        ) {
+            item {
+                AlertCard(
+                    modifier = Modifier.padding(bottom = 8.dp),
+                ) {
+                    Text(
+                        text = stringResource(Res.string.msgRepeat),
+                        style = typography.bodyMedium
+                    )
+                }
+            }
+            items(
+                count = repeatOptions.size,
+                key = { repeatOptions[it] },
+            ) { index ->
+                val repeatCount = repeatOptions[index]
+
+                RadioItem(
+                    titleStr = when (repeatCount) {
+                        0 -> stringResource(Res.string.once)
+                        1 -> stringResource(Res.string.twice)
+                        else -> formattedStringResource(Res.string.nTimes, repeatCount + 1)
+                    },
+                    enabled = repeatSupported,
+                    selected = repeatCount == currentRepeatCount,
+                    onClick = {
+                        if (!repeatSupported || repeatCount == currentRepeatCount) return@RadioItem
+
+                        coroutineScope.launch {
+                            RecitationPreferences.setRepeatCount(repeatCount)
+                            controller.setRepeatCount(repeatCount)
+                        }
+                    },
+                )
+            }
+        }
+    }
+}

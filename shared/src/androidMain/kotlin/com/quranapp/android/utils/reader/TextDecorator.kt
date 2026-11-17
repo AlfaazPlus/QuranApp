@@ -1,0 +1,211 @@
+package com.quranapp.android.utils.reader
+
+import android.content.Context
+import android.graphics.Typeface
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.Typography
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.TextMeasurer
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.text.style.TextDirection
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.quranapp.android.theme.appFontFamily
+import com.quranapp.android.theme.fontUrdu
+import com.quranapp.android.utils.miscellenous.StringUtils
+
+data class ComposeUiConfig(
+    val context: Context,
+    val textMeasurer: TextMeasurer,
+    val density: Density,
+    val colors: ColorScheme,
+    val type: Typography,
+)
+
+data class TextBuilderParams(
+    val uiConfig: ComposeUiConfig,
+    val verseActions: VerseActions,
+    val fontResolver: FontResolver,
+    val arabicEnabled: Boolean,
+    val script: String,
+    val arabicSizeMultiplier: Float,
+    val translationSizeMultiplier: Float,
+    val slugs: Set<String>,
+) {
+    fun toKey(): String {
+        return "$script,$arabicSizeMultiplier,$translationSizeMultiplier,$slugs"
+    }
+
+    override fun toString(): String {
+        return "script:$script, arabicSizeMultiplier:$arabicSizeMultiplier, translationSizeMultiplier:$translationSizeMultiplier ,slugs:$slugs"
+    }
+}
+
+data class PageBuilderParams(
+    val uiConfig: ComposeUiConfig,
+    val contentWidthPx: Int,
+    val isDark: Boolean,
+) {
+    fun toKey(): String {
+        return "$contentWidthPx:${uiConfig.density.density}:$isDark"
+    }
+}
+
+data class TranslationPageBuilderParams(
+    val colors: ColorScheme,
+    val type: Typography,
+    val verseActions: VerseActions,
+    val translationSizeMultiplier: Float,
+)
+
+data class TranslationTextStyleParams(
+    val slug: String,
+    val type: Typography,
+    val sizeMultiplier: Float,
+    val useSmallSize: Boolean = false,
+    val baselineHeightMultiplier: Float = 1.5f
+)
+
+data class QuranTextStyleParams(
+    val density: Float,
+    val fontScale: Float,
+    val baseTextSizePx: Float,
+    val fontResolver: FontResolver,
+    val colors: ColorScheme,
+    val type: Typography,
+    val pageNo: Int,
+    val script: String,
+    val sizeMultiplier: Float,
+    val isDark: Boolean,
+)
+
+fun quranTextStyleParams(
+    context: Context,
+    fontResolver: FontResolver,
+    colors: ColorScheme,
+    type: Typography,
+    pageNo: Int,
+    script: String,
+    sizeMultiplier: Float,
+    useSmallSize: Boolean = false,
+    isDark: Boolean,
+): QuranTextStyleParams {
+    val textSizeSp = if (useSmallSize) {
+        script.getQuranScriptVerseTextSizeSmallSp()
+    } else {
+        script.getQuranScriptVerseTextSizeMediumSp()
+    }
+    val baseTextSizePx = textSizeSp * context.resources.displayMetrics.scaledDensity
+
+    return QuranTextStyleParams(
+        density = context.resources.displayMetrics.density,
+        fontScale = context.resources.configuration.fontScale,
+        baseTextSizePx = baseTextSizePx.toFloat(),
+        fontResolver = fontResolver,
+        colors = colors,
+        type = type,
+        pageNo = pageNo,
+        script = script,
+        sizeMultiplier = sizeMultiplier,
+        isDark = isDark,
+    )
+}
+
+fun getTranslationTextStyle(
+    params: TranslationTextStyleParams,
+): TextStyle {
+    val isRtl = StringUtils.isRtlLanguage(params.slug)
+    val isUrdu = TranslUtils.isUrdu(params.slug)
+
+    val baselineFontSize = if (params.useSmallSize) params.type.bodyMedium.fontSize
+    else params.type.bodyLarge.fontSize
+    val resolvedFontSize = baselineFontSize * params.sizeMultiplier
+
+    return TextStyle(
+        textDirection = if (isRtl) TextDirection.Rtl else TextDirection.Ltr,
+        fontFamily = if (isUrdu) fontUrdu else appFontFamily,
+        platformStyle = PlatformTextStyle(
+            includeFontPadding = true
+        ),
+        fontSize = resolvedFontSize,
+        lineHeight = if (isUrdu) resolvedFontSize * 2.5f else resolvedFontSize * params.baselineHeightMultiplier,
+    )
+}
+
+fun getQuranTextStyle(
+    params: QuranTextStyleParams,
+): TextStyle {
+    val density = Density(
+        density = params.density,
+        fontScale = params.fontScale,
+    )
+    val fontSize = with(density) { (params.baseTextSizePx * params.sizeMultiplier).toSp() }
+
+    return params.type.headlineSmall.copy(
+        fontFamily = params.fontResolver.typeface(params.script, params.pageNo, params.isDark)
+            ?.asFontFamily()
+            ?: FontFamily.Default,
+        fontSize = fontSize,
+        color = params.colors.onBackground,
+        textDirection = TextDirection.Rtl,
+        lineHeight = fontSize * 1.8f,
+        lineHeightStyle = LineHeightStyle(
+            alignment = LineHeightStyle.Alignment.Center,
+            trim = LineHeightStyle.Trim.Both,
+            mode = LineHeightStyle.Mode.Tight
+        ),
+        platformStyle = PlatformTextStyle(includeFontPadding = false),
+    )
+}
+
+fun mushafCappedBaseStyleForScale(base: TextStyle, pageScale: Float): TextStyle {
+    val cap = pageScale.coerceIn(
+        MUSHAF_FONT_SCALE_AT_MIN_WIDTH,
+        MUSHAF_FONT_SCALE_AT_MAX_WIDTH
+    )
+
+    val scaled = (base.fontSize.value * cap).sp
+
+    return base.copy(
+        fontSize = scaled,
+        lineHeight = (scaled.value * MUSHAF_LINE_HEIGHT_MULT).sp,
+    )
+}
+
+/**
+ * Scales the dimen-derived mushaf base font by available line width (dp).
+ * Narrow phones use a slightly lower ceiling; large screens allow a larger max before shrink-only logic.
+ */
+private fun mushafScreenMaxFontScale(lineInnerWidthDp: Float): Float {
+    val w = lineInnerWidthDp.coerceIn(MUSHAF_FONT_WIDTH_DP_MIN, MUSHAF_FONT_WIDTH_DP_MAX)
+    return (MUSHAF_FONT_SCALE_AT_MIN_WIDTH + (w - MUSHAF_FONT_WIDTH_DP_MIN) / (MUSHAF_FONT_WIDTH_DP_MAX - MUSHAF_FONT_WIDTH_DP_MIN) * (MUSHAF_FONT_SCALE_AT_MAX_WIDTH - MUSHAF_FONT_SCALE_AT_MIN_WIDTH)).coerceIn(
+        MUSHAF_FONT_SCALE_AT_MIN_WIDTH,
+        MUSHAF_FONT_SCALE_AT_MAX_WIDTH
+    )
+}
+
+fun mushafScaleForWidth(lineInnerWidthDp: Float): Float {
+    return mushafScreenMaxFontScale(lineInnerWidthDp)
+}
+
+const val MUSHAF_LINE_HEIGHT_MULT = 2f
+private const val MUSHAF_FONT_WIDTH_DP_MIN = 260f
+const val MUSHAF_FONT_WIDTH_DP_MAX = 600f
+
+val MUSHAF_PAGE_HORIZONTAL_PADDING = 12.dp
+const val MUSHAF_FONT_SCALE_AT_MIN_WIDTH = 0.85f
+const val MUSHAF_FONT_SCALE_AT_MAX_WIDTH = 1.5f
+
+/** Inter-word gap as a fraction of font size for centered mushaf lines. */
+const val MUSHAF_CENTERED_GAP_FRACTION = 0.22f
+
+/** Minimum gap between adjacent words (all lines), as a fraction of font size — avoids overlap when justified. */
+const val MUSHAF_MIN_INTER_WORD_GAP_FRACTION = 0.1f
+
+/** When shrinking to fit, do not go below this fraction of the (screen-capped) base size. */
+const val MUSHAF_LINE_SHRINK_MIN = 0.16f
+
+fun Typeface.asFontFamily(): FontFamily = FontFamily(this)

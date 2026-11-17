@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="strTitleFootnote">Fußnote</string>
+    <string name="strTitleFootnotes">Fußnoten</string>
+    <string name="strTitleVOTD">Vers des Tages</string>
+    <string name="strHintSearch">Suche</string>
+    <string name="desc_votd_widget">Erhalte jeden Tag einen neuen Vers</string>
+    <string name="recitationPlayer">Rezitationsplayer</string>
+    <string name="desc_recitation_player_widget">Koranrezitation vom Startbildschirm steuern</string>
+</resources>

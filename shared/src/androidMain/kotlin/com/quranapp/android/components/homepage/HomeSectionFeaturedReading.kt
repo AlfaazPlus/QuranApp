@@ -1,0 +1,150 @@
+package com.quranapp.android.components.homepage
+
+import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.shapes
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.quranapp.android.extensions.appViewModel
+import com.quranapp.android.generated.resources.Res
+import com.quranapp.android.generated.resources.dr_icon_feature
+import com.quranapp.android.generated.resources.dr_quran_wallpaper
+import com.quranapp.android.generated.resources.strTitleFeaturedQuran
+import com.quranapp.android.theme.ThemeUtils
+import com.quranapp.android.theme.alpha
+import com.quranapp.android.theme.grayscaleColorFilter
+import com.quranapp.android.theme.observeIsMonoPalette
+import com.quranapp.android.theme.tightTextStyle
+import com.quranapp.android.utils.reader.factory.ReaderFactory
+import com.quranapp.android.viewmodel.FeaturedQuranModel
+import com.quranapp.android.viewmodel.HomepageViewModel
+import org.jetbrains.compose.resources.painterResource
+
+@Composable
+fun HomeSectionFeaturedReading(
+    vm: HomepageViewModel = appViewModel(),
+) {
+    val featuredItems by vm.featured.collectAsStateWithLifecycle()
+
+    if (featuredItems == null) return
+    val isMono = ThemeUtils.observeIsMonoPalette()
+    val wallpaperPainter = painterResource(Res.drawable.dr_quran_wallpaper)
+
+    Column(
+        modifier = Modifier
+            .padding(vertical = 10.dp)
+            .animateContentSize(),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        HomeSectionHeader(
+            icon = Res.drawable.dr_icon_feature,
+            title = Res.string.strTitleFeaturedQuran,
+            iconTint = if (isMono) colorScheme.onSurface else null,
+        )
+
+        LazyRow(
+            contentPadding = PaddingValues(horizontal = 12.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            items(featuredItems!!, key = { it.chapterNo.toString() + it.subtext }) {
+                FeaturedQuranCard(it, wallpaperPainter)
+            }
+        }
+    }
+}
+
+@Composable
+private fun FeaturedQuranCard(
+    model: FeaturedQuranModel,
+    wallpaperPainter: Painter,
+) {
+    val context = LocalContext.current
+    val isMono = ThemeUtils.observeIsMonoPalette()
+    val wallpaperFilter = remember { grayscaleColorFilter() }
+
+    Box(
+        modifier = Modifier
+            .width(220.dp)
+            .height(110.dp)
+            .clip(shapes.medium)
+            .background(Color.Black)
+            .clickable {
+                ReaderFactory.startVerseRange(context, model.chapterNo, model.verseRange)
+            },
+    ) {
+        Image(
+            painter = wallpaperPainter,
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            colorFilter = if (isMono) wallpaperFilter else null,
+            modifier = Modifier
+                .fillMaxSize()
+                .alpha(0.6f)
+        )
+
+        val overlayTop = if (isMono) Color.Black.alpha(0.2f) else colorScheme.primary.alpha(0.1f)
+
+        Box(
+            modifier = Modifier
+                .matchParentSize()
+                .background(
+                    Brush.verticalGradient(
+                        0.5f to overlayTop,
+                        1f to Color.Black.alpha(0.9f)
+                    )
+                )
+        )
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(10.dp),
+            verticalArrangement = Arrangement.Bottom
+        ) {
+            Text(
+                text = model.title,
+                style = MaterialTheme.typography.titleMedium.copy(
+                    fontWeight = FontWeight.SemiBold
+                ).merge(tightTextStyle),
+                color = Color.White,
+                maxLines = 2
+            )
+
+            Spacer(modifier = Modifier.height(2.dp))
+
+            Text(
+                text = model.subtext,
+                style = MaterialTheme.typography.labelSmall.merge(tightTextStyle),
+                color = Color.White.copy(alpha = 0.7f)
+            )
+        }
+    }
+}

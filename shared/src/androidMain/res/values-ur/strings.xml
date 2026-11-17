@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="strTitleFootnote">حاشیہ</string>
+    <string name="strTitleFootnotes">حاشیہ</string>
+    <string name="strTitleVOTD">دن کی آیت</string>
+    <string name="strHintSearch">تلاش کریں</string>
+    <string name="desc_votd_widget">ہر روز ایک نئی آیت حاصل کریں</string>
+    <string name="recitationPlayer">تلاوت پلیئر</string>
+    <string name="desc_recitation_player_widget">ہوم اسکرین سے قرآن کی تلاوت چلائیں</string>
+</resources>

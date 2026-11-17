@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="strTitleFootnotes">پانویسها و منابع</string>
+    <string name="strTitleFootnote">پاورقی</string>
+    <string name="strTitleVOTD">آیه روز</string>
+    <string name="strHintSearch">جستجو</string>
+    <string name="desc_votd_widget">دریافت یک آیه جدید در هر روز</string>
+    <string name="recitationPlayer">پخش‌کنندهٔ تلاوت</string>
+    <string name="desc_recitation_player_widget">تلاوت قرآن را از صفحهٔ اصلی کنترل کنید</string>
+</resources>

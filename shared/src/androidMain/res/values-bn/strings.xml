@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="strTitleFootnote">পাদটীকাগুলো দেখুন</string>
+    <string name="strTitleFootnotes">পাদটীকাগুলো দেখুন</string>
+    <string name="strTitleVOTD">আজকের আয়াত</string>
+    <string name="strHintSearch">অনুসন্ধান করুন</string>
+    <string name="desc_votd_widget">প্রতিদিন একটি নতুন আয়াত পান</string>
+    <string name="recitationPlayer">তিলাওয়াত প্লেয়ার</string>
+    <string name="desc_recitation_player_widget">হোম স্ক্রিন থেকে কুরআনের তিলাওয়াত চালান</string>
+</resources>

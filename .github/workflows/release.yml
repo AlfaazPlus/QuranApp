@@ -64,12 +64,12 @@ jobs:
 
       - name: Prepare release artifacts
         run: |
-          OUT="app/build/outputs"
+          OUT="androidApp/build/outputs"
 
           OUTPUT="${OUT}/apk/release"
           MAPPING="${OUT}/mapping/release/mapping.txt"
 
-          APK="${OUTPUT}/app-release.apk"
+          APK="${OUTPUT}/androidApp-release.apk"
           RELEASE_APK="${OUTPUT}/QuranApp-${GITHUB_REF_NAME}.apk"
           CHECKSUM="${OUTPUT}/SHA256SUMS.txt"
 
