@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.stateIn
 
 class ChapterNavigatorViewModel() :
     AppViewModel() {
-    val repository get() = DatabaseProvider.getQuranRepository(application)
+    val repository get() = DatabaseProvider.getQuranRepository()
 
     val surahs = repository.getAllSurahs()
         .stateIn(

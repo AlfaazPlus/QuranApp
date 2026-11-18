@@ -67,8 +67,8 @@ import com.quranapp.android.components.importing.ContentImportSheet
 import com.quranapp.android.components.importing.TranslationImportDetails
 import com.quranapp.android.components.importing.translationImportFields
 import com.quranapp.android.components.settings.TranslationSelectionMessages
-import com.quranapp.android.components.transls.TranslModel
-import com.quranapp.android.components.transls.TranslationGroupModel
+import com.quranapp.android.models.transls.TranslModel
+import com.quranapp.android.models.transls.TranslationGroupModel
 import com.quranapp.android.extensions.appViewModel
 import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.dr_icon_chevron_right

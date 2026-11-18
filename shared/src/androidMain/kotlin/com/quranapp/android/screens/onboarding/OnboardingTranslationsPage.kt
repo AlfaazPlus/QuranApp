@@ -48,7 +48,7 @@ import com.quranapp.android.components.common.dialogs.BottomSheetBare
 import com.quranapp.android.components.common.dialogs.MessageDialog
 import com.quranapp.android.components.settings.TranslationDownloadList
 import com.quranapp.android.components.settings.TranslationSelectionMessages
-import com.quranapp.android.components.transls.TranslModel
+import com.quranapp.android.models.transls.TranslModel
 import com.quranapp.android.extensions.appViewModel
 import com.quranapp.android.extensions.verticalFadingEdge
 import com.quranapp.android.generated.resources.Res

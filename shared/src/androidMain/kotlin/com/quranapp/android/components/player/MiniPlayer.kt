@@ -40,7 +40,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -64,7 +63,7 @@ import com.quranapp.android.theme.alpha
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
 import com.quranapp.android.utils.mediaplayer.RecitationServiceState
-import com.quranapp.android.utils.miscellenous.formatDuration
+import com.quranapp.android.utils.miscellenous.DateUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -84,10 +83,9 @@ fun MiniPlayer(
     onSyncRequest: ((forceJump: Boolean) -> Unit)?,
     onExpand: () -> Unit,
 ) {
-    val context = LocalContext.current
 
     val verse = state.currentVerse.takeIf { it.isValid } ?: ChapterVersePair(1, 1)
-    val repository = remember(context) { DatabaseProvider.getQuranRepository(context) }
+    val repository = remember { DatabaseProvider.getQuranRepository() }
     var chapterName by remember { mutableStateOf("") }
 
     LaunchedEffect(verse.chapterNo) {
@@ -249,8 +247,8 @@ fun Timestamp(
     positionMs: Long,
     durationMs: Long,
 ) {
-    val current = formatDuration(positionMs)
-    val total = formatDuration(durationMs)
+    val current = DateUtils.durationFormatted(positionMs)
+    val total = DateUtils.durationFormatted(durationMs)
 
     BoxWithConstraints(
         modifier = Modifier.padding(start = 8.dp),

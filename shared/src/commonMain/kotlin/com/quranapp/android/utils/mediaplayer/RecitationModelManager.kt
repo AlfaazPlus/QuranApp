@@ -10,7 +10,7 @@ import com.quranapp.android.api.models.recitation2.RecitationTranslationModel
 import com.quranapp.android.locale.appFallbackLanguageCodes
 import com.quranapp.android.preferences.RecitationPreferences
 import com.quranapp.android.utils.app.Logger
-import com.quranapp.android.utils.files.AppFiles
+import com.quranapp.android.utils.app.AppFiles
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

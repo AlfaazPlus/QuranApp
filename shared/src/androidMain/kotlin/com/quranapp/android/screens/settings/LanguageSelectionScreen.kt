@@ -47,11 +47,9 @@ import com.quranapp.android.locale.appLocaleForLanguageChange
 import com.quranapp.android.locale.normalizedLanguageTag
 import com.quranapp.android.locale.numeralSystemsForLanguage
 import com.quranapp.android.locale.platformLocale
-import com.quranapp.android.locale.readAppLocale
 import com.quranapp.android.locale.setAppLocale
 import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.theme.alpha
-import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
 import org.jetbrains.compose.resources.stringResource
 import java.util.Locale
 
@@ -91,11 +89,9 @@ fun LanguageSelectionScreen() {
         }
     }
 
-    var committed by remember {
-        mutableStateOf(
-            SPAppConfigs.getLocale(context) to
-                    readAppLocale(context).numeralSystem
-        )
+    val appLocale = LocalAppLocale.current
+    var committed by remember(appLocale.storedTag, appLocale.numeralSystem) {
+        mutableStateOf(appLocale.storedTag to appLocale.numeralSystem)
     }
 
     var searchQuery by remember { mutableStateOf("") }

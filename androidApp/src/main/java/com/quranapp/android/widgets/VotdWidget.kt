@@ -60,23 +60,23 @@ import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
 import com.quranapp.android.R
-import com.quranapp.android.generated.resources.Res
-import com.quranapp.android.generated.resources.*
-import com.quranapp.android.resources.ComposeResourceFiles
-import org.jetbrains.compose.resources.getString
-import org.jetbrains.compose.resources.stringResource
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.relations.VerseWithDetails
+import com.quranapp.android.generated.resources.Res
+import com.quranapp.android.generated.resources.noto_nastaliq_urdu_regular
+import com.quranapp.android.generated.resources.strLabelVerseWithChapNameAndNo
+import com.quranapp.android.generated.resources.strTitleVOTD
 import com.quranapp.android.preferences.DataStoreManager
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.preferences.VersePreferences
+import com.quranapp.android.resources.ComposeResourceFiles
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.colorSchemeFromPreferences
 import com.quranapp.android.utils.extensions.dp2px
 import com.quranapp.android.utils.extensions.sp2px
-import com.quranapp.android.utils.miscellenous.StringUtils
+import com.quranapp.android.utils.miscellenous.stripHtmlTags
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.FontResolver
 import com.quranapp.android.utils.reader.atlas.AtlasAyahRasterizer
@@ -93,9 +93,12 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.getString
+import org.jetbrains.compose.resources.stringResource
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
+import kotlin.time.Duration.Companion.milliseconds
 
 private data class VotdWidgetUiState(
     val verseInfo: String,
@@ -326,7 +329,7 @@ fun startVotdWidgetPreferenceObserver(context: Context) {
             "${prefs.toKey()}|${theme.first}|${theme.second}|${theme.third}|${votd.first}|${votd.second}|${votd.third}"
         }
             .distinctUntilChanged()
-            .debounce(1000)
+            .debounce(1000.milliseconds)
             .collect {
                 updateAllVotdWidgets(app)
             }
@@ -339,7 +342,7 @@ private suspend fun buildVotdWidgetState(
     widgetWidthDp: Float,
     widgetHeightDp: Float,
 ): VotdWidgetUiState? {
-    val repository = DatabaseProvider.getQuranRepository(context)
+    val repository = DatabaseProvider.getQuranRepository()
     val vwd = VerseUtils.getVOTD(context, repository) ?: return null
 
     if (
@@ -389,16 +392,19 @@ private suspend fun buildVotdWidgetState(
     val chapterNo = vwd.chapterNo
     val verseNo = vwd.verseNo
 
-    val translation = DatabaseProvider.getTranslationRepository(context).let { repo ->
+    val translation = DatabaseProvider.getTranslationRepository().let { repo ->
         val bookInfo = repo.getBook(ReaderPreferences.primaryTranslationSlug())
         repo.getTranslation(bookInfo.slug, chapterNo, verseNo)
     }
 
     val translationBitmap = if (translation != null) createTextBitmap(
         context = context,
-        text = StringUtils.removeHTML(translation.text, false),
+        text = translation.text.stripHtmlTags(false),
         typeface = if (translation.isUrdu) {
-            ComposeResourceFiles.typeface(Res.font.noto_nastaliq_urdu_regular, "noto_nastaliq_urdu_regular.ttf")
+            ComposeResourceFiles.typeface(
+                Res.font.noto_nastaliq_urdu_regular,
+                "noto_nastaliq_urdu_regular.ttf"
+            )
         } else {
             null
         },
@@ -453,8 +459,7 @@ internal suspend fun prepareArabicTextBitmap(
 
     if (quranScript.isQuranAtlasScript()) {
         val bundle = QuranAtlasLoader.getBundle(
-            context,
-            DatabaseProvider.getExternalQuranDatabase(context),
+            DatabaseProvider.getExternalQuranDatabase(),
             quranScript,
         ) ?: return null
 

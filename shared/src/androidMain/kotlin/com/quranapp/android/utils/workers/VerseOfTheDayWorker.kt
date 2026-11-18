@@ -18,7 +18,7 @@ import com.quranapp.android.preferences.VersePreferences
 import com.quranapp.android.shared.R
 import com.quranapp.android.utils.app.AppDestinations
 import com.quranapp.android.utils.app.NotificationUtils
-import com.quranapp.android.utils.miscellenous.StringUtils
+import com.quranapp.android.utils.miscellenous.stripHtmlTags
 import com.quranapp.android.utils.reader.ReaderIntentData
 import com.quranapp.android.utils.reader.ReaderLaunchParams
 import com.quranapp.android.utils.reader.TranslUtils
@@ -40,7 +40,7 @@ class VerseOfTheDayWorker constructor(
             return@withContext Result.success()
         }
 
-        val repository = DatabaseProvider.getQuranRepository(applicationContext)
+        val repository = DatabaseProvider.getQuranRepository()
         val votd = VerseUtils.getVOTD(applicationContext, repository)
             ?: return@withContext Result.failure()
 
@@ -57,7 +57,7 @@ class VerseOfTheDayWorker constructor(
             slugs = TranslUtils.defaultTranslationSlugs()
         }
 
-        val translationRepo = DatabaseProvider.getTranslationRepository(context)
+        val translationRepo = DatabaseProvider.getTranslationRepository()
         val translations = translationRepo.getTranslations(slugs, votd.chapterNo, votd.verseNo)
 
         if (translations.isEmpty()) {
@@ -68,7 +68,7 @@ class VerseOfTheDayWorker constructor(
             context, NotificationManager::class.java
         ) ?: return
 
-        val translationText = StringUtils.removeHTML(translations[0].text, false)
+        val translationText = translations[0].text.stripHtmlTags(false)
 
         val verseReference = getString(
             Res.string.strLabelVerseSerialWithChapter,

@@ -3,6 +3,7 @@ package com.quranapp.android.utils.mediaplayer
 import android.content.Context
 import com.quranapp.android.api.models.recitation2.RecitationModelBase
 import com.quranapp.android.utils.app.Logger
+import com.quranapp.android.utils.app.AppFiles
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,7 +28,6 @@ data class ManifestVersionSnapshot(
 class RecitationVersionManager private constructor(context: Context) {
     private val appContext = context.applicationContext
     private val modelManager = RecitationModelManager
-    private val store = RecitationVersionStore()
     private val reconcileMutex = Mutex()
 
     private val _updateUiState = MutableStateFlow(RecitationUpdateUiState())
@@ -42,7 +42,7 @@ class RecitationVersionManager private constructor(context: Context) {
                     return@runCatching
                 }
 
-                val stored = store.loadAll()
+                val stored = RecitationVersionStore.loadAll()
                 val outdated = mutableSetOf<String>()
                 var mutated = false
 
@@ -62,7 +62,7 @@ class RecitationVersionManager private constructor(context: Context) {
                     var next = existing
 
                     if (existing.timing < remote.timingVersion) {
-                        modelManager.getRecitationTimingFile(reciterId).toFile().delete()
+                        AppFiles.delete(modelManager.getRecitationTimingFile(reciterId))
                         RecitationStreamCache.clearForReciter(appContext, remote.urlTemplate)
                         next = next.copy(timing = remote.timingVersion)
                     }
@@ -84,7 +84,7 @@ class RecitationVersionManager private constructor(context: Context) {
                 }
 
                 if (mutated) {
-                    store.saveAll(stored)
+                    RecitationVersionStore.saveAll(stored)
                 }
 
                 _updateUiState.value = RecitationUpdateUiState(outdated)
@@ -103,7 +103,7 @@ class RecitationVersionManager private constructor(context: Context) {
                     return@runCatching
                 }
 
-                val stored = store.loadAll()
+                val stored = RecitationVersionStore.loadAll()
                 val outdated = mutableSetOf<String>()
                 var mutated = false
 
@@ -134,7 +134,7 @@ class RecitationVersionManager private constructor(context: Context) {
                 }
 
                 if (mutated) {
-                    store.saveAll(stored)
+                    RecitationVersionStore.saveAll(stored)
                 }
 
                 _updateUiState.value = RecitationUpdateUiState(outdated)
@@ -149,14 +149,14 @@ class RecitationVersionManager private constructor(context: Context) {
             runCatching {
                 val manifest = loadManifestSnapshots()
                 val remote = manifest[reciterId] ?: return@runCatching
-                val stored = store.loadAll()
+                val stored = RecitationVersionStore.loadAll()
                 val existing = stored[reciterId]
                 val next = ReciterStoredVersions(
                     audio = remote.audioVersion,
                     timing = maxOf(existing?.timing ?: 0, remote.timingVersion),
                 )
                 stored[reciterId] = next
-                store.saveAll(stored)
+                RecitationVersionStore.saveAll(stored)
                 _updateUiState.value = _updateUiState.value.copy(
                     outdatedReciters = _updateUiState.value.outdatedReciters - reciterId,
                 )
@@ -195,8 +195,8 @@ class RecitationVersionManager private constructor(context: Context) {
 
     private fun hasDownloadedAudio(reciterId: String): Boolean {
         for (chapterNo in 1..114) {
-            val file = modelManager.getRecitationAudioFile(reciterId, chapterNo).toFile()
-            if (file.exists() && file.length() > 0L) {
+            val file = modelManager.getRecitationAudioFile(reciterId, chapterNo)
+            if (AppFiles.size(file) > 0L) {
                 return true
             }
         }

@@ -14,7 +14,7 @@ import com.quranapp.android.locale.AppLocale
 import com.quranapp.android.locale.appPlatformLocale
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.repository.QuranRepository
-import com.quranapp.android.utils.miscellenous.StringUtils
+import com.quranapp.android.utils.miscellenous.stripHtmlTags
 import com.quranapp.android.utils.reader.atlas.AtlasAyahRasterizer
 import com.quranapp.android.utils.reader.atlas.QuranAtlasBundle
 import com.quranapp.android.utils.reader.atlas.QuranAtlasLoader
@@ -42,14 +42,13 @@ data class QuranVerseArabicWebResult(
 )
 
 suspend fun buildQuranVerseWebAssets(request: QuranVerseWebRequest): QuranVerseArabicWebResult {
-    val translationRepo = DatabaseProvider.getTranslationRepository(request.context)
+    val translationRepo = DatabaseProvider.getTranslationRepository()
     val isAtlas = request.scriptCode.isQuranAtlasScript()
     val isKFQPC = request.scriptCode.isKFQPCScript()
 
     val atlasBundle = if (isAtlas) {
         QuranAtlasLoader.getBundle(
-            request.context,
-            DatabaseProvider.getExternalQuranDatabase(request.context),
+            DatabaseProvider.getExternalQuranDatabase(),
             request.scriptCode,
         )
     } else {
@@ -153,7 +152,7 @@ private fun escapePlainForHtml(s: String): String =
     s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 private fun plainTranslationForWeb(translationRaw: String): String {
-    val stripped = StringUtils.removeHTML(translationRaw, false)
+    val stripped = translationRaw.stripHtmlTags(false)
     if (stripped.isEmpty()) return ""
     return HtmlCompat.fromHtml(stripped, HtmlCompat.FROM_HTML_MODE_LEGACY).toString().trim()
 }

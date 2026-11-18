@@ -64,21 +64,19 @@ import com.quranapp.android.generated.resources.strLabelVerseRange
 import com.quranapp.android.generated.resources.strLabelWhatsappStyling
 import com.quranapp.android.generated.resources.strMsgEnterValidRange
 import com.quranapp.android.generated.resources.strMsgShareRange
+import com.quranapp.android.generated.resources.strTitleFootnotes
 import com.quranapp.android.generated.resources.strTitleShareVerse
 import com.quranapp.android.locale.formattedStringResource
 import com.quranapp.android.models.Translation
 import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.repository.TranslationRepository
-import com.quranapp.android.shared.R
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.utils.extensions.copyToClipboard
-import com.quranapp.android.utils.miscellenous.ResUtils
-import com.quranapp.android.utils.miscellenous.StringUtils
+import com.quranapp.android.utils.miscellenous.HYPHEN
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
-import java.util.Locale
 
 private val footnoteTagPattern = Regex("""(?s)<fn.*?>(.*?)<.*?fn>""")
 
@@ -107,7 +105,7 @@ fun VerseShareSheet(
 
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
-    val translRepo = remember(context) { DatabaseProvider.getTranslationRepository(context) }
+    val translRepo = remember { DatabaseProvider.getTranslationRepository() }
 
     val translationBooks by produceState<Map<String, TranslationBookInfoModel>>(
         emptyMap(),
@@ -483,7 +481,7 @@ private suspend fun buildShareText(
 
         if (verseNo < toVerse) {
             sb.append("\n\n")
-            sb.append(StringUtils.HYPHEN.repeat(10))
+            sb.append(HYPHEN.repeat(10))
             sb.append("\n\n")
         }
     }
@@ -500,7 +498,7 @@ private suspend fun appendVerseBlock(
     isSingleVerse: Boolean,
     state: VerseShareState,
 ) {
-    val repository = DatabaseProvider.getQuranRepository(context)
+    val repository = DatabaseProvider.getQuranRepository()
 
     val transls = translFactory.getTranslations(state.selectedSlugs, chapterNo, verseNo)
     val hasMultiTransls = transls.size > 1
@@ -532,11 +530,11 @@ private suspend fun appendVerseBlock(
     }
 
     if (isSingleVerse && !hasMultiTransls) {
-        sb.append("\n\n").append("${StringUtils.HYPHEN} Quran $chapterNo:$verseNo")
+        sb.append("\n\n").append("${HYPHEN} Quran $chapterNo:$verseNo")
     }
 
     if (state.includeBookmarkNote) {
-        val userRepository = DatabaseProvider.getUserRepository(context)
+        val userRepository = DatabaseProvider.getUserRepository()
 
         userRepository.getBookmark(chapterNo, verseNo, verseNo)?.let { bookmark ->
             val bookmarkNote = bookmark.note?.trim().orEmpty()
@@ -578,12 +576,7 @@ private suspend fun makeTranslText(
     if (inclFootnotes && hasFootnotes) {
         sb.append("\n\n")
 
-        val title =
-            ResUtils.getLocalizedString(
-                context,
-                R.string.strTitleFootnotes,
-                Locale.forLanguageTag(bookInfo.langCode)
-            ) ?: "FOOTNOTES"
+        val title = getString(Res.string.strTitleFootnotes)
 
         appendBold(sb, title, whatsappStyle)
 

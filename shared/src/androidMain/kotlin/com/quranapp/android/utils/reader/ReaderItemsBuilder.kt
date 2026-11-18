@@ -1,6 +1,5 @@
 package com.quranapp.android.utils.reader
 
-import android.content.Context
 import androidx.compose.foundation.text.appendInlineContent
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.Typography
@@ -144,7 +143,6 @@ object ReaderItemsBuilder {
     )
 
     suspend fun buildChapterVersesForTranslationMode(
-        context: Context,
         params: TextBuilderParams,
         chapterNo: Int,
     ): ReaderPreparedData? {
@@ -152,13 +150,13 @@ object ReaderItemsBuilder {
             return null
         }
 
-        val quranRepository = DatabaseProvider.getQuranRepository(context)
+        val quranRepository = DatabaseProvider.getQuranRepository()
 
         val verseCount = quranRepository.getChapterVerseCount(chapterNo)
         if (verseCount <= 0) return null
 
-        val translationRepo = DatabaseProvider.getTranslationRepository(context)
-        val externalQuranDb = DatabaseProvider.getExternalQuranDatabase(context)
+        val translationRepo = DatabaseProvider.getTranslationRepository()
+        val externalQuranDb = DatabaseProvider.getExternalQuranDatabase()
 
         val out = ArrayList<ReaderLayoutItem>()
         val textStyles = HashMap<Int, TextStyle>()
@@ -185,7 +183,6 @@ object ReaderItemsBuilder {
     }
 
     suspend fun buildJuzVersesForTranslationMode(
-        context: Context,
         params: TextBuilderParams,
         quranRepository: QuranRepository,
         juzNo: Int
@@ -195,13 +192,12 @@ object ReaderItemsBuilder {
         }
 
         return buildGroupedVerses(
-            context, params,
+            params,
             quranRepository.getChapterVerseRangesInJuz(juzNo)
         )
     }
 
     suspend fun buildHizbVersesForTranslationMode(
-        context: Context,
         params: TextBuilderParams,
         quranRepository: QuranRepository,
         hizbNo: Int
@@ -211,21 +207,20 @@ object ReaderItemsBuilder {
         }
 
         return buildGroupedVerses(
-            context, params,
+            params,
             quranRepository.getChapterVerseRangesInHizb(hizbNo)
         )
     }
 
     private suspend fun buildGroupedVerses(
-        context: Context,
         params: TextBuilderParams,
         chapterRanges: List<Pair<Int, IntRange>>,
     ): ReaderPreparedData? {
         if (chapterRanges.isEmpty()) return null
 
-        val quranRepository = DatabaseProvider.getQuranRepository(context)
-        val externalQuranDb = DatabaseProvider.getExternalQuranDatabase(context)
-        val translationRepo = DatabaseProvider.getTranslationRepository(context)
+        val quranRepository = DatabaseProvider.getQuranRepository()
+        val externalQuranDb = DatabaseProvider.getExternalQuranDatabase()
+        val translationRepo = DatabaseProvider.getTranslationRepository()
 
         val out = ArrayList<ReaderLayoutItem>()
         val textStyles = HashMap<Int, TextStyle>()
@@ -299,7 +294,7 @@ object ReaderItemsBuilder {
             val atlasDef = async(Dispatchers.IO) {
                 if (isAtlasScript) {
                     val bundle = QuranAtlasLoader.getBundle(
-                        uiConfig.context, externalQuranDb, scriptCode
+                        externalQuranDb, scriptCode
                     )
                     val prefetchPairs =
                         (fromVerse..toVerse).asSequence()
@@ -398,7 +393,7 @@ object ReaderItemsBuilder {
                 manzil = ayah.manzilNo,
             )
 
-            out.addSectionMarker(uiConfig.context, chapterNo, verseNo, cur, prevSection)
+            out.addSectionMarker(chapterNo, verseNo, cur, prevSection)
             prevSection = cur
 
             if (words.isNotEmpty()) {
@@ -454,7 +449,6 @@ object ReaderItemsBuilder {
         }
 
         out.addSectionMarkerAtRangeEnd(
-            uiConfig.context,
             quranRepository,
             mushafId,
             chapterNo = chapterNo,
@@ -465,7 +459,6 @@ object ReaderItemsBuilder {
     }
 
     suspend fun buildQuickReferenceItems(
-        context: Context,
         params: TextBuilderParams,
         chapterNo: Int,
         verseNos: List<Int>,
@@ -477,7 +470,7 @@ object ReaderItemsBuilder {
         val scriptCode = ReaderPreferences.getQuranScript()
         val isDarkThem = ThemeUtils.isDarkTheme(uiConfig.context)
 
-        val repository = DatabaseProvider.getQuranRepository(context)
+        val repository = DatabaseProvider.getQuranRepository()
 
         val batch = repository.loadArbitraryVersesBatch(
             chapterNo,
@@ -488,14 +481,13 @@ object ReaderItemsBuilder {
             ?: return null
         val surah = batch.surah
 
-        val translationRepo = DatabaseProvider.getTranslationRepository(context)
-        val externalQuranDb = DatabaseProvider.getExternalQuranDatabase(context)
+        val translationRepo = DatabaseProvider.getTranslationRepository()
+        val externalQuranDb = DatabaseProvider.getExternalQuranDatabase()
 
         val out = ArrayList<ReaderLayoutItem>(verseNos.size)
 
         val atlasBundle = if (scriptCode.isQuranAtlasScript()) {
             QuranAtlasLoader.getBundle(
-                context,
                 externalQuranDb,
                 scriptCode
             )
@@ -620,7 +612,6 @@ object ReaderItemsBuilder {
      * chapter, allowing callers such as collections to avoid doing reader setup for every row.
      */
     suspend fun buildQuickReferenceItems(
-        context: Context,
         params: TextBuilderParams,
         requests: Collection<QuickReferenceRequest>,
     ): Map<Long, ReaderPreparedData> {
@@ -629,7 +620,6 @@ object ReaderItemsBuilder {
         val preparedByKey = HashMap<Long, ReaderPreparedData>(requests.size)
         for ((chapterNo, chapterRequests) in requests.groupBy { it.chapterNo }) {
             val prepared = buildQuickReferenceItems(
-                context = context,
                 params = params,
                 chapterNo = chapterNo,
                 verseNos = chapterRequests.map { it.verseNo }.distinct(),
@@ -711,8 +701,8 @@ object ReaderItemsBuilder {
 
         val mushafId = scriptCode.toQuranMushafId(scriptVariant)
 
-        val quranRepository = DatabaseProvider.getQuranRepository(uiConfig.context)
-        val externalQuranDb = DatabaseProvider.getExternalQuranDatabase(uiConfig.context)
+        val quranRepository = DatabaseProvider.getQuranRepository()
+        val externalQuranDb = DatabaseProvider.getExternalQuranDatabase()
 
         val linesByPage = quranRepository.getPageLinesGroupedForPages(mushafId, distinct)
         val juzByPage = quranRepository.getJuzForMushafPages(mushafId, distinct)
@@ -726,7 +716,6 @@ object ReaderItemsBuilder {
 
         val atlasBundle = if (scriptCode.isQuranAtlasScript()) {
             QuranAtlasLoader.getBundle(
-                uiConfig.context,
                 externalQuranDb,
                 scriptCode
             )
@@ -830,7 +819,6 @@ object ReaderItemsBuilder {
      * on the page; text uses the same annotated pipeline as verse-by-verse (footnotes, refs).
      */
     suspend fun buildTranslationPages(
-        context: Context,
         quranRepository: QuranRepository,
         pageNumbers: Collection<Int>,
         translationSlug: String,
@@ -862,7 +850,7 @@ object ReaderItemsBuilder {
                 quranRepository.getChapterNamesOnMushafPage(mushafId, pageNo)
         }
 
-        val translationRepo = DatabaseProvider.getTranslationRepository(context)
+        val translationRepo = DatabaseProvider.getTranslationRepository()
 
         val out = LinkedHashMap<Int, TranslationPageItem>(distinct.size)
         val slugSet = setOf(translationSlug)
@@ -1095,7 +1083,6 @@ object ReaderItemsBuilder {
      * as the translation reader, with words in reading order instead of justified lines.
      */
     suspend fun buildReadingFlowPages(
-        context: Context,
         quranRepository: QuranRepository,
         pageNumbers: Collection<Int>,
         cacheKey: String,
@@ -1107,7 +1094,7 @@ object ReaderItemsBuilder {
         val mushafId = scriptCode.toQuranMushafId(ReaderPreferences.getQuranScriptVariant())
         if (mushafId <= 0) return emptyMap()
 
-        val externalQuranDb = DatabaseProvider.getExternalQuranDatabase(context)
+        val externalQuranDb = DatabaseProvider.getExternalQuranDatabase()
         val linesByPage = quranRepository.getPageLinesGroupedForPages(mushafId, distinct)
         val juzByPage = quranRepository.getJuzForMushafPages(mushafId, distinct)
         val hizbByPage = quranRepository.getHizbForMushafPages(mushafId, distinct)
@@ -1143,7 +1130,7 @@ object ReaderItemsBuilder {
         }
 
         val atlasBundle = if (scriptCode.isQuranAtlasScript()) {
-            QuranAtlasLoader.getBundle(context, externalQuranDb, scriptCode)
+            QuranAtlasLoader.getBundle(externalQuranDb, scriptCode)
         } else {
             null
         }
@@ -1332,7 +1319,6 @@ object ReaderItemsBuilder {
     }
 
     private suspend fun ArrayList<ReaderLayoutItem>.addSectionMarker(
-        context: Context,
         chapterNo: Int,
         verseNo: Int,
         cur: SectionSnapshot,
@@ -1354,7 +1340,7 @@ object ReaderItemsBuilder {
         val rubNo = prevSnap.rub.takeIf { rubEnded }
         val manzilNo = prevSnap.manzil.takeIf { manzilEnded }
 
-        val text = context.formatSectionMarkerLabel(pageNo, rukuNo, rubNo, manzilNo)
+        val text = formatSectionMarkerLabel(pageNo, rukuNo, rubNo, manzilNo)
         if (text.isEmpty()) return
 
         add(
@@ -1374,7 +1360,6 @@ object ReaderItemsBuilder {
     }
 
     private suspend fun ArrayList<ReaderLayoutItem>.addSectionMarkerAtRangeEnd(
-        context: Context,
         quranRepository: QuranRepository,
         mushafId: Int,
         chapterNo: Int,
@@ -1441,7 +1426,7 @@ object ReaderItemsBuilder {
             return
         }
 
-        val text = context.formatSectionMarkerLabel(
+        val text = formatSectionMarkerLabel(
             pageForMarker,
             rukuForMarker,
             rubForMarker,
@@ -1479,7 +1464,7 @@ object ReaderItemsBuilder {
         }
     }
 
-    private suspend fun Context.formatSectionMarkerLabel(
+    private suspend fun formatSectionMarkerLabel(
         pageNo: Int?,
         rukuNo: Int?,
         rubNo: Int?,

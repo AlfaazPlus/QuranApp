@@ -73,7 +73,7 @@ fun StorageCleanupMainScreen(
     LaunchedEffect(Unit) {
         loading = true
         metrics = withContext(Dispatchers.IO) {
-            val translations = DatabaseProvider.getTranslationRepository(context).let {
+            val translations = DatabaseProvider.getTranslationRepository().let {
                 it.getDownloadedBooks().size
             }
             val (recFiles, recReciters) = recitationManager.getDownloadedAudioStats()

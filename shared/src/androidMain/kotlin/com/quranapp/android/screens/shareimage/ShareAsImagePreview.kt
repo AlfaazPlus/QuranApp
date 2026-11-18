@@ -42,7 +42,7 @@ fun ShareAsImagePreview(
     val session = LocalShareAsImage.current
     val template = session.selectedTemplate
     val scene = session.scene
-    val previewBg = session.previewBgBitmap
+    val previewBg = session.previewBackground
 
     Surface(
         modifier = modifier,
@@ -92,7 +92,7 @@ fun ShareAsImagePreview(
                     }
 
                     scene != null -> {
-                        val activeBitmap = if (scene.templateId == template?.id) previewBg else null
+                        val activeBackground = if (scene.templateId == template?.id) previewBg else null
 
                         Canvas(modifier = Modifier.fillMaxSize()) {
                             if (size.width > 0f && size.height > 0f) {
@@ -103,7 +103,7 @@ fun ShareAsImagePreview(
                                     composeCanvas.nativeCanvas.withScale(sx, sy) {
                                         scene.draw(
                                             canvas = this,
-                                            bgBitmap = activeBitmap,
+                                            background = activeBackground,
                                             allowBlockingTextureLoad = false,
                                         )
                                     }
@@ -111,7 +111,7 @@ fun ShareAsImagePreview(
                             }
                         }
 
-                        if (session.isPreviewBgLoading && activeBitmap == null) {
+                        if (session.isPreviewBgLoading && activeBackground == null) {
                             Box(
                                 modifier = Modifier
                                     .align(Alignment.TopEnd)

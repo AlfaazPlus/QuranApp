@@ -79,9 +79,10 @@ fun ChapterInfoScreen(
     val viewModel = appViewModel<ChapterInfoViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val onEvent = viewModel::onEvent
+    val context = LocalContext.current
 
     LaunchedEffect(initialChapterNo, initialLanguage) {
-        onEvent(ChapterInfoEvent.Init(initialChapterNo, initialLanguage))
+        onEvent(ChapterInfoEvent.Init(context, initialChapterNo, initialLanguage))
     }
 
     var quickRefData by remember { mutableStateOf<QuickReferenceData?>(null) }
@@ -126,13 +127,13 @@ fun ChapterInfoScreen(
                     ErrorContent(
                         message = contentState.message,
                         canRetry = contentState.canRetry,
-                        onRetry = { onEvent(ChapterInfoEvent.Retry) },
+                        onRetry = { onEvent(ChapterInfoEvent.Retry(context)) },
                     )
                 }
 
                 is ChapterInfoContentState.NoInternet -> {
                     NoInternetContent(
-                        onRetry = { onEvent(ChapterInfoEvent.Retry) },
+                        onRetry = { onEvent(ChapterInfoEvent.Retry(context)) },
                     )
                 }
 
@@ -149,11 +150,10 @@ fun ChapterInfoScreen(
         selectedChapterNo = uiState.chapterNo.takeIf { it >= 1 },
         selectedVerseNos = emptySet(),
         onChapterSelected = { chapterNo ->
-            onEvent(ChapterInfoEvent.Init(chapterNo, initialLanguage))
+            onEvent(ChapterInfoEvent.Init(context, chapterNo, initialLanguage))
         },
     )
 
-    val context = LocalContext.current
     QuickReference(
         data = quickRefData,
         onOpenInReader = { chapterNo, range ->

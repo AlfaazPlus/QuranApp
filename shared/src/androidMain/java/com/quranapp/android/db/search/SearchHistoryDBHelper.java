@@ -74,7 +74,7 @@ public class SearchHistoryDBHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(COL_TEXT, trimmed);
-        values.put(COL_DATE, DateUtils.getDateTimeNow());
+        values.put(COL_DATE, DateUtils.INSTANCE.format(DateUtils.INSTANCE.now(), DateUtils.SYSTEM));
 
         long rowId = db.insert(TABLE_NAME, null, values);
         boolean inserted = rowId != -1;
@@ -125,7 +125,7 @@ public class SearchHistoryDBHelper extends SQLiteOpenHelper {
         String[] whereArgs = {text.trim()};
 
         ContentValues values = new ContentValues();
-        values.put(COL_DATE, DateUtils.getDateTimeNow());
+        values.put(COL_DATE, DateUtils.INSTANCE.format(DateUtils.INSTANCE.now(), DateUtils.SYSTEM));
 
         long rowsAffected = db.update(TABLE_NAME, values, whereClause, whereArgs);
         return rowsAffected > 0;

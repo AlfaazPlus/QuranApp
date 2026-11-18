@@ -2,7 +2,7 @@ package com.quranapp.android.utils.tafsir
 
 import com.quranapp.android.api.models.tafsir.TafsirModel
 import com.quranapp.android.locale.appFallbackLanguageCodes
-import com.quranapp.android.utils.files.AppFiles
+import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.reader.tafsir.TafsirManager
 import okio.Path
 

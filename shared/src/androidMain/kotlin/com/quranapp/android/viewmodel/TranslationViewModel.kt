@@ -1,11 +1,13 @@
 package com.quranapp.android.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.quranapp.android.AndroidAppContext
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel
-import com.quranapp.android.components.transls.TranslModel
-import com.quranapp.android.components.transls.TranslationGroupModel
 import com.quranapp.android.db.DatabaseProvider
+import com.quranapp.android.extensions.canProceed
 import com.quranapp.android.models.DataLoadError
+import com.quranapp.android.models.transls.TranslModel
+import com.quranapp.android.models.transls.TranslationGroupModel
 import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.search.SearchIndexScheduler
@@ -13,7 +15,6 @@ import com.quranapp.android.utils.managers.ResourceDownloadStatus
 import com.quranapp.android.utils.managers.TranslationDownloadManager
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.translation.TranslationVersionManager
-import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -64,8 +65,8 @@ class TranslationViewModel() : AppViewModel() {
     private val _events = MutableSharedFlow<TranslationUiEvent>(extraBufferCapacity = 1)
     val events = _events.asSharedFlow()
 
-    private val context get() = application
-    private val versionManager = TranslationVersionManager.get(context)
+    private val context get() = AndroidAppContext.get()
+    private val versionManager = TranslationVersionManager.get()
 
     init {
         TranslationDownloadManager.initialize(context)
@@ -202,9 +203,9 @@ class TranslationViewModel() : AppViewModel() {
         }
 
         var updatedSelectedSlugs: Set<String> = emptySet()
-        DatabaseProvider.getTranslationRepository(application).let {
+        DatabaseProvider.getTranslationRepository().let {
             it.delete(slug)
-            SearchIndexScheduler.enqueueRemoveSlug(application.applicationContext, slug)
+            SearchIndexScheduler.enqueueRemoveSlug(context, slug)
 
             _uiState.update { current ->
                 val updatedGroups = current.translationGroups.map { group ->
@@ -231,10 +232,11 @@ class TranslationViewModel() : AppViewModel() {
     private fun updateTranslation(slug: String) {
         if (TranslUtils.isPrebuilt(slug)) return
         if (!_uiState.value.outdatedSlugs.contains(slug)) return
+
         viewModelScope.launch {
-            if (!NetworkStateReceiver.canProceed(context.applicationContext)) return@launch
+            if (!PlatformServices.networkMonitor.canProceed()) return@launch
             val remoteInfo = versionManager.getRemoteBookInfo(slug)
-                ?: DatabaseProvider.getTranslationRepository(context.applicationContext)
+                ?: DatabaseProvider.getTranslationRepository()
                     .let { factory ->
                         factory.getBook(slug)
                     }
@@ -244,6 +246,7 @@ class TranslationViewModel() : AppViewModel() {
             _uiState.update {
                 it.copy(updatingSlugs = it.updatingSlugs + slug)
             }
+
             PlatformServices.downloads.downloadTranslation(remoteInfo)
         }
     }
@@ -297,7 +300,7 @@ class TranslationViewModel() : AppViewModel() {
         oldGroups: List<TranslationGroupModel>,
         selectedSlugs: Set<String>
     ): List<TranslationGroupModel> {
-        val translFactory = DatabaseProvider.getTranslationRepository(application)
+        val translFactory = DatabaseProvider.getTranslationRepository()
 
         // map old groups expanded state for better UX
         val oldExpandedState = oldGroups.associate { it.langCode to it.isExpanded }

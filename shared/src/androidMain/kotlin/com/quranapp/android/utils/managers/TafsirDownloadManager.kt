@@ -8,6 +8,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.workDataOf
+import com.quranapp.android.AndroidAppContext
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import com.quranapp.android.utils.workers.TafsirDownloadWorker
 import kotlinx.coroutines.channels.awaitClose
@@ -22,8 +23,8 @@ object TafsirDownloadManager {
 
     private val downloadStates = MutableLiveData<Map<String, WorkInfo>>(emptyMap())
 
-    fun initialize(context: Context) {
-        val wm = WorkManager.getInstance(context)
+    fun initialize() {
+        val wm = WorkManager.getInstance(AndroidAppContext.get())
 
         wm.getWorkInfosByTagLiveData(TAG).observeForever { workInfos ->
             val map = mutableMapOf<String, WorkInfo>()
@@ -62,17 +63,17 @@ object TafsirDownloadManager {
             request
         )
 
-        observeWork(context, bookInfo.key, request.id)
+        observeWork(bookInfo.key, request.id)
     }
 
-    fun stopDownload(context: Context, slug: String) {
+    fun stopDownload(slug: String) {
         val itemTag = "${ITEM_TAG_PREFIX}$slug"
-        val wm = WorkManager.getInstance(context)
+        val wm = WorkManager.getInstance(AndroidAppContext.get())
         wm.cancelUniqueWork(itemTag)
     }
 
-    private fun observeWork(context: Context, tafsirKey: String, workId: UUID) {
-        val wm = WorkManager.getInstance(context)
+    private fun observeWork(tafsirKey: String, workId: UUID) {
+        val wm = WorkManager.getInstance(AndroidAppContext.get())
         val liveData = wm.getWorkInfoByIdLiveData(workId)
 
         val observer = object : Observer<WorkInfo?> {

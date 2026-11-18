@@ -27,6 +27,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -97,6 +98,10 @@ fun ScriptsScreen() {
     val selectedScript = ReaderPreferences.observeQuranScript()
     val selectedVariant = ReaderPreferences.observeQuranScriptVariant()
 
+    LaunchedEffect(context) {
+        viewModel.initialize(context)
+    }
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
@@ -120,7 +125,7 @@ fun ScriptsScreen() {
                     selectedVariant = selectedVariant,
                     downloadStates = uiState.downloadStates,
                     onCancelDownload = { key ->
-                        viewModel.onEvent(ScriptEvent.CancelDownload(key))
+                        viewModel.onEvent(ScriptEvent.CancelDownload(context, key))
                     }
                 ) { newScript, newVariant ->
                     if (script.isKFQPCScript()) {
@@ -370,7 +375,7 @@ private fun ScriptAtlasDownloadRequestAlert(
                 onClick = {
                     val key = scriptKey ?: return@AlertDialogAction
                     viewModel.onEvent(
-                        ScriptEvent.DownloadAtlas(key, 6)
+                        ScriptEvent.DownloadAtlas(context, key, 6)
                     )
                 }
             )

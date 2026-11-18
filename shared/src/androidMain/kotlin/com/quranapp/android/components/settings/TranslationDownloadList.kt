@@ -48,8 +48,8 @@ import androidx.compose.ui.unit.dp
 import com.quranapp.android.components.common.dialogs.AlertDialog
 import com.quranapp.android.components.common.dialogs.AlertDialogAction
 import com.quranapp.android.components.common.dialogs.AlertDialogActionStyle
-import com.quranapp.android.components.transls.TranslModel
-import com.quranapp.android.components.transls.TranslationGroupModel
+import com.quranapp.android.models.transls.TranslModel
+import com.quranapp.android.models.transls.TranslationGroupModel
 import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.dr_icon_chevron_right
 import com.quranapp.android.generated.resources.dr_icon_close

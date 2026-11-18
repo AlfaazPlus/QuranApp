@@ -1,6 +1,7 @@
 package com.quranapp.android.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.quranapp.android.AndroidAppContext
 import com.quranapp.android.api.ApiClient
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import com.quranapp.android.api.models.tafsir.TafsirModel
@@ -18,7 +19,7 @@ import com.quranapp.android.utils.reader.QuranVerseWebRequest
 import com.quranapp.android.utils.reader.buildQuranVerseWebAssets
 import com.quranapp.android.utils.reader.tafsir.TafsirManager
 import com.quranapp.android.utils.reader.translation.isCustomImportSlug
-import com.quranapp.android.utils.receivers.NetworkStateReceiver
+import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.utils.tafsir.TafsirUtils
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
@@ -72,8 +73,8 @@ class TafsirReaderViewModel() : AppViewModel() {
     private val _uiState = MutableStateFlow(TafsirReaderUiState())
     val uiState: StateFlow<TafsirReaderUiState> = _uiState.asStateFlow()
 
-    private val context get() = application
-    val repository get() = DatabaseProvider.getQuranRepository(context)
+    private val context get() = AndroidAppContext.get()
+    val repository get() = DatabaseProvider.getQuranRepository()
 
     private var contentLoadJob: Job? = null
 
@@ -303,7 +304,7 @@ class TafsirReaderViewModel() : AppViewModel() {
                             return@withContext LoadOutcome.NotFound
                         }
 
-                        if (!NetworkStateReceiver.isNetworkConnected(context)) {
+                        if (!PlatformServices.networkMonitor.isConnected) {
                             return@withContext LoadOutcome.NoNetwork
                         }
 

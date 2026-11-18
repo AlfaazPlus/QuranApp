@@ -19,6 +19,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalContext
+import coil3.BitmapImage
+import coil3.Image
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.relations.VerseWithDetails
@@ -42,7 +44,6 @@ import com.quranapp.android.utils.reader.atlas.QuranAtlasLoader
 import com.quranapp.android.utils.reader.isKFQPCScript
 import com.quranapp.android.utils.reader.isPrebuiltAtlas
 import com.quranapp.android.utils.reader.isQuranAtlasScript
-import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.share.PreparedVerseScene
 import com.quranapp.android.utils.share.ShareImageExporter
 import com.quranapp.android.utils.share.VerseFitStage
@@ -69,7 +70,7 @@ data class ShareAsImageSession(
     val isTemplatesLoading: Boolean,
     val templatesError: DataLoadError?,
     val selectedTemplate: VerseTemplate?,
-    val previewBgBitmap: Bitmap?,
+    val previewBackground: Image?,
     val isPreviewBgLoading: Boolean,
     val scene: PreparedVerseScene?,
     val canExport: Boolean,
@@ -104,7 +105,7 @@ fun ShareAsImageProvider(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val fontResolver = remember { FontResolver.getInstance(context) }
-    val translRepo = remember(context) { DatabaseProvider.getTranslationRepository(context) }
+    val translRepo = remember { DatabaseProvider.getTranslationRepository() }
     val downloadProxy = AppPreferences.observeResourceDownloadProxy()
 
     var templates by remember { mutableStateOf<List<VerseTemplate>>(emptyList()) }
@@ -142,11 +143,11 @@ fun ShareAsImageProvider(
         templatesError = null
 
         val force = templatesReloadToken > 0
-        val catalog = VerseTemplateManager.getAvailable(context, forceRefresh = force)
+        val catalog = VerseTemplateManager.getAvailable(forceRefresh = force)
 
         when {
             catalog == null -> {
-                templatesError = if (!NetworkStateReceiver.isNetworkConnected(context)) {
+                templatesError = if (!PlatformServices.networkMonitor.isConnected) {
                     DataLoadError.NoConnection
                 } else {
                     DataLoadError.Failed
@@ -231,7 +232,7 @@ fun ShareAsImageProvider(
         showArabic,
     ) {
         value = withContext(Dispatchers.IO) {
-            DatabaseProvider.getQuranRepository(context).getVerseWithDetails(
+            DatabaseProvider.getQuranRepository().getVerseWithDetails(
                 chapterNo = chapterNo,
                 verseNo = verseNo,
                 scriptCode = scriptCode,
@@ -271,8 +272,7 @@ fun ShareAsImageProvider(
 
         value = withContext(Dispatchers.IO) {
             val bundle = QuranAtlasLoader.getBundle(
-                context,
-                DatabaseProvider.getExternalQuranDatabase(context),
+                DatabaseProvider.getExternalQuranDatabase(),
                 scriptCode,
             ) ?: return@withContext null
 
@@ -286,7 +286,7 @@ fun ShareAsImageProvider(
         }
     }
 
-    var previewBgPair by remember { mutableStateOf<Pair<String, Bitmap>?>(null) }
+    var previewBgPair by remember { mutableStateOf<Pair<String, Image>?>(null) }
     var isPreviewBgLoading by remember { mutableStateOf(false) }
 
     val previewCanvasSize = selectedTemplate?.layout?.let { layout ->
@@ -307,21 +307,23 @@ fun ShareAsImageProvider(
             return@LaunchedEffect
         }
 
-        if (previewBgPair?.first != tpl.id || previewBgPair?.second?.isRecycled == true) {
+        if (previewBgPair?.first != tpl.id || previewBgPair?.second?.isDrawable() != true) {
             isPreviewBgLoading = true
         }
-        val bmp = VerseTemplateManager.loadPreviewBitmap(
-            context = context,
+
+        val background = VerseTemplateManager.decodeBackground(
             template = tpl,
             reqWidth = size.first,
             reqHeight = size.second,
+            cache = true,
         )
-        previewBgPair = if (bmp != null) tpl.id to bmp else null
+
+        previewBgPair = if (background != null) tpl.id to background else null
         isPreviewBgLoading = false
     }
 
     val activePreviewBg = previewBgPair
-        ?.takeIf { it.first == selectedTemplate?.id && !it.second.isRecycled }
+        ?.takeIf { it.first == selectedTemplate?.id && it.second.isDrawable() }
         ?.second
 
     val cleanTranslationText = remember(translation) {
@@ -440,7 +442,6 @@ fun ShareAsImageProvider(
             return null
         }
         return VerseTemplateRenderer.renderHighQualityBitmap(
-            context = context,
             scene = latestScene,
             template = input.template,
         )
@@ -492,7 +493,7 @@ fun ShareAsImageProvider(
         isTemplatesLoading = isTemplatesLoading,
         templatesError = templatesError,
         selectedTemplate = selectedTemplate,
-        previewBgBitmap = activePreviewBg,
+        previewBackground = activePreviewBg,
         isPreviewBgLoading = isPreviewBgLoading,
         scene = scene,
         canExport = canExport,
@@ -523,13 +524,18 @@ fun ShareAsImageProvider(
     CompositionLocalProvider(LocalShareAsImage provides session, content = content)
 }
 
+private fun Image.isDrawable(): Boolean {
+    val bitmap = (this as? BitmapImage)?.bitmap ?: return false
+    return !bitmap.isRecycled && bitmap.width > 0 && bitmap.height > 0
+}
+
 private val ShareContentOptionSaver = Saver<ShareContentOption, String>(
     save = { it.value },
     restore = { ShareContentOption.fromValue(it) },
 )
 
 private suspend fun listAvailableScripts(context: Context): List<String> {
-    val db = DatabaseProvider.getExternalQuranDatabase(context)
+    val db = DatabaseProvider.getExternalQuranDatabase()
 
     return QuranScriptUtils.availableScripts().keys.filter { script ->
         when {

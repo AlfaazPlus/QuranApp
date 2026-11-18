@@ -1,7 +1,9 @@
 package com.quranapp.android.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.viewModelScope
 import com.quranapp.android.db.DatabaseProvider
+import com.quranapp.android.extensions.canProceed
 import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.utils.managers.ResourceDownloadStatus
 import com.quranapp.android.utils.managers.ScriptFontsDownloadManager
@@ -9,7 +11,6 @@ import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.QuranScriptVariant
 import com.quranapp.android.utils.reader.atlas.AtlasDownloadManager
 import com.quranapp.android.utils.reader.isPrebuiltAtlas
-import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,17 +26,17 @@ data class ScriptsUiState(
 
 sealed interface ScriptEvent {
     data class DownloadScript(val key: String) : ScriptEvent
-    data class DownloadAtlas(val key: String, val densityLevel: Int) : ScriptEvent
-    data class CancelDownload(val key: String) : ScriptEvent
+    data class DownloadAtlas(val context: Context, val key: String, val densityLevel: Int) :
+        ScriptEvent
+
+    data class CancelDownload(val context: Context, val key: String) : ScriptEvent
 }
 
 class ScriptsViewModel() : AppViewModel() {
     private val _uiState = MutableStateFlow(ScriptsUiState())
     val uiState: StateFlow<ScriptsUiState> = _uiState.asStateFlow()
 
-    private val context get() = application
-
-    init {
+    fun initialize(context: Context) {
         ScriptFontsDownloadManager.initialize(context)
         AtlasDownloadManager.initialize(context)
         observeDownloadStates()
@@ -57,7 +58,7 @@ class ScriptsViewModel() : AppViewModel() {
     suspend fun isAtlasInstalled(script: String): Boolean = withContext(Dispatchers.IO) {
         if (script.isPrebuiltAtlas()) return@withContext true
 
-        DatabaseProvider.getExternalQuranDatabase(context)
+        DatabaseProvider.getExternalQuranDatabase()
             .atlasWordShapeDao()
             .getBundleByKey(script) != null
     }
@@ -65,30 +66,35 @@ class ScriptsViewModel() : AppViewModel() {
     fun onEvent(event: ScriptEvent) {
         when (event) {
             is ScriptEvent.DownloadScript -> downloadScript(event.key)
-            is ScriptEvent.DownloadAtlas -> downloadAtlas(event.key, event.densityLevel)
-            is ScriptEvent.CancelDownload -> cancelDownload(event.key)
+            is ScriptEvent.DownloadAtlas -> downloadAtlas(
+                event.context,
+                event.key,
+                event.densityLevel
+            )
+
+            is ScriptEvent.CancelDownload -> cancelDownload(event.context, event.key)
         }
     }
 
     private fun downloadScript(key: String) {
         viewModelScope.launch {
-            if (!NetworkStateReceiver.canProceed(context)) return@launch
+            if (!PlatformServices.networkMonitor.canProceed()) return@launch
 
             PlatformServices.downloads.downloadScriptFont(key)
             updateDownloadStatus(key, ResourceDownloadStatus.Started)
         }
     }
 
-    private fun downloadAtlas(key: String, densityLevel: Int) {
+    private fun downloadAtlas(context: Context, key: String, densityLevel: Int) {
         viewModelScope.launch {
-            if (!NetworkStateReceiver.canProceed(context)) return@launch
+            if (!PlatformServices.networkMonitor.canProceed()) return@launch
 
             AtlasDownloadManager.startDownload(context, key, densityLevel)
             updateDownloadStatus(key, ResourceDownloadStatus.Started)
         }
     }
 
-    private fun cancelDownload(key: String) {
+    private fun cancelDownload(context: Context, key: String) {
         ScriptFontsDownloadManager.stopDownload(context, key)
         AtlasDownloadManager.stopDownload(context, key)
         updateDownloadStatus(key, ResourceDownloadStatus.Cancelled)

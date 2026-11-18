@@ -1,12 +1,12 @@
 package com.quranapp.android.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.quranapp.android.AndroidAppContext
 import com.quranapp.android.api.ApiClient
 import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel
-import com.quranapp.android.components.transls.TranslModel
-import com.quranapp.android.components.transls.TranslationGroupModel
 import com.quranapp.android.db.DatabaseProvider
+import com.quranapp.android.extensions.canProceed
 import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.strMsgTranslDownloaded
 import com.quranapp.android.generated.resources.strMsgTranslFailedToDownload
@@ -14,14 +14,15 @@ import com.quranapp.android.generated.resources.strMsgTryLater
 import com.quranapp.android.generated.resources.strTitleFailed
 import com.quranapp.android.generated.resources.strTitleSuccess
 import com.quranapp.android.models.DataLoadError
+import com.quranapp.android.models.transls.TranslModel
+import com.quranapp.android.models.transls.TranslationGroupModel
 import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.app.Logger
-import com.quranapp.android.utils.files.AppFiles
-import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.managers.ResourceDownloadStatus
 import com.quranapp.android.utils.managers.TranslationDownloadManager
+import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.translation.TranslationVersionManager
-import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -66,8 +67,8 @@ class TranslationDownloadViewModel() : AppViewModel() {
     private val _events = MutableSharedFlow<TranslationDownloadUiEvent>()
     val events = _events.asSharedFlow()
 
-    private val context get() = application.applicationContext
-    private val versionManager = TranslationVersionManager.get(context)
+    private val context get() = AndroidAppContext.get()
+    private val versionManager = TranslationVersionManager.get()
 
     init {
         TranslationDownloadManager.initialize(context)
@@ -97,7 +98,7 @@ class TranslationDownloadViewModel() : AppViewModel() {
     }
 
     private fun loadAvailableTranslations(force: Boolean) {
-        if (force && !NetworkStateReceiver.isNetworkConnected(context)) {
+        if (force && !PlatformServices.networkMonitor.isConnected) {
             _uiState.update { it.copy(isLoading = false, error = DataLoadError.NoConnection) }
             return
         }
@@ -137,7 +138,7 @@ class TranslationDownloadViewModel() : AppViewModel() {
         val translationGroups = LinkedList<TranslationGroupModel>()
 
         val downloadedSlugs =
-            DatabaseProvider.getTranslationRepository(application).let { factory ->
+            DatabaseProvider.getTranslationRepository().let { factory ->
                 factory.getDownloadedSlugs()
             }
 
@@ -236,7 +237,7 @@ class TranslationDownloadViewModel() : AppViewModel() {
                 return@launch
             }
 
-            if (!NetworkStateReceiver.canProceed(context)) {
+            if (!PlatformServices.networkMonitor.canProceed()) {
                 return@launch
             }
 
@@ -338,6 +339,6 @@ class TranslationDownloadViewModel() : AppViewModel() {
     }
 
     private suspend fun isDownloaded(slug: String): Boolean {
-        return DatabaseProvider.getTranslationRepository(application).isDownloaded(slug)
+        return DatabaseProvider.getTranslationRepository().isDownloaded(slug)
     }
 }

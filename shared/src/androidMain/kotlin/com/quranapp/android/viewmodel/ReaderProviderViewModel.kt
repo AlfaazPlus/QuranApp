@@ -1,6 +1,7 @@
 package com.quranapp.android.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.quranapp.android.AndroidAppContext
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.utils.mediaplayer.RecitationController
@@ -16,18 +17,20 @@ import kotlinx.coroutines.flow.stateIn
 
 @OptIn(ExperimentalCoroutinesApi::class)
 open class ReaderProviderViewModel() : AppViewModel() {
-    val controller = RecitationController.getInstance(application)
-    val userRepository get() = DatabaseProvider.getUserRepository(application)
-    val repository get() = DatabaseProvider.getQuranRepository(application)
-    val fontResolver = FontResolver.getInstance(application)
-    val externalQuranDb get() = DatabaseProvider.getExternalQuranDatabase(application)
+    private val context get() = AndroidAppContext.get()
+
+    val controller = RecitationController.getInstance(context)
+    val userRepository get() = DatabaseProvider.getUserRepository()
+    val repository get() = DatabaseProvider.getQuranRepository()
+    val fontResolver = FontResolver.getInstance(context)
+    val externalQuranDb get() = DatabaseProvider.getExternalQuranDatabase()
 
     val atlasBundle: StateFlow<QuranAtlasBundle?> = ReaderPreferences.quranScriptFlow()
         .mapLatest { script ->
             if (!script.isQuranAtlasScript()) {
                 null
             } else {
-                QuranAtlasLoader.getBundle(application, externalQuranDb, script)
+                QuranAtlasLoader.getBundle(externalQuranDb, script)
             }
         }
         .stateIn(

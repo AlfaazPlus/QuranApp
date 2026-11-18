@@ -11,6 +11,7 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.quranapp.android.api.JsonHelper
+import com.quranapp.android.api.downloadTo
 import com.quranapp.android.api.fetchInventoryStreamingResponse
 import com.quranapp.android.api.models.wbw.WbwLanguageInfo
 import com.quranapp.android.api.models.wbw.WbwPayloadModel
@@ -25,18 +26,15 @@ import com.quranapp.android.shared.R
 import com.quranapp.android.utils.app.AppDestinations
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.app.NotificationUtils.createForegroundInfoFallback
-import com.quranapp.android.utils.extensions.isGzip
+import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.miscellenous.Keys
+import com.quranapp.android.utils.miscellenous.isGzip
 import com.quranapp.android.utils.reader.wbw.WbwManager
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
+import okio.Path
 import org.jetbrains.compose.resources.getString
-import java.io.File
-import java.io.IOException
-import java.io.InputStream
-import java.util.zip.GZIPInputStream
 
 class WbwDownloadWorker(
     private val ctx: Context,
@@ -67,12 +65,12 @@ class WbwDownloadWorker(
     private suspend fun downloadAndStore(
         info: WbwLanguageInfo
     ) = withContext(Dispatchers.IO) {
-        val tmpFile = WbwManager.tempDownloadFile(info.id).toFile()
+        val tmpFile = WbwManager.tempDownloadFile(info.id)
 
         try {
             downloadGithubRawContentToFile(
                 url = info.url,
-                dest = tmpFile
+                dest = tmpFile,
             ) { progress ->
                 if (!isStopped) {
                     setProgressAsync(workDataOf("progress" to (progress ?: 0)))
@@ -83,7 +81,7 @@ class WbwDownloadWorker(
             val payload = decodePayload(tmpFile)
             val entities = toEntities(payload, info.id)
 
-            val db = DatabaseProvider.getExternalQuranDatabase(ctx)
+            val db = DatabaseProvider.getExternalQuranDatabase()
             db.wbwDao().replaceByWbwId(info.id, entities)
             ReaderPreferences.bumpWbwContentEpoch()
 
@@ -92,25 +90,22 @@ class WbwDownloadWorker(
                 version = payload.version,
             )
         } finally {
-            if (tmpFile.exists()) {
-                tmpFile.delete()
-            }
+            AppFiles.delete(tmpFile)
         }
     }
 
-    private suspend fun decodePayload(source: File): WbwPayloadModel = withContext(Dispatchers.IO) {
-        if (!source.exists()) throw IOException("Source file does not exist")
+    private suspend fun decodePayload(source: Path): WbwPayloadModel = withContext(Dispatchers.IO) {
+        if (AppFiles.size(source) <= 0L) {
+            throw IllegalStateException("Source file does not exist")
+        }
 
-        val inputFactory: () -> InputStream = if (source.isGzip()) {
-            { GZIPInputStream(source.inputStream().buffered()) }
+        val content = if (source.isGzip()) {
+            AppFiles.readTextGzipped(source)
         } else {
-            { source.inputStream().buffered() }
+            AppFiles.readText(source)
         }
 
-        inputFactory().use { stream ->
-            val content = stream.reader().use { it.readText() }
-            JsonHelper.json.decodeFromString(content)
-        }
+        JsonHelper.json.decodeFromString(content)
     }
 
     private suspend fun createForegroundInfo(
@@ -189,50 +184,24 @@ class WbwDownloadWorker(
 
 suspend fun downloadGithubRawContentToFile(
     url: String,
-    dest: File,
+    dest: Path,
     setProgress: suspend (Int?) -> Unit,
 ) = withContext(Dispatchers.IO) {
     val response = fetchInventoryStreamingResponse(url)
 
-    if (!response.isSuccessful) {
-        throw IOException("WBW download failed: HTTP ${response.code}")
-    }
-
-    val body = response
-    val totalBytes = body.contentLength
-    var downloaded = 0L
-
-    body.byteStream().use { input ->
-        dest.outputStream().buffered().use { output ->
-            val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
-            var lastUpdateTime = 0L
-
-            while (true) {
-                ensureActive()
-
-                val bytes = input.read(buffer)
-                if (bytes <= 0) break
-
-                output.write(buffer, 0, bytes)
-                downloaded += bytes
-
-                val now = System.currentTimeMillis()
-                val isFinished = totalBytes > 0L && downloaded == totalBytes
-
-                if (now - lastUpdateTime >= 2000L || isFinished) {
-                    lastUpdateTime = now
-
-                    val progress = if (totalBytes > 0) {
-                        ((downloaded * 100) / totalBytes).toInt()
-                    } else {
-                        null
-                    }
-
-                    setProgress(progress)
-                }
+    response.downloadTo(
+        dest,
+        onFailed = {
+            throw IllegalStateException("WBW download failed: HTTP ${it.code}")
+        },
+        onProgress = { downloaded, totalBytes ->
+            val progress = if (totalBytes != null && totalBytes > 0L) {
+                ((downloaded * 100) / totalBytes).toInt()
+            } else {
+                null
             }
 
-            output.flush()
-        }
-    }
+            setProgress(progress)
+        },
+    )
 }

@@ -5,6 +5,12 @@ private const val ARABEXT_DIGITS = "۰۱۲۳۴۵۶۷۸۹"
 private const val ARAB_DECIMAL = '\u066B'
 
 fun String.toFormatted(
+    vararg args: Any,
+): String {
+    return toFormatted("en", null, *args)
+}
+
+fun String.toFormatted(
     languageTag: String?,
     vararg args: Any,
 ): String {

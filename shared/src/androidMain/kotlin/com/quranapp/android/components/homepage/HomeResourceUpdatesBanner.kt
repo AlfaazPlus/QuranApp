@@ -49,8 +49,8 @@ import org.jetbrains.compose.resources.stringResource
 fun HomeResourceUpdatesBanner() {
     val context = LocalContext.current
     val recitationManager = remember { RecitationVersionManager.get(context) }
-    val translationManager = remember { TranslationVersionManager.get(context) }
-    val wbwManager = remember { WbwVersionManager.get(context) }
+    val translationManager = remember { TranslationVersionManager.get() }
+    val wbwManager = remember { WbwVersionManager.get() }
 
     LaunchedEffect(Unit) {
         recitationManager.refreshOutdatedState()

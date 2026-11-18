@@ -1,12 +1,11 @@
 package com.quranapp.android.utils.reader.translation
 
-import android.content.Context
 import com.quranapp.android.api.ApiClient
 import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel
 import com.quranapp.android.db.DatabaseProvider
+import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.app.Logger
-import com.quranapp.android.utils.files.AppFiles
 import com.quranapp.android.utils.reader.TranslUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,9 +25,7 @@ data class TranslationUpdateUiState(
     val hasOutdatedDownloads: Boolean get() = outdatedSlugs.isNotEmpty()
 }
 
-class TranslationVersionManager private constructor(context: Context) {
-    private val appContext = context.applicationContext
-    private val store = TranslationVersionStore()
+class TranslationVersionManager private constructor() {
     private val mutex = Mutex()
     private val legacyVersionThreshold = 1_000_000L
 
@@ -71,10 +68,10 @@ class TranslationVersionManager private constructor(context: Context) {
 
                     val remoteMap = remoteEntries.associateBy { it.slug }
                     val outdated = mutableSetOf<String>()
-                    val stored = store.loadAll()
+                    val stored = TranslationVersionStore.loadAll()
                     var mutated = false
 
-                    DatabaseProvider.getTranslationRepository(appContext).let { repo ->
+                    DatabaseProvider.getTranslationRepository().let { repo ->
                         val downloaded = repo.getDownloadedBooks()
 
                         for ((slug, bookInfo) in downloaded) {
@@ -106,7 +103,7 @@ class TranslationVersionManager private constructor(context: Context) {
                     }
 
                     if (mutated) {
-                        store.saveAll(stored)
+                        TranslationVersionStore.saveAll(stored)
                     }
                     _updateUiState.value = TranslationUpdateUiState(outdated)
                 }.onFailure {
@@ -122,9 +119,9 @@ class TranslationVersionManager private constructor(context: Context) {
             runCatching {
                 val remote =
                     getRemoteEntries(false).associateBy { it.slug }[slug] ?: return@runCatching
-                val stored = store.loadAll()
+                val stored = TranslationVersionStore.loadAll()
                 stored[slug] = TranslationVersionEntry(remote.version)
-                store.saveAll(stored)
+                TranslationVersionStore.saveAll(stored)
                 _updateUiState.value = _updateUiState.value.copy(
                     outdatedSlugs = _updateUiState.value.outdatedSlugs - slug,
                 )
@@ -211,9 +208,9 @@ class TranslationVersionManager private constructor(context: Context) {
         @Volatile
         private var instance: TranslationVersionManager? = null
 
-        fun get(context: Context): TranslationVersionManager {
+        fun get(): TranslationVersionManager {
             return instance ?: synchronized(this) {
-                instance ?: TranslationVersionManager(context).also { instance = it }
+                instance ?: TranslationVersionManager().also { instance = it }
             }
         }
     }

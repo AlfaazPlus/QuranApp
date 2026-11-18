@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
+import com.quranapp.android.AndroidAppContext
 import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
 import com.quranapp.android.api.models.recitation2.RecitationModelBase
 import com.quranapp.android.api.models.recitation2.RecitationQuranModel
@@ -16,12 +17,14 @@ import com.quranapp.android.generated.resources.strTitleChapInfoChapterNo
 import com.quranapp.android.generated.resources.strTitleFailed
 import com.quranapp.android.models.DataLoadError
 import com.quranapp.android.utils.app.Logger
+import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.mediaplayer.RecitationAudioRepository
 import com.quranapp.android.utils.mediaplayer.RecitationDownloadProgressBus
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
 import com.quranapp.android.utils.mediaplayer.RecitationVersionManager
 import com.quranapp.android.utils.quran.QuranMeta
-import com.quranapp.android.utils.receivers.NetworkStateReceiver
+import com.quranapp.android.extensions.canProceed
+import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.utils.workers.RecitationAudioDownloadWorker
 import com.quranapp.android.utils.workers.RecitationBulkDownloadWorker
 import kotlinx.coroutines.Dispatchers
@@ -183,7 +186,7 @@ sealed interface RecitationDownloadUiEvent {
 @OptIn(FlowPreview::class)
 class RecitationDownloadViewModel() : AppViewModel() {
 
-    private val context get() = application.applicationContext
+    private val context get() = AndroidAppContext.get()
     private val modelManager = RecitationModelManager
     private val versionManager = RecitationVersionManager.get(context)
     private val workManager = WorkManager.getInstance(context)
@@ -275,7 +278,7 @@ class RecitationDownloadViewModel() : AppViewModel() {
     }
 
     private suspend fun loadReciters(forceRefresh: Boolean) {
-        if (forceRefresh && !NetworkStateReceiver.isNetworkConnected(context)) {
+        if (forceRefresh && !PlatformServices.networkMonitor.isConnected) {
             _uiState.update { it.copy(isLoading = false, error = DataLoadError.NoConnection) }
             return
         }
@@ -474,8 +477,8 @@ class RecitationDownloadViewModel() : AppViewModel() {
         if (forceRecheck) {
             val set = mutableSetOf<Int>()
             for (chapterNo in QuranMeta.chapterRange) {
-                val f = modelManager.getRecitationAudioFile(reciterId, chapterNo).toFile()
-                if (f.exists() && f.length() > 0L) {
+                val f = modelManager.getRecitationAudioFile(reciterId, chapterNo)
+                if (AppFiles.size(f) > 0L) {
                     set.add(chapterNo)
                 }
             }
@@ -491,7 +494,7 @@ class RecitationDownloadViewModel() : AppViewModel() {
         val model = findModel(kind, reciterId) ?: return
 
         viewModelScope.launch {
-            if (!NetworkStateReceiver.canProceed(context)) return@launch
+            if (!PlatformServices.networkMonitor.canProceed()) return@launch
 
             launch(Dispatchers.IO) {
                 try {
@@ -518,7 +521,7 @@ class RecitationDownloadViewModel() : AppViewModel() {
                             ?: return@launch
 
                     val outputPath =
-                        modelManager.getRecitationAudioFile(reciterId, chapterNo).toFile().absolutePath
+                        modelManager.getRecitationAudioFile(reciterId, chapterNo).toString()
 
                     val request = RecitationAudioDownloadWorker.oneTimeRequest(
                         url = url,
@@ -571,10 +574,7 @@ class RecitationDownloadViewModel() : AppViewModel() {
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val f = modelManager.getRecitationAudioFile(reciterId, chapterNo).toFile()
-                if (f.exists()) {
-                    f.delete()
-                }
+                AppFiles.delete(modelManager.getRecitationAudioFile(reciterId, chapterNo))
                 downloadedCache.remove(reciterId)
 
                 triggerRecompute()
@@ -588,7 +588,7 @@ class RecitationDownloadViewModel() : AppViewModel() {
         val model = findModel(kind, reciterId) ?: return
 
         viewModelScope.launch {
-            if (!NetworkStateReceiver.canProceed(context)) return@launch
+            if (!PlatformServices.networkMonitor.canProceed()) return@launch
 
             launch(Dispatchers.IO) {
                 try {
@@ -630,7 +630,7 @@ class RecitationDownloadViewModel() : AppViewModel() {
         val model = findModel(kind, reciterId) ?: return
 
         viewModelScope.launch {
-            if (!NetworkStateReceiver.canProceed(context)) return@launch
+            if (!PlatformServices.networkMonitor.canProceed()) return@launch
 
             launch(Dispatchers.IO) {
                 try {

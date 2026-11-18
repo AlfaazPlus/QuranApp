@@ -693,7 +693,7 @@ fun TranslationModeTranslationButton() {
     val translationSlug = ReaderPreferences.observePrimaryTranslationSlug()
 
     val bookName by produceState("", translationSlug) {
-        value = DatabaseProvider.getTranslationRepository(context).let {
+        value = DatabaseProvider.getTranslationRepository().let {
             it.getBook(translationSlug).displayName
         }
     }

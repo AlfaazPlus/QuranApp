@@ -4,7 +4,6 @@ import android.content.Context
 import com.quranapp.android.api.ApiClient
 import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.models.ResourcesVersions
-import com.quranapp.android.utils.files.AppFiles
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
 import com.quranapp.android.utils.mediaplayer.RecitationVersionManager
 import com.quranapp.android.utils.mediaplayer.WbwAudioRepository
@@ -107,7 +106,7 @@ class ResourceUpdateManager private constructor(private val ctx: Context) {
             launch {
                 if (force || local == null || remote.urlsVersion > local.urlsVersion) {
                     try {
-                        UrlsManager(ctx).refresh()
+                        UrlsManager().refresh()
                     } catch (e: Exception) {
                         Logger.saveError(e, "ResourceUpdateManager.updateUrls")
                     }
@@ -132,7 +131,7 @@ class ResourceUpdateManager private constructor(private val ctx: Context) {
             launch {
                 if (force || local == null || remote.translationsVersion > local.translationsVersion) {
                     try {
-                        TranslationVersionManager.get(ctx).reconcileAfterManifestRefresh(
+                        TranslationVersionManager.get().reconcileAfterManifestRefresh(
                             forceFetchManifest = true,
                         )
                     } catch (e: Exception) {
@@ -157,7 +156,7 @@ class ResourceUpdateManager private constructor(private val ctx: Context) {
                 if (force || local == null || remote.wbwVersion > local.wbwVersion) {
                     try {
                         WbwManager.getAvailable(forceRefresh = true)
-                        WbwVersionManager.get(ctx).reconcileAfterManifestRefresh()
+                        WbwVersionManager.get().reconcileAfterManifestRefresh()
                     } catch (e: Exception) {
                         Logger.saveError(e, "ResourceUpdateManager.updateWbw")
                     }
@@ -179,7 +178,7 @@ class ResourceUpdateManager private constructor(private val ctx: Context) {
             launch {
                 if (force || local == null || remote.templatesVersion > local.templatesVersion) {
                     try {
-                        VerseTemplateManager.getAvailable(ctx, forceRefresh = true)
+                        VerseTemplateManager.getAvailable(forceRefresh = true)
                     } catch (e: Exception) {
                         Logger.saveError(e, "ResourceUpdateManager.updateTemplates")
                     }

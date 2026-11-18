@@ -169,7 +169,7 @@ fun QuranAtlasText(
                 sharedImage
             } else {
                 signal.imageOf(page)
-            }
+            } ?: continue
 
             drawImage(
                 image = image,
@@ -190,6 +190,6 @@ private fun pageFor(
     bundle: QuranAtlasBundle,
     index: Int,
 ): Bitmap? {
-    if (shared != null && index == onlyPage) return shared
-    return bundle.cachedBitmap(index)
+    if (shared != null && index == onlyPage) return shared.takeUnless { it.isRecycled }
+    return bundle.cachedBitmap(index)?.takeUnless { it.isRecycled }
 }

@@ -16,10 +16,11 @@ import com.quranapp.android.generated.resources.strLabelCancel
 import com.quranapp.android.generated.resources.textDownloading
 import com.quranapp.android.navigation.SettingRoutes
 import com.quranapp.android.shared.R
-import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.app.AppDestinations
+import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.app.NotificationUtils.createForegroundInfoFallback
+import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.miscellenous.Keys
 import com.quranapp.android.utils.reader.atlas.AtlasManager
 import com.quranapp.android.utils.reader.toAtlasBundleDownloadKey
@@ -78,14 +79,12 @@ class AtlasDownloadWorker(
                 }
             }
 
-            val db = DatabaseProvider.getExternalQuranDatabase(ctx)
+            val db = DatabaseProvider.getExternalQuranDatabase()
             AtlasManager.importAtlasFromZip(tmpFile, scriptKey, db)
         } catch (e: Exception) {
             Logger.saveError(e, "AtlasDownloadWorker.downloadAndStore")
         } finally {
-            if (tmpFile.exists()) {
-                tmpFile.delete()
-            }
+            AppFiles.delete(tmpFile)
         }
     }
 

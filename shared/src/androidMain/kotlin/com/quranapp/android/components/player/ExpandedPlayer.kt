@@ -119,7 +119,7 @@ import com.quranapp.android.utils.mediaplayer.AudioOption
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
 import com.quranapp.android.utils.mediaplayer.RecitationServiceState
-import com.quranapp.android.utils.miscellenous.formatDuration
+import com.quranapp.android.utils.miscellenous.DateUtils
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -866,12 +866,12 @@ private fun ProgressSeekBar(
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(
-                text = formatDuration(displayedPositionMs),
+                text = DateUtils.durationFormatted(displayedPositionMs),
                 style = MaterialTheme.typography.labelMedium,
                 color = PlayerContentColor.alpha(0.7f),
             )
             Text(
-                text = formatDuration(durationMs),
+                text = DateUtils.durationFormatted(durationMs),
                 style = MaterialTheme.typography.labelMedium,
                 color = PlayerContentColor.alpha(0.7f),
             )

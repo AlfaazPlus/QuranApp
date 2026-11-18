@@ -39,7 +39,7 @@ import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.WbwAudioPlayResult
 import com.quranapp.android.utils.mediaplayer.WbwAudioPlayer
-import com.quranapp.android.utils.miscellenous.StringUtils
+import com.quranapp.android.utils.miscellenous.isRtlLanguageCode
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.VerseActions
@@ -139,7 +139,7 @@ fun ReaderProvider(
             it.id == wbwId
         }
 
-        value = StringUtils.isRtlLanguage(wbwInfo?.langCode)
+        value = wbwInfo?.langCode?.isRtlLanguageCode() ?: false
     }
 
     fun playWord(word: AyahWordEntity) {

@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import okio.Path
 
 private const val DATASTORE_NAME = "app_preferences"
@@ -56,6 +57,10 @@ object DataStoreManager {
         }
 
         if (cachedPreferences.value == null) {
+            runBlocking {
+                cachedPreferences.value = preferences.data.first()
+            }
+            
             scope.launch {
                 preferences.data.collect { cachedPreferences.value = it }
             }
@@ -105,6 +110,7 @@ object DataStoreManager {
     suspend fun <T> write(key: Preferences.Key<T>, value: T) {
         preferences.edit { preferences ->
             preferences[key] = value
+            cachedPreferences.value = preferences.toPreferences()
         }
     }
 
@@ -112,7 +118,10 @@ object DataStoreManager {
      * Single DataStore transaction — observers (e.g. [flowMultiple]) emit once with all keys updated.
      */
     suspend fun edit(transform: suspend MutablePreferences.() -> Unit) {
-        preferences.edit { it.transform() }
+        preferences.edit { preferences ->
+            preferences.transform()
+            cachedPreferences.value = preferences.toPreferences()
+        }
     }
 
     suspend fun <T> remove(prefKey: PrefKey<T>) {
@@ -122,6 +131,7 @@ object DataStoreManager {
     suspend fun <T> remove(key: Preferences.Key<T>) {
         preferences.edit { preferences ->
             preferences.remove(key)
+            cachedPreferences.value = preferences.toPreferences()
         }
     }
 
@@ -130,6 +140,7 @@ object DataStoreManager {
             keys.forEach {
                 preferences.remove(it)
             }
+            cachedPreferences.value = preferences.toPreferences()
         }
     }
 

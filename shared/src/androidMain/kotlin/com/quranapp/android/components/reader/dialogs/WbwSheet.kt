@@ -232,7 +232,6 @@ private fun Content(data: WbwSheetData) {
             }
 
             val prepared = ReaderItemsBuilder.buildQuickReferenceItems(
-                context,
                 params = TextBuilderParams(
                     uiConfig = ComposeUiConfig(
                         context = context,

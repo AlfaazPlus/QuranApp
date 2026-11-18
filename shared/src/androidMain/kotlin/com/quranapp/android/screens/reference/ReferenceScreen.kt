@@ -107,8 +107,8 @@ import com.quranapp.android.preferences.AppPreferences
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.reader.ReaderLayoutItem
 import com.quranapp.android.theme.alpha
-import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.app.AppDestinations
+import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.extensions.isSingleValue
 import com.quranapp.android.utils.miscellenous.Keys
 import com.quranapp.android.utils.reader.ComposeUiConfig
@@ -827,7 +827,6 @@ private suspend fun buildReferenceRows(
             window.map { req ->
                 async {
                     val prepared = ReaderItemsBuilder.buildQuickReferenceItems(
-                        context = context,
                         params = params,
                         chapterNo = req.segment.chapterNo,
                         verseNos = req.verseNos,

@@ -1,14 +1,15 @@
 package com.quranapp.android.utils.reader.atlas
 
-import android.content.Context
 import com.quranapp.android.db.ExternalQuranDatabase
 import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.reader.isPrebuiltAtlas
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+import okio.Path
 import java.util.concurrent.ConcurrentHashMap
 
 object QuranAtlasLoader {
@@ -36,7 +37,6 @@ object QuranAtlasLoader {
     }
 
     suspend fun getBundle(
-        context: Context,
         db: ExternalQuranDatabase,
         bundleKey: String,
     ): QuranAtlasBundle? =
@@ -57,8 +57,7 @@ object QuranAtlasLoader {
 
                         PlatformServices.assets
                             .readAssetBytes(assetPath)
-                            .inputStream()
-                            .use {
+                            .let {
                                 ent = AtlasManager.importAtlasFromZip(it, bundleKey, db)
                             }
                     } catch (e: Exception) {
@@ -75,12 +74,13 @@ object QuranAtlasLoader {
                     val meta = atlasJson.decodeFromString<AtlasMetaRoot>(entity.metaJson)
                     val layer = atlasJson.decodeFromString<AtlasLayerJson>(entity.layerJson)
 
-                    val textureFiles = linkedMapOf<Int, java.io.File>()
+                    val textureFiles = linkedMapOf<Int, Path>()
 
                     for (t in layer.textures.sortedBy { it.index }) {
                         val imageFile = AtlasManager.atlasTextureFile(bundleKey, t.index)
+                        val metadata = AppFiles.metadata(imageFile)
 
-                        if (!imageFile.isFile || imageFile.length() == 0L) {
+                        if (metadata == null || !metadata.isRegularFile || metadata.size == 0L) {
                             return@withContext null
                         }
 
@@ -96,7 +96,9 @@ object QuranAtlasLoader {
                         key = bundleKey,
                         meta = meta,
                         layer = layer,
-                        textureStore = QuranAtlasTextureStore(textureFiles),
+                        textureStore = QuranAtlasTextureStore(
+                            textureFiles,
+                        ),
                     )
 
                     // Release bitmaps for other scripts only — never clear the bundle we

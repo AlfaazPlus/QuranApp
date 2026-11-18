@@ -21,6 +21,7 @@ import com.quranapp.android.shared.R
 import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.app.NotificationUtils.createForegroundInfoFallback
+import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.mediaplayer.RecitationAudioFileDownloader
 import com.quranapp.android.utils.mediaplayer.RecitationAudioRepository
 import com.quranapp.android.utils.mediaplayer.RecitationDownloadProgressBus
@@ -33,8 +34,8 @@ import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+import okio.Path.Companion.toPath
 import org.jetbrains.compose.resources.getString
-import java.io.File
 import java.util.concurrent.atomic.AtomicInteger
 
 class RecitationBulkDownloadWorker(
@@ -84,9 +85,9 @@ class RecitationBulkDownloadWorker(
 
         val pendingChapters = buildList {
             for (chapterNo in QuranMeta.chapterRange) {
-                val audioFile = modelManager.getRecitationAudioFile(reciterId, chapterNo).toFile()
+                val audioFile = modelManager.getRecitationAudioFile(reciterId, chapterNo)
 
-                if (audioFile.exists() && audioFile.length() > 0L) continue
+                if (AppFiles.size(audioFile) > 0L) continue
 
                 val url = RecitationAudioRepository.prepareAudioUrl(urlTemplate, chapterNo)
                     ?: continue
@@ -95,7 +96,7 @@ class RecitationBulkDownloadWorker(
                     PendingChapter(
                         chapterNo = chapterNo,
                         url = url,
-                        outputPath = audioFile.absolutePath,
+                        outputPath = audioFile.toString(),
                     ),
                 )
             }
@@ -132,13 +133,7 @@ class RecitationBulkDownloadWorker(
                     async {
                         currentCoroutineContext().ensureActive()
 
-                        val outputFile = File(pending.outputPath)
-                        val parent = outputFile.parentFile
-
-                        if (parent != null && !parent.exists() && !parent.mkdirs()) {
-                            updateForeground(completed.incrementAndGet())
-                            return@async
-                        }
+                        val outputFile = pending.outputPath.toPath()
 
                         try {
                             RecitationDownloadProgressBus.set(
@@ -159,7 +154,7 @@ class RecitationBulkDownloadWorker(
                                 )
                             }
                         } catch (e: Exception) {
-                            outputFile.delete()
+                            AppFiles.delete(outputFile)
                             Logger.saveError(e, "RecitationBulkDownload: ${pending.chapterNo}")
                         } finally {
                             RecitationDownloadProgressBus.clear(reciterId, pending.chapterNo)

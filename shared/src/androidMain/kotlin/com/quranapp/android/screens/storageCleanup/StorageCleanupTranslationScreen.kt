@@ -24,14 +24,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.components.common.ErrorMessageCard
 import com.quranapp.android.components.common.dialogs.AlertDialog
 import com.quranapp.android.components.common.dialogs.AlertDialogAction
 import com.quranapp.android.components.common.dialogs.AlertDialogActionStyle
-import com.quranapp.android.components.transls.TranslModel
-import com.quranapp.android.components.transls.TranslationGroupModel
+import com.quranapp.android.models.transls.TranslModel
+import com.quranapp.android.models.transls.TranslationGroupModel
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.extensions.appViewModel
 import com.quranapp.android.generated.resources.Res
@@ -55,7 +54,6 @@ fun StorageCleanupTranslationScreen(
 ) {
     val viewModel = appViewModel<TranslationViewModel>()
     val uiState by viewModel.uiState.collectAsState()
-    val context = LocalContext.current
 
     var downloadedSlugs by remember { mutableStateOf<Set<String>>(emptySet()) }
     var downloadedSlugsReady by remember { mutableStateOf(false) }
@@ -67,7 +65,7 @@ fun StorageCleanupTranslationScreen(
     LaunchedEffect(uiState.translationGroups, uiState.isLoading) {
         if (uiState.isLoading) return@LaunchedEffect
         withContext(Dispatchers.IO) {
-            DatabaseProvider.getTranslationRepository(context).let { repo ->
+            DatabaseProvider.getTranslationRepository().let { repo ->
                 downloadedSlugs = repo.getDownloadedBooks().keys.toSet()
             }
         }

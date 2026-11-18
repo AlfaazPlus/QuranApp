@@ -72,7 +72,6 @@ import com.quranapp.android.utils.reader.ReaderTextSizeUtils
 import com.quranapp.android.utils.reader.getQuranScriptName
 import com.quranapp.android.utils.reader.getQuranScriptVariantName
 import com.quranapp.android.utils.reader.tafsir.TafsirManager
-import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 
@@ -89,8 +88,9 @@ fun SettingsMainScreen(
     var showTextSizesSheet by rememberSaveable { mutableStateOf(false) }
 
     val systemDefaultName = stringResource(Res.string.strLabelSystemDefault)
-    val selectedLanguage = remember(context, appLocale, systemDefaultName) {
-        val selected = appLanguageOptions.firstOrNull { it.tag == SPAppConfigs.getLocale(context) }
+    val selectedLanguage = remember(appLocale, systemDefaultName) {
+        val selected = appLanguageOptions.firstOrNull { it.tag == appLocale.storedTag }
+      
         when {
             selected == null -> ""
             selected.systemDefault -> systemDefaultName

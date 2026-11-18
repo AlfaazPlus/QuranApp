@@ -5,6 +5,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.quranapp.android.AndroidAppContext
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.relations.SurahWithLocalizations
 import com.quranapp.android.db.search.SearchHistoryEntry
@@ -45,8 +46,10 @@ class QuranSearchViewModel() : AppViewModel() {
         const val SEARCH_PAGE_SIZE = 10
     }
 
-    private val repository get() = DatabaseProvider.getQuranRepository(application)
-    private val searchHistoryStore = SearchHistoryStore(application)
+    private val context get() = AndroidAppContext.get()
+
+    private val repository get() = DatabaseProvider.getQuranRepository()
+    private val searchHistoryStore = SearchHistoryStore(context)
 
     private val _searchQuery = MutableStateFlow("")
     val searchQuery: StateFlow<String> = _searchQuery
@@ -63,7 +66,7 @@ class QuranSearchViewModel() : AppViewModel() {
     private val _availableTranslations = MutableStateFlow<List<TranslationOption>>(emptyList())
     val availableTranslations: StateFlow<List<TranslationOption>> = _availableTranslations
 
-    private val indexingFlow = SearchIndexMonitor.isIndexingFlow(application)
+    private val indexingFlow = SearchIndexMonitor.isIndexingFlow(context)
     val isSearchIndexing: StateFlow<Boolean> = indexingFlow.stateIn(
         viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -124,7 +127,7 @@ class QuranSearchViewModel() : AppViewModel() {
     val topicResults: StateFlow<List<CollectionSearchResult>> = debouncedQuery
         .mapLatest { query ->
             withContext(Dispatchers.IO) {
-                ExclusiveVersesSearchProvider.search(application, query)
+                ExclusiveVersesSearchProvider.search(query)
             }
         }
         .stateIn(
@@ -155,7 +158,6 @@ class QuranSearchViewModel() : AppViewModel() {
                 )
             ) {
                 SearchPagingSource(
-                    application = application,
                     query = query,
                     sourceQuran = sourceQuran,
                     filters = filters,
@@ -191,7 +193,7 @@ class QuranSearchViewModel() : AppViewModel() {
     private fun loadAvailableTranslations() {
         viewModelScope.launch {
             val options = withContext(Dispatchers.IO) {
-                DatabaseProvider.getTranslationRepository(application).let { repo ->
+                DatabaseProvider.getTranslationRepository().let { repo ->
                     repo.getBooks()
                         .map { (slug, info) ->
                             TranslationOption(

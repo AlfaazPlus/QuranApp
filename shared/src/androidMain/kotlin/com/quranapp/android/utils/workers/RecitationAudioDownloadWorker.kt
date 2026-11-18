@@ -21,10 +21,11 @@ import com.quranapp.android.generated.resources.strLabelCancel
 import com.quranapp.android.shared.R
 import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.app.NotificationUtils
+import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.mediaplayer.RecitationAudioFileDownloader
 import com.quranapp.android.utils.mediaplayer.RecitationDownloadProgressBus
+import okio.Path.Companion.toPath
 import org.jetbrains.compose.resources.getString
-import java.io.File
 
 class RecitationAudioDownloadWorker(
     private val ctx: Context,
@@ -66,14 +67,9 @@ class RecitationAudioDownloadWorker(
             return Result.failure()
         }
 
-        val outputFile = File(outputPath)
-        val parent = outputFile.parentFile
+        val outputFile = outputPath.toPath()
 
-        if (parent != null && !parent.exists() && !parent.mkdirs()) {
-            return Result.failure()
-        }
-
-        if (outputFile.exists() && outputFile.length() > 0L) {
+        if (AppFiles.size(outputFile) > 0L) {
             return Result.success()
         }
 
@@ -155,7 +151,7 @@ class RecitationAudioDownloadWorker(
 
             Result.success()
         } catch (e: Exception) {
-            outputFile.delete()
+            AppFiles.delete(outputFile)
             Logger.saveError(e, "RecitationSingleDownload: ${chapterNo}")
             Result.failure()
         } finally {

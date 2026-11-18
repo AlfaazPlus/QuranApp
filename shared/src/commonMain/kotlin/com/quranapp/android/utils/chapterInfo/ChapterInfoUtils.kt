@@ -1,6 +1,6 @@
 package com.quranapp.android.utils.chapterInfo
 
-import com.quranapp.android.utils.files.AppFiles
+import com.quranapp.android.utils.app.AppFiles
 import okio.Path
 
 object ChapterInfoUtils {

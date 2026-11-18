@@ -1,4 +1,3 @@
-import com.android.build.api.variant.KotlinMultiplatformAndroidComponentsExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -90,8 +89,12 @@ kotlin {
             implementation(libs.androidx.sqlite.bundled)
             implementation(libs.paging.common)
             implementation(libs.okio)
+            implementation(libs.coil.core)
             api(libs.datastore.preferences.core)
             implementation(libs.datastore.core.okio)
+            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.8.0")
+            implementation("com.apollographql.apollo:apollo-api:5.2.0")
+            implementation("io.github.optimumcode:json-schema-validator:0.5.5")
         }
 
         androidMain.dependencies {
@@ -134,7 +137,6 @@ kotlin {
 
             implementation(libs.commons.lang)
             implementation(libs.commons.compress)
-            implementation("com.github.erosb:json-sKema:0.32.0")
             implementation(libs.workManager)
             implementation(libs.dataStore)
 
@@ -173,10 +175,4 @@ dependencies {
     coreLibraryDesugaring(libs.desugaring)
     androidRuntimeClasspath(project.dependencies.platform(libs.compose.bom))
     androidRuntimeClasspath(libs.compose.ui.tooling)
-}
-
-extensions.configure<KotlinMultiplatformAndroidComponentsExtension>("androidComponents") {
-    onVariants { variant ->
-        variant.sources.assets?.addStaticSourceDirectory(rootProject.file("backup").absolutePath)
-    }
 }

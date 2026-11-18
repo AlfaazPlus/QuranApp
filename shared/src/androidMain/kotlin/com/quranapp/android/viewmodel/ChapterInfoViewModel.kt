@@ -1,5 +1,6 @@
 package com.quranapp.android.viewmodel
 
+import android.content.Context
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
@@ -25,12 +26,11 @@ import com.quranapp.android.theme.colorSchemeFromPreferences
 import com.quranapp.android.theme.isDarkTheme
 import com.quranapp.android.theme.toCssHex
 import com.quranapp.android.theme.toCssRgba
+import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.chapterInfo.ChapterInfoUtils
-import com.quranapp.android.utils.files.AppFiles
-import com.quranapp.android.utils.miscellenous.StringUtils
+import com.quranapp.android.utils.miscellenous.isRtlLanguageCode
 import com.quranapp.android.utils.quran.QuranGlyphs
 import com.quranapp.android.utils.quran.QuranMeta
-import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -58,8 +58,10 @@ data class ChapterInfoUiState(
 )
 
 sealed interface ChapterInfoEvent {
-    data class Init(val chapterNo: Int, val language: String?) : ChapterInfoEvent
-    object Retry : ChapterInfoEvent
+    data class Init(val context: Context, val chapterNo: Int, val language: String?) :
+        ChapterInfoEvent
+
+    data class Retry(val context: Context) : ChapterInfoEvent
 }
 
 class ChapterInfoViewModel() : AppViewModel() {
@@ -67,8 +69,7 @@ class ChapterInfoViewModel() : AppViewModel() {
     private val _uiState = MutableStateFlow(ChapterInfoUiState())
     val uiState: StateFlow<ChapterInfoUiState> = _uiState.asStateFlow()
 
-    private val context get() = application
-    private val repository = DatabaseProvider.getQuranRepository(context)
+    private val repository = DatabaseProvider.getQuranRepository()
 
     private var contentLoadJob: Job? = null
     private val lastLangCode = mutableStateOf<String?>(null)
@@ -77,18 +78,18 @@ class ChapterInfoViewModel() : AppViewModel() {
         when (event) {
             is ChapterInfoEvent.Init -> {
                 viewModelScope.launch {
-                    initialize(event.chapterNo, event.language)
+                    initialize(event.context, event.chapterNo, event.language)
                 }
             }
 
             is ChapterInfoEvent.Retry -> {
                 val langCode = lastLangCode.value ?: return
-                loadContent(langCode)
+                loadContent(event.context, langCode)
             }
         }
     }
 
-    private suspend fun initialize(chapterNo: Int, language: String?) {
+    private suspend fun initialize(context: Context, chapterNo: Int, language: String?) {
         if (!QuranMeta.isChapterValid(chapterNo)) {
             _uiState.update {
                 it.copy(
@@ -128,10 +129,10 @@ class ChapterInfoViewModel() : AppViewModel() {
             )
         }
 
-        loadContent(langCode)
+        loadContent(context, langCode)
     }
 
-    private fun loadContent(langCode: String) {
+    private fun loadContent(context: Context, langCode: String) {
         val state = _uiState.value
         if (state.chapterNo < 1) return
 
@@ -155,6 +156,7 @@ class ChapterInfoViewModel() : AppViewModel() {
                 is LoadOutcome.Success -> {
                     val resultLangCode = outcome.res.chapterInfo.languageCode ?: "en"
                     val html = buildHtml(
+                        context,
                         outcome.res.chapterInfo.primaryContent(),
                         resultLangCode
                     )
@@ -207,7 +209,7 @@ class ChapterInfoViewModel() : AppViewModel() {
         }
 
         // Need network
-        if (!NetworkStateReceiver.isNetworkConnected(context)) {
+        if (!PlatformServices.networkMonitor.isConnected) {
             return LoadOutcome.NoNetwork
         }
 
@@ -231,7 +233,7 @@ class ChapterInfoViewModel() : AppViewModel() {
         }
     }
 
-    private suspend fun buildHtml(contentText: String, langCode: String): String {
+    private suspend fun buildHtml(context: Context, contentText: String, langCode: String): String {
         val state = _uiState.value
         val meta = state.swl ?: return ""
         val surah = meta.surah
@@ -239,7 +241,7 @@ class ChapterInfoViewModel() : AppViewModel() {
 
         val theme = if (ThemeUtils.isDarkTheme(context)) "dark" else "light"
         val colorScheme = ThemeUtils.colorSchemeFromPreferences(context)
-        val textDirection = if (StringUtils.isRtlLanguage(langCode)) "rtl" else "ltr"
+        val textDirection = if (langCode.isRtlLanguageCode()) "rtl" else "ltr"
         val chapterIcon = QuranGlyphs.Chapter.get(state.chapterNo) + QuranGlyphs.Chapter.getPrefix()
 
         val juzStr = when {

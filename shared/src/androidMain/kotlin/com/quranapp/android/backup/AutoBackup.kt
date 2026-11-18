@@ -52,7 +52,7 @@ object AutoBackup {
         if (!BackupPreferences.isEnabled()) return false
 
         val uri = BackupPreferences.readDocumentUri().toUri()
-        val bytes = BackupImportService(context).exportBytes(scopes)
+        val bytes = BackupImportService().exportBytes(scopes)
 
         return try {
             writeToDocument(context.contentResolver, uri, bytes)

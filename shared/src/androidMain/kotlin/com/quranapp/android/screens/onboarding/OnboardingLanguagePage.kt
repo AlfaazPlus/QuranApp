@@ -21,26 +21,25 @@ import com.quranapp.android.components.common.RadioItem
 import com.quranapp.android.extensions.verticalFadingEdge
 import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.strLabelSystemDefault
+import com.quranapp.android.locale.LOCALE_DEFAULT
+import com.quranapp.android.locale.LocalAppLocale
 import com.quranapp.android.locale.NumeralSystem
 import com.quranapp.android.locale.appLanguageOptions
 import com.quranapp.android.locale.appLocaleForLanguageChange
 import com.quranapp.android.locale.normalizedLanguageTag
 import com.quranapp.android.locale.numeralSystemsForLanguage
-import com.quranapp.android.locale.readAppLocale
 import com.quranapp.android.locale.setAppLocale
 import com.quranapp.android.screens.settings.NumeralSystemChipRow
-import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
 import org.jetbrains.compose.resources.stringResource
 import java.util.Locale
 
 @Composable
 fun OnboardingLanguagePage() {
     val context = LocalContext.current
+    val appLocale = LocalAppLocale.current
     val systemDefaultName = stringResource(Res.string.strLabelSystemDefault)
-    var committed by remember(context) {
-        mutableStateOf(
-            SPAppConfigs.getLocale(context) to readAppLocale(context).numeralSystem
-        )
+    var committed by remember(appLocale.storedTag, appLocale.numeralSystem) {
+        mutableStateOf(appLocale.storedTag to appLocale.numeralSystem)
     }
     val listState = rememberLazyListState()
 
@@ -70,7 +69,7 @@ fun OnboardingLanguagePage() {
                 val v = option.tag
                 val title = if (option.systemDefault) systemDefaultName else option.nativeName
                 val isSelected = v == selectedTag
-                val languageCode = if (v == SPAppConfigs.LOCALE_DEFAULT) {
+                val languageCode = if (v == LOCALE_DEFAULT) {
                     ""
                 } else {
                     Locale.forLanguageTag(v.normalizedLanguageTag()).language

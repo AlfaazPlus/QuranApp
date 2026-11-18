@@ -80,7 +80,7 @@ fun ExportPage() {
             onClick = {
                 scope.launch(Dispatchers.IO) {
                     try {
-                        exportBytes.value = BackupImportService(context).exportBytes(
+                        exportBytes.value = BackupImportService().exportBytes(
                             selectedScopes(selectedItems),
                         )
                         withContext(Dispatchers.Main) {

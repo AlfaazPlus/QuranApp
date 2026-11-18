@@ -31,7 +31,7 @@ data class FeaturedQuranModel(
 
 class HomepageViewModel() : AppViewModel() {
 
-    private val repository = DatabaseProvider.getQuranRepository(application)
+    private val repository = DatabaseProvider.getQuranRepository()
 
     private val _featured = MutableStateFlow<List<FeaturedQuranModel>?>(null)
     val featured: StateFlow<List<FeaturedQuranModel>?> = _featured.asStateFlow()
@@ -50,8 +50,6 @@ class HomepageViewModel() : AppViewModel() {
     private suspend fun loadFeatured(
         locale: AppLocale,
     ): List<FeaturedQuranModel> {
-        val context = application
-
         val chapNameFormat = getString(Res.string.strLabelSurah)
         val verseNoFormat = getString(Res.string.strLabelVerseNo)
         val versesFormat = getString(Res.string.strLabelVerses)

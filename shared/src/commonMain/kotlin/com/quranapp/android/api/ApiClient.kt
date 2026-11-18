@@ -6,11 +6,15 @@ import com.quranapp.android.api.models.ResourcesVersions
 import com.quranapp.android.api.models.tafsir.ChapterInfoApiResponse
 import com.quranapp.android.api.models.tafsir.TafsirResponseModel
 import com.quranapp.android.api.models.wbw.AvailableWbwInfoModel
+import com.quranapp.android.utils.app.APP_VERSION_CODE
 import com.quranapp.android.utils.app.Logger
 import io.ktor.client.HttpClient
+import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.request.get
 import io.ktor.client.request.header
+import io.ktor.client.statement.bodyAsChannel
 import io.ktor.client.statement.bodyAsText
+import io.ktor.http.contentLength
 import io.ktor.http.encodeURLParameter
 import io.ktor.http.isSuccess
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -20,28 +24,34 @@ object ApiClient {
     var githubProxyBaseUrl: String = ApiConfig.GH_PROXY_BASE_URL
     var githubLikeProxyBaseUrl: String = ApiConfig.GH_PROXY_ROOT
 
-    internal val client: HttpClient = createApiHttpClient(platformApiEngine())
+    internal val client: HttpClient = createApiHttpClient(OkHttp.create())
+
 
     suspend fun getAppUpdates(): List<AppUpdate> =
-        getJson(githubUrl("inventory/versions/app_updates.json"))
+        getJson(ghRepoUrl("inventory/versions/app_updates.json"))
 
     suspend fun getResourcesVersions(): ResourcesVersions =
-        getJson(githubUrl("inventory/versions/resources_versions.json"))
+        getJson(ghRepoUrl("inventory/versions/resources_versions.json"))
 
     suspend fun getAppUrls(): AppUrls =
-        getJson(githubUrl("inventory/other/urls.json"))
+        getJson(ghRepoUrl("inventory/other/urls.json"))
 
     suspend fun getAvailableWbwInfo(): AvailableWbwInfoModel =
-        getJson(githubUrl("inventory/wbw/available_wbw_info_v2.json"))
+        getJson(ghRepoUrl("inventory/wbw/available_wbw_info_v2.json"))
 
     suspend fun getAvailableTranslations(): String =
-        getText(githubUrl("inventory/translations/available_translations_info.json"))
+        getText(ghRepoUrl("inventory/translations/available_translations_info.json"))
+
+    suspend fun getTranslation(path: String): HttpBody = openStream(ghRepoUrl(path))
 
     suspend fun getAvailableRecitations(): String =
-        getText(githubUrl("inventory/recitations/available_recitations_info_v2.json"))
+        getText(ghRepoUrl("inventory/recitations/available_recitations_info_v2.json"))
 
     suspend fun getAvailableRecitationTranslations(): String =
-        getText(githubUrl("inventory/recitations/available_recitation_translations_info_v2.json"))
+        getText(ghRepoUrl("inventory/recitations/available_recitation_translations_info_v2.json"))
+
+    suspend fun getAvailableTemplates(): HttpBody =
+        openStream(ghRepoUrl("inventory/templates/available_templates.json.gz"))
 
     suspend fun getChapterInfo(
         chapterNo: Int,
@@ -75,12 +85,12 @@ object ApiClient {
         // Base URLs are read on each request.
     }
 
-    fun githubUrl(path: String): String {
+    fun ghRepoUrl(path: String): String {
         val base = githubProxyBaseUrl.trimEnd('/')
         return "$base/${path.trimStart('/')}"
     }
 
-    fun rawUrl(path: String): String {
+    fun ghRawUrl(path: String): String {
         val base = githubLikeProxyBaseUrl.trimEnd('/')
         return "$base/${path.trimStart('/')}"
     }
@@ -92,13 +102,29 @@ object ApiClient {
     private suspend fun getText(url: String): String {
         Logger.d(url)
         val response = client.get(url) {
-            header("X-QuranApp-Version", appVersionCode())
+            header("X-QuranApp-Version", APP_VERSION_CODE)
         }
         if (!response.status.isSuccess()) error("HTTP ${response.status.value}")
         return response.bodyAsText()
     }
+
+    suspend fun downloadStreaming(url: String): HttpBody = openStream(url)
+
+    suspend fun getRawContent(path: String): HttpBody = openStream(ghRawUrl(path))
+
+    suspend fun openStream(url: String): HttpBody {
+        Logger.d(url)
+
+        val response = ApiClient.client.get(url) {
+            header("X-QuranApp-Version", APP_VERSION_CODE)
+        }
+
+        return HttpBody(
+            code = response.status.value,
+            contentLength = response.contentLength(),
+            channel = response.bodyAsChannel(),
+            response = response
+        )
+    }
+
 }
-
-internal expect fun platformApiEngine(): io.ktor.client.engine.HttpClientEngine
-
-internal expect fun appVersionCode(): String

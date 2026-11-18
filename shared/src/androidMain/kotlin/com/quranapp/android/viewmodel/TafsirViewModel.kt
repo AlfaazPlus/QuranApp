@@ -1,9 +1,11 @@
 package com.quranapp.android.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.quranapp.android.AndroidAppContext
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import com.quranapp.android.components.tafsir.TafsirGroupModel
 import com.quranapp.android.db.tafsir.QuranTafsirDBHelper
+import com.quranapp.android.extensions.canProceed
 import com.quranapp.android.models.DataLoadError
 import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.preferences.ReaderPreferences
@@ -11,7 +13,6 @@ import com.quranapp.android.utils.managers.ResourceDownloadStatus
 import com.quranapp.android.utils.managers.TafsirDownloadManager
 import com.quranapp.android.utils.reader.tafsir.TafsirManager
 import com.quranapp.android.utils.reader.translation.isCustomImportSlug
-import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.sharedPrefs.SPAppActions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -48,11 +49,11 @@ class TafsirViewModel() : AppViewModel() {
     private val _uiState = MutableStateFlow(TafsirUiState())
     val uiState: StateFlow<TafsirUiState> = _uiState.asStateFlow()
 
-    private val context get() = application
+    private val context get() = AndroidAppContext.get()
     private var initialTafsirKey: String? = null
 
     init {
-        TafsirDownloadManager.initialize(context)
+        TafsirDownloadManager.initialize()
         loadDownloadedTafsirKeys()
         observeDownloadStates()
 
@@ -71,6 +72,7 @@ class TafsirViewModel() : AppViewModel() {
 
     private fun readDownloadedKeys(): Set<String> {
         val dbHelper = QuranTafsirDBHelper(context)
+
         try {
             return dbHelper.getDownloadedTafsirKeys()
         } finally {
@@ -100,7 +102,7 @@ class TafsirViewModel() : AppViewModel() {
     }
 
     private fun loadTafsirs(force: Boolean) {
-        if (force && !NetworkStateReceiver.isNetworkConnected(context)) {
+        if (force && !PlatformServices.networkMonitor.isConnected) {
             _uiState.update { it.copy(isLoading = false, error = DataLoadError.NoConnection) }
             return
         }
@@ -227,7 +229,7 @@ class TafsirViewModel() : AppViewModel() {
         val tafsirInfo = findTafsirByKey(key) ?: return
 
         viewModelScope.launch {
-            if (!NetworkStateReceiver.canProceed(context)) return@launch
+            if (!PlatformServices.networkMonitor.canProceed()) return@launch
 
             PlatformServices.downloads.downloadTafsir(tafsirInfo)
             updateDownloadStatus(key, ResourceDownloadStatus.Started)
@@ -235,7 +237,7 @@ class TafsirViewModel() : AppViewModel() {
     }
 
     private fun cancelDownload(key: String) {
-        TafsirDownloadManager.stopDownload(context, key)
+        TafsirDownloadManager.stopDownload(key)
         updateDownloadStatus(key, ResourceDownloadStatus.Cancelled)
     }
 

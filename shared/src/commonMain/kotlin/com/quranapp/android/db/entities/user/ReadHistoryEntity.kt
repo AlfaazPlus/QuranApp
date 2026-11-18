@@ -3,6 +3,7 @@ package com.quranapp.android.db.entities.user
 import androidx.room3.ColumnInfo
 import androidx.room3.Entity
 import androidx.room3.PrimaryKey
+import com.quranapp.android.utils.miscellenous.DateUtils
 import kotlin.time.Clock
 
 @Entity(tableName = "read_history")
@@ -39,7 +40,7 @@ data class ReadHistoryEntity(
     val pageNo: Int? = null,
 
     @ColumnInfo(name = "datetime")
-    val datetime: Long = Clock.System.now().toEpochMilliseconds(),
+    val datetime: Long = DateUtils.now().toEpochMilliseconds(),
 
     @ColumnInfo(name = "is_main", defaultValue = "0")
     val isMain: Boolean = false,

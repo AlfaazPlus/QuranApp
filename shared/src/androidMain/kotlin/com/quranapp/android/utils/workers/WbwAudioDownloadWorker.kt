@@ -22,11 +22,12 @@ import com.quranapp.android.generated.resources.wbwAudio
 import com.quranapp.android.shared.R
 import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.app.NotificationUtils
+import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.mediaplayer.RecitationAudioFileDownloader
 import com.quranapp.android.utils.mediaplayer.WbwAudioDownloadProgressBus
 import com.quranapp.android.utils.mediaplayer.WbwAudioRepository
+import okio.Path.Companion.toPath
 import org.jetbrains.compose.resources.getString
-import java.io.File
 
 class WbwAudioDownloadWorker(
     private val context: Context,
@@ -57,14 +58,9 @@ class WbwAudioDownloadWorker(
 
         WbwAudioRepository.ensureTimingsAvailable(applicationContext)
 
-        val outputFile = File(outputPath)
-        val parent = outputFile.parentFile
+        val outputFile = outputPath.toPath()
 
-        if (parent != null && !parent.exists() && !parent.mkdirs()) {
-            return Result.failure()
-        }
-
-        if (outputFile.exists() && outputFile.length() > 0L) {
+        if (AppFiles.size(outputFile) > 0L) {
             return Result.success()
         }
 
@@ -134,7 +130,7 @@ class WbwAudioDownloadWorker(
 
             Result.success()
         } catch (e: Exception) {
-            outputFile.delete()
+            AppFiles.delete(outputFile)
             Logger.saveError(e, "WbwAudioSingleDownload: $chapterNo")
             Result.failure()
         } finally {

@@ -1,31 +1,34 @@
 package com.quranapp.android.utils.reader.atlas
 
-import android.util.JsonReader
-import android.util.JsonToken
 import androidx.room3.withWriteTransaction
+import com.apollographql.apollo.api.json.BufferedSourceJsonReader
+import com.apollographql.apollo.api.json.JsonReader
+import com.apollographql.apollo.api.json.JsonReader.Token
 import com.quranapp.android.db.ExternalQuranDatabase
 import com.quranapp.android.db.entities.atlas.AtlasBundleEntity
 import com.quranapp.android.db.entities.atlas.AtlasWordShapeEntity
-import com.quranapp.android.utils.files.AppFiles
+import com.quranapp.android.platform.AppZipArchive
+import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.utils.app.AppFiles
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
-import java.io.File
-import java.io.InputStream
-import java.io.InputStreamReader
-import java.util.zip.ZipEntry
-import java.util.zip.ZipFile
+import okio.FileSystem
+import okio.Path
+import okio.Source
+import okio.buffer
 
 object AtlasManager {
     private const val DIR_NAME = "atlas"
-    private const val INSERT_CHUNK = 1000
+    private const val INSERT_CHUNK = 1_000
 
     private val lock = Mutex()
+    private val fileSystem = FileSystem.SYSTEM
 
-    private fun getRootDir(): File = AppFiles.savedDir(DIR_NAME).toFile()
+    private fun getRootDir(): Path = AppFiles.savedDir(DIR_NAME)
 
-    fun getTempDownloadFile(id: String): File = File(getRootDir(), "$id.tmp")
+    fun getTempDownloadFile(id: String): Path = getRootDir() / "$id.tmp"
 
     /**
      * On-disk file for one atlas texture page (`atlas.json` `textures[]` entry).
@@ -33,18 +36,21 @@ object AtlasManager {
     fun atlasTextureFile(
         bundleKey: String,
         textureIndex: Int,
-    ): File {
-        return File(getRootDir(), "${bundleKey}_tex${textureIndex}.png")
+    ): Path {
+        return getRootDir() / "${bundleKey}_tex${textureIndex}.png"
     }
 
     fun deleteBundleAtlasImages(bundleKey: String) {
         val dir = getRootDir()
+        if (!fileSystem.exists(dir)) return
 
-        File(dir, "$bundleKey.png").delete()
+        fileSystem.delete(dir / "$bundleKey.png")
 
-        dir.listFiles()?.forEach { f ->
-            if (f.isFile && f.name.startsWith("${bundleKey}_tex")) {
-                f.delete()
+        // Only delete this bundle's texture pages; do not delete other bundles' files.
+        val texturePrefix = "${bundleKey}_tex"
+        for (file in fileSystem.list(dir)) {
+            if (file.name.startsWith(texturePrefix)) {
+                fileSystem.delete(file)
             }
         }
     }
@@ -54,7 +60,7 @@ object AtlasManager {
     }
 
     suspend fun importAtlasFromZip(
-        zipFile: File,
+        zipFile: Path,
         bundleKey: String,
         db: ExternalQuranDatabase,
     ): AtlasBundleEntity? = withContext(Dispatchers.IO) {
@@ -64,39 +70,53 @@ object AtlasManager {
     }
 
     suspend fun importAtlasFromZip(
-        zipStream: InputStream,
+        zipByteArray: ByteArray,
         bundleKey: String,
         db: ExternalQuranDatabase,
     ): AtlasBundleEntity? = withContext(Dispatchers.IO) {
         lock.withLock {
-            val tempZip =
-                File.createTempFile("${bundleKey}_atlas_import", ".zip", getRootDir())
+            val tmpFile = PlatformServices.files.cacheDirectory / "${bundleKey}_atlas_import.zip"
+
             try {
-                tempZip.outputStream().use { out ->
-                    zipStream.use { input -> input.copyTo(out) }
+                FileSystem.SYSTEM.sink(tmpFile).buffer().use { sink ->
+                    sink.write(zipByteArray)
                 }
 
-                importFromZipFile(tempZip, bundleKey, db)
+                importFromZipFile(tmpFile, bundleKey, db)
             } finally {
-                tempZip.delete()
+                AppFiles.delete(tmpFile)
             }
         }
     }
 
+
     private suspend fun importFromZipFile(
-        zipFile: File,
+        zipFile: Path,
         bundleKey: String,
         db: ExternalQuranDatabase,
     ): AtlasBundleEntity {
-        ZipFile(zipFile).use { zip ->
-            val entries = normalizedZipEntries(zip)
-            val metaJson = readZipEntryText(zip, entries, "meta.json")
+        PlatformServices.files.zipReader.open(zipFile).use { zip ->
+            val entries = zip.entries()
+                .associateBy { normalizeZipPath(it) }
+
+            val metaJson = readZipEntryText(
+                zip = zip,
+                entries = entries,
+                path = "meta.json",
+            )
+
             val meta = atlasJson.decodeFromString<AtlasMetaRoot>(metaJson)
             val layoutEntry = entries[normalizeZipPath(meta.layout.file)]
                 ?: error("atlas zip missing layout file: ${meta.layout.file}")
 
             val atlasJsonPath = meta.sizes.firstOrNull()?.atlas ?: ""
-            val layerJson = readZipEntryText(zip, entries, atlasJsonPath)
+
+            val layerJson = readZipEntryText(
+                zip = zip,
+                entries = entries,
+                path = atlasJsonPath,
+            )
+
             val layer = atlasJson.decodeFromString<AtlasLayerJson>(layerJson).also {
                 if (it.textures.isEmpty()) {
                     error("atlas.json missing textures[]")
@@ -109,11 +129,10 @@ object AtlasManager {
                 val textureEntry = entries[normalizeZipPath(texture.image)]
                     ?: error("atlas zip missing texture file: ${texture.image}")
 
-                zip.getInputStream(textureEntry).use { input ->
-                    atlasTextureFile(bundleKey, texture.index).outputStream().use { out ->
-                        input.copyTo(out)
-                    }
-                }
+                zip.copyEntry(
+                    path = textureEntry,
+                    destination = atlasTextureFile(bundleKey, texture.index),
+                )
             }
 
             return processImport(
@@ -128,36 +147,21 @@ object AtlasManager {
         }
     }
 
-    private fun normalizedZipEntries(zip: ZipFile): Map<String, ZipEntry> {
-        val out = LinkedHashMap<String, ZipEntry>()
-
-        val en = zip.entries()
-
-        while (en.hasMoreElements()) {
-            val e = en.nextElement()
-            if (e.isDirectory) continue
-
-            out[normalizeZipPath(e.name)] = e
-        }
-
-        return out
-    }
-
     private fun readZipEntryText(
-        zip: ZipFile,
-        entries: Map<String, ZipEntry>,
+        zip: AppZipArchive,
+        entries: Map<String, String>,
         path: String,
     ): String {
-        val entry = entries[normalizeZipPath(path)] ?: error("atlas zip missing $path")
 
-        return zip.getInputStream(entry).use { input ->
-            InputStreamReader(input, Charsets.UTF_8).readText()
-        }
+        val entry = entries[normalizeZipPath(path)]
+            ?: error("atlas zip missing $path")
+
+        return zip.readEntry(entry).decodeToString()
     }
 
     private suspend fun processImport(
-        zip: ZipFile,
-        layoutEntry: ZipEntry,
+        zip: AppZipArchive,
+        layoutEntry: String,
         bundleKey: String,
         db: ExternalQuranDatabase,
         meta: AtlasMetaRoot,
@@ -169,9 +173,9 @@ object AtlasManager {
         db.withWriteTransaction {
             dao.deleteShapesForBundle(bundleKey)
 
-            zip.getInputStream(layoutEntry).use { input ->
+            zip.openEntry(layoutEntry).use { source ->
                 streamWordShapesFromLayout(
-                    input = input,
+                    input = source,
                     bundleKey = bundleKey,
                     requirePage = meta.isPageScopedGlyphAtlas(),
                 ) { rows ->
@@ -186,12 +190,14 @@ object AtlasManager {
             )
 
             dao.upsertBundle(bundle)
+
             bundle
         }
     }
 
+
     private suspend fun streamWordShapesFromLayout(
-        input: InputStream,
+        input: Source,
         bundleKey: String,
         requirePage: Boolean,
         insertRows: suspend (List<AtlasWordShapeEntity>) -> Unit,
@@ -200,21 +206,26 @@ object AtlasManager {
 
         suspend fun flushRows() {
             if (rows.isEmpty()) return
-            insertRows(ArrayList(rows))
+            insertRows(rows.toList())
             rows.clear()
         }
 
-        JsonReader(InputStreamReader(input, Charsets.UTF_8)).use { reader ->
-            reader.isLenient = true
+        BufferedSourceJsonReader(input.buffer()).use { reader ->
             reader.beginObject()
+
             while (reader.hasNext()) {
                 when (reader.nextName()) {
                     "documents" -> {
                         reader.beginObject()
 
                         while (reader.hasNext()) {
-                            reader.nextName()
-                            rows.add(readLayoutDocumentShape(reader, bundleKey, requirePage))
+                            reader.nextName() // Document ID is not needed.
+
+                            rows += readLayoutDocumentShape(
+                                reader = reader,
+                                bundleKey = bundleKey,
+                                requirePage = requirePage,
+                            )
 
                             if (rows.size >= INSERT_CHUNK) {
                                 flushRows()
@@ -227,6 +238,7 @@ object AtlasManager {
                     else -> reader.skipValue()
                 }
             }
+
             reader.endObject()
         }
 
@@ -246,8 +258,8 @@ object AtlasManager {
 
         while (reader.hasNext()) {
             when (reader.nextName()) {
-                "text" -> text = reader.nextString()
-                "page" -> page = reader.nextNullableInt()
+                "text" -> text = reader.readStringOrNull()
+                "page" -> page = reader.readIntOrNull()
                 "glyphs" -> placementsJson = reader.readGlyphPlacementsJson()
                 else -> reader.skipValue()
             }
@@ -256,6 +268,7 @@ object AtlasManager {
         reader.endObject()
 
         val word = text ?: error("atlas layout document missing text")
+
         val resolvedPage = if (requirePage) {
             page ?: error("page_glyph_atlas layout document missing page: $word")
         } else {
@@ -270,73 +283,10 @@ object AtlasManager {
         )
     }
 
-    private fun JsonReader.readGlyphPlacementsJson(): String {
-        val out = StringBuilder()
-        var firstGlyph = true
-
-        out.append('[')
-        beginArray()
-        while (hasNext()) {
-            if (firstGlyph) {
-                firstGlyph = false
-            } else {
-                out.append(',')
-            }
-
-            readGlyphPlacementJson(out)
-        }
-        endArray()
-        out.append(']')
-
-        return out.toString()
-    }
-
-    private fun JsonReader.readGlyphPlacementJson(out: StringBuilder) {
-        var firstField = true
-
-        fun appendNumberField(name: String, value: String) {
-            if (firstField) {
-                firstField = false
-            } else {
-                out.append(',')
-            }
-
-            out.append('"').append(name).append("\":").append(value)
-        }
-
-        out.append('{')
-        beginObject()
-        while (hasNext()) {
-            when (val name = nextName()) {
-                "g", "xa", "ya", "xo", "yo" -> {
-                    val value = nextNumberLiteralOrNull()
-                    if (value != null) {
-                        appendNumberField(name, value)
-                    }
-                }
-
-                else -> skipValue()
-            }
-        }
-        endObject()
-        out.append('}')
-    }
-
-    private fun JsonReader.nextNullableInt(): Int? {
-        return if (peek() == JsonToken.NULL) {
-            nextNull()
-            null
-        } else {
-            nextInt()
-        }
-    }
-
-    private fun JsonReader.nextNumberLiteralOrNull(): String? {
-        return when (peek()) {
-            JsonToken.NUMBER,
-            JsonToken.STRING -> nextString()
-
-            JsonToken.NULL -> {
+    private fun JsonReader.readStringOrNull(): String? =
+        when (peek()) {
+            Token.STRING -> nextString()
+            Token.NULL -> {
                 nextNull()
                 null
             }
@@ -346,7 +296,92 @@ object AtlasManager {
                 null
             }
         }
+
+    private fun JsonReader.readIntOrNull(): Int? =
+        when (peek()) {
+            Token.NULL -> {
+                nextNull()
+                null
+            }
+
+            Token.NUMBER, Token.LONG, Token.STRING -> {
+                val value = nextLong()
+
+                require(value in Int.MIN_VALUE.toLong()..Int.MAX_VALUE.toLong()) {
+                    "Page number is outside the Int range: $value"
+                }
+
+                value.toInt()
+            }
+
+            else -> error("Expected an integer or null for page")
+        }
+
+    private fun JsonReader.readGlyphPlacementsJson(): String {
+        val out = StringBuilder("[")
+        var first = true
+
+        beginArray()
+
+        while (hasNext()) {
+            if (!first) out.append(',')
+            first = false
+
+            out.append(readGlyphPlacementJson())
+        }
+
+        endArray()
+
+        return out.append(']').toString()
     }
+
+    private fun JsonReader.readGlyphPlacementJson(): String {
+        val out = StringBuilder("{")
+        var firstField = true
+
+        beginObject()
+
+        while (hasNext()) {
+            val name = nextName()
+
+            when (name) {
+                "g", "xa", "ya", "xo", "yo" -> {
+                    val value = readNumberLiteralOrNull() ?: continue
+                    if (!firstField) out.append(',')
+                    firstField = false
+
+                    out.append('"').append(name).append("\":").append(value)
+                }
+
+                else -> skipValue()
+            }
+        }
+
+        endObject()
+
+        return out.append('}').toString()
+    }
+
+    private fun JsonReader.readNumberLiteralOrNull(): String? =
+        when (peek()) {
+            Token.NULL -> {
+                nextNull()
+                null
+            }
+
+            Token.NUMBER, Token.LONG -> nextString()
+
+            Token.STRING -> nextString()?.takeIf(JSON_NUMBER::matches)
+
+            else -> {
+                skipValue()
+                null
+            }
+        }
+
+    private val JSON_NUMBER = Regex(
+        """-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?"""
+    )
 
     private fun normalizeZipPath(path: String): String {
         return path.trimStart('/').replace('\\', '/')

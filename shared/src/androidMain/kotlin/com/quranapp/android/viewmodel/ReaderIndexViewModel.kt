@@ -26,7 +26,7 @@ import kotlinx.serialization.json.Json
 import org.jetbrains.compose.resources.getString
 
 class ReaderIndexViewModel() : AppViewModel() {
-    val repository get() = DatabaseProvider.getQuranRepository(application)
+    val repository get() = DatabaseProvider.getQuranRepository()
 
     private val filtersJson = Json {
         ignoreUnknownKeys = true

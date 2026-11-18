@@ -1,102 +1,66 @@
 package com.quranapp.android.utils.mediaplayer
 
 import com.quranapp.android.api.ApiClient
-import com.quranapp.android.api.downloadStreaming
+import com.quranapp.android.api.downloadTo
+import com.quranapp.android.utils.app.AppFiles
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
-import java.io.File
-import java.io.FileOutputStream
+import okio.FileSystem
+import okio.Path
 
 internal object RecitationAudioFileDownloader {
-    private const val DOWNLOAD_BUFFER_SIZE = 4096
-
     suspend fun downloadToFile(
         urlStr: String,
-        finalFile: File,
-        onProgress: suspend (Long, Long) -> Unit,
+        finalFile: Path,
+        onProgress: (suspend (Long, Long) -> Unit)? = null,
     ) = withContext(Dispatchers.IO) {
-        val parent = finalFile.parentFile
+        val parent = finalFile.parent
             ?: throw IllegalStateException("Output path has no parent directory")
 
-        val tempFile = File(parent, "${finalFile.name}.part")
+        FileSystem.SYSTEM.createDirectories(parent)
 
-        if (tempFile.exists()) {
-            tempFile.delete()
+        val tmpFile = parent / "${finalFile.name}.part"
+
+        if (AppFiles.exists(tmpFile)) {
+            AppFiles.delete(tmpFile)
         }
 
         try {
             val response = ApiClient.downloadStreaming(urlStr)
 
-            if (response.code == 404) {
-                throw IllegalStateException("Audio file not found")
-            }
-
-            if (!response.isSuccessful) {
-                throw IllegalStateException("Download failed: HTTP ${response.code}")
-            }
-
-            val totalLength = response.contentLength
-
-            response.use { responseBody ->
-                responseBody.byteStream().buffered(DOWNLOAD_BUFFER_SIZE).use { input ->
-                    FileOutputStream(tempFile).buffered(DOWNLOAD_BUFFER_SIZE).use { output ->
-                        val buffer = ByteArray(DOWNLOAD_BUFFER_SIZE)
-                        var totalConsumed = 0L
-                        var lastEmitTime = 0L
-
-                        while (true) {
-                            ensureActive()
-
-                            val bytes = input.read(buffer)
-                            if (bytes <= 0) break
-
-                            output.write(buffer, 0, bytes)
-                            totalConsumed += bytes
-
-                            val now = System.currentTimeMillis()
-                            if (now - lastEmitTime >= 200L) {
-                                lastEmitTime = now
-                                if (totalLength > 0L) {
-                                    onProgress(totalConsumed, totalLength)
-                                } else if (totalConsumed > 0L) {
-                                    onProgress(totalConsumed, -1L)
-                                }
-                            }
-                        }
-
-                        // ensure final progress is emitted
-                        if (totalLength > 0L) {
-                            onProgress(totalConsumed, totalLength)
-                        } else if (totalConsumed > 0L) {
-                            onProgress(totalConsumed, -1L)
-                        }
-
-                        output.flush()
+            response.downloadTo(
+                tmpFile,
+                onFailed = {
+                    if (it.code == 404) {
+                        throw IllegalStateException("Audio file not found")
                     }
-                }
+
+                    throw IllegalStateException("Download failed: HTTP ${it.code}")
+                },
+                onProgress = onProgress?.let { progress ->
+                    { downloaded, total ->
+                        progress(downloaded, total ?: -1L)
+                    }
+                },
+            )
+
+            if (AppFiles.size(tmpFile) <= 0L) {
+                AppFiles.delete(tmpFile)
+                throw IllegalStateException("Download produced empty file")
             }
 
-            commitTempFile(tempFile, finalFile)
-        } catch (e: Exception) {
-            tempFile.delete()
+            if (AppFiles.exists(finalFile)) {
+                AppFiles.delete(finalFile)
+            }
+
+            AppFiles.move(tmpFile, finalFile)
+        } catch (e: CancellationException) {
+            AppFiles.delete(tmpFile)
             throw e
-        }
-    }
-
-    private fun commitTempFile(tempFile: File, finalFile: File) {
-        if (tempFile.renameTo(finalFile)) return
-
-        try {
-            tempFile.copyTo(finalFile, overwrite = true)
         } catch (e: Exception) {
-            finalFile.delete()
+            AppFiles.delete(tmpFile)
             throw e
-        }
-
-        if (!tempFile.delete()) {
-            finalFile.delete()
-            throw IllegalStateException("Could not finalize download file")
         }
     }
 }

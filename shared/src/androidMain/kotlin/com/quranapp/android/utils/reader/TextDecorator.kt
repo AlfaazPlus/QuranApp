@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.quranapp.android.theme.appFontFamily
 import com.quranapp.android.theme.fontUrdu
-import com.quranapp.android.utils.miscellenous.StringUtils
+import com.quranapp.android.utils.miscellenous.isRtlLanguageCode
 
 data class ComposeUiConfig(
     val context: Context,
@@ -117,7 +117,7 @@ fun quranTextStyleParams(
 fun getTranslationTextStyle(
     params: TranslationTextStyleParams,
 ): TextStyle {
-    val isRtl = StringUtils.isRtlLanguage(params.slug)
+    val isRtl = params.slug.isRtlLanguageCode()
     val isUrdu = TranslUtils.isUrdu(params.slug)
 
     val baselineFontSize = if (params.useSmallSize) params.type.bodyMedium.fontSize

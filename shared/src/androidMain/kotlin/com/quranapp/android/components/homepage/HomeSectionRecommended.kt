@@ -57,7 +57,7 @@ private fun RecommendationCard(
     val context = LocalContext.current
 
     val resolvedChapterName by produceState<String?>(initialValue = null) {
-        val quranRepository = DatabaseProvider.getQuranRepository(context)
+        val quranRepository = DatabaseProvider.getQuranRepository()
 
         val ref = recommendation.reference
         if (ref is RecommendationRef.Chapter) {

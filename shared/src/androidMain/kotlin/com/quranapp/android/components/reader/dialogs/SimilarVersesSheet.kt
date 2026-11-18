@@ -134,7 +134,7 @@ fun SimilarVersesSheet(
         rows = withContext(Dispatchers.IO) {
             val similar = repository.extrasDao.getSimilarVerses(v.id)
 
-            val translationRepo = DatabaseProvider.getTranslationRepository(context)
+            val translationRepo = DatabaseProvider.getTranslationRepository()
             val translations = if (primarySlug.isNotEmpty()) {
                 translationRepo.getTranslationsByAyahId(
                     setOf(primarySlug),

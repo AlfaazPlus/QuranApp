@@ -174,7 +174,6 @@ private fun SpotlightVersePanel(
     versePair: ChapterVersePair,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
     val prefs by DataStoreManager.flowMultiple(
         ReaderPreferences.KEY_TRANSLATIONS,
         ReaderPreferences.KEY_SCRIPT,
@@ -255,7 +254,7 @@ private fun SpotlightVersePanel(
 
                             vwd.apply {
                                 translations =
-                                    DatabaseProvider.getTranslationRepository(context).let {
+                                    DatabaseProvider.getTranslationRepository().let {
                                         it.getTranslations(
                                             setOf(aSlug),
                                             chapterNo,

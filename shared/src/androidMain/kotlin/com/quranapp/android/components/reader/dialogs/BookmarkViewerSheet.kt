@@ -156,7 +156,7 @@ private fun BookmarkViewerSheetContent(
 
     LaunchedEffect(chapterNo) {
         chapterName = withContext(Dispatchers.IO) {
-            DatabaseProvider.getQuranRepository(context).getChapterName(chapterNo)
+            DatabaseProvider.getQuranRepository().getChapterName(chapterNo)
         }
     }
 
@@ -180,7 +180,7 @@ private fun BookmarkViewerSheetContent(
             )
 
             ReaderItemsBuilder.buildQuickReferenceItems(
-                context, params, chapterNo, (fromVerseNo..toVerseNo).toList(),
+                params, chapterNo, (fromVerseNo..toVerseNo).toList(),
             )
         }
     }

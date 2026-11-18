@@ -5,20 +5,22 @@ import android.net.Uri
 import androidx.core.net.toUri
 import androidx.work.WorkManager
 import com.quranapp.android.api.JsonHelper
+import com.quranapp.android.api.downloadTo
 import com.quranapp.android.api.fetchInventoryStreamingResponse
 import com.quranapp.android.api.models.mediaplayer.ChapterTimingMetadata
 import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
 import com.quranapp.android.api.models.mediaplayer.RecitationAudioTrack
 import com.quranapp.android.api.models.mediaplayer.ResolvedAudioResult
 import com.quranapp.android.api.models.recitation2.RecitationModelBase
+import com.quranapp.android.locale.toFormatted
+import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.toInputStream
+import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.exceptions.HttpNotFoundException
 import com.quranapp.android.utils.exceptions.NoInternetException
-import com.quranapp.android.utils.extensions.isGzip
-import com.quranapp.android.utils.files.AppFiles
-import com.quranapp.android.utils.miscellenous.StringUtils
+import com.quranapp.android.utils.miscellenous.isGzip
 import com.quranapp.android.utils.reader.recitation.RecitationUtils.URL_CHAPTER_PATTERN
-import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import com.quranapp.android.utils.workers.RecitationAudioDownloadWorker
 import com.quranapp.android.utils.workers.RecitationBulkDownloadWorker
 import kotlinx.coroutines.Dispatchers
@@ -33,16 +35,13 @@ import kotlinx.serialization.json.intOrNull
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
-import okio.Path.Companion.toOkioPath
-import java.io.File
-import java.io.IOException
+import okio.FileSystem
+import okio.Path
 import java.io.InputStream
 import java.util.zip.GZIPInputStream
 
 class RecitationAudioRepository(private val context: Context) {
     companion object {
-        private const val DOWNLOAD_BUFFER_SIZE = 4096
-
         fun prepareAudioUrl(urlTemplate: String, chapterNo: Int): String? {
             var url = urlTemplate
             return try {
@@ -50,7 +49,7 @@ class RecitationAudioRepository(private val context: Context) {
                 while (matcher.find()) {
                     val group = matcher.group(1)
                     if (group != null) {
-                        url = matcher.replaceFirst(StringUtils.formatInvariant(group, chapterNo))
+                        url = matcher.replaceFirst(group.toFormatted(null, chapterNo))
                         matcher.reset(url)
                     }
                 }
@@ -114,16 +113,16 @@ class RecitationAudioRepository(private val context: Context) {
         }
 
         val quranFile = quranModel?.let {
-            modelManager.getRecitationAudioFile(it.id, chapterNo).toFile()
+            modelManager.getRecitationAudioFile(it.id, chapterNo)
         }
         val translationFile = translationModel?.let {
-            modelManager.getRecitationAudioFile(it.id, chapterNo).toFile()
+            modelManager.getRecitationAudioFile(it.id, chapterNo)
         }
 
         val quranNeedsStream =
-            shouldPlayArabic && quranFile != null && quranFile.length() == 0L
+            shouldPlayArabic && quranFile != null && AppFiles.size(quranFile) == 0L
         val translationNeedsStream =
-            shouldPlayTranslation && translationFile != null && translationFile.length() == 0L
+            shouldPlayTranslation && translationFile != null && AppFiles.size(translationFile) == 0L
 
         try {
             coroutineScope {
@@ -136,7 +135,7 @@ class RecitationAudioRepository(private val context: Context) {
                 }
 
                 if (quranNeedsStream || translationNeedsStream) {
-                    if (!NetworkStateReceiver.isNetworkConnected(context)) {
+                    if (!PlatformServices.networkMonitor.isConnected) {
                         throw NoInternetException()
                     }
                 }
@@ -151,7 +150,7 @@ class RecitationAudioRepository(private val context: Context) {
 
                 fun resolveTrackUri(
                     needsStream: Boolean,
-                    file: File?,
+                    file: Path?,
                     urlTemplate: String,
                 ): Uri {
                     if (file == null) {
@@ -159,7 +158,7 @@ class RecitationAudioRepository(private val context: Context) {
                     }
 
                     if (!needsStream) {
-                        return file.toUri()
+                        return file.toFile().toUri()
                     }
 
                     val url = prepareAudioUrl(urlTemplate, chapterNo)
@@ -214,103 +213,101 @@ class RecitationAudioRepository(private val context: Context) {
         model: RecitationModelBase,
         chapterNo: Int,
     ): ChapterTimingMetadata? = withContext(Dispatchers.IO) {
-        var timingUrl = model.timingUrl?.trim().orEmpty()
+        val timingUrl = model.timingUrl?.trim().orEmpty()
 
         if (timingUrl.isEmpty()) return@withContext null
 
-        val cacheFile = modelManager.getRecitationTimingFile(model.id).toFile()
+        val cacheFile = modelManager.getRecitationTimingFile(model.id)
 
-        if (cacheFile.length() > 0L) {
+        if (AppFiles.size(cacheFile) > 0L) {
             try {
                 when (val parsed = parseTimingFile(
-                    cacheFile.inputStream().buffered(),
+                    openTimingInputStream(cacheFile),
                     chapterNo,
-                    model.timingVersion ?: 0
+                    model.timingVersion ?: 0,
                 )) {
                     is TimingParseResult.Found -> return@withContext parsed.metadata
                     TimingParseResult.ChapterMissing -> return@withContext null
-                    TimingParseResult.ParseFailed -> cacheFile.delete()
+                    TimingParseResult.ParseFailed -> AppFiles.delete(cacheFile)
                 }
             } catch (e: Exception) {
                 Logger.saveError(
                     e,
                     "RecitationAudioRepository.resolveChapterTimingMetadata - read cache"
                 )
-                cacheFile.delete()
+                AppFiles.delete(cacheFile)
             }
         }
 
-        if (!NetworkStateReceiver.isNetworkConnected(context)) {
+        if (!PlatformServices.networkMonitor.isConnected) {
             return@withContext null
         }
 
-        try {
-            val tempFile =
-                File(context.cacheDir, "timing_temp_${System.currentTimeMillis()}")
+        val tempFile =
+            PlatformServices.files.cacheDirectory / "timing_temp_${System.currentTimeMillis()}"
 
+        try {
             downloadTimingMetadata(tempFile, timingUrl)
 
-            if (!tempFile.exists() || tempFile.length() == 0L) {
-                tempFile.delete()
+            if (AppFiles.size(tempFile) <= 0L) {
+                AppFiles.delete(tempFile)
                 return@withContext null
             }
 
-            // Decompress to a separate temp file so nothing is held in memory
-            val contentFile =
-                File(context.cacheDir, "timing_content_${System.currentTimeMillis()}")
-
-            try {
-                val input: InputStream = try {
-                    if (tempFile.isGzip()) {
-                        GZIPInputStream(tempFile.inputStream().buffered())
-                    } else {
-                        tempFile.inputStream().buffered()
-                    }
-                } catch (e: Exception) {
-                    tempFile.inputStream().buffered()
-                }
-
-                input.use { src ->
-                    contentFile.outputStream().buffered().use { dst -> src.copyTo(dst) }
+            val jsonText = try {
+                if (tempFile.isGzip()) {
+                    AppFiles.readTextGzipped(tempFile)
+                } else {
+                    AppFiles.readText(tempFile)
                 }
             } finally {
-                tempFile.delete()
+                AppFiles.delete(tempFile)
             }
 
-            try {
-                when (val parsed =
-                    parseTimingFile(
-                        contentFile.inputStream().buffered(),
-                        chapterNo,
-                        model.timingVersion ?: 0
-                    )) {
-                    is TimingParseResult.Found -> {
-                        if (AppFiles.createFile(cacheFile.toOkioPath())) {
-                            contentFile.inputStream().buffered().use { src ->
-                                cacheFile.outputStream().buffered().use { dst ->
-                                    src.copyTo(dst)
-                                }
-                            }
-                        }
-                        return@withContext parsed.metadata
-                    }
-
-                    TimingParseResult.ChapterMissing -> {
-                        Logger.saveError(
-                            Exception("Timing JSON had no entry for chapter $chapterNo"),
-                            "RecitationAudioRepository.resolveTimingFromCacheOrNetwork",
-                        )
-                        return@withContext null
-                    }
-
-                    TimingParseResult.ParseFailed -> return@withContext null
+            when (
+                val parsed = parseTimingText(
+                    jsonText,
+                    chapterNo,
+                    model.timingVersion ?: 0,
+                )
+            ) {
+                is TimingParseResult.Found -> {
+                    cacheFile.parent?.let { FileSystem.SYSTEM.createDirectories(it) }
+                    AppFiles.writeText(cacheFile, jsonText)
+                    return@withContext parsed.metadata
                 }
-            } finally {
-                contentFile.delete()
+
+                TimingParseResult.ChapterMissing -> {
+                    Logger.saveError(
+                        Exception("Timing JSON had no entry for chapter $chapterNo"),
+                        "RecitationAudioRepository.resolveTimingFromCacheOrNetwork",
+                    )
+                    return@withContext null
+                }
+
+                TimingParseResult.ParseFailed -> return@withContext null
             }
         } catch (e: Exception) {
-            Logger.saveError(e, "RecitationAudioRepository.resolveTimingFromCacheOrNetwork - download")
+            AppFiles.delete(tempFile)
+            Logger.saveError(
+                e,
+                "RecitationAudioRepository.resolveTimingFromCacheOrNetwork - download"
+            )
             return@withContext null
+        }
+    }
+
+    private fun openTimingInputStream(path: Path): InputStream {
+        val source = FileSystem.SYSTEM.source(path)
+
+        return try {
+            if (path.isGzip()) {
+                GZIPInputStream(source.toInputStream())
+            } else {
+                source.toInputStream()
+            }
+        } catch (_: Exception) {
+            source.toInputStream()
         }
     }
 
@@ -321,15 +318,24 @@ class RecitationAudioRepository(private val context: Context) {
     private fun parseTimingFile(
         contentStream: InputStream,
         chapterNo: Int,
-        upstreamVersion: Int
+        upstreamVersion: Int,
+    ): TimingParseResult {
+        return try {
+            val text = contentStream.use { it.bufferedReader().readText() }
+            parseTimingText(text, chapterNo, upstreamVersion)
+        } catch (e: Exception) {
+            Logger.saveError(e, "RecitationAudioRepository.parseTimingFile")
+            TimingParseResult.ParseFailed
+        }
+    }
+
+    private fun parseTimingText(
+        jsonText: String,
+        chapterNo: Int,
+        upstreamVersion: Int,
     ): TimingParseResult {
         try {
-            val root = contentStream.use { stream ->
-                JsonHelper.json.parseToJsonElement(
-                    stream.bufferedReader().readText()
-                ).jsonObject
-            }
-
+            val root = JsonHelper.json.parseToJsonElement(jsonText).jsonObject
             val version = root["version"]?.jsonPrimitive?.intOrNull ?: 0
 
             if (version < upstreamVersion) {
@@ -352,29 +358,22 @@ class RecitationAudioRepository(private val context: Context) {
 
             return TimingParseResult.ChapterMissing
         } catch (e: Exception) {
-            Logger.saveError(e, "RecitationAudioRepository.parseTimingFile")
+            Logger.saveError(e, "RecitationAudioRepository.parseTimingText")
             return TimingParseResult.ParseFailed
         }
     }
 
     private suspend fun downloadTimingMetadata(
-        file: File,
+        file: Path,
         timingUrl: String,
-    ) = withContext(Dispatchers.IO) {
+    ) {
         val response = fetchInventoryStreamingResponse(timingUrl)
-
-        response.use { body ->
-            if (!body.isSuccessful) {
-                if (body.code == 404) throw HttpNotFoundException()
-                throw IOException("Timing metadata download failed: HTTP ${body.code}")
-            }
-
-            body.byteStream().use { input ->
-                file.outputStream().buffered(DOWNLOAD_BUFFER_SIZE).use { output ->
-                    input.copyTo(output, DOWNLOAD_BUFFER_SIZE)
-                    output.flush()
-                }
-            }
-        }
+        response.downloadTo(
+            file,
+            onFailed = {
+                if (it.code == 404) throw HttpNotFoundException()
+                throw IllegalStateException("Timing metadata download failed: HTTP ${it.code}")
+            },
+        )
     }
 }

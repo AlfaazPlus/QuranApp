@@ -31,12 +31,15 @@ internal class AtlasDrawSignal : AtlasPageListener {
 
     private val images = HashMap<Bitmap, ImageBitmap>()
 
-    fun imageOf(bitmap: Bitmap): ImageBitmap {
+    fun imageOf(bitmap: Bitmap): ImageBitmap? {
+        if (bitmap.isRecycled) return null
+
         images[bitmap]?.let { return it }
+
         return bitmap.asImageBitmap().also { images[bitmap] = it }
     }
 
-    override fun onDecoded(index: Int, bitmap: android.graphics.Bitmap) {
+    override fun onDecoded(index: Int) {
         if (index >= 0) bump()
     }
 
@@ -78,7 +81,7 @@ fun rememberQuranAtlasBundle(db: ExternalQuranDatabase): QuranAtlasBundle? {
     if (!script.isQuranAtlasScript()) return null
 
     val bundleState = produceState<QuranAtlasBundle?>(initialValue = null, script, context) {
-        value = QuranAtlasLoader.getBundle(context, db, script)
+        value = QuranAtlasLoader.getBundle(db, script)
     }
     return bundleState.value
 }

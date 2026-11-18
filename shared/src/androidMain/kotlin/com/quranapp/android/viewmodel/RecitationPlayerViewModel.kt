@@ -1,6 +1,7 @@
 package com.quranapp.android.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.quranapp.android.AndroidAppContext
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.RecitationServiceState
@@ -9,10 +10,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 
-class RecitationPlayerViewModel() :
-    AppViewModel() {
-    val controller = RecitationController.getInstance(application)
-    val repository get() = DatabaseProvider.getQuranRepository(application)
+class RecitationPlayerViewModel() : AppViewModel() {
+    val controller = RecitationController.getInstance(AndroidAppContext.get())
+    val repository get() = DatabaseProvider.getQuranRepository()
 
     init {
         controller.connect()

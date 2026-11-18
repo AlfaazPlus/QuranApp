@@ -109,7 +109,7 @@ private data class RootsLoadResult(
 }
 
 class QuranicTopicsViewModel() : AppViewModel() {
-    private val repository = DatabaseProvider.getTopicsRepository(application)
+    private val repository = DatabaseProvider.getTopicsRepository()
     private val inFlightTopicLoads = mutableSetOf<String>()
 
     private val _uiState = MutableStateFlow(TopicsUiState())

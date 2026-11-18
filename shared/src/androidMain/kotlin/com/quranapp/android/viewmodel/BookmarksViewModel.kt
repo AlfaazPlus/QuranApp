@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.locale.appLocaleFlow
-import com.quranapp.android.repository.BookmarkMessage
+import com.quranapp.android.models.BookmarkMessage
 import com.quranapp.android.utils.quran.QuranMeta
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
@@ -13,8 +13,8 @@ import kotlinx.coroutines.flow.stateIn
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class BookmarksViewModel() : AppViewModel() {
-    private val userRepository get() = DatabaseProvider.getUserRepository(application)
-    private val quranRepository get() = DatabaseProvider.getQuranRepository(application)
+    private val userRepository get() = DatabaseProvider.getUserRepository()
+    private val quranRepository get() = DatabaseProvider.getQuranRepository()
 
     val chapterNames = appLocaleFlow.mapLatest {
         quranRepository.getChapterNames(QuranMeta.chapterRange.toList())

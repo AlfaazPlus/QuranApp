@@ -32,3 +32,5 @@ val appLanguageOptions: List<AppLanguageOption> = listOf(
     AppLanguageOption("zh-CN", "简体中文"),
     AppLanguageOption("zh-TW", "繁體中文"),
 )
+
+val LOCALE_DEFAULT = appLanguageOptions.firstOrNull { it.systemDefault }?.tag ?: ""

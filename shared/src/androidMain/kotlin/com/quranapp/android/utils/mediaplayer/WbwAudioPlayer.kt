@@ -19,7 +19,7 @@ import androidx.media3.datasource.cache.SimpleCache
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import com.quranapp.android.utils.app.Logger
-import com.quranapp.android.utils.receivers.NetworkStateReceiver
+import com.quranapp.android.platform.PlatformServices
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -166,14 +166,13 @@ object WbwAudioPlayer {
         val app = context.applicationContext
 
         val source = WbwAudioRepository.resolveWordPlaybackSource(
-            context = context,
             chapterNo = chapterNo,
             verseNo = verseNo,
             appWordIndex = appWordIndex,
         )
 
         if (source == null) {
-            return if (!NetworkStateReceiver.isNetworkConnected(app)) {
+            return if (!PlatformServices.networkMonitor.isConnected) {
                 WbwAudioPlayResult.NoInternet
             } else {
                 WbwAudioPlayResult.NoChapterAudio
@@ -212,7 +211,7 @@ object WbwAudioPlayer {
             is WbwWordPlaybackSource.Chapter -> {
                 if (
                     WbwAudioRepository.getTimingCount(context) == 0 &&
-                    !NetworkStateReceiver.isNetworkConnected(app)
+                    !PlatformServices.networkMonitor.isConnected
                 ) {
                     return WbwAudioPlayResult.NoInternet
                 }
@@ -224,7 +223,7 @@ object WbwAudioPlayer {
                     val count = WbwAudioRepository.getTimingCount(context)
 
                     return when {
-                        count == 0 && !NetworkStateReceiver.isNetworkConnected(app) ->
+                        count == 0 && !PlatformServices.networkMonitor.isConnected ->
                             WbwAudioPlayResult.NoInternet
 
                         else -> WbwAudioPlayResult.TimingsNotLoaded

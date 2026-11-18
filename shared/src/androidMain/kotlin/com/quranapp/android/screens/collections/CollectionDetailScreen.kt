@@ -245,7 +245,6 @@ private fun CollectionDetailContent(
         val newlyPrepared = try {
             withContext(Dispatchers.IO) {
                 ReaderItemsBuilder.buildQuickReferenceItems(
-                    context = textParams.uiConfig.context,
                     params = textParams,
                     requests = missingItems.map {
                         ReaderItemsBuilder.QuickReferenceRequest(

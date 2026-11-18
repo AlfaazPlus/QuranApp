@@ -114,7 +114,7 @@ class RecitationService : MediaLibraryService() {
 
     @Volatile
     private var _repository = serviceScope.async {
-        DatabaseProvider.getQuranRepository(applicationContext)
+        DatabaseProvider.getQuranRepository()
     }
 
     private var _singleTrackTimingMetadata = MutableStateFlow<ChapterTimingMetadata?>(null)

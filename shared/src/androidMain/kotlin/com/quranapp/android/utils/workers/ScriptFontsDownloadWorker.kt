@@ -11,18 +11,20 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.quranapp.android.api.ApiClient
-import com.quranapp.android.api.downloadStreaming
+import com.quranapp.android.api.downloadTo
 import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.msgDownloadingFonts
 import com.quranapp.android.generated.resources.msgExtractingFonts
 import com.quranapp.android.generated.resources.strLabelCancel
 import com.quranapp.android.generated.resources.textDownloading
 import com.quranapp.android.navigation.SettingRoutes
+import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.shared.R
 import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.app.AppDestinations
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.app.NotificationUtils.createForegroundInfoFallback
+import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.miscellenous.Keys
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.getQuranScriptName
@@ -86,48 +88,33 @@ class ScriptFontsDownloadWorker(
         }
 
         val url = "https://github.com/AlfaazPlus/QuranAppInventory/releases/download/qpc/$fileName"
-        val tempFile = File.createTempFile("tmp", fileName, ctx.filesDir)
+        val tempFile =
+            PlatformServices.files.filesDirectory / "tmp_${System.currentTimeMillis()}_$fileName"
 
         try {
             val response = ApiClient.downloadStreaming(url)
 
-            response.use { body ->
-                if (!body.isSuccessful) {
-                    throw Error("Failed")
-                }
-
-                val totalBytes = body.contentLength
-
-                val input = body.byteStream()
-                val output = tempFile.outputStream()
-
-                val buffer = ByteArray(8 * 1024)
-                var bytesCopied = 0L
-                var bytes = input.read(buffer)
-
-                while (bytes >= 0) {
-                    output.write(buffer, 0, bytes)
-                    bytesCopied += bytes
-
-                    val progress = if (totalBytes > 0) {
+            response.downloadTo(
+                tempFile,
+                onFailed = {
+                    throw IllegalStateException("Font download failed: HTTP ${it.code}")
+                },
+                onProgress = { bytesCopied, totalBytes ->
+                    val progress = if (totalBytes != null && totalBytes > 0L) {
                         ((bytesCopied * 100) / totalBytes).toInt()
-                    } else -1
+                    } else {
+                        -1
+                    }
 
                     updateProgres(scriptKey, progress)
-
-                    bytes = input.read(buffer)
-                }
-
-                output.flush()
-                output.close()
-                input.close()
-            }
+                },
+            )
 
             val fontsDir = QuranScriptUtils.kfqpcFontDir(scriptKey).toFile()
 
-            extractFonts(scriptKey, tempFile, fontsDir)
+            extractFonts(scriptKey, tempFile.toFile(), fontsDir)
         } finally {
-            tempFile.delete()
+            AppFiles.delete(tempFile)
         }
     }
 

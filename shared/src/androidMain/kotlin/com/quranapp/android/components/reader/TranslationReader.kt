@@ -91,7 +91,7 @@ import com.quranapp.android.reader.TranslationPageSection
 import com.quranapp.android.reader.TranslationPageVerse
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.tightTextStyle
-import com.quranapp.android.utils.miscellenous.StringUtils
+import com.quranapp.android.utils.miscellenous.isRtlLanguageCode
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.TranslationPageBuilderParams
@@ -410,7 +410,7 @@ private fun TranslationModePage(
     }
 
     val playerState = LocalRecitation.current
-    val isRtl = StringUtils.isRtlLanguage(item.translationSlug)
+    val isRtl = item.translationSlug.isRtlLanguageCode()
     val pageAyahIds = remember(item) {
         item.sections.asSequence()
             .filterIsInstance<TranslationPageSection.Text>()

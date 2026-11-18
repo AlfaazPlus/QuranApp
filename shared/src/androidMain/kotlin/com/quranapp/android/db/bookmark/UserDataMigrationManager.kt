@@ -7,7 +7,6 @@ import com.quranapp.android.db.entities.user.BookmarkEntity
 import com.quranapp.android.db.readHistory.ReadHistoryMigration
 import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.miscellenous.DateUtils
-import com.quranapp.android.utils.miscellenous.DateUtils.DATETIME_FORMAT_SYSTEM
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -39,7 +38,7 @@ class UserDataMigrationManager(
             if (oldBookmarks.isNotEmpty()) {
                 Logger.d("Bookmarks - running migration")
 
-                val userDatabase = DatabaseProvider.getUserDatabase(context)
+                val userDatabase = DatabaseProvider.getUserDatabase()
                 val dao = userDatabase.bookmarkDao()
 
                 val existing = dao.getBookmarks()
@@ -50,7 +49,7 @@ class UserDataMigrationManager(
                             fromVerseNo = it.fromVerseNo,
                             toVerseNo = it.toVerseNo,
                             dateTime = it.date?.let {
-                                DateUtils.toDate(it, DATETIME_FORMAT_SYSTEM)?.time
+                                DateUtils.parse(it, DateUtils.SYSTEM)?.toEpochMilliseconds()
                             } ?: System.currentTimeMillis(),
                             note = it.note
                         )
@@ -74,7 +73,7 @@ class UserDataMigrationManager(
             }
 
             Logger.d("ReadHistory - running migration")
-            val userDatabase = DatabaseProvider.getUserDatabase(context)
+            val userDatabase = DatabaseProvider.getUserDatabase()
             ReadHistoryMigration.migrateIfNeeded(context, userDatabase)
 
             prefs.edit(commit = true) {

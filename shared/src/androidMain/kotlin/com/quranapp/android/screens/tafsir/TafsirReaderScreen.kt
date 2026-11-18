@@ -95,7 +95,7 @@ import com.quranapp.android.theme.observeDarkTheme
 import com.quranapp.android.theme.toCssVariables
 import com.quranapp.android.utils.app.AppDestinations
 import com.quranapp.android.utils.miscellenous.Keys
-import com.quranapp.android.utils.miscellenous.StringUtils.isRtlLanguage
+import com.quranapp.android.utils.miscellenous.isRtlLanguageCode
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.quran.parser.ParserUtils.compressVerseRefsByChapter
 import com.quranapp.android.utils.reader.factory.ReaderFactory
@@ -551,7 +551,7 @@ private suspend fun buildTafsirHtml(
     multiVerseAlert: String,
 ): String {
     val theme = if (isDark) "dark" else "light"
-    val direction = if (isRtlLanguage(langCode)) "rtl" else "ltr"
+    val direction = if (langCode.isRtlLanguageCode()) "rtl" else "ltr"
 
     val alertBlock = if (verses.size > 1) {
         val versesSorted = compressVerseRefsByChapter(verses)

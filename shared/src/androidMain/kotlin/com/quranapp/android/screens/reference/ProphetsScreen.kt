@@ -76,7 +76,7 @@ import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun ProphetsScreen() {
-    val allProphets = rememberLocalized { QuranProphetParser.parseProphets(it) }
+    val allProphets = rememberLocalized { QuranProphetParser.parseProphets() }
 
     var searchQuery by remember { mutableStateOf("") }
     var debouncedQuery by remember { mutableStateOf("") }

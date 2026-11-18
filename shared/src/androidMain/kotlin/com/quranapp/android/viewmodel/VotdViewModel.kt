@@ -46,8 +46,8 @@ data class VotdUiState(
 
 class VotdViewModel() : AppViewModel() {
 
-    private val repository = DatabaseProvider.getQuranRepository(application)
-    private val translationRepo = DatabaseProvider.getTranslationRepository(application)
+    private val repository = DatabaseProvider.getQuranRepository()
+    private val translationRepo = DatabaseProvider.getTranslationRepository()
 
     private val _uiState = MutableStateFlow(VotdUiState())
     val uiState: StateFlow<VotdUiState> = _uiState.asStateFlow()

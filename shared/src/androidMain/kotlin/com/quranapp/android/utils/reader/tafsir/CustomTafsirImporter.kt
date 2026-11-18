@@ -20,7 +20,7 @@ object CustomTafsirImporter {
                 throw ImportException(ImportFailure.RESERVED)
             }
 
-            val repository = DatabaseProvider.getQuranRepository(context)
+            val repository = DatabaseProvider.getQuranRepository()
             val models = parseTafsirImport(
                 readImportText(context, uri),
                 manifest.slug

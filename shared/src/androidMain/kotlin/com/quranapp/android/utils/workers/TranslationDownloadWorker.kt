@@ -11,13 +11,14 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.quranapp.android.api.ApiClient
-import com.quranapp.android.api.getTranslation
+import com.quranapp.android.api.downloadTo
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.strLabelCancel
 import com.quranapp.android.generated.resources.textDownloading
 import com.quranapp.android.navigation.SettingRoutes
+import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.search.SearchIndexScheduler
 import com.quranapp.android.shared.R
 import com.quranapp.android.utils.app.Logger
@@ -25,14 +26,13 @@ import com.quranapp.android.utils.app.AppActions
 import com.quranapp.android.utils.app.AppDestinations
 import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.app.NotificationUtils.createForegroundInfoFallback
+import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.miscellenous.Keys
 import com.quranapp.android.utils.sharedPrefs.SPAppActions.removeFromPendingAction
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import org.jetbrains.compose.resources.getString
-import java.io.File
 
 class TranslationDownloadWorker(
     val ctx: Context,
@@ -79,53 +79,41 @@ class TranslationDownloadWorker(
     private suspend fun downloadFile(
         bookInfo: TranslationBookInfoModel
     ) = withContext(Dispatchers.IO) {
-        val tmpFile = File.createTempFile(
-            bookInfo.slug,
-            ".json",
-            ctx.cacheDir
-        )
+        val tmpFile =
+            PlatformServices.files.cacheDirectory / "${bookInfo.slug}.${System.currentTimeMillis()}.json"
 
-        val response = ApiClient.getTranslation(bookInfo.downloadPath)
+        try {
+            val response = ApiClient.getTranslation(bookInfo.downloadPath)
 
-        response.use { body ->
-            if (!body.isSuccessful) throw Exception("HTTP ${body.code}")
-            val totalBytes = body.contentLength
-            val byteStream = body.byteStream()
+            response.downloadTo(
+                tmpFile,
+                onFailed = {
+                    throw IllegalStateException("HTTP ${it.code}")
+                },
+                onProgress = { downloaded, totalBytes ->
+                    if (isStopped) return@downloadTo
 
-            byteStream.use { inS ->
-                tmpFile.outputStream().buffered().use { outS ->
+                    val progress =
+                        if (totalBytes != null && totalBytes > 0L) {
+                            ((downloaded * 100) / totalBytes).toInt()
+                        } else {
+                            null
+                        }
 
-                    val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
-                    var downloaded = 0L
+                    setProgressAsync(workDataOf("progress" to progress))
+                    setForeground(createForegroundInfo(bookInfo, progress))
+                },
+            )
 
-                    while (true) {
-                        ensureActive()
+            DatabaseProvider.getTranslationRepository()
+                .store(bookInfo, AppFiles.readText(tmpFile))
 
-                        if (isStopped) break
+            SearchIndexScheduler.enqueueSlug(ctx.applicationContext, bookInfo.slug)
 
-                        val bytes = inS.read(buffer)
-
-                        if (bytes <= 0) break
-
-                        outS.write(buffer, 0, bytes)
-                        downloaded += bytes
-
-                        val progress =
-                            if (totalBytes > 0) ((downloaded * 100) / totalBytes).toInt() else null
-                        setProgressAsync(workDataOf("progress" to progress))
-                        setForeground(createForegroundInfo(bookInfo, progress))
-                    }
-
-                    outS.flush()
-                }
-            }
+            removeFromPendingAction(ctx, AppActions.APP_ACTION_TRANSL_UPDATE, bookInfo.slug)
+        } finally {
+            AppFiles.delete(tmpFile)
         }
-
-        DatabaseProvider.getTranslationRepository(ctx).store(bookInfo, tmpFile.readText())
-
-        SearchIndexScheduler.enqueueSlug(ctx.applicationContext, bookInfo.slug)
-
-        removeFromPendingAction(ctx, AppActions.APP_ACTION_TRANSL_UPDATE, bookInfo.slug)
     }
 
     private suspend fun createForegroundInfo(

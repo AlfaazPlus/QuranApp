@@ -3,11 +3,15 @@ package com.quranapp.android.platform
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
 import android.os.Build
 import android.widget.Toast
 import androidx.core.net.toUri
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel
+import com.quranapp.android.db.QURAN_DATABASE_NAME
 import com.quranapp.android.models.ChapterVersePair
 import com.quranapp.android.resources.ComposeResourceFiles
 import com.quranapp.android.utils.managers.ScriptFontsDownloadManager
@@ -15,11 +19,19 @@ import com.quranapp.android.utils.managers.TafsirDownloadManager
 import com.quranapp.android.utils.managers.TranslationDownloadManager
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.reader.FontResolver
+import com.quranapp.platform.AppImageLoader
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import okio.FileSystem
 import okio.Path
 import okio.Path.Companion.toOkioPath
+import okio.Path.Companion.toPath
+import okio.Source
+import okio.buffer
+import okio.source
 import java.io.File
-import java.io.IOException
 import java.lang.ref.WeakReference
+import java.util.zip.ZipFile
 
 fun installAndroidFileSystem(context: Context) {
     // Called from Application.attachBaseContext, where applicationContext is still null.
@@ -38,6 +50,7 @@ fun installAndroidPlatform(context: Context) {
         downloads = AndroidDownloadScheduler(app),
         links = AndroidAppLinks(app),
         messages = AndroidAppMessages(app),
+        networkMonitor = AndroidNetworkMonitor(app),
     )
 }
 
@@ -68,52 +81,88 @@ private class AndroidAppMessages(
     }
 }
 
+class AndroidZipReader : AppZipReader {
+
+    override fun open(path: Path): AppZipArchive {
+        return AndroidZipArchive(path)
+    }
+}
+
+private class AndroidZipArchive(path: Path) : AppZipArchive {
+    private val zipFile = ZipFile(path.toFile())
+
+    private val entries = zipFile.entries().asSequence()
+        .filterNot { it.isDirectory }
+        .associateBy { normalizeZipPath(it.name) }
+
+    override fun entries(): List<String> = entries.keys.toList()
+
+    override fun readEntry(path: String): ByteArray {
+        val entry = findEntry(path)
+
+        return zipFile.getInputStream(entry).use { input ->
+            input.readBytes()
+        }
+    }
+
+    override fun openEntry(path: String): Source {
+        val entry = findEntry(path)
+
+        return zipFile.getInputStream(entry).source()
+    }
+
+    override fun copyEntry(path: String, destination: Path) {
+        openEntry(path).use { source ->
+            FileSystem.SYSTEM.sink(destination).buffer().use { sink ->
+                sink.writeAll(source)
+            }
+        }
+    }
+
+    private fun findEntry(path: String) =
+        entries[normalizeZipPath(path)]
+            ?: error("ZIP entry not found: $path")
+
+    override fun close() {
+        zipFile.close()
+    }
+
+    private fun normalizeZipPath(path: String): String {
+        return path.trimStart('/').replace('\\', '/')
+    }
+}
+
 private class AndroidAppFileSystem(
-    private val context: Context,
+    context: Context,
 ) : AppFileSystem {
+    private val appContext = context.applicationContext ?: context
+
+    override val zipReader: AppZipReader
+        get() = AndroidZipReader()
+
+    override val imageLoader: AppImageLoader
+        get() = createAppImageLoader(appContext)
+
     override val filesDirectory: Path
-        get() = context.filesDir.toOkioPath()
+        get() = appContext.filesDir.toOkioPath()
+
+    override val cacheDirectory: Path
+        get() = appContext.cacheDir.toOkioPath()
+
+    override val databaseDirectory: Path =
+        appContext.getDatabasePath(QURAN_DATABASE_NAME)
+            .parentFile!!
+            .absolutePath
+            .toPath()
 
     override fun resourceDirectory(relativePath: String): Path {
-        val directory = File(context.filesDir, relativePath)
+        val directory = File(appContext.filesDir, relativePath)
 
         if (!directory.exists()) {
             directory.mkdirs()
         }
 
         return directory.toOkioPath()
-    }
-
-    override fun createFile(file: Path): Boolean {
-        val target = file.toFile()
-        if (target.exists()) return true
-
-        return try {
-            target.parentFile?.mkdirs()
-            target.createNewFile()
-        } catch (_: IOException) {
-            false
-        }
-    }
-
-    override fun readText(file: Path): String = file.toFile().readText()
-
-    override fun writeText(file: Path, text: String) {
-        file.toFile().writeText(text)
-    }
-
-    override fun deleteRecursively(file: Path) {
-        deleteFile(file.toFile())
-    }
-
-    private fun deleteFile(file: File) {
-        if (file.isDirectory) {
-            file.listFiles()?.forEach { deleteFile(it) }
-        }
-
-        if (file.exists() && !file.delete()) {
-            throw IOException("Failed to delete: ${file.absolutePath}")
-        }
     }
 }
 
@@ -219,5 +268,54 @@ private class AndroidDownloadScheduler(
 
     override fun downloadScriptFont(script: String) {
         ScriptFontsDownloadManager.startDownload(context, script)
+    }
+}
+
+class AndroidNetworkMonitor(
+    context: Context
+) : NetworkMonitor {
+    private val connectivityManager =
+        context.getSystemService(Context.CONNECTIVITY_SERVICE)
+                as ConnectivityManager
+
+    private val _isConnected = MutableStateFlow(checkConnection())
+
+    override val isConnectedFlow: StateFlow<Boolean> = _isConnected
+    override val isConnected: Boolean get() = isConnectedFlow.value
+
+    private fun checkConnection(): Boolean {
+        val network = connectivityManager.activeNetwork
+            ?: return false
+
+        val capabilities =
+            connectivityManager.getNetworkCapabilities(network)
+                ?: return false
+
+        return capabilities.hasCapability(
+            NetworkCapabilities.NET_CAPABILITY_INTERNET
+        ) && capabilities.hasCapability(
+            NetworkCapabilities.NET_CAPABILITY_VALIDATED
+        )
+    }
+
+    private val callback = object : ConnectivityManager.NetworkCallback() {
+        override fun onAvailable(network: Network) {
+            _isConnected.value = checkConnection()
+        }
+
+        override fun onLost(network: Network) {
+            _isConnected.value = checkConnection()
+        }
+
+        override fun onCapabilitiesChanged(
+            network: Network,
+            capabilities: NetworkCapabilities
+        ) {
+            _isConnected.value = checkConnection()
+        }
+    }
+
+    init {
+        connectivityManager.registerDefaultNetworkCallback(callback)
     }
 }

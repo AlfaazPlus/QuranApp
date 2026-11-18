@@ -13,7 +13,7 @@ import com.quranapp.android.search.SearchIndexScheduler
 import com.quranapp.android.search.SearchNormalizer
 import com.quranapp.android.shared.R
 import com.quranapp.android.utils.app.NotificationUtils
-import com.quranapp.android.utils.miscellenous.StringUtils
+import com.quranapp.android.utils.miscellenous.stripHtmlTags
 import com.quranapp.android.utils.quran.QuranMeta
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -69,7 +69,7 @@ class TranslationSearchIndexWorker(
             }
 
             MODE_ALL -> {
-                DatabaseProvider.getTranslationRepository(applicationContext).let { factory ->
+                DatabaseProvider.getTranslationRepository().let { factory ->
                     val slugs = factory.getBooks().keys
 
                     for (slug in slugs) {
@@ -82,7 +82,7 @@ class TranslationSearchIndexWorker(
                         )
                     }
 
-                    DatabaseProvider.getSearchIndexDatabase(applicationContext)
+                    DatabaseProvider.getSearchIndexDatabase()
                         .searchIndexDao()
                         .rebuildFtsIndex()
 
@@ -101,9 +101,9 @@ class TranslationSearchIndexWorker(
         slug: String,
         rebuildFts: Boolean = true,
     ): Boolean = withContext(Dispatchers.IO) {
-        val dao = DatabaseProvider.getSearchIndexDatabase(context).searchIndexDao()
+        val dao = DatabaseProvider.getSearchIndexDatabase().searchIndexDao()
 
-        DatabaseProvider.getTranslationRepository(context).let { factory ->
+        DatabaseProvider.getTranslationRepository().let { factory ->
             if (!factory.isDownloaded(slug)) {
                 dao.replaceSlugIndex(slug, emptyList(), "", rebuildFts)
                 return@let true
@@ -119,7 +119,7 @@ class TranslationSearchIndexWorker(
             val rows = ArrayList<TranslationSearchContentEntity>(rowCount.coerceAtMost(7000))
 
             for (row in factory.getVerseTexts(slug)) {
-                val plain = StringUtils.removeHTML(row.text, false)
+                val plain = row.text.stripHtmlTags(false)
                 val norm = SearchNormalizer.normalizeForTranslationIndex(plain)
                 if (norm.isBlank()) continue
 
@@ -144,7 +144,7 @@ class TranslationSearchIndexWorker(
         slug: String,
         rebuildFts: Boolean = true,
     ): Boolean = withContext(Dispatchers.IO) {
-        val dao = DatabaseProvider.getSearchIndexDatabase(context).searchIndexDao()
+        val dao = DatabaseProvider.getSearchIndexDatabase().searchIndexDao()
         dao.replaceSlugIndex(slug, emptyList(), "", rebuildFts)
         true
     }

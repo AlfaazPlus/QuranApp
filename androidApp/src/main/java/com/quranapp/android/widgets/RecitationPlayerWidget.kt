@@ -54,6 +54,7 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
+import com.quranapp.android.AndroidAppContext
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
 import com.quranapp.android.models.ChapterVersePair
@@ -356,8 +357,8 @@ private suspend fun buildRecitationPlayerWidgetState(
         playbackState.currentVerse
     }.takeIf { it.isValid } ?: ChapterVersePair(1, 1)
 
-    val repository = DatabaseProvider.getQuranRepository(context)
-    val controller = RecitationController.getInstance(context)
+    val repository = DatabaseProvider.getQuranRepository()
+    val controller = RecitationController.getInstance(AndroidAppContext.get())
     val connected = controller.isConnectedState.value
     val isPlaying = if (connected) controller.isPlaying else playbackState.isPlaying
     val isLoading = if (connected) {

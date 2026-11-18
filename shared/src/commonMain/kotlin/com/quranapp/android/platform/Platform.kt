@@ -2,6 +2,8 @@ package com.quranapp.android.platform
 
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel
+import com.quranapp.platform.AppImageLoader
+import kotlinx.coroutines.flow.StateFlow
 import okio.Path
 import okio.Source
 
@@ -20,13 +22,29 @@ interface AppAssets {
     suspend fun assetUri(relativePath: String): String
 }
 
+
+interface AppZipReader {
+    fun open(path: Path): AppZipArchive
+}
+
+interface AppZipArchive : AutoCloseable {
+    fun entries(): List<String>
+
+    fun readEntry(path: String): ByteArray
+
+    fun openEntry(path: String): Source
+
+    fun copyEntry(path: String, destination: Path)
+}
+
+
 interface AppFileSystem {
+    val zipReader: AppZipReader
+    val imageLoader: AppImageLoader
     val filesDirectory: Path
+    val cacheDirectory: Path
+    val databaseDirectory: Path
     fun resourceDirectory(relativePath: String): Path
-    fun createFile(file: Path): Boolean
-    fun readText(file: Path): String
-    fun writeText(file: Path, text: String)
-    fun deleteRecursively(file: Path)
 }
 
 interface AppLinks {
@@ -61,6 +79,11 @@ interface AppMessages {
     fun showClipboard(text: String)
 }
 
+interface NetworkMonitor {
+    val isConnectedFlow: StateFlow<Boolean>
+    val isConnected: Boolean
+}
+
 object PlatformServices {
     lateinit var assets: AppAssets
         private set
@@ -76,6 +99,8 @@ object PlatformServices {
         private set
     lateinit var messages: AppMessages
         private set
+    lateinit var networkMonitor: NetworkMonitor
+        private set
 
     fun installFiles(files: AppFileSystem) {
         this.files = files
@@ -89,6 +114,7 @@ object PlatformServices {
         downloads: DownloadScheduler,
         links: AppLinks,
         messages: AppMessages,
+        networkMonitor: NetworkMonitor,
     ) {
         this.assets = assets
         this.files = files
@@ -97,5 +123,6 @@ object PlatformServices {
         this.downloads = downloads
         this.links = links
         this.messages = messages
+        this.networkMonitor = networkMonitor
     }
 }

@@ -1,8 +1,9 @@
 package com.quranapp.android.backup
 
-import android.content.Context
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.entities.user.BookmarkEntity
+import com.quranapp.android.locale.appLocale
+import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.preferences.AppPreferences
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.preferences.RecitationPreferences
@@ -13,13 +14,13 @@ import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.utils.app.ResourceDownloadProxy
 import com.quranapp.android.utils.mediaplayer.AudioEndBehaviour
 import com.quranapp.android.utils.mediaplayer.AudioOption
+import com.quranapp.android.utils.miscellenous.DateUtils
 import com.quranapp.android.utils.reader.QuranScriptVariant
-import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonArray
-import java.time.Instant
+import kotlin.time.Instant
 
 class ExportKeys {
     companion object {
@@ -35,12 +36,17 @@ data class ImportResult(
     val settingsImported: Boolean,
 )
 
-class BackupImportService(private val context: Context) {
-    private val schema by lazy {
-        context.assets.open("schemas/backup-v2.schema.json").bufferedReader().use { it.readText() }
+class BackupImportService() {
+    private val repository by lazy { DatabaseProvider.getUserRepository() }
+    private val quran by lazy { DatabaseProvider.getQuranRepository() }
+
+    private var cachedSchema: String? = null
+
+    private suspend fun getSchema(): String {
+        return cachedSchema ?: PlatformServices.assets
+            .readAssetText("schemas/backup-v2.schema.json")
+            .also { cachedSchema = it }
     }
-    private val repository by lazy { DatabaseProvider.getUserRepository(context) }
-    private val quran by lazy { DatabaseProvider.getQuranRepository(context) }
 
     suspend fun exportBytes(scopes: Map<String, Boolean>): ByteArray {
         val bookmarks = if (scopes[ExportKeys.BOOKMARKS] == true) {
@@ -56,13 +62,13 @@ class BackupImportService(private val context: Context) {
         }
 
         val settings = if (scopes[ExportKeys.SETTINGS] == true) exportSettings() else null
-        val text = BackupCodec.write(Instant.now(), bookmarks, settings, collections, schema)
+        val text = BackupCodec.write(DateUtils.now(), bookmarks, settings, collections, getSchema())
 
         return BackupFiles.gzip(text)
     }
 
     suspend fun import(bytes: ByteArray, scopes: Map<String, Boolean>): ImportResult {
-        val document = BackupCodec.read(BackupFiles.decode(bytes), schema)
+        val document = BackupCodec.read(BackupFiles.decode(bytes), getSchema())
         val bookmarks = if (scopes[ExportKeys.BOOKMARKS] == true) document.bookmarks else null
         val collections = if (scopes[ExportKeys.COLLECTIONS] == true) document.collections else null
 
@@ -98,11 +104,9 @@ class BackupImportService(private val context: Context) {
 
     private suspend fun exportSettings(): JsonObject {
         val values = linkedMapOf<String, JsonElement>()
-        val locale = SPAppConfigs.getLocale(context)
-        values[SettingsContract.LOCALE] = JsonPrimitive(locale)
-        values[SettingsContract.NUMERAL_SYSTEM] = JsonPrimitive(
-            SPAppConfigs.getNumeralSystem(context) ?: SPAppConfigs.NUMERAL_SYSTEM_DEFAULT
-        )
+        val locale = appLocale()
+        values[SettingsContract.LOCALE] = JsonPrimitive(locale.storedTag)
+        values[SettingsContract.NUMERAL_SYSTEM] = JsonPrimitive(locale.numeralSystem?.storageKey)
         values[SettingsContract.THEME] = JsonPrimitive(ThemeUtils.getThemeMode())
         values[SettingsContract.THEME_COLOR] = JsonPrimitive(ThemeUtils.getThemeColor())
         values[SettingsContract.DYNAMIC_COLOR] = JsonPrimitive(ThemeUtils.getDynamicColor())
@@ -184,11 +188,11 @@ class BackupImportService(private val context: Context) {
     private suspend fun apply(setting: AcceptedSetting) {
         when (setting.path) {
             SettingsContract.LOCALE -> {
-                SPAppConfigs.setLocale(context, (setting.value as SettingValue.Text).value)
+                AppPreferences.setLocale((setting.value as SettingValue.Text).value)
             }
 
             SettingsContract.NUMERAL_SYSTEM -> {
-                SPAppConfigs.setNumeralSystem(context, (setting.value as SettingValue.Text).value)
+                AppPreferences.setNumeralSystem((setting.value as SettingValue.Text).value)
             }
 
             SettingsContract.DAILY_REMINDER -> {
@@ -332,8 +336,8 @@ private fun BookmarkEntity.toBackupBookmark(): BackupBookmark {
         startVerseNumber = fromVerseNo,
         endVerseNumber = toVerseNo,
         note = note,
-        createdAt = if (legacyCreatedAtText.isNullOrBlank()) Instant.ofEpochMilli(dateTime) else null,
-        updatedAt = updatedAt?.let { Instant.ofEpochMilli(it) },
+        createdAt = if (legacyCreatedAtText.isNullOrBlank()) Instant.fromEpochMilliseconds(dateTime) else null,
+        updatedAt = updatedAt?.let { Instant.fromEpochMilliseconds(it) },
         legacyCreatedAtText = legacyCreatedAtText,
     )
 }

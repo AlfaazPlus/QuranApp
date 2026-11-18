@@ -1,13 +1,14 @@
 package com.quranapp.android.theme
 
+import androidx.compose.material3.ColorScheme
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.strLabelSystemDefault
 import com.quranapp.android.generated.resources.strLabelThemeDark
 import com.quranapp.android.generated.resources.strLabelThemeLight
-import androidx.compose.material3.ColorScheme
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.stringPreferencesKey
 import com.quranapp.android.preferences.DataStoreManager
+import com.quranapp.android.preferences.PrefKey
 import com.quranapp.android.theme.colors.BaseColors
 import com.quranapp.android.theme.colors.ThemeAmoledColors
 import com.quranapp.android.theme.colors.ThemeBlueColors
@@ -27,9 +28,10 @@ object ThemeUtils {
     const val THEME_MODE_LIGHT = "app.theme.light"
     const val THEME_MODE_DARK = "app.theme.dark"
 
-    val KEY_THEME_MODE = stringPreferencesKey("v2.theme_mode")
-    val KEY_THEME_COLOR = stringPreferencesKey("v2.theme_color")
-    val KEY_THEME_DYNAMIC_COLOR = booleanPreferencesKey("v2.theme_dynamic_color")
+    val KEY_THEME_MODE = PrefKey(stringPreferencesKey("v2.theme_mode"), THEME_MODE_DEFAULT)
+    val KEY_THEME_COLOR = PrefKey(stringPreferencesKey("v2.theme_color"), THEME_COLOR_DEFAULT)
+    val KEY_THEME_DYNAMIC_COLOR =
+        PrefKey(booleanPreferencesKey("v2.theme_dynamic_color"), DEFAULT_DYNAMIC_COLOR)
 
     const val THEME_COLOR_DEFAULT = "default"
     const val THEME_COLOR_BLUE = "blue"
@@ -51,7 +53,7 @@ object ThemeUtils {
     }
 
     fun getThemeMode(): String {
-        return DataStoreManager.read(KEY_THEME_MODE, THEME_MODE_DEFAULT)
+        return DataStoreManager.read(KEY_THEME_MODE)
     }
 
     suspend fun setThemeMode(themeMode: String) {
@@ -59,11 +61,11 @@ object ThemeUtils {
     }
 
     fun getThemeColor(): String {
-        return DataStoreManager.read(KEY_THEME_COLOR, THEME_COLOR_DEFAULT)
+        return DataStoreManager.read(KEY_THEME_COLOR)
     }
 
     fun getDynamicColor(): Boolean {
-        return DataStoreManager.read(KEY_THEME_DYNAMIC_COLOR, DEFAULT_DYNAMIC_COLOR)
+        return DataStoreManager.read(KEY_THEME_DYNAMIC_COLOR)
     }
 
     suspend fun setThemeColor(themeColor: String) {
@@ -76,9 +78,9 @@ object ThemeUtils {
 
     fun widgetAppearancePreferencesFlow(): Flow<Triple<String, String, Boolean>> {
         return combine(
-            DataStoreManager.flow(KEY_THEME_MODE, THEME_MODE_DEFAULT),
-            DataStoreManager.flow(KEY_THEME_COLOR, THEME_COLOR_DEFAULT),
-            DataStoreManager.flow(KEY_THEME_DYNAMIC_COLOR, DEFAULT_DYNAMIC_COLOR),
+            DataStoreManager.flow(KEY_THEME_MODE),
+            DataStoreManager.flow(KEY_THEME_COLOR),
+            DataStoreManager.flow(KEY_THEME_DYNAMIC_COLOR),
         ) { mode, color, dynamicColor ->
             Triple(mode, color, dynamicColor)
         }.distinctUntilChanged()

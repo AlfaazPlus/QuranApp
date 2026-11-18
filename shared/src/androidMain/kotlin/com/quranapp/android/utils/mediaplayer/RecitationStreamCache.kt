@@ -6,8 +6,10 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.database.StandaloneDatabaseProvider
 import androidx.media3.datasource.cache.LeastRecentlyUsedCacheEvictor
 import androidx.media3.datasource.cache.SimpleCache
+import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.quran.QuranMeta
-import java.io.File
+import okio.FileSystem
 
 @OptIn(UnstableApi::class)
 object RecitationStreamCache {
@@ -24,14 +26,14 @@ object RecitationStreamCache {
             simpleCache?.let { return it }
 
             val appCtx = context.applicationContext
-            val dir = File(appCtx.cacheDir, CACHE_DIR_NAME)
-            if (!dir.exists()) {
-                dir.mkdirs()
+            val dir = PlatformServices.files.cacheDirectory / CACHE_DIR_NAME
+            if (!AppFiles.exists(dir)) {
+                FileSystem.SYSTEM.createDirectories(dir)
             }
 
             val evictor = LeastRecentlyUsedCacheEvictor(CACHE_MAX_BYTES)
             val dbProvider = StandaloneDatabaseProvider(appCtx)
-            return SimpleCache(dir, evictor, dbProvider).also { simpleCache = it }
+            return SimpleCache(dir.toFile(), evictor, dbProvider).also { simpleCache = it }
         }
     }
 

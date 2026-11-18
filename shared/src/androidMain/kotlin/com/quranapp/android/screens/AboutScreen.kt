@@ -36,7 +36,7 @@ import com.quranapp.android.generated.resources.strTitleHelpSupport
 import com.quranapp.android.generated.resources.strTitlePrivacyPolicy
 import com.quranapp.android.generated.resources.strTitleSendFeedback
 import com.quranapp.android.platform.PlatformServices
-import com.quranapp.android.shared.BuildConfig
+import com.quranapp.android.utils.app.APP_VERSION_NAME
 import com.quranapp.android.utils.app.UrlsManager
 import com.quranapp.android.utils.extensions.copyToClipboard
 import org.jetbrains.compose.resources.DrawableResource
@@ -121,7 +121,7 @@ private fun VersionCard() {
 
     ListItem(
         title = Res.string.strTitleAppVersion,
-        subtitleStr = BuildConfig.VERSION_NAME,
+        subtitleStr = APP_VERSION_NAME,
         leading = {
             Icon(
                 painter = painterResource(Res.drawable.dr_logo),
@@ -139,7 +139,7 @@ private fun VersionCard() {
             )
         }
     ) {
-        context.copyToClipboard(BuildConfig.VERSION_NAME)
+        context.copyToClipboard(APP_VERSION_NAME)
         PlatformServices.messages.showClipboard("Version name copied")
     }
 }

@@ -49,12 +49,13 @@ import com.quranapp.android.generated.resources.strMsgSearchNoResultsFoundAbsolu
 import com.quranapp.android.locale.formattedStringResource
 import com.quranapp.android.search.SearchResult
 import com.quranapp.android.search.SearchResultMatch
+import com.quranapp.android.search.SearchSnippet
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.appFontFamily
 import com.quranapp.android.theme.fontArabic
 import com.quranapp.android.theme.fontUrdu
 import com.quranapp.android.utils.extensions.copyToClipboard
-import com.quranapp.android.utils.miscellenous.StringUtils
+import com.quranapp.android.utils.miscellenous.isRtlLanguageCode
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.viewmodel.QuranSearchViewModel
@@ -188,10 +189,7 @@ private fun TextSearchResultCard(result: SearchResult, onClick: (SearchResult) -
                 when (match) {
                     is SearchResultMatch.TranslationMatch -> {
                         CompositionLocalProvider(
-                            LocalLayoutDirection provides if (StringUtils.isRtlLanguage(
-                                    match.slug
-                                )
-                            ) LayoutDirection.Rtl else LayoutDirection.Ltr
+                            LocalLayoutDirection provides if (match.slug.isRtlLanguageCode()) LayoutDirection.Rtl else LayoutDirection.Ltr
                         ) {
                             val isUrdu = TranslUtils.isUrdu(match.slug)
                             val fontFamily = if (isUrdu) fontUrdu else appFontFamily
@@ -239,7 +237,7 @@ private fun TextSearchResultCard(result: SearchResult, onClick: (SearchResult) -
     }
 }
 
-private fun com.quranapp.android.search.SearchSnippet.highlighted() = buildAnnotatedString {
+private fun SearchSnippet.highlighted() = buildAnnotatedString {
     append(text)
 
     val style = SpanStyle(background = Color(0x66FFD858))

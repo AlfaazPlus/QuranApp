@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class CollectionsViewModel() : AppViewModel() {
-    private val repo = DatabaseProvider.getUserRepository(application)
+    private val repo = DatabaseProvider.getUserRepository()
     private val collectionItemFlows = mutableMapOf<Long, Flow<PagingData<CollectionItemEntity>>>()
 
     val allCollections = collections("")

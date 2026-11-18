@@ -31,7 +31,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -52,13 +51,11 @@ import com.quranapp.android.locale.formattedStringResource
 import com.quranapp.android.models.Footnote
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.repository.TranslationRepository
-import com.quranapp.android.shared.R
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.fontUrdu
 import com.quranapp.android.theme.observeDarkTheme
-import com.quranapp.android.utils.miscellenous.ResUtils
-import com.quranapp.android.utils.miscellenous.StringUtils
+import com.quranapp.android.utils.miscellenous.HYPHEN
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.OnReferenceClick
 import com.quranapp.android.utils.reader.TranslationTextStyleParams
@@ -68,7 +65,6 @@ import com.quranapp.android.utils.reader.getTranslationTextStyle
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.stringResource
-import java.util.Locale
 
 data class FootnotePresenterData(
     val verse: VerseWithDetails,
@@ -98,8 +94,7 @@ fun FootnotePresenter(
 
 @Composable
 private fun SheetContent(data: FootnotePresenterData) {
-    val context = LocalContext.current
-    val translationRepo = remember(context) { DatabaseProvider.getTranslationRepository(context) }
+    val translationRepo = remember { DatabaseProvider.getTranslationRepository() }
 
     val verse = data.verse
     val singleFootnote = data.singleFootnote
@@ -139,7 +134,6 @@ private fun Header(
     verse: VerseWithDetails,
     singleFootnote: Footnote?
 ) {
-    val context = LocalContext.current
 
     val singleFootnoteBooInfo by produceState<TranslationBookInfoModel?>(
         null,
@@ -151,16 +145,10 @@ private fun Header(
         }
     }
 
-    val title = singleFootnoteBooInfo?.let {
-        ResUtils.getLocalizedString(
-            context,
-            R.string.strTitleFootnote,
-            Locale.forLanguageTag(it.langCode)
-        )
-    } ?: if (singleFootnote != null) stringResource(Res.string.strTitleFootnote)
+    val title = if (singleFootnote != null) stringResource(Res.string.strTitleFootnote)
     else stringResource(Res.string.strTitleFootnotes)
 
-    val repository = remember(context) { DatabaseProvider.getQuranRepository(context) }
+    val repository = remember { DatabaseProvider.getQuranRepository() }
     var chapterName by remember { mutableStateOf("") }
 
     LaunchedEffect(verse.chapterNo) {
@@ -208,7 +196,7 @@ private fun Header(
 
                 val bookInfo = singleFootnoteBooInfo
                 if (bookInfo != null) {
-                    append(" ${StringUtils.HYPHEN} ")
+                    append(" ${HYPHEN} ")
                     append(bookInfo.getDisplayName(true))
                 }
             },

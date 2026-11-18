@@ -68,8 +68,7 @@ import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.extensions.copyToClipboard
-import com.quranapp.android.utils.miscellenous.formatted
-import com.quranapp.android.utils.miscellenous.toDate
+import com.quranapp.android.utils.miscellenous.DateUtils
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.painterResource
@@ -150,8 +149,9 @@ private fun CrashLogs() {
                     ) + "... ${logText.length - 200} more chars"
                     else logText
 
-                    val parsedDate = logFile.name.toDate(Logger.FILE_NAME_DATE_FORMAT)
-                    val formattedDateTime = parsedDate?.formatted() ?: logFile.name
+                    val parsedDate = DateUtils.parse(logFile.name, DateUtils.FILENAME)
+                    val formattedDateTime =
+                        parsedDate?.let { DateUtils.format(it) } ?: logFile.name
 
                     AppLogModel(
                         datetime = formattedDateTime,
@@ -215,8 +215,6 @@ private fun SuppressedLogs() {
     var isLoading by remember { mutableStateOf(true) }
     var logs by remember { mutableStateOf<List<AppLogModel>>(emptyList()) }
 
-    val context = LocalContext.current
-
     LaunchedEffect(Unit) {
         val files = Logger.SUPPRESSED_LOGS_DIR.toFile().listFiles()
 
@@ -235,8 +233,9 @@ private fun SuppressedLogs() {
                     ) + "... ${logText.length - 200} more chars"
                     else logText
 
-                    val parsedDate = datetimeStr.toDate(Logger.FILE_NAME_DATE_FORMAT)
-                    val formattedDateTime = parsedDate?.formatted() ?: logFile.name
+                    val parsedDate = DateUtils.parse(datetimeStr, DateUtils.FILENAME)
+                    val formattedDateTime =
+                        parsedDate?.let { DateUtils.format(it) } ?: logFile.name
 
                     AppLogModel(
                         datetime = formattedDateTime,

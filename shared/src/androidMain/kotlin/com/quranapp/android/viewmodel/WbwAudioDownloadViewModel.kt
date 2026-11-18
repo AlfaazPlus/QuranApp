@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
+import com.quranapp.android.AndroidAppContext
 import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.wbwAudioBulkWaitForChapterDownloads
 import com.quranapp.android.generated.resources.wbwAudioChapterWaitForBulk
@@ -12,7 +13,8 @@ import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.mediaplayer.WbwAudioDownloadProgressBus
 import com.quranapp.android.utils.mediaplayer.WbwAudioRepository
 import com.quranapp.android.utils.quran.QuranMeta
-import com.quranapp.android.utils.receivers.NetworkStateReceiver
+import com.quranapp.android.extensions.canProceed
+import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.utils.workers.WbwAudioBulkDownloadWorker
 import com.quranapp.android.utils.workers.WbwAudioDownloadWorker
 import kotlinx.coroutines.Dispatchers
@@ -98,7 +100,7 @@ sealed interface WbwAudioDownloadUiEvent {
 @OptIn(FlowPreview::class)
 class WbwAudioDownloadViewModel() : AppViewModel() {
 
-    private val context get() = application.applicationContext
+    private val context get() = AndroidAppContext.get()
     private val workManager = WorkManager.getInstance(context)
 
     private val recomputeMutex = Mutex()
@@ -135,7 +137,7 @@ class WbwAudioDownloadViewModel() : AppViewModel() {
 
     fun downloadChapter(audioId: String, chapterNo: Int) {
         viewModelScope.launch {
-            if (!NetworkStateReceiver.canProceed(context)) return@launch
+            if (!PlatformServices.networkMonitor.canProceed()) return@launch
 
             launch(Dispatchers.IO) {
                 try {
@@ -148,8 +150,7 @@ class WbwAudioDownloadViewModel() : AppViewModel() {
                     }
 
                     val url = WbwAudioRepository.prepareChapterAudioUrl(chapterNo) ?: return@launch
-                    val outputPath = WbwAudioRepository.getChapterAudioFile(chapterNo)
-                        .absolutePath
+                    val outputPath = WbwAudioRepository.getChapterAudioFile(chapterNo).toString()
 
                     val request = WbwAudioDownloadWorker.oneTimeRequest(
                         url = url,
@@ -189,7 +190,7 @@ class WbwAudioDownloadViewModel() : AppViewModel() {
     fun deleteChapter(chapterNo: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                WbwAudioRepository.deleteChapterAudio(context, chapterNo)
+                WbwAudioRepository.deleteChapterAudio(chapterNo)
                 triggerRecompute()
             } catch (e: Exception) {
                 Logger.saveError(e, "WbwAudioDownloadViewModel.deleteChapter")
@@ -199,7 +200,7 @@ class WbwAudioDownloadViewModel() : AppViewModel() {
 
     fun startBulkDownload(audioId: String) {
         viewModelScope.launch {
-            if (!NetworkStateReceiver.canProceed(context)) return@launch
+            if (!PlatformServices.networkMonitor.canProceed()) return@launch
 
             launch(Dispatchers.IO) {
                 try {

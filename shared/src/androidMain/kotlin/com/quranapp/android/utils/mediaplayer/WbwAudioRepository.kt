@@ -5,15 +5,17 @@ import android.net.Uri
 import android.util.JsonReader
 import androidx.core.net.toUri
 import androidx.room3.withWriteTransaction
+import com.quranapp.android.api.downloadTo
 import com.quranapp.android.api.fetchInventoryStreamingResponse
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.entities.wbw.WbwAudioTimingEntity
+import com.quranapp.android.locale.toFormatted
+import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.toInputStream
+import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.app.Logger
-import com.quranapp.android.utils.extensions.isGzip
-import com.quranapp.android.utils.files.AppFiles
-import com.quranapp.android.utils.miscellenous.StringUtils
+import com.quranapp.android.utils.miscellenous.isGzip
 import com.quranapp.android.utils.reader.recitation.RecitationUtils
-import com.quranapp.android.utils.receivers.NetworkStateReceiver
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,8 +23,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
-import java.io.File
-import java.io.IOException
+import okio.FileSystem
+import okio.Path
 import java.io.InputStreamReader
 import java.nio.charset.StandardCharsets
 import java.util.zip.GZIPInputStream
@@ -43,29 +45,24 @@ object WbwAudioRepository {
 
     private val timingLoadMutex = Mutex()
 
-    fun migrateLegacyData(appContext: Context) {
+    fun migrateLegacyData() {
         CoroutineScope(Dispatchers.IO).launch {
-            val dir = File(appContext.cacheDir, "wbw_audio")
-
-            if (dir.exists()) {
-                dir.deleteRecursively()
-            }
+            AppFiles.deleteRecursively(PlatformServices.files.cacheDirectory / "wbw_audio")
         }
     }
 
-    private fun getRootDir(): File = AppFiles.savedDir(DIR_NAME).toFile()
+    private fun getRootDir(): Path = AppFiles.savedDir(DIR_NAME)
 
-    fun getChapterAudioFile(chapterNo: Int): File {
-        return File(getRootDir(), StringUtils.formatInvariant("%03d.webm", chapterNo))
+    fun getChapterAudioFile(chapterNo: Int): Path {
+        return getRootDir() / "%03d.webm".toFormatted(chapterNo)
     }
 
-    private fun hasValidChapterAudioFile(file: File): Boolean {
-        return file.exists() && file.length() > 0L
+    private fun hasValidChapterAudioFile(file: Path): Boolean {
+        return AppFiles.size(file) > 0L
     }
 
     fun isChapterAudioDownloaded(chapterNo: Int): Boolean {
-        val f = getChapterAudioFile(chapterNo)
-        return hasValidChapterAudioFile(f)
+        return hasValidChapterAudioFile(getChapterAudioFile(chapterNo))
     }
 
     fun prepareOneOffWordAudioUrl(
@@ -78,8 +75,7 @@ object WbwAudioRepository {
         }
 
         val sourceWordIndex = appWordIndex + 1
-        val fileName = StringUtils.formatInvariant(
-            "%03d_%03d_%03d.mp3",
+        val fileName = "%03d_%03d_%03d.mp3".toFormatted(
             chapterNo,
             verseNo,
             sourceWordIndex,
@@ -87,12 +83,9 @@ object WbwAudioRepository {
         return ONE_OFF_AUDIO_URL_BASE + fileName
     }
 
-    suspend fun deleteChapterAudio(context: Context, chapterNo: Int) =
+    suspend fun deleteChapterAudio(chapterNo: Int) =
         withContext(Dispatchers.IO) {
-            val f = getChapterAudioFile(chapterNo)
-            if (f.exists()) {
-                f.delete()
-            }
+            AppFiles.delete(getChapterAudioFile(chapterNo))
         }
 
     fun prepareChapterAudioUrl(chapterNo: Int): String? {
@@ -105,7 +98,7 @@ object WbwAudioRepository {
                 val group = matcher.group(1)
 
                 if (group != null) {
-                    url = matcher.replaceFirst(StringUtils.formatInvariant(group, chapterNo))
+                    url = matcher.replaceFirst(group.toFormatted(chapterNo))
                     matcher.reset(url)
                 }
             }
@@ -119,22 +112,20 @@ object WbwAudioRepository {
 
     suspend fun getTimingCount(context: Context): Int =
         withContext(Dispatchers.IO) {
-            DatabaseProvider.getExternalQuranDatabase(context.applicationContext)
+            DatabaseProvider.getExternalQuranDatabase()
                 .wbwDao()
                 .getTimingCount(AUDIO_ID)
         }
 
-    suspend fun resolveChapterAudioUri(context: Context, chapterNo: Int): Uri? =
+    suspend fun resolveChapterAudioUri(chapterNo: Int): Uri? =
         withContext(Dispatchers.IO) {
-            val app = context.applicationContext
-
             val local = getChapterAudioFile(chapterNo)
 
             if (hasValidChapterAudioFile(local)) {
-                return@withContext local.toUri()
+                return@withContext local.toFile().toUri()
             }
 
-            if (!NetworkStateReceiver.isNetworkConnected(app)) {
+            if (!PlatformServices.networkMonitor.isConnected) {
                 return@withContext null
             }
 
@@ -144,19 +135,17 @@ object WbwAudioRepository {
         }
 
     suspend fun resolveWordPlaybackSource(
-        context: Context,
         chapterNo: Int,
         verseNo: Int,
         appWordIndex: Int,
     ): WbwWordPlaybackSource? = withContext(Dispatchers.IO) {
-        val app = context.applicationContext
         val local = getChapterAudioFile(chapterNo)
 
         if (hasValidChapterAudioFile(local)) {
-            return@withContext WbwWordPlaybackSource.Chapter(local.toUri())
+            return@withContext WbwWordPlaybackSource.Chapter(local.toFile().toUri())
         }
 
-        if (!NetworkStateReceiver.isNetworkConnected(app)) {
+        if (!PlatformServices.networkMonitor.isConnected) {
             return@withContext null
         }
 
@@ -178,7 +167,7 @@ object WbwAudioRepository {
 
         val ayahId = chapterNo * 1000 + verseNo
 
-        return DatabaseProvider.getExternalQuranDatabase(context.applicationContext)
+        return DatabaseProvider.getExternalQuranDatabase()
             .wbwDao()
             .getWordTiming(AUDIO_ID, ayahId, wordIndex)
     }
@@ -193,7 +182,7 @@ object WbwAudioRepository {
     suspend fun refreshTimingsFromRemote(context: Context) {
         val app = context.applicationContext
         timingLoadMutex.withLock {
-            if (!NetworkStateReceiver.isNetworkConnected(app)) return@withLock
+            if (!PlatformServices.networkMonitor.isConnected) return@withLock
             downloadAndImportTimings(app)
         }
     }
@@ -202,14 +191,14 @@ object WbwAudioRepository {
      * @return true if timing rows exist for [AUDIO_ID] after any required download/import attempt.
      */
     private suspend fun ensureTimingsInDb(appContext: Context): Boolean {
-        val db = DatabaseProvider.getExternalQuranDatabase(appContext)
+        val db = DatabaseProvider.getExternalQuranDatabase()
         val dao = db.wbwDao()
 
         if (dao.getTimingCount(AUDIO_ID) > 0) return true
 
         return timingLoadMutex.withLock {
             if (db.wbwDao().getTimingCount(AUDIO_ID) > 0) return@withLock true
-            if (!NetworkStateReceiver.isNetworkConnected(appContext)) return@withLock false
+            if (!PlatformServices.networkMonitor.isConnected) return@withLock false
 
             downloadAndImportTimings(appContext)
 
@@ -219,7 +208,7 @@ object WbwAudioRepository {
 
     private suspend fun downloadAndImportTimings(appContext: Context) {
         val tmp = try {
-            downloadTimingToTemp(appContext)
+            downloadTimingToTemp()
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
@@ -234,47 +223,44 @@ object WbwAudioRepository {
         } catch (e: Exception) {
             Logger.saveError(e, "WbwAudioRepository.importTimingFromFile")
         } finally {
-            tmp.delete()
+            AppFiles.delete(tmp)
         }
     }
 
-    private suspend fun downloadTimingToTemp(appContext: Context): File =
+    private suspend fun downloadTimingToTemp(): Path =
         withContext(Dispatchers.IO) {
-            val dest = File(appContext.cacheDir, "wbw_timing_${System.currentTimeMillis()}.tmp")
+            val dest =
+                PlatformServices.files.cacheDirectory / "wbw_timing_${System.currentTimeMillis()}.tmp"
 
             try {
                 val response = fetchInventoryStreamingResponse(TIMING_URL)
 
-                response.use { body ->
-                    if (!body.isSuccessful) {
-                        throw IOException("WBW timing download failed: HTTP ${body.code}")
-                    }
-
-                    body.byteStream().use { input ->
-                        dest.outputStream().buffered().use { output ->
-                            input.copyTo(output)
-                        }
-                    }
-                }
+                response.downloadTo(
+                    dest,
+                    onFailed = {
+                        throw IllegalStateException("WBW timing download failed: HTTP ${it.code}")
+                    },
+                )
 
                 dest
             } catch (e: Exception) {
-                dest.delete()
+                AppFiles.delete(dest)
                 throw e
             }
         }
 
-    private suspend fun importTimingFromFile(appContext: Context, file: File) =
+    private suspend fun importTimingFromFile(appContext: Context, file: Path) =
         withContext(Dispatchers.IO) {
             val INSERT_CHUNK = 750
 
-            val db = DatabaseProvider.getExternalQuranDatabase(appContext)
+            val db = DatabaseProvider.getExternalQuranDatabase()
             val dao = db.wbwDao()
 
+            val source = FileSystem.SYSTEM.source(file)
             val rawStream = if (file.isGzip()) {
-                GZIPInputStream(file.inputStream().buffered())
+                GZIPInputStream(source.toInputStream())
             } else {
-                file.inputStream().buffered()
+                source.toInputStream()
             }
 
             rawStream.use { raw ->

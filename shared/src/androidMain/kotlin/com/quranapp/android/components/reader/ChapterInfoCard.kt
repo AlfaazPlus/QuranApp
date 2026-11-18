@@ -63,7 +63,7 @@ fun ChapterInfoCard(chapterNo: Int) {
     val context = LocalContext.current
     val appLocale = LocalAppLocale.current
 
-    val repository = remember(context) { DatabaseProvider.getQuranRepository(context) }
+    val repository = remember { DatabaseProvider.getQuranRepository() }
     var _swl by remember { mutableStateOf<SurahWithLocalizations?>(null) }
 
     LaunchedEffect(chapterNo) {

@@ -1,11 +1,10 @@
 package com.quranapp.android.utils.app
 
-import android.content.Context
 import com.quranapp.android.api.ApiClient
 import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.models.AppUrls
-import com.quranapp.android.utils.files.AppFiles
-import com.quranapp.android.utils.receivers.NetworkStateReceiver
+import com.quranapp.android.extensions.canProceed
+import com.quranapp.android.platform.PlatformServices
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,7 +17,7 @@ import java.util.concurrent.CancellationException
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
-class UrlsManager(private val ctx: Context) {
+class UrlsManager {
     companion object {
         const val URL_KEY_FEEDBACK = "feedback"
         const val URL_KEY_PRIVACY_POLICY = "privacy-policy"
@@ -90,7 +89,7 @@ class UrlsManager(private val ctx: Context) {
             }
 
             CoroutineScope(Dispatchers.Main.immediate).launch {
-                if (!NetworkStateReceiver.canProceed(ctx)) {
+                if (!PlatformServices.networkMonitor.canProceed()) {
                     failedCallback?.invoke(IOException("No network connection to fetch URLs."))
                     return@launch
                 }

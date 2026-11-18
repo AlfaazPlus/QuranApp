@@ -77,7 +77,7 @@ import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun PropheticDuasScreen(title: String? = null) {
-    val allProphets = rememberLocalized { QuranPropheticDuasParser.parsePropheticDuas(it) }
+    val allProphets = rememberLocalized { QuranPropheticDuasParser.parsePropheticDuas() }
 
     val barTitle = title?.takeIf { it.isNotBlank() }
         ?: stringResource(Res.string.strTitleFeaturedDuas)

@@ -18,15 +18,17 @@ import com.quranapp.android.locale.NumeralSystem
 import com.quranapp.android.locale.appLocaleForLanguageChange
 import com.quranapp.android.locale.setAppLocale
 import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.preferences.AppPreferences
 import com.quranapp.android.preferences.BackupPreferences
+import com.quranapp.android.preferences.DataStoreManager
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.resolveThemeModeForDelegate
-import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.app.AppDestinations
-import com.quranapp.android.utils.sharedPrefs.SPAppConfigs
+import com.quranapp.android.utils.app.Logger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.withContext
+import okio.source
 import org.jetbrains.compose.resources.getString
 
 private const val PERSISTABLE_URI_FLAGS =
@@ -47,9 +49,10 @@ fun readImportFileName(context: Context, uri: Uri): String {
 suspend fun importBackup(context: Context, uri: Uri, scopes: Map<String, Boolean>) {
     try {
         val bytes =
-            context.contentResolver.openInputStream(uri)?.use { BackupFiles.readLimited(it) }
+            context.contentResolver.openInputStream(uri)
+                ?.use { BackupFiles.readLimited(it.source()) }
                 ?: throw BackupReadException(BackupReadFailure.UNREADABLE)
-        val result = BackupImportService(context).import(bytes, scopes)
+        val result = BackupImportService().import(bytes, scopes)
 
         withContext(Dispatchers.Main + NonCancellable) {
             val counts = result.counts
@@ -69,10 +72,14 @@ suspend fun importBackup(context: Context, uri: Uri, scopes: Map<String, Boolean
             if (result.settingsImported) {
                 AppCompatDelegate.setDefaultNightMode(ThemeUtils.resolveThemeModeForDelegate())
 
-                val numeral = NumeralSystem.fromStorage(SPAppConfigs.getNumeralSystem(context))
+                val localeTag = DataStoreManager.readFirst(AppPreferences.KEY_APP_LANGUAGE)
+                val numeral = NumeralSystem.fromStorage(
+                    DataStoreManager.readFirst(AppPreferences.KEY_NUMERAL_SYSTEM)
+                        .takeIf { it.isNotEmpty() },
+                )
                 setAppLocale(
                     context,
-                    appLocaleForLanguageChange(context, SPAppConfigs.getLocale(context), numeral),
+                    appLocaleForLanguageChange(context, localeTag, numeral),
                 )
 
                 restartMainActivity(context)

@@ -1,6 +1,7 @@
 package com.quranapp.android.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.quranapp.android.AndroidAppContext
 import com.quranapp.android.api.models.wbw.WbwLanguageInfo
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.models.DataLoadError
@@ -33,9 +34,9 @@ data class WbwSettingsUiState(
 )
 
 class WbwSettingsViewModel() : AppViewModel() {
-    private val context get() = application
-    private val db get() = DatabaseProvider.getExternalQuranDatabase(context)
-    private val versionManager = WbwVersionManager.get(context)
+    private val context get() = AndroidAppContext.get()
+    private val db get() = DatabaseProvider.getExternalQuranDatabase()
+    private val versionManager = WbwVersionManager.get()
 
     private val _uiState = MutableStateFlow(WbwSettingsUiState())
     val uiState: StateFlow<WbwSettingsUiState> = _uiState.asStateFlow()

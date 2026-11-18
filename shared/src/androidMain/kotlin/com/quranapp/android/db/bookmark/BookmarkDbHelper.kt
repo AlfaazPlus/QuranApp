@@ -3,7 +3,7 @@ package com.quranapp.android.db.bookmark
 import android.content.Context
 import androidx.sqlite.SQLiteConnection
 import androidx.sqlite.execSQL
-import com.quranapp.android.components.bookmark.BookmarkModel
+import com.quranapp.android.models.BookmarkModel
 import com.quranapp.android.db.openBundled
 import com.quranapp.android.db.textOrNull
 

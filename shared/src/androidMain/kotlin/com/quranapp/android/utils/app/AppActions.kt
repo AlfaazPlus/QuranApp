@@ -24,7 +24,7 @@ object AppActions {
 
     private fun updateTransl(ctx: ContextWrapper, slug: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            val repo = DatabaseProvider.getTranslationRepository(ctx)
+            val repo = DatabaseProvider.getTranslationRepository()
             val translationExists = repo.isDownloaded(slug)
 
             if (translationExists) {

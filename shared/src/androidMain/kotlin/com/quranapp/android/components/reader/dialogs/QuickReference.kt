@@ -103,10 +103,11 @@ fun parseVerses(chapterNo: Int, versesStr: String): QuickReferenceVerses {
         return QuickReferenceVerses.Discrete(chapterNo, ints)
     }
 
-    val matcher = RegexPattern.VERSE_RANGE_PATTERN.matcher(versesStr)
-    if (matcher.find() && matcher.groupCount() >= 2) {
-        val from = matcher.group(1)!!.toInt()
-        val to = matcher.group(2)!!.toInt()
+    val matcher = RegexPattern.VERSE_RANGE_PATTERN.find(versesStr)
+    if (matcher != null) {
+        val from = matcher.groupValues[1].toInt()
+        val to = matcher.groupValues[2].toInt()
+
         return QuickReferenceVerses.Range(chapterNo, from..to)
     }
 
@@ -267,7 +268,7 @@ private fun QuickReferenceContent(
             )
 
             prepared = ReaderItemsBuilder.buildQuickReferenceItems(
-                context, params, data.chapterNo, verseNos
+                params, data.chapterNo, verseNos
             )
         }
         isLoading = false
@@ -443,8 +444,7 @@ private fun ChapterOnlyDialog(
     onOpen: () -> Unit,
     onClose: () -> Unit,
 ) {
-    val context = LocalContext.current
-    val repository = remember(context) { DatabaseProvider.getQuranRepository(context) }
+    val repository = remember { DatabaseProvider.getQuranRepository() }
     var chapterName by remember { mutableStateOf("") }
 
     LaunchedEffect(chapterNo) {

@@ -264,17 +264,10 @@ class BackupContractTest {
     }
 
     private fun schemaFile(): File {
-        return listOf(
-            File("../backup/schemas/backup-v2.schema.json"),
-            File("backup/schemas/backup-v2.schema.json"),
-        ).first { it.isFile }
+        return File("src/commonMain/composeResources/files/schemas/backup-v2.schema.json")
     }
 
     private fun v1Sample(): File {
-        return listOf(
-            File("src/commonMain/composeResources/files/quranapp-exported-data-v1.json"),
-            File("src/main/assets/quranapp-exported-data-v1.json"),
-            File("app/src/main/assets/quranapp-exported-data-v1.json"),
-        ).first { it.isFile }
+        return File("src/commonMain/composeResources/files/quranapp-exported-data-v1.json")
     }
 }

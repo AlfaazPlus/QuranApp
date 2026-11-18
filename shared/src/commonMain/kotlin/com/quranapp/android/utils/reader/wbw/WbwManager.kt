@@ -4,7 +4,7 @@ import com.quranapp.android.api.ApiClient
 import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.models.wbw.AvailableWbwInfoModel
 import com.quranapp.android.utils.app.Logger
-import com.quranapp.android.utils.files.AppFiles
+import com.quranapp.android.utils.app.AppFiles
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -45,11 +45,11 @@ object WbwManager {
         }
     }
 
-    fun markResourceVersion(id: String, version: Int) {
-        writeWbwItemVersion(id, version)
+    suspend fun markResourceVersion(id: String, version: Int) {
+        WbwVersionStore.setItemVersion(id, version)
     }
 
-    fun getResourceVersion(id: String): Int = readWbwItemVersion(id)
+    fun getResourceVersion(id: String): Int = WbwVersionStore.getItemVersion(id)
 
     private suspend fun loadLocal(): AvailableWbwInfoModel? = withContext(Dispatchers.IO) {
         val file = manifestFile()
@@ -75,7 +75,3 @@ object WbwManager {
         manifest
     }
 }
-
-internal expect fun readWbwItemVersion(id: String): Int
-
-internal expect fun writeWbwItemVersion(id: String, version: Int)

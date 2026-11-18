@@ -172,7 +172,6 @@ class ReaderViewModel() : ReaderProviderViewModel() {
     private var lastInitReaderSignature: String? = null
     private var pendingInitMode: ReaderMode? = null
 
-    private val context get() = application
 
     init {
         controller.connect()
@@ -563,7 +562,7 @@ class ReaderViewModel() : ReaderProviderViewModel() {
         if (verse.isValid && lastKnownVerse != verse) lastKnownVerse = verse
     }
 
-    fun saveReadHistory() {
+    fun saveReadHistory(context: Context) {
         val state = _uiState.value
         val mushafSession = _mushafSession.value
         val viewType = state.viewType ?: return
@@ -810,15 +809,15 @@ class ReaderViewModel() : ReaderProviderViewModel() {
         _verseByVersePrepared.value = withContext(Dispatchers.IO) {
             when (val vt = state.viewType) {
                 is ReaderViewType.Juz -> ReaderItemsBuilder.buildJuzVersesForTranslationMode(
-                    context, params, repository, vt.juzNo
+                    params, repository, vt.juzNo
                 )
 
                 is ReaderViewType.Hizb -> ReaderItemsBuilder.buildHizbVersesForTranslationMode(
-                    context, params, repository, vt.hizbNo
+                    params, repository, vt.hizbNo
                 )
 
                 is ReaderViewType.Chapter -> ReaderItemsBuilder.buildChapterVersesForTranslationMode(
-                    context, params, vt.chapterNo,
+                    params, vt.chapterNo,
                 )
 
                 null -> ReaderPreparedData(emptyList(), emptyMap())
@@ -908,7 +907,6 @@ class ReaderViewModel() : ReaderProviderViewModel() {
 
         val built = withContext(Dispatchers.IO) {
             ReaderItemsBuilder.buildTranslationPages(
-                context,
                 repository,
                 missing,
                 slug,
@@ -950,7 +948,6 @@ class ReaderViewModel() : ReaderProviderViewModel() {
                 emptyMap()
             } else {
                 ReaderItemsBuilder.buildReadingFlowPages(
-                    context,
                     repository,
                     missing,
                     cacheKey,

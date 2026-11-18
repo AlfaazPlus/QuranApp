@@ -18,6 +18,8 @@ import android.text.TextDirectionHeuristics
 import android.text.TextPaint
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.withSave
+import coil3.BitmapImage
+import coil3.Image
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.logo_dark
@@ -25,7 +27,7 @@ import com.quranapp.android.generated.resources.logo_light
 import com.quranapp.android.generated.resources.noto_nastaliq_urdu_regular
 import com.quranapp.android.models.Translation
 import com.quranapp.android.resources.ComposeResourceFiles
-import com.quranapp.android.utils.miscellenous.StringUtils
+import com.quranapp.android.utils.miscellenous.isRtlLanguageCode
 import com.quranapp.android.utils.reader.FontResolver
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.RichTextPart
@@ -142,11 +144,12 @@ class PreparedVerseScene internal constructor(
      */
     fun draw(
         canvas: Canvas,
-        bgBitmap: Bitmap?,
+        background: Image?,
         allowBlockingTextureLoad: Boolean = false,
     ) {
         val cw = canvasWidth.toFloat()
         val ch = canvasHeight.toFloat()
+        val bgBitmap = (background as? BitmapImage)?.bitmap
 
         // 1. Background (object-fit: cover)
         if (bgBitmap != null && !bgBitmap.isRecycled && bgBitmap.width > 0 && bgBitmap.height > 0) {
@@ -234,7 +237,7 @@ class PreparedVerseScene internal constructor(
                 block.bundle.cachedAndroidTextureForGlyph(g)
             } ?: continue
 
-            if (g.w <= 0 || g.h <= 0 || g.x < 0 || g.y < 0 ||
+            if (texture.isRecycled || g.w <= 0 || g.h <= 0 || g.x < 0 || g.y < 0 ||
                 g.x + g.w > texture.width || g.y + g.h > texture.height
             ) {
                 continue
@@ -416,7 +419,7 @@ object VerseTemplateRenderer {
 
         val isUrduTranslation = hasTranslation && TranslUtils.isUrdu(input.translationSlug)
         val isRtlTranslation = hasTranslation && (
-                StringUtils.isRtlLanguage(input.translationSlug) ||
+                input.translationSlug.isRtlLanguageCode() ||
                         BidiFormatter.getInstance().isRtl(trimmedTranslation)
                 )
         val translationTypeface = if (isUrduTranslation) {
@@ -666,15 +669,14 @@ object VerseTemplateRenderer {
     }
 
     suspend fun renderHighQualityBitmap(
-        context: Context,
         scene: PreparedVerseScene,
         template: VerseTemplate,
     ): Bitmap? = withContext(Dispatchers.IO) {
-        val bgBitmap = VerseTemplateManager.decodeExportBitmap(
-            context = context,
+        val background = VerseTemplateManager.decodeBackground(
             template = template,
             reqWidth = scene.canvasWidth,
             reqHeight = scene.canvasHeight,
+            cache = false,
         ) ?: return@withContext null
 
         try {
@@ -686,16 +688,12 @@ object VerseTemplateRenderer {
             val canvas = Canvas(outBitmap)
             scene.draw(
                 canvas = canvas,
-                bgBitmap = bgBitmap,
+                background = background,
                 allowBlockingTextureLoad = true,
             )
             outBitmap
         } catch (_: OutOfMemoryError) {
             null
-        } finally {
-            if (!bgBitmap.isRecycled) {
-                bgBitmap.recycle()
-            }
         }
     }
 

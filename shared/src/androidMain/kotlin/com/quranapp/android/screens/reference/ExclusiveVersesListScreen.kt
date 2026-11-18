@@ -61,7 +61,7 @@ import kotlin.time.Duration.Companion.milliseconds
 @Composable
 fun ExclusiveVersesListScreen(kind: ExclusiveVersesScreenKind) {
     val verses = rememberLocalized(kind.dataset) {
-        QuranExclusiveVerses.get(it, kind.dataset)
+        QuranExclusiveVerses.get(kind.dataset)
     }
 
     var searchQuery by remember { mutableStateOf("") }

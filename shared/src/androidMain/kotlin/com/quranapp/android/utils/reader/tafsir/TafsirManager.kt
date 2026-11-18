@@ -8,7 +8,7 @@ import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import com.quranapp.android.db.tafsir.QuranTafsirDBHelper
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.utils.app.Logger
-import com.quranapp.android.utils.files.AppFiles
+import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.tafsir.TafsirUtils
 import com.quranapp.android.utils.reader.translation.isCustomImportSlug
 import com.quranapp.android.utils.sharedPrefs.SPAppActions

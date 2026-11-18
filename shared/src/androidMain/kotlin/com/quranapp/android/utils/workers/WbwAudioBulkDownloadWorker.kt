@@ -19,6 +19,7 @@ import com.quranapp.android.generated.resources.wbwAudio
 import com.quranapp.android.shared.R
 import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.app.NotificationUtils
+import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.mediaplayer.RecitationAudioFileDownloader
 import com.quranapp.android.utils.mediaplayer.WbwAudioDownloadProgressBus
 import com.quranapp.android.utils.mediaplayer.WbwAudioRepository
@@ -30,8 +31,8 @@ import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+import okio.Path.Companion.toPath
 import org.jetbrains.compose.resources.getString
-import java.io.File
 import java.util.concurrent.atomic.AtomicInteger
 
 class WbwAudioBulkDownloadWorker(
@@ -53,7 +54,7 @@ class WbwAudioBulkDownloadWorker(
         val pendingChapters = buildList {
             for (chapterNo in QuranMeta.chapterRange) {
                 val audioFile = WbwAudioRepository.getChapterAudioFile(chapterNo)
-                if (audioFile.exists() && audioFile.length() > 0L) continue
+                if (AppFiles.size(audioFile) > 0L) continue
 
                 val url = WbwAudioRepository.prepareChapterAudioUrl(chapterNo) ?: continue
 
@@ -61,7 +62,7 @@ class WbwAudioBulkDownloadWorker(
                     PendingChapter(
                         chapterNo = chapterNo,
                         url = url,
-                        outputPath = audioFile.absolutePath,
+                        outputPath = audioFile.toString(),
                     ),
                 )
             }
@@ -91,13 +92,7 @@ class WbwAudioBulkDownloadWorker(
                     async {
                         currentCoroutineContext().ensureActive()
 
-                        val outputFile = File(pending.outputPath)
-                        val parent = outputFile.parentFile
-
-                        if (parent != null && !parent.exists() && !parent.mkdirs()) {
-                            updateForeground(completed.incrementAndGet())
-                            return@async
-                        }
+                        val outputFile = pending.outputPath.toPath()
 
                         try {
                             WbwAudioDownloadProgressBus.set(
@@ -119,7 +114,7 @@ class WbwAudioBulkDownloadWorker(
                                 )
                             }
                         } catch (e: Exception) {
-                            outputFile.delete()
+                            AppFiles.delete(outputFile)
                             Logger.saveError(e, "WbwAudioBulkDownload: ${pending.chapterNo}")
                         } finally {
                             WbwAudioDownloadProgressBus.clear(audioId, pending.chapterNo)

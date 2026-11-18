@@ -7,7 +7,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
 import com.quranapp.android.components.common.dialogs.AlertDialog
 import com.quranapp.android.components.common.dialogs.AlertDialogAction
 import com.quranapp.android.components.common.dialogs.WaitingDialog
@@ -17,19 +16,16 @@ import com.quranapp.android.generated.resources.strLabelClose
 import com.quranapp.android.generated.resources.strMsgCouldNotOpenPage
 import com.quranapp.android.generated.resources.strMsgSomethingWrong
 import com.quranapp.android.generated.resources.strMsgTryLater
-import com.quranapp.android.utils.app.InfoUtils
+import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.utils.app.Logger
+import com.quranapp.android.utils.app.UrlsManager
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 
-/**
- * Opens an [InfoUtils] URL and hosts the waiting and error dialogs.
- * Call this above any early return so the dialogs stay composed while a link loads.
- */
 @Composable
 fun rememberInfoLinks(): (urlKey: String) -> Unit {
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var job by remember { mutableStateOf<Job?>(null) }
     var showError by remember { mutableStateOf(false) }
@@ -59,10 +55,25 @@ fun rememberInfoLinks(): (urlKey: String) -> Unit {
         job?.cancel()
         val next = scope.launch {
             try {
-                InfoUtils.open(context, urlKey)
+                val url = UrlsManager().load().let {
+                    when (urlKey) {
+                        UrlsManager.URL_KEY_FEEDBACK -> it.feedback
+                        UrlsManager.URL_KEY_PRIVACY_POLICY -> it.privacyPolicy
+                        UrlsManager.URL_KEY_ABOUT -> it.about
+                        UrlsManager.URL_KEY_HELP -> it.help
+                        UrlsManager.URL_KEY_DISCORD -> it.discord
+                        UrlsManager.URL_KEY_DONATION -> it.donation
+                        else -> null
+                    }
+                }
+
+                if (url.isNullOrEmpty()) return@launch
+
+                PlatformServices.links.browse(url)
             } catch (e: CancellationException) {
                 throw e
-            } catch (_: Exception) {
+            } catch (e: Exception) {
+                Logger.saveError(e, "InfoUtils.open")
                 showError = true
             }
         }

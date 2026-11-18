@@ -39,7 +39,7 @@ import com.quranapp.android.locale.formattedStringResource
 import com.quranapp.android.repository.TopicVersePreview
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.utils.extensions.copyToClipboard
-import com.quranapp.android.utils.miscellenous.StringUtils
+import com.quranapp.android.utils.miscellenous.stripHtmlTags
 import com.quranapp.android.utils.quran.parser.ParserUtils
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.viewmodel.TopicNode
@@ -231,7 +231,7 @@ internal fun VerseRefsCard(
             context,
             ReferenceVerseModel(
                 title = topic.title,
-                desc = StringUtils.removeHTML(description, true),
+                desc = description.stripHtmlTags(true),
                 chapters = chapters,
                 verses = compressedRefs.toSet(),
                 thumbnail = topic.imageUrl?.let { ReferenceThumbnail.RemoteUrl(it) }
@@ -305,7 +305,7 @@ internal fun VerseRefsCard(
                             style = typography.labelMedium,
                         )
 
-                        val translationText = StringUtils.removeHTML(preview.translation, false)
+                        val translationText = preview.translation.stripHtmlTags(false)
 
                         if (translationText.isNotEmpty()) {
                             Text(

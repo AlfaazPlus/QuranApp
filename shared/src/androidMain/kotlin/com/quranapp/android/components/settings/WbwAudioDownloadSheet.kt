@@ -90,13 +90,13 @@ fun WbwAudioDownloadSheet(
 
     val chapterNames by produceState<Map<Int, String>?>(null) {
         value = withContext(Dispatchers.IO) {
-            DatabaseProvider.getQuranRepository(context).getChapterNames(
+            DatabaseProvider.getQuranRepository().getChapterNames(
                 QuranMeta.chapterRange.toList(),
             )
         }
     }
 
-    val repository = remember { DatabaseProvider.getQuranRepository(context) }
+    val repository = remember { DatabaseProvider.getQuranRepository() }
     var searchQuery by remember { mutableStateOf("") }
     var filteredChapters by remember { mutableStateOf(QuranMeta.chapterRange.toList()) }
 

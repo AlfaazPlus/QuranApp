@@ -155,7 +155,7 @@ object AtlasAyahRasterizer {
 
                     val texture = singleTexture ?: bundle.androidTextureForGlyph(glyph)
 
-                    if (texture != null) {
+                    if (texture != null && !texture.isRecycled) {
                         canvas.drawBitmap(
                             texture,
                             Rect(glyph.x, glyph.y, glyph.x + glyph.w, glyph.y + glyph.h),

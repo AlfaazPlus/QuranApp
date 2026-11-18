@@ -38,15 +38,15 @@ fun QuranAppTheme(
 
 @Composable
 fun ThemeUtils.observeThemeMode(): String =
-    DataStoreManager.observe(ThemeUtils.KEY_THEME_MODE, ThemeUtils.THEME_MODE_DEFAULT)
+    DataStoreManager.observe(ThemeUtils.KEY_THEME_MODE)
 
 @Composable
 fun ThemeUtils.observeThemeColor(): String =
-    DataStoreManager.observe(ThemeUtils.KEY_THEME_COLOR, ThemeUtils.THEME_COLOR_DEFAULT)
+    DataStoreManager.observe(ThemeUtils.KEY_THEME_COLOR)
 
 @Composable
 fun ThemeUtils.observeIsDynamicColor(): Boolean =
-    DataStoreManager.observe(ThemeUtils.KEY_THEME_DYNAMIC_COLOR, ThemeUtils.DEFAULT_DYNAMIC_COLOR)
+    DataStoreManager.observe(ThemeUtils.KEY_THEME_DYNAMIC_COLOR)
 
 @Composable
 fun ThemeUtils.observeDarkTheme(): Boolean {

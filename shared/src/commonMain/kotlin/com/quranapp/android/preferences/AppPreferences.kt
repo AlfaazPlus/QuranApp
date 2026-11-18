@@ -3,6 +3,7 @@ package com.quranapp.android.preferences
 import androidx.compose.runtime.Composable
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.quranapp.android.locale.LOCALE_DEFAULT
 import com.quranapp.android.utils.app.ResourceDownloadProxy
 
 object AppPreferences {
@@ -12,6 +13,10 @@ object AppPreferences {
         stringPreferencesKey("resource_download_proxy"),
         ResourceDownloadProxy.DEFAULT.name,
     )
+    val KEY_APP_LANGUAGE = PrefKey(stringPreferencesKey("app_language"), LOCALE_DEFAULT)
+    val KEY_NUMERAL_SYSTEM = PrefKey(stringPreferencesKey("app_numeral_system"), "")
+    val KEY_LEGACY_APP_CONFIGS_MIGRATED =
+        PrefKey(booleanPreferencesKey("app_configs.legacy_migrated_v1"), false)
 
     fun getLastCrashLogFilename(): String? {
         return DataStoreManager.read(KEY_LAST_CRASH_LOG_FILENAME).takeIf { it.isNotEmpty() }
@@ -39,6 +44,26 @@ object AppPreferences {
 
     suspend fun setResourceDownloadProxy(src: ResourceDownloadProxy) {
         DataStoreManager.write(KEY_DOWNLOAD_PROXY, src.value)
+    }
+
+    fun getLocale(): String {
+        return DataStoreManager.read(KEY_APP_LANGUAGE)
+    }
+
+    suspend fun setLocale(locale: String) {
+        DataStoreManager.write(KEY_APP_LANGUAGE, locale)
+    }
+
+    fun getNumeralSystem(): String? {
+        return DataStoreManager.read(KEY_NUMERAL_SYSTEM).takeIf { it.isNotEmpty() }
+    }
+
+    suspend fun setNumeralSystem(systemKey: String?) {
+        if (systemKey.isNullOrEmpty()) {
+            DataStoreManager.remove(KEY_NUMERAL_SYSTEM)
+        } else {
+            DataStoreManager.write(KEY_NUMERAL_SYSTEM, systemKey)
+        }
     }
 
     @Composable

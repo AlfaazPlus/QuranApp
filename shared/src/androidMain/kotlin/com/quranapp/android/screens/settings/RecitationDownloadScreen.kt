@@ -769,13 +769,13 @@ private fun ChapterDownloadsSheet(
 
     val chapterNames by produceState<Map<Int, String>?>(null, selected.id) {
         value = withContext(Dispatchers.IO) {
-            DatabaseProvider.getQuranRepository(context).getChapterNames(
+            DatabaseProvider.getQuranRepository().getChapterNames(
                 QuranMeta.chapterRange.toList(),
             )
         }
     }
 
-    val repository = remember { DatabaseProvider.getQuranRepository(context) }
+    val repository = remember { DatabaseProvider.getQuranRepository() }
     var searchQuery by remember { mutableStateOf("") }
     var filteredChapters by remember { mutableStateOf(QuranMeta.chapterRange.toList()) }
 

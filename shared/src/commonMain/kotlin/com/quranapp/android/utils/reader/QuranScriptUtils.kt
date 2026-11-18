@@ -10,7 +10,7 @@ import com.quranapp.android.generated.resources.preview_uthmani_hafs
 import com.quranapp.android.generated.resources.uthmanic_hafs
 import com.quranapp.android.locale.appFallbackLanguageCodes
 import com.quranapp.android.locale.toFormatted
-import com.quranapp.android.utils.files.AppFiles
+import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.reader.QuranScriptUtils.SCRIPT_NAMES
 import com.quranapp.android.utils.reader.QuranScriptUtils.VARIANT_NAMES
 import okio.FileSystem
@@ -300,14 +300,14 @@ fun QuranScriptVariant.getQuranScriptVariantName(): String {
 
 fun Int.toKFQPCFontFilename(isDark: Boolean): String {
     val format = if (isDark) "qpc_page_%03d_dark.ttf" else "qpc_page_%03d.ttf"
-    return format.toFormatted(null, this)
+    return format.toFormatted(this)
 }
 
 /**
  * For backward compatibility with old KFQPC font filenames.
  */
 fun Int.toKFQPCFontFilenameOld(): String {
-    return "qpc_page_%03d.TTF".toFormatted(null, this)
+    return "qpc_page_%03d.TTF".toFormatted(this)
 }
 
 private fun Path?.hasBytes(): Boolean {

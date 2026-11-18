@@ -17,8 +17,7 @@ data class WbwUpdateUiState(
     val hasOutdatedDownloads: Boolean get() = outdatedLanguageIds.isNotEmpty()
 }
 
-class WbwVersionManager private constructor(context: Context) {
-    private val appContext = context.applicationContext
+class WbwVersionManager private constructor() {
     private val mutex = Mutex()
 
     private val _updateUiState = MutableStateFlow(WbwUpdateUiState())
@@ -36,7 +35,7 @@ class WbwVersionManager private constructor(context: Context) {
                 }
 
                 val wbwIds = languages.map { it.id }.distinct()
-                val downloadedIds = DatabaseProvider.getExternalQuranDatabase(appContext)
+                val downloadedIds = DatabaseProvider.getExternalQuranDatabase()
                     .wbwDao()
                     .getDownloadedWbwIds(wbwIds)
                     .toSet()
@@ -84,9 +83,9 @@ class WbwVersionManager private constructor(context: Context) {
         @Volatile
         private var instance: WbwVersionManager? = null
 
-        fun get(context: Context): WbwVersionManager {
+        fun get(): WbwVersionManager {
             return instance ?: synchronized(this) {
-                instance ?: WbwVersionManager(context).also { instance = it }
+                instance ?: WbwVersionManager().also { instance = it }
             }
         }
     }

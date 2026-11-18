@@ -16,7 +16,7 @@ import com.quranapp.android.reader.ReaderLayoutItem
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.observeDarkTheme
-import com.quranapp.android.utils.miscellenous.StringUtils
+import com.quranapp.android.utils.miscellenous.isRtlLanguageCode
 
 @Composable
 fun TranslationText(
@@ -43,7 +43,7 @@ fun TranslationText(
                     modifier = Modifier.fillMaxWidth(),
                     color = if (isDark) colorScheme.onBackground.alpha(0.8f) else colorScheme.onBackground,
                     style = TextStyle(
-                        textDirection = if (StringUtils.isRtlLanguage(langCode)) TextDirection.Rtl else TextDirection.Ltr,
+                        textDirection = if (langCode.isRtlLanguageCode()) TextDirection.Rtl else TextDirection.Ltr,
                     )
                 )
             }

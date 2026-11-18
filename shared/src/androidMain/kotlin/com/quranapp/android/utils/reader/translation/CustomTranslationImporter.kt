@@ -39,7 +39,7 @@ object CustomTranslationImporter {
 
             validateVerses(chapters)
 
-            DatabaseProvider.getTranslationRepository(context)
+            DatabaseProvider.getTranslationRepository()
                 .store(manifest.toBookInfo(), text)
             SearchIndexScheduler.enqueueSlug(context.applicationContext, manifest.slug)
         } catch (error: ImportException) {

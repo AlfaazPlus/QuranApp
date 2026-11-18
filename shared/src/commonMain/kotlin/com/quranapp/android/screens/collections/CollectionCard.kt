@@ -1,8 +1,4 @@
 package com.quranapp.android.screens.collections
-import org.jetbrains.compose.resources.pluralStringResource
-import org.jetbrains.compose.resources.stringResource
-import com.quranapp.android.generated.resources.*
-import com.quranapp.android.generated.resources.Res
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -34,10 +30,18 @@ import androidx.compose.ui.unit.dp
 import com.quranapp.android.components.collections.collectionColor
 import com.quranapp.android.components.collections.collectionIcon
 import com.quranapp.android.db.entities.user.CollectionWithCount
-import kotlin.time.Clock
-import kotlin.time.Duration.Companion.milliseconds
+import com.quranapp.android.generated.resources.Res
+import com.quranapp.android.generated.resources.updated_days
+import com.quranapp.android.generated.resources.updated_hours
+import com.quranapp.android.generated.resources.updated_just_now
+import com.quranapp.android.generated.resources.updated_minutes
+import com.quranapp.android.generated.resources.verse_count
+import com.quranapp.android.utils.miscellenous.DateUtils
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.pluralStringResource
+import org.jetbrains.compose.resources.stringResource
+import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun CollectionCard(
@@ -105,18 +109,22 @@ fun CollectionCard(
 
 @Composable
 fun updatedLabel(updatedAt: Long): String {
-    var nowMillis by remember(updatedAt) { mutableLongStateOf(Clock.System.now().toEpochMilliseconds()) }
+    var nowMillis by remember(updatedAt) {
+        mutableLongStateOf(
+            DateUtils.now().toEpochMilliseconds()
+        )
+    }
 
     LaunchedEffect(updatedAt) {
         while (true) {
-            val elapsed = (Clock.System.now().toEpochMilliseconds() - updatedAt).coerceAtLeast(0)
+            val elapsed = (DateUtils.now().toEpochMilliseconds() - updatedAt).coerceAtLeast(0)
             val wait = when {
                 elapsed < 60_000L -> 60_000L - elapsed
                 elapsed < 3_600_000L -> 60_000L
                 else -> 3_600_000L
             }
             delay(wait.coerceAtLeast(1_000L).milliseconds)
-            nowMillis = Clock.System.now().toEpochMilliseconds()
+            nowMillis = DateUtils.now().toEpochMilliseconds()
         }
     }
 

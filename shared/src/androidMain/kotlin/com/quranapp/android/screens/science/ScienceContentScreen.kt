@@ -184,7 +184,7 @@ private suspend fun renderScienceDocument(
     arabicEnabled: Boolean,
     locale: AppLocale,
 ): String {
-    val repository = DatabaseProvider.getQuranRepository(context)
+    val repository = DatabaseProvider.getQuranRepository()
 
     val rootVarsInner =
         colorScheme.toCssVariables() + "--tafsir-ar-size-mult:1;--tafsir-tr-size-mult:1;"

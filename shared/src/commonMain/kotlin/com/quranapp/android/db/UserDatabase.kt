@@ -16,6 +16,7 @@ import com.quranapp.android.db.entities.user.BookmarkEntity
 import com.quranapp.android.db.entities.user.CollectionEntity
 import com.quranapp.android.db.entities.user.CollectionItemEntity
 import com.quranapp.android.db.entities.user.ReadHistoryEntity
+import com.quranapp.android.utils.miscellenous.DateUtils
 import kotlin.time.Clock
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
@@ -183,7 +184,7 @@ abstract class UserDatabase : RoomDatabase() {
 @Suppress("KotlinNoActualForExpect")
 expect object UserDatabaseConstructor : RoomDatabaseConstructor<UserDatabase>
 
-fun epochNow(): Long = Clock.System.now().toEpochMilliseconds()
+fun epochNow(): Long = DateUtils.now().toEpochMilliseconds()
 
 @OptIn(ExperimentalUuidApi::class)
 fun newStableId(): String = Uuid.random().toString()

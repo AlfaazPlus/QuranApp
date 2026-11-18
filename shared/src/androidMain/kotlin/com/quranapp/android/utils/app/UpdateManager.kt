@@ -11,7 +11,6 @@ import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.models.AppUpdate
 import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.shared.BuildConfig
-import com.quranapp.android.utils.files.AppFiles
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

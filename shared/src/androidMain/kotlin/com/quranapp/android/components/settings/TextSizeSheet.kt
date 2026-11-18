@@ -155,7 +155,7 @@ private fun ArabicTextPreview(textSizeMult: Float) {
     val colors = MaterialTheme.colorScheme
     val typography = MaterialTheme.typography
     val fontResolver = remember(context) { FontResolver.getInstance(context.applicationContext) }
-    val externalDb = remember(context) { DatabaseProvider.getExternalQuranDatabase(context) }
+    val externalDb = remember { DatabaseProvider.getExternalQuranDatabase() }
     val atlasBundle = rememberQuranAtlasBundle(externalDb)
 
     val loaded by produceState<ArabicPreviewLoaded?>(
@@ -164,7 +164,7 @@ private fun ArabicTextPreview(textSizeMult: Float) {
         atlasBundle,
     ) {
         value = withContext(Dispatchers.IO) {
-            val repo = DatabaseProvider.getQuranRepository(context)
+            val repo = DatabaseProvider.getQuranRepository()
             val variant = ReaderPreferences.getQuranScriptVariant()
             val mushafId = script.toQuranMushafId(variant)
 
