@@ -71,7 +71,7 @@ import com.quranapp.android.theme.observeThemeMode
 import com.quranapp.android.utils.reader.ReaderTextSizeUtils
 import com.quranapp.android.utils.reader.getQuranScriptName
 import com.quranapp.android.utils.reader.getQuranScriptVariantName
-import com.quranapp.android.utils.reader.tafsir.TafsirManager
+import com.quranapp.android.utils.tafsir.TafsirManager
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 
@@ -103,7 +103,7 @@ fun SettingsMainScreen(
     val tafsirId = ReaderPreferences.observeTafsirId()
     val selectedTafsirName by produceState("", context, tafsirId) {
         tafsirId?.let {
-            TafsirManager.prepare(context, false) {
+            TafsirManager.prepare( false) {
                 value = TafsirManager.getModel(tafsirId)?.name ?: ""
             }
         }

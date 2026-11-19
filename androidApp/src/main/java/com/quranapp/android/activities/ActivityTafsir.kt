@@ -9,7 +9,7 @@ import com.quranapp.android.activities.base.BaseActivity
 import com.quranapp.android.screens.tafsir.TafsirReaderScreen
 import com.quranapp.android.theme.QuranAppTheme
 import com.quranapp.android.utils.miscellenous.Keys
-import com.quranapp.android.utils.reader.tafsir.TafsirManager
+import com.quranapp.android.utils.tafsir.TafsirManager
 import com.quranapp.android.viewmodel.TafsirReaderEvent
 import com.quranapp.android.viewmodel.TafsirReaderViewModel
 
@@ -34,7 +34,7 @@ class ActivityTafsir : BaseActivity() {
             }
         }
 
-        TafsirManager.prepare(this, false) {
+        TafsirManager.prepare(false) {
             initContent(intent)
         }
     }

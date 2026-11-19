@@ -40,8 +40,8 @@ import com.quranapp.android.navigation.SettingRoutes
 import com.quranapp.android.utils.app.AppDestinations
 import com.quranapp.android.utils.mediaplayer.RecitationVersionManager
 import com.quranapp.android.utils.miscellenous.Keys
-import com.quranapp.android.utils.reader.translation.TranslationVersionManager
-import com.quranapp.android.utils.reader.wbw.WbwVersionManager
+import com.quranapp.android.utils.translation.TranslationVersionManager
+import com.quranapp.android.utils.wbw.WbwVersionManager
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 

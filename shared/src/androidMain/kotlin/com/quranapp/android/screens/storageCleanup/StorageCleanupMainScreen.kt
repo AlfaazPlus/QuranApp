@@ -44,8 +44,8 @@ import com.quranapp.android.generated.resources.strTitleTranslations
 import com.quranapp.android.generated.resources.tafseerCanBeFreedUp
 import com.quranapp.android.generated.resources.translationCanBeFreedUp
 import com.quranapp.android.theme.alpha
-import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
+import com.quranapp.android.utils.reader.QuranScriptUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.stringResource
@@ -77,9 +77,10 @@ fun StorageCleanupMainScreen(
                 it.getDownloadedBooks().size
             }
             val (recFiles, recReciters) = recitationManager.getDownloadedAudioStats()
-            val scripts = QuranScriptUtils.fontDir().toFile().listFiles()?.count { it.isDirectory } ?: 0
+            val scripts =
+                QuranScriptUtils.fontDir().toFile().listFiles()?.count { it.isDirectory } ?: 0
             val tafsirCount = run {
-                val helper = QuranTafsirDBHelper(context)
+                val helper = QuranTafsirDBHelper()
                 try {
                     helper.getDownloadedTafsirKeys().size
                 } finally {

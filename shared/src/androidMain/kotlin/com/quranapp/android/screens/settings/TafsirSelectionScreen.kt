@@ -93,10 +93,10 @@ import com.quranapp.android.generated.resources.yesCancelDownload
 import com.quranapp.android.locale.LocalAppLocale
 import com.quranapp.android.preferences.AppPreferences
 import com.quranapp.android.utils.managers.ResourceDownloadStatus
-import com.quranapp.android.utils.reader.importing.ImportFieldId
-import com.quranapp.android.utils.reader.tafsir.CustomTafsirImporter
-import com.quranapp.android.utils.reader.translation.toTranslationManifest
-import com.quranapp.android.utils.reader.translation.translationSlug
+import com.quranapp.android.utils.importing.ImportFieldId
+import com.quranapp.android.utils.tafsir.CustomTafsirImporter
+import com.quranapp.android.utils.translation.toTranslationManifest
+import com.quranapp.android.utils.translation.translationSlug
 import com.quranapp.android.viewmodel.TafsirEvent
 import com.quranapp.android.viewmodel.TafsirViewModel
 import org.jetbrains.compose.resources.painterResource
@@ -176,9 +176,9 @@ fun TafsirSelectionScreen() {
                 values[ImportFieldId.BOOK].orEmpty(),
             ) != null
         },
-        buildManifest = { _, values -> values.toTranslationManifest() },
-        onImport = { context, manifest, uri ->
-            CustomTafsirImporter.import(context, manifest, uri)
+        buildManifest = { values -> values.toTranslationManifest() },
+        onImport = { manifest, file ->
+            CustomTafsirImporter.import(manifest, file)
         },
     )
 }

@@ -18,11 +18,10 @@ import com.quranapp.android.search.SearchIndexScheduler
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.resolveThemeModeForDelegate
 import com.quranapp.android.utils.app.DownloadSourceUtils
-import com.quranapp.android.utils.app.NotificationUtils
 import com.quranapp.android.utils.exceptions.CustomExceptionHandler
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
 import com.quranapp.android.utils.mediaplayer.WbwAudioRepository
-import com.quranapp.android.utils.reader.tafsir.TafsirManager
+import com.quranapp.android.utils.tafsir.TafsirManager
 import com.quranapp.android.viewmodel.ReaderIndexViewModel
 import com.quranapp.android.widgets.startRecitationPlayerWidgetObserver
 import com.quranapp.android.widgets.startVotdWidgetPreferenceObserver
@@ -60,7 +59,6 @@ class QuranApp : Application() {
         ReaderPreferences.onTafsirSelected = { TafsirManager.setSavedTafsirKey(it) }
         refreshAppLocale(applicationContext)
         DownloadSourceUtils.resetDownloadSourceBaseUrl()
-        NotificationUtils.createNotificationChannels(this)
         updateTheme()
         startVotdWidgetPreferenceObserver(this)
         startRecitationPlayerWidgetObserver(this)
@@ -79,6 +77,6 @@ class QuranApp : Application() {
         ReaderIndexViewModel.migrateFavourites(this)
         UserDataMigrationManager(this).migrate()
 
-        SearchIndexScheduler.scheduleTranslationSearchIndexIfNeeded(applicationContext)
+        SearchIndexScheduler.scheduleTranslationSearchIndexIfNeeded()
     }
 }

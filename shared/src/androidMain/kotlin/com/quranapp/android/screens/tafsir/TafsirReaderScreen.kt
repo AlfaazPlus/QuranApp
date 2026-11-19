@@ -100,7 +100,7 @@ import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.quran.parser.ParserUtils.compressVerseRefsByChapter
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.tafsir.TafsirUtils
-import com.quranapp.android.utils.tafsir.TafsirWebViewClient
+import com.quranapp.android.utils.webview.TafsirWebViewClient
 import com.quranapp.android.viewmodel.TafsirContentState
 import com.quranapp.android.viewmodel.TafsirReaderEvent
 import com.quranapp.android.viewmodel.TafsirReaderUiState

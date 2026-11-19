@@ -7,11 +7,11 @@ import com.quranapp.android.api.models.ResourcesVersions
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
 import com.quranapp.android.utils.mediaplayer.RecitationVersionManager
 import com.quranapp.android.utils.mediaplayer.WbwAudioRepository
-import com.quranapp.android.utils.reader.tafsir.TafsirManager
-import com.quranapp.android.utils.reader.translation.TranslationVersionManager
-import com.quranapp.android.utils.reader.wbw.WbwManager
-import com.quranapp.android.utils.reader.wbw.WbwVersionManager
 import com.quranapp.android.utils.share.VerseTemplateManager
+import com.quranapp.android.utils.tafsir.TafsirManager
+import com.quranapp.android.utils.translation.TranslationVersionManager
+import com.quranapp.android.utils.wbw.WbwManager
+import com.quranapp.android.utils.wbw.WbwVersionManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -144,7 +144,7 @@ class ResourceUpdateManager private constructor(private val ctx: Context) {
             launch {
                 if (force || local == null || remote.tafsirsVersion > local.tafsirsVersion) {
                     try {
-                        TafsirManager.prepare(ctx, true) { /* no-op */ }
+                        TafsirManager.prepare(true) { /* no-op */ }
                     } catch (e: Exception) {
                         Logger.saveError(e, "ResourceUpdateManager.updateTafsirs")
                     }

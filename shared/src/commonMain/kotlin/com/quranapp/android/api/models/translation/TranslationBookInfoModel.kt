@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
  * */
 
 @Serializable
-class TranslationBookInfoModel(val slug: String) : java.io.Serializable {
+class TranslationBookInfoModel(val slug: String) {
     companion object {
         const val DISPLAY_NAME_DEFAULT_WITHOUT_HYPHEN = false
     }

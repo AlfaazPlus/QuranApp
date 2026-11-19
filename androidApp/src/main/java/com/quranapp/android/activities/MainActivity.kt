@@ -10,7 +10,7 @@ import com.quranapp.android.screens.main.MainScreen
 import com.quranapp.android.theme.QuranAppTheme
 import com.quranapp.android.utils.app.AppActions.scheduleActions
 import com.quranapp.android.utils.app.UpdateManager
-import com.quranapp.android.utils.sharedPrefs.SPAppActions
+import com.quranapp.android.preferences.AppActionsPreferences
 import com.quranapp.android.widgets.updateAllVotdWidgets
 
 class MainActivity : BaseActivity() {
@@ -60,7 +60,7 @@ class MainActivity : BaseActivity() {
     }
 
 
-    private val isOnboardingRequired get() = SPAppActions.getRequireOnboarding(this)
+    private val isOnboardingRequired get() = AppActionsPreferences.getRequireOnboarding()
 
     private fun initOnboarding() {
         startActivity(Intent(this, ActivityOnboarding::class.java))

@@ -8,8 +8,8 @@ import androidx.paging.cachedIn
 import com.quranapp.android.AndroidAppContext
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.relations.SurahWithLocalizations
+import com.quranapp.android.db.search.SearchHistoryDBHelper
 import com.quranapp.android.db.search.SearchHistoryEntry
-import com.quranapp.android.db.search.SearchHistoryStore
 import com.quranapp.android.search.CollectionSearchResult
 import com.quranapp.android.search.ExclusiveVersesSearchProvider
 import com.quranapp.android.search.FtsQueryBuilder
@@ -49,7 +49,7 @@ class QuranSearchViewModel() : AppViewModel() {
     private val context get() = AndroidAppContext.get()
 
     private val repository get() = DatabaseProvider.getQuranRepository()
-    private val searchHistoryStore = SearchHistoryStore(context)
+    private val searchHistoryDb = SearchHistoryDBHelper()
 
     private val _searchQuery = MutableStateFlow("")
     val searchQuery: StateFlow<String> = _searchQuery
@@ -73,11 +73,6 @@ class QuranSearchViewModel() : AppViewModel() {
         initialValue = false,
     )
     private val ftsIndexGeneration = MutableStateFlow(0)
-
-    override fun onCleared() {
-        searchHistoryStore.close()
-        super.onCleared()
-    }
 
     init {
         loadAvailableTranslations()
@@ -211,16 +206,17 @@ class QuranSearchViewModel() : AppViewModel() {
 
     fun refreshSearchHistory() {
         viewModelScope.launch {
-            _searchHistory.value = searchHistoryStore.loadAll()
+            _searchHistory.value = searchHistoryDb.getHistories("")
         }
     }
 
     private fun commitSearchQuery(text: String) {
         val trimmed = text.trim()
-        if (trimmed.isEmpty()) return
+        if (trimmed.isBlank()) return
+
         viewModelScope.launch {
-            searchHistoryStore.add(trimmed)
-            _searchHistory.value = searchHistoryStore.loadAll()
+            searchHistoryDb.addToHistory(trimmed)
+            _searchHistory.value = searchHistoryDb.getHistories("")
         }
     }
 
@@ -238,14 +234,14 @@ class QuranSearchViewModel() : AppViewModel() {
 
     fun removeSearchHistory(id: Int) {
         viewModelScope.launch {
-            searchHistoryStore.remove(id)
-            _searchHistory.value = searchHistoryStore.loadAll()
+            searchHistoryDb.removeFromHistory(id)
+            _searchHistory.value = searchHistoryDb.getHistories("")
         }
     }
 
     fun clearSearchHistory() {
         viewModelScope.launch {
-            searchHistoryStore.clear()
+            searchHistoryDb.clearHistories()
             _searchHistory.value = emptyList()
         }
     }

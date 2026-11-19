@@ -55,12 +55,12 @@ class ActivityReader : BaseActivity() {
 
     override fun onPause() {
         super.onPause()
-        readerVm.saveReadHistory(this)
+        readerVm.saveReadHistory()
     }
 
     override fun onDestroy() {
         if (!isChangingConfigurations && isFinishing) {
-            readerVm.saveReadHistory(this)
+            readerVm.saveReadHistory()
         }
 
         super.onDestroy()

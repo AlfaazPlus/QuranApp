@@ -1,8 +1,9 @@
 package com.quranapp.android.utils.reader.tafsir
 
-import com.quranapp.android.utils.reader.importing.ImportException
-import com.quranapp.android.utils.reader.importing.ImportFailure
-import com.quranapp.android.utils.reader.translation.translationSlug
+import com.quranapp.android.utils.importing.ImportException
+import com.quranapp.android.utils.importing.ImportFailure
+import com.quranapp.android.utils.tafsir.parseTafsirImport
+import com.quranapp.android.utils.translation.translationSlug
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull

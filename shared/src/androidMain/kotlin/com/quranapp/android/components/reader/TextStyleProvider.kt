@@ -19,7 +19,7 @@ import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.appFontFamily
 import com.quranapp.android.theme.fontUrdu
-import com.quranapp.android.utils.reader.wbw.WbwManager
+import com.quranapp.android.utils.wbw.WbwManager
 
 data class QuranTextStyle(
     val quran: (Int) -> TextStyle?,

@@ -14,7 +14,7 @@ import com.quranapp.android.search.SearchIndexScheduler
 import com.quranapp.android.utils.managers.ResourceDownloadStatus
 import com.quranapp.android.utils.managers.TranslationDownloadManager
 import com.quranapp.android.utils.reader.TranslUtils
-import com.quranapp.android.utils.reader.translation.TranslationVersionManager
+import com.quranapp.android.utils.translation.TranslationVersionManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

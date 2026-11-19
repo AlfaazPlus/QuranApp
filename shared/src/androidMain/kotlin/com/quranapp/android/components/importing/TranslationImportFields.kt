@@ -6,10 +6,10 @@ import androidx.compose.runtime.Composable
 import com.quranapp.android.components.common.AlertCard
 import com.quranapp.android.components.common.AlertType
 import com.quranapp.android.utils.reader.TranslUtils
-import com.quranapp.android.utils.reader.importing.ImportFieldId
-import com.quranapp.android.utils.reader.translation.importLanguages
-import com.quranapp.android.utils.reader.translation.isCustomImportSlug
-import com.quranapp.android.utils.reader.translation.translationSlug
+import com.quranapp.android.utils.importing.ImportFieldId
+import com.quranapp.android.utils.translation.importLanguages
+import com.quranapp.android.utils.translation.isCustomImportSlug
+import com.quranapp.android.utils.translation.translationSlug
 
 fun translationImportFields() = listOf(
     ImportField(ImportFieldId.BOOK, "Book", required = true),

@@ -49,7 +49,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.core.net.toUri
 import com.quranapp.android.backup.AutoBackup
 import com.quranapp.android.backup.ExportKeys
 import com.quranapp.android.backup.disableAutoBackup
@@ -95,6 +94,7 @@ import com.quranapp.android.preferences.BackupPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okio.Path.Companion.toPath
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
@@ -227,12 +227,12 @@ private fun AutoBackupSheet(
     val enabled = BackupPreferences.observeEnabled()
     val documentUri = BackupPreferences.observeDocumentUri()
     val fileName = remember(documentUri) {
-        documentUri.takeIf { it.isNotBlank() }?.let { AutoBackup.displayName(context, it.toUri()) }
+        documentUri.takeIf { it.isNotBlank() }?.let { AutoBackup.displayName(it.toPath()) }
     }
 
     LaunchedEffect(documentUri) {
         if (documentUri.isBlank()) return@LaunchedEffect
-        withContext(Dispatchers.IO) { AutoBackup.ensureAvailable(context) }
+        withContext(Dispatchers.IO) { AutoBackup.ensureAvailable() }
     }
 
     val fileLauncher = rememberLauncherForActivityResult(
@@ -251,7 +251,7 @@ private fun AutoBackupSheet(
         }
 
         scope.launch(Dispatchers.IO) {
-            enableAutoBackup(context, uri.toString())
+            enableAutoBackup(uri.toString())
         }
     }
 
@@ -266,7 +266,8 @@ private fun AutoBackupSheet(
     }
 
     val viewFile = {
-        val opened = documentUri.isNotBlank() && AutoBackup.openFile(context, documentUri.toUri())
+        val opened = documentUri.isNotBlank() && AutoBackup.openFile(documentUri.toPath())
+
         if (!opened) {
             scope.launch {
                 PlatformServices.messages.show(
@@ -308,7 +309,7 @@ private fun AutoBackupSheet(
                         pickFile()
                     } else {
                         scope.launch(Dispatchers.IO) {
-                            disableAutoBackup(context)
+                            disableAutoBackup()
                         }
                     }
                 },

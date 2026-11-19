@@ -1,6 +1,5 @@
 package com.quranapp.android.screens.onboarding
 
-import android.app.Activity
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.Spring
@@ -81,10 +80,12 @@ import com.quranapp.android.generated.resources.strTitleAppLanguage
 import com.quranapp.android.generated.resources.strTitleSelectTafsir
 import com.quranapp.android.generated.resources.strTitleTheme
 import com.quranapp.android.locale.LocalAppLocale
+import com.quranapp.android.preferences.AppActionsPreferences
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.type
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -105,8 +106,6 @@ private val onboardingItems = listOf(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnboardingScreen(onComplete: () -> Unit) {
-    val context = LocalContext.current
-    val activity = context as? Activity
     val scope = rememberCoroutineScope()
     val pageCount = onboardingItems.size
 
@@ -120,12 +119,8 @@ fun OnboardingScreen(onComplete: () -> Unit) {
         snapshotFlow { pagerState.settledPage }.collectLatest { savedPage = it }
     }
 
-    BackHandler {
-        if (pagerState.currentPage > 0) {
-            scope.launch { pagerState.animateScrollToPage(pagerState.currentPage - 1) }
-        } else {
-            activity?.finish()
-        }
+    BackHandler(enabled = pagerState.currentPage > 0) {
+        scope.launch { pagerState.animateScrollToPage(pagerState.currentPage - 1) }
     }
 
     val onNext: () -> Unit = {
@@ -133,6 +128,12 @@ fun OnboardingScreen(onComplete: () -> Unit) {
     }
     val onBack: () -> Unit = {
         scope.launch { pagerState.animateScrollToPage(pagerState.currentPage - 1) }
+    }
+
+    val handleComplete: () -> Unit = {
+        runBlocking {
+            AppActionsPreferences.setRequireOnboarding(false)
+        }
     }
 
     Surface(
@@ -144,9 +145,15 @@ fun OnboardingScreen(onComplete: () -> Unit) {
             // Tablets in portrait use the same single-column layout as phones.
             val useTwoPane = maxWidth > maxHeight
             if (useTwoPane) {
-                OnboardingTwoPaneLayout(pagerState, onComplete, onNext, onBack)
+                OnboardingTwoPaneLayout(pagerState, handleComplete, onNext, onBack)
             } else {
-                OnboardingPortraitLayout(pagerState, maxHeight < 700.dp, onComplete, onNext, onBack)
+                OnboardingPortraitLayout(
+                    pagerState,
+                    maxHeight < 700.dp,
+                    handleComplete,
+                    onNext,
+                    onBack
+                )
             }
         }
     }

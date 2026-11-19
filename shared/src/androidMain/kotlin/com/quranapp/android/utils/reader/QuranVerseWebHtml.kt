@@ -1,6 +1,5 @@
 package com.quranapp.android.utils.reader
 
-import android.content.Context
 import android.graphics.BitmapFactory
 import androidx.compose.material3.ColorScheme
 import androidx.compose.ui.graphics.toArgb
@@ -14,6 +13,7 @@ import com.quranapp.android.locale.AppLocale
 import com.quranapp.android.locale.appPlatformLocale
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.repository.QuranRepository
+import com.quranapp.android.utils.miscellenous.PlatformUtils
 import com.quranapp.android.utils.miscellenous.stripHtmlTags
 import com.quranapp.android.utils.reader.atlas.AtlasAyahRasterizer
 import com.quranapp.android.utils.reader.atlas.QuranAtlasBundle
@@ -26,7 +26,6 @@ data class QuranVerseWebItem(
 )
 
 data class QuranVerseWebRequest(
-    val context: Context,
     val locale: AppLocale,
     val colorScheme: ColorScheme,
     val scriptCode: String,
@@ -69,7 +68,6 @@ suspend fun buildQuranVerseWebAssets(request: QuranVerseWebRequest): QuranVerseA
     }
 
     val atlasRasterParams = if (isAtlas) verseWebAtlasRasterParams(
-        request.context,
         request.colorScheme,
         request.scriptCode,
     ) else null
@@ -170,18 +168,18 @@ private data class VerseWebAtlasRasterParams(
 )
 
 private suspend fun verseWebAtlasRasterParams(
-    context: Context,
     colorScheme: ColorScheme,
     scriptCode: String,
 ): VerseWebAtlasRasterParams {
-    val dm = context.resources.displayMetrics
+    val density = PlatformUtils.density
     val fontSizePx = scriptCode.getQuranScriptVerseTextSizeMediumSp() *
-            context.resources.displayMetrics.scaledDensity *
+            density *
             ReaderPreferences.getArabicTextSizeMultiplier()
 
     val lineHeightPx = fontSizePx * 1.5f
     val wordGapPx = fontSizePx * 0.15f
-    val maxLineWidthPx = (dm.widthPixels - 72f * dm.density).coerceAtLeast(240f)
+    val maxLineWidthPx =
+        (PlatformUtils.screenWidthPx - 72f * PlatformUtils.density).coerceAtLeast(240f)
     val onSurfaceArgb = colorScheme.onSurface.toArgb()
 
     val colorHex = String.format(
@@ -199,7 +197,7 @@ private suspend fun verseWebAtlasRasterParams(
         colorHex = colorHex,
         sizeCacheKey = fontSizePx.roundToInt(),
         maxLineCacheKey = maxLineWidthPx.roundToInt(),
-        density = dm.density
+        density = density
     )
 }
 

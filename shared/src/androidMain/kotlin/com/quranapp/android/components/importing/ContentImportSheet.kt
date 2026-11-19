@@ -1,11 +1,6 @@
 package com.quranapp.android.components.importing
 
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import android.net.Uri
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -55,7 +50,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -74,11 +68,14 @@ import com.quranapp.android.generated.resources.strHintSearch
 import com.quranapp.android.generated.resources.strLabelCancel
 import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.theme.alpha
-import com.quranapp.android.utils.reader.importing.ImportException
-import com.quranapp.android.utils.reader.importing.ImportFailure
-import com.quranapp.android.utils.reader.importing.ImportFieldId
-import com.quranapp.android.utils.reader.importing.ImportManifest
-import com.quranapp.android.utils.reader.importing.readImportFileName
+import com.quranapp.android.utils.importing.ImportException
+import com.quranapp.android.utils.importing.ImportFailure
+import com.quranapp.android.utils.importing.ImportFieldId
+import com.quranapp.android.utils.importing.ImportManifest
+import io.github.vinceglb.filekit.PlatformFile
+import io.github.vinceglb.filekit.dialogs.FileKitType
+import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
+import io.github.vinceglb.filekit.name
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -120,39 +117,33 @@ fun ContentImportSheet(
     onImported: () -> Unit,
     details: @Composable (Map<ImportFieldId, String>) -> Unit = {},
     canSubmit: (Map<ImportFieldId, String>) -> Boolean = { true },
-    buildManifest: (Context, Map<ImportFieldId, String>) -> ImportManifest,
-    onImport: suspend (Context, ImportManifest, Uri) -> Unit,
+    buildManifest: (Map<ImportFieldId, String>) -> ImportManifest,
+    onImport: suspend (ImportManifest, PlatformFile) -> Unit,
 ) {
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val initialValues = remember(fields) { fields.associate { it.id to "" } }
     var values by rememberSaveable(stateSaver = formSaver) { mutableStateOf(initialValues) }
-    var fileUri by rememberSaveable(stateSaver = uriSaver) { mutableStateOf(null) }
-    var fileName by rememberSaveable { mutableStateOf<String?>(null) }
+    var pickedFile by remember { mutableStateOf<PlatformFile?>(null) }
     var importing by remember { mutableStateOf(false) }
     var importError by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(isOpen) {
         if (!isOpen) {
             values = initialValues
-            fileUri = null
-            fileName = null
+            pickedFile = null
             importError = null
         }
     }
 
-    val fileLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.StartActivityForResult(),
-    ) { result ->
-        if (result.resultCode != Activity.RESULT_OK) return@rememberLauncherForActivityResult
-        val uri = result.data?.data ?: return@rememberLauncherForActivityResult
-        fileUri = uri
-        fileName = readImportFileName(context, uri)
-        importError = null
-    }
-
     val requiredFilled = fields.filter { it.required }.all { field ->
         values[field.id].orEmpty().isNotBlank()
+    }
+
+    val fileLauncher = rememberFilePickerLauncher(
+        type = FileKitType.Image,
+        onError = { failure -> importError = failure.message },
+    ) {
+        pickedFile = it
     }
 
     BottomSheet(
@@ -206,16 +197,7 @@ fun ContentImportSheet(
                     .clip(RoundedCornerShape(12.dp))
                     .background(colorScheme.surfaceContainerLow)
                     .clickable(enabled = !importing) {
-                        fileLauncher.launch(
-                            Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                                addCategory(Intent.CATEGORY_OPENABLE)
-                                type = "*/*"
-                                putExtra(
-                                    Intent.EXTRA_MIME_TYPES,
-                                    arrayOf("application/json", "text/plain"),
-                                )
-                            },
-                        )
+                        fileLauncher.launch()
                     }
                     .padding(horizontal = 14.dp, vertical = 12.dp),
                 verticalAlignment = Alignment.CenterVertically,
@@ -229,7 +211,7 @@ fun ContentImportSheet(
                 )
 
                 Text(
-                    text = fileName ?: "Select file",
+                    text = pickedFile?.name ?: "Select file",
                     modifier = Modifier.weight(1f),
                     style = typography.bodyLarge,
                     maxLines = 1,
@@ -268,17 +250,18 @@ fun ContentImportSheet(
 
             Button(
                 modifier = Modifier.weight(1f),
-                enabled = requiredFilled && fileUri != null && canSubmit(values) && !importing,
+                enabled = requiredFilled && pickedFile != null && canSubmit(values) && !importing,
                 onClick = {
-                    val uri = fileUri ?: return@Button
+                    val file = pickedFile ?: return@Button
+
                     scope.launch {
                         importing = true
                         importError = null
 
                         val failure = withContext(Dispatchers.IO) {
                             runCatching {
-                                val manifest = buildManifest(context, values)
-                                onImport(context, manifest, uri)
+                                val manifest = buildManifest(values)
+                                onImport(manifest, file)
                             }.exceptionOrNull()
                         }
 

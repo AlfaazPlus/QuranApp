@@ -50,7 +50,7 @@ import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.atlas.AtlasGlyphPlacement
 import com.quranapp.android.utils.reader.atlas.QuranAtlasBundle
 import com.quranapp.android.utils.reader.atlas.QuranAtlasLoader
-import com.quranapp.android.utils.verse.isVOTD
+import com.quranapp.android.utils.isVOTD
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll

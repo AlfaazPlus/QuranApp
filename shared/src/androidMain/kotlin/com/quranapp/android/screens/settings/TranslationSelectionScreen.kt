@@ -67,8 +67,6 @@ import com.quranapp.android.components.importing.ContentImportSheet
 import com.quranapp.android.components.importing.TranslationImportDetails
 import com.quranapp.android.components.importing.translationImportFields
 import com.quranapp.android.components.settings.TranslationSelectionMessages
-import com.quranapp.android.models.transls.TranslModel
-import com.quranapp.android.models.transls.TranslationGroupModel
 import com.quranapp.android.extensions.appViewModel
 import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.dr_icon_chevron_right
@@ -86,13 +84,15 @@ import com.quranapp.android.generated.resources.strTitleDownloadTranslations
 import com.quranapp.android.generated.resources.strTitleTranslDelete
 import com.quranapp.android.generated.resources.strTitleTranslations
 import com.quranapp.android.generated.resources.updateAvailable
+import com.quranapp.android.models.transls.TranslModel
+import com.quranapp.android.models.transls.TranslationGroupModel
 import com.quranapp.android.navigation.SettingRoutes
 import com.quranapp.android.preferences.AppPreferences
 import com.quranapp.android.utils.reader.TranslUtils
-import com.quranapp.android.utils.reader.importing.ImportFieldId
-import com.quranapp.android.utils.reader.translation.CustomTranslationImporter
-import com.quranapp.android.utils.reader.translation.toTranslationManifest
-import com.quranapp.android.utils.reader.translation.translationSlug
+import com.quranapp.android.utils.importing.ImportFieldId
+import com.quranapp.android.utils.translation.CustomTranslationImporter
+import com.quranapp.android.utils.translation.toTranslationManifest
+import com.quranapp.android.utils.translation.translationSlug
 import com.quranapp.android.viewmodel.TranslationEvent
 import com.quranapp.android.viewmodel.TranslationViewModel
 import org.jetbrains.compose.resources.painterResource
@@ -209,9 +209,9 @@ fun TranslationSelectionScreen() {
                 values[ImportFieldId.BOOK].orEmpty(),
             ) != null
         },
-        buildManifest = { _, values -> values.toTranslationManifest() },
-        onImport = { context, manifest, uri ->
-            CustomTranslationImporter.import(context, manifest, uri)
+        buildManifest = { values -> values.toTranslationManifest() },
+        onImport = { manifest, file ->
+            CustomTranslationImporter.import(manifest, file)
         },
     )
 }

@@ -18,12 +18,12 @@ object BackupPreferences {
 
     suspend fun isEnabled(): Boolean = DataStoreManager.readFirst(enabledKey)
 
-    suspend fun readDocumentUri(): String = DataStoreManager.readFirst(documentUriKey)
+    suspend fun readDocumentPath(): String = DataStoreManager.readFirst(documentUriKey)
 
-    suspend fun setDocumentUri(uri: String) {
+    suspend fun setDocumentPath(path: String) {
         DataStoreManager.edit {
             this[enabledKey.key] = true
-            this[documentUriKey.key] = uri
+            this[documentUriKey.key] = path
             this[fileDeletedAlertKey.key] = false
         }
     }

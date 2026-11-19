@@ -222,7 +222,6 @@ private suspend fun renderScienceDocument(
 
     val verseWeb = buildQuranVerseWebAssets(
         QuranVerseWebRequest(
-            context = context,
             locale = locale,
             colorScheme = colorScheme,
             repository = repository,

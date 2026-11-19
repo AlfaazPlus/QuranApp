@@ -16,7 +16,7 @@ internal fun Source.toInputStream(): InputStream {
         override fun read(b: ByteArray, off: Int, len: Int): Int {
             if (len == 0) return 0
             if (buffered.exhausted()) return -1
-            return buffered.read(b, off, len).toInt()
+            return buffered.read(b, off, len)
         }
 
         override fun close() {

@@ -24,8 +24,8 @@ import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.labelRecommended
 import com.quranapp.android.generated.resources.strTitleVOTD
 import com.quranapp.android.theme.alpha
-import com.quranapp.android.utils.recommended.Recommendation
-import com.quranapp.android.utils.recommended.Recommended
+import com.quranapp.android.utils.reader.recommended.Recommendation
+import com.quranapp.android.utils.reader.recommended.Recommended
 import com.quranapp.android.viewmodel.VotdViewModel
 import org.jetbrains.compose.resources.stringResource
 

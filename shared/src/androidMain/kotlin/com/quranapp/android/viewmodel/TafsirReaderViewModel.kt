@@ -10,6 +10,7 @@ import com.quranapp.android.db.relations.SurahWithLocalizations
 import com.quranapp.android.db.tafsir.QuranTafsirDBHelper
 import com.quranapp.android.locale.appLocale
 import com.quranapp.android.models.ChapterVersePair
+import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.colorSchemeFromPreferences
@@ -17,10 +18,9 @@ import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.QuranVerseWebItem
 import com.quranapp.android.utils.reader.QuranVerseWebRequest
 import com.quranapp.android.utils.reader.buildQuranVerseWebAssets
-import com.quranapp.android.utils.reader.tafsir.TafsirManager
-import com.quranapp.android.utils.reader.translation.isCustomImportSlug
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.utils.tafsir.TafsirManager
 import com.quranapp.android.utils.tafsir.TafsirUtils
+import com.quranapp.android.utils.translation.isCustomImportSlug
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -220,7 +220,7 @@ class TafsirReaderViewModel() : AppViewModel() {
 
         val lastChapter = QuranMeta.chapterRange.last
 
-        val dbHelper = QuranTafsirDBHelper(context)
+        val dbHelper = QuranTafsirDBHelper()
         try {
             val currentModel: TafsirModel? = when (val c = state.contentState) {
                 is TafsirContentState.Success -> c.tafsir
@@ -289,7 +289,7 @@ class TafsirReaderViewModel() : AppViewModel() {
 
             val outcome = try {
                 withContext(Dispatchers.IO) {
-                    val dbHelper = QuranTafsirDBHelper(context)
+                    val dbHelper = QuranTafsirDBHelper()
 
                     try {
                         dbHelper.getTafsirByVerse(tafsirKey, chapterNo, verseNo)?.let { model ->
@@ -385,7 +385,6 @@ class TafsirReaderViewModel() : AppViewModel() {
 
         val verseWeb = buildQuranVerseWebAssets(
             QuranVerseWebRequest(
-                context = context,
                 locale = appLocale(),
                 colorScheme = ThemeUtils.colorSchemeFromPreferences(context),
                 repository = repository,

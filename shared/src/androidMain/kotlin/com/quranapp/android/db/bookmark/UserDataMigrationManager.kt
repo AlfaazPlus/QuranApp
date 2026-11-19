@@ -32,7 +32,7 @@ class UserDataMigrationManager(
                 return@launch
             }
 
-            val oldHelper = BookmarkDbHelper(context)
+            val oldHelper = BookmarkDbHelper()
             val oldBookmarks = oldHelper.getBookmarks()
 
             if (oldBookmarks.isNotEmpty()) {

@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import com.quranapp.android.activities.base.BaseActivity
 import com.quranapp.android.screens.onboarding.OnboardingScreen
 import com.quranapp.android.theme.QuranAppTheme
-import com.quranapp.android.utils.sharedPrefs.SPAppActions.setRequireOnboarding
 
 class ActivityOnboarding : BaseActivity() {
 
@@ -21,7 +20,6 @@ class ActivityOnboarding : BaseActivity() {
     }
 
     private fun takeOff() {
-        setRequireOnboarding(this, false)
         launchMainActivity()
         finish()
     }

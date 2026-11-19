@@ -2,6 +2,9 @@ package com.quranapp.android.platform
 
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel
+import com.quranapp.android.platform.notification.NotificationManager
+import com.quranapp.android.platform.shortcut.ShortcutManager
+import com.quranapp.android.task.TaskManager
 import com.quranapp.platform.AppImageLoader
 import kotlinx.coroutines.flow.StateFlow
 import okio.Path
@@ -84,6 +87,12 @@ interface NetworkMonitor {
     val isConnected: Boolean
 }
 
+interface SystemServices {
+    val taskManager: TaskManager
+    val notificationManager: NotificationManager
+    val shortcutManager: ShortcutManager
+}
+
 object PlatformServices {
     lateinit var assets: AppAssets
         private set
@@ -101,6 +110,8 @@ object PlatformServices {
         private set
     lateinit var networkMonitor: NetworkMonitor
         private set
+    lateinit var system: SystemServices
+        private set
 
     fun installFiles(files: AppFileSystem) {
         this.files = files
@@ -115,6 +126,7 @@ object PlatformServices {
         links: AppLinks,
         messages: AppMessages,
         networkMonitor: NetworkMonitor,
+        system: SystemServices,
     ) {
         this.assets = assets
         this.files = files
@@ -124,5 +136,6 @@ object PlatformServices {
         this.links = links
         this.messages = messages
         this.networkMonitor = networkMonitor
+        this.system = system
     }
 }

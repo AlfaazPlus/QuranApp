@@ -22,8 +22,8 @@ import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.managers.ResourceDownloadStatus
 import com.quranapp.android.utils.managers.TranslationDownloadManager
 import com.quranapp.android.utils.reader.TranslUtils
-import com.quranapp.android.utils.reader.translation.TranslationVersionManager
-import com.quranapp.android.utils.sharedPrefs.SPAppActions
+import com.quranapp.android.utils.translation.TranslationVersionManager
+import com.quranapp.android.preferences.AppActionsPreferences
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -72,7 +72,7 @@ class TranslationDownloadViewModel() : AppViewModel() {
 
     init {
         TranslationDownloadManager.initialize(context)
-        loadAvailableTranslations(force = SPAppActions.getFetchTranslationsForce(context))
+        loadAvailableTranslations(force = AppActionsPreferences.getFetchTranslationsForce())
         observeDownloadStates()
         viewModelScope.launch {
             versionManager.refreshOutdatedState()
@@ -183,7 +183,7 @@ class TranslationDownloadViewModel() : AppViewModel() {
             }
         }
 
-        SPAppActions.setFetchTranslationsForce(context, false)
+        AppActionsPreferences.setFetchTranslationsForce(false)
         return translationGroups
     }
 

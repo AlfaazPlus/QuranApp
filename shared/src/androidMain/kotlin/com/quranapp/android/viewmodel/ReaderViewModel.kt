@@ -11,6 +11,7 @@ import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.strMsgInvalidChapterNo
 import com.quranapp.android.generated.resources.strMsgInvalidJuzNo
 import com.quranapp.android.models.ChapterVersePair
+import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.reader.QuranPageItem
 import com.quranapp.android.reader.ReaderLayoutItem
@@ -19,7 +20,6 @@ import com.quranapp.android.reader.ReaderPreparedData
 import com.quranapp.android.reader.ReadingFlowPageItem
 import com.quranapp.android.reader.TranslationPageItem
 import com.quranapp.android.utils.app.Logger
-import com.quranapp.android.utils.others.ShortcutUtils
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.ComposeUiConfig
 import com.quranapp.android.utils.reader.PageBuilderParams
@@ -562,7 +562,7 @@ class ReaderViewModel() : ReaderProviderViewModel() {
         if (verse.isValid && lastKnownVerse != verse) lastKnownVerse = verse
     }
 
-    fun saveReadHistory(context: Context) {
+    fun saveReadHistory() {
         val state = _uiState.value
         val mushafSession = _mushafSession.value
         val viewType = state.viewType ?: return
@@ -645,7 +645,13 @@ class ReaderViewModel() : ReaderProviderViewModel() {
             }
 
             if (didSave) {
-                ShortcutUtils.pushLastVersesShortcut(context, entity)
+                PlatformServices.system.shortcutManager.pushLastVersesShortcut(
+                    readType = entity.readType,
+                    readerMode = entity.readerMode,
+                    chapterNo = entity.chapterNo,
+                    fromVerseNo = entity.fromVerseNo,
+                    divisionNo = entity.divisionNo,
+                )
             }
         }
     }

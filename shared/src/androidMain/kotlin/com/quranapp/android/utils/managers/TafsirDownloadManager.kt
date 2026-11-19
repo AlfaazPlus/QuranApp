@@ -10,7 +10,6 @@ import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.quranapp.android.AndroidAppContext
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel
-import com.quranapp.android.utils.workers.TafsirDownloadWorker
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow

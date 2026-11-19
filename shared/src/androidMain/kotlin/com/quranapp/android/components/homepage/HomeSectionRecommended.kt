@@ -29,8 +29,8 @@ import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.dr_icon_chevron_right
 import com.quranapp.android.generated.resources.strLabelSurah
 import com.quranapp.android.utils.reader.factory.ReaderFactory
-import com.quranapp.android.utils.recommended.Recommendation
-import com.quranapp.android.utils.recommended.RecommendationRef
+import com.quranapp.android.utils.reader.recommended.Recommendation
+import com.quranapp.android.utils.reader.recommended.RecommendationRef
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 

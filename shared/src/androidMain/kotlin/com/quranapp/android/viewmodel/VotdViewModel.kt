@@ -25,7 +25,7 @@ import com.quranapp.android.utils.reader.VerseActions
 import com.quranapp.android.utils.reader.atlas.QuranAtlasBundle
 import com.quranapp.android.utils.reader.buildTranslationAnnotatedString
 import com.quranapp.android.utils.reader.getTranslationTextStyle
-import com.quranapp.android.utils.verse.VerseUtils
+import com.quranapp.android.utils.VerseUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -115,8 +115,7 @@ class VotdViewModel() : AppViewModel() {
         translationSizeMultiplier: Float,
         atlasBundle: QuranAtlasBundle?,
     ): ReaderLayoutItem.VerseUI? {
-        val context = uiConfig.context
-        val verse = VerseUtils.getVOTD(context, repository) ?: return null
+        val verse = VerseUtils.getVOTD(repository) ?: return null
         val slugs = setOf(primarySlug)
         val translations = translationRepo.getTranslations(
             slugs,

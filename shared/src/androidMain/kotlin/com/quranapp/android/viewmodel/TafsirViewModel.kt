@@ -1,19 +1,18 @@
 package com.quranapp.android.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import com.quranapp.android.AndroidAppContext
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import com.quranapp.android.components.tafsir.TafsirGroupModel
 import com.quranapp.android.db.tafsir.QuranTafsirDBHelper
 import com.quranapp.android.extensions.canProceed
 import com.quranapp.android.models.DataLoadError
 import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.preferences.AppActionsPreferences
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.utils.managers.ResourceDownloadStatus
 import com.quranapp.android.utils.managers.TafsirDownloadManager
-import com.quranapp.android.utils.reader.tafsir.TafsirManager
-import com.quranapp.android.utils.reader.translation.isCustomImportSlug
-import com.quranapp.android.utils.sharedPrefs.SPAppActions
+import com.quranapp.android.utils.tafsir.TafsirManager
+import com.quranapp.android.utils.translation.isCustomImportSlug
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -49,7 +48,6 @@ class TafsirViewModel() : AppViewModel() {
     private val _uiState = MutableStateFlow(TafsirUiState())
     val uiState: StateFlow<TafsirUiState> = _uiState.asStateFlow()
 
-    private val context get() = AndroidAppContext.get()
     private var initialTafsirKey: String? = null
 
     init {
@@ -59,7 +57,7 @@ class TafsirViewModel() : AppViewModel() {
 
         viewModelScope.launch {
             initialTafsirKey = ReaderPreferences.getTafsirId()
-            loadTafsirs(force = SPAppActions.getFetchTafsirsForce(context))
+            loadTafsirs(force = AppActionsPreferences.getFetchTafsirsForce())
         }
     }
 
@@ -71,7 +69,7 @@ class TafsirViewModel() : AppViewModel() {
     }
 
     private fun readDownloadedKeys(): Set<String> {
-        val dbHelper = QuranTafsirDBHelper(context)
+        val dbHelper = QuranTafsirDBHelper()
 
         try {
             return dbHelper.getDownloadedTafsirKeys()
@@ -110,7 +108,7 @@ class TafsirViewModel() : AppViewModel() {
         _uiState.update { it.copy(isLoading = true, error = null) }
 
         viewModelScope.launch {
-            TafsirManager.prepare(context, force) {
+            TafsirManager.prepare(force) {
                 viewModelScope.launch {
                     val models = TafsirManager.getModels()
 
@@ -244,7 +242,7 @@ class TafsirViewModel() : AppViewModel() {
     private fun deleteTafsir(key: String) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                val dbHelper = QuranTafsirDBHelper(context)
+                val dbHelper = QuranTafsirDBHelper()
 
                 try {
                     dbHelper.deleteTafsirData(key)

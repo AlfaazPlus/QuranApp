@@ -83,7 +83,7 @@ import com.quranapp.android.utils.reader.atlas.AtlasAyahRasterizer
 import com.quranapp.android.utils.reader.atlas.QuranAtlasLoader
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.reader.isQuranAtlasScript
-import com.quranapp.android.utils.verse.VerseUtils
+import com.quranapp.android.utils.VerseUtils
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -343,7 +343,7 @@ private suspend fun buildVotdWidgetState(
     widgetHeightDp: Float,
 ): VotdWidgetUiState? {
     val repository = DatabaseProvider.getQuranRepository()
-    val vwd = VerseUtils.getVOTD(context, repository) ?: return null
+    val vwd = VerseUtils.getVOTD(repository) ?: return null
 
     if (
         !QuranMeta.isChapterValid(vwd.chapterNo) ||

@@ -15,8 +15,8 @@ import com.quranapp.android.utils.reader.ReaderTextSizeUtils
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.isKFQPCScript
 import com.quranapp.android.utils.reader.isQuranAtlasScript
-import com.quranapp.android.utils.reader.translation.TranslationVersionStore
-import com.quranapp.android.utils.reader.wbw.WbwVersionStore
+import com.quranapp.android.utils.translation.TranslationVersionStore
+import com.quranapp.android.utils.wbw.WbwVersionStore
 import com.quranapp.android.utils.tafsir.TafsirUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -27,6 +27,8 @@ private const val LEGACY_KEY_APP_THEME = "key.app.theme"
 private const val LEGACY_KEY_APP_LANGUAGE = "key.app.language"
 private const val LEGACY_KEY_NUMERAL_SYSTEM = "key.app.numeral_system"
 
+private const val LEGACY_SP_APP_ACTION = "sp_app_action"
+private const val LEGACY_KEY_ONBOARDING_REQUIRED = "app.action.onboarding_required"
 
 private const val LEGACY_SP_READER = "sp_reader"
 private const val LEGACY_SP_TEXT_STYLE = "sp_reader_text"
@@ -37,10 +39,29 @@ private const val LEGACY_SP_TAFSIR = "sp_reader_tafsir"
 fun migrateLegacySharedPreferences(context: Context) {
     runBlocking {
         withContext(Dispatchers.IO) {
+            AppActionsPreferences.migrateFromLegacyIfNeeded(context)
             ReaderPreferences.migrateFromLegacyIfNeeded(context)
             ReaderPreferences.repairStoredPreferencesIfNeeded(context)
             migrateVersionStoresIfNeeded(context)
         }
+    }
+}
+
+private suspend fun AppActionsPreferences.migrateFromLegacyIfNeeded(context: Context) {
+    if (DataStoreManager.readFirst(KEY_LEGACY_MIGRATED)) return
+
+    val sp = context.applicationContext.getSharedPreferences(
+        LEGACY_SP_APP_ACTION,
+        Context.MODE_PRIVATE,
+    )
+
+    DataStoreManager.edit {
+        if (sp.contains(LEGACY_KEY_ONBOARDING_REQUIRED)) {
+            this[KEY_ONBOARDING_REQUIRED.key] =
+                sp.getBoolean(LEGACY_KEY_ONBOARDING_REQUIRED, true)
+        }
+
+        this[KEY_LEGACY_MIGRATED.key] = true
     }
 }
 

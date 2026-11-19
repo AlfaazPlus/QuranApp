@@ -13,7 +13,13 @@ import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel
 import com.quranapp.android.db.QURAN_DATABASE_NAME
 import com.quranapp.android.models.ChapterVersePair
+import com.quranapp.android.platform.notification.AndroidNotificationManager
+import com.quranapp.android.platform.notification.NotificationManager
+import com.quranapp.android.platform.shortcut.AndroidShortcutManager
+import com.quranapp.android.platform.shortcut.ShortcutManager
 import com.quranapp.android.resources.ComposeResourceFiles
+import com.quranapp.android.task.AndroidTaskManager
+import com.quranapp.android.task.TaskManager
 import com.quranapp.android.utils.managers.ScriptFontsDownloadManager
 import com.quranapp.android.utils.managers.TafsirDownloadManager
 import com.quranapp.android.utils.managers.TranslationDownloadManager
@@ -42,6 +48,7 @@ fun installAndroidFileSystem(context: Context) {
 fun installAndroidPlatform(context: Context) {
     val app = context.applicationContext
     ComposeResourceFiles.install(app)
+
     PlatformServices.install(
         assets = DefaultAppAssets(),
         files = AndroidAppFileSystem(app),
@@ -51,6 +58,7 @@ fun installAndroidPlatform(context: Context) {
         links = AndroidAppLinks(app),
         messages = AndroidAppMessages(app),
         networkMonitor = AndroidNetworkMonitor(app),
+        system = AndroidSystemServices(app),
     )
 }
 
@@ -317,5 +325,18 @@ class AndroidNetworkMonitor(
 
     init {
         connectivityManager.registerDefaultNetworkCallback(callback)
+    }
+}
+
+class AndroidSystemServices(private val app: Context) : SystemServices {
+    override val taskManager: TaskManager
+        get() = AndroidTaskManager(app)
+
+    override val notificationManager: NotificationManager by lazy {
+        AndroidNotificationManager(app)
+    }
+
+    override val shortcutManager: ShortcutManager by lazy {
+        AndroidShortcutManager(app)
     }
 }

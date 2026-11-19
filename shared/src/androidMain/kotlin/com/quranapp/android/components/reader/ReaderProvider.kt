@@ -46,7 +46,7 @@ import com.quranapp.android.utils.reader.VerseActions
 import com.quranapp.android.utils.reader.atlas.LocalQuranAtlasBundle
 import com.quranapp.android.utils.reader.atlas.QuranAtlasLoader
 import com.quranapp.android.utils.reader.factory.ReaderFactory
-import com.quranapp.android.utils.reader.wbw.WbwManager
+import com.quranapp.android.utils.wbw.WbwManager
 import com.quranapp.android.viewmodel.ReaderProviderViewModel
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString

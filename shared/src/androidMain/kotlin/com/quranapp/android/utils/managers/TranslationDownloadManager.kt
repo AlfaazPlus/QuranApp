@@ -9,7 +9,6 @@ import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel
-import com.quranapp.android.utils.workers.TranslationDownloadWorker
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
