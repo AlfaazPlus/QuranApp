@@ -4,7 +4,7 @@ import androidx.room3.RoomDatabase
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import com.quranapp.android.db.migrations.ExternalQuranDatabaseMigrations
 import com.quranapp.android.db.searchindex.SearchIndexDatabase
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.repository.TopicsRepository
 import com.quranapp.android.repository.TranslationRepository
@@ -176,7 +176,7 @@ object DatabaseProvider {
         assetPath: String,
         expectedVersion: Int,
     ) {
-        val directory = PlatformServices.files.databaseDirectory
+        val directory = Platform.files.databaseDirectory
         fs.createDirectories(directory)
 
         val destination = directory / name
@@ -192,7 +192,7 @@ object DatabaseProvider {
         val temp = directory / "$name.installing"
 
         try {
-            val bytes = PlatformServices.assets.readAssetBytes(assetPath)
+            val bytes = Platform.assets.readAssetBytes(assetPath)
 
             fs.sink(temp).buffer().use {
                 it.write(bytes)
@@ -213,7 +213,7 @@ object DatabaseProvider {
         }.getOrNull()
 
     private fun deleteDatabaseFiles(name: String) {
-        val directory = PlatformServices.files.databaseDirectory
+        val directory = Platform.files.databaseDirectory
 
         listOf(
             name,

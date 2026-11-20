@@ -45,12 +45,11 @@ import com.quranapp.android.repository.TranslationRepository
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.fontUrdu
-import com.quranapp.android.theme.isDarkTheme
+import com.quranapp.android.utils.isVOTD
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.atlas.AtlasGlyphPlacement
 import com.quranapp.android.utils.reader.atlas.QuranAtlasBundle
 import com.quranapp.android.utils.reader.atlas.QuranAtlasLoader
-import com.quranapp.android.utils.isVOTD
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -271,7 +270,7 @@ object ReaderItemsBuilder {
         val wbwTranslationEnabled = ReaderPreferences.getWbwShowTranslation()
         val wbwTransliterationEnabled = ReaderPreferences.getWbwShowTransliteration()
         val wbwId = ReaderPreferences.getWbwId()
-        val isDarkThem = ThemeUtils.isDarkTheme(uiConfig.context)
+        val isDarkThem = ThemeUtils.isDarkTheme()
 
         val scriptCode = ReaderPreferences.getQuranScript()
         val mushafId = scriptCode.toQuranMushafId(ReaderPreferences.getQuranScriptVariant())
@@ -468,7 +467,7 @@ object ReaderItemsBuilder {
         val wbwTransliterationEnabled = ReaderPreferences.getWbwShowTransliteration()
         val wbwId = ReaderPreferences.getWbwId()
         val scriptCode = ReaderPreferences.getQuranScript()
-        val isDarkThem = ThemeUtils.isDarkTheme(uiConfig.context)
+        val isDarkThem = ThemeUtils.isDarkTheme()
 
         val repository = DatabaseProvider.getQuranRepository()
 

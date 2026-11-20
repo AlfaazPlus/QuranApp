@@ -524,29 +524,29 @@
     <string name="collection_updated">Жыйнактар жаңыртылды</string>
     <string name="updated_just_now">Жаңы эле жаңыртылды</string>
     <plurals name="verse_count">
-            <item quantity="one">%1$d аят</item>
-            <item quantity="other">%1$d аят</item>
-        </plurals>
+        <item quantity="one">%1$d аят</item>
+        <item quantity="other">%1$d аят</item>
+    </plurals>
     <plurals name="updated_minutes">
-            <item quantity="one">%1$d мүнөт мурун жаңыртылды</item>
-            <item quantity="other">%1$d мүнөт мурун жаңыртылды</item>
-        </plurals>
+        <item quantity="one">%1$d мүнөт мурун жаңыртылды</item>
+        <item quantity="other">%1$d мүнөт мурун жаңыртылды</item>
+    </plurals>
     <plurals name="updated_hours">
-            <item quantity="one">%1$d саат мурун жаңыртылды</item>
-            <item quantity="other">%1$d саат мурун жаңыртылды</item>
-        </plurals>
+        <item quantity="one">%1$d саат мурун жаңыртылды</item>
+        <item quantity="other">%1$d саат мурун жаңыртылды</item>
+    </plurals>
     <plurals name="updated_days">
-            <item quantity="one">%1$d күн мурун жаңыртылды</item>
-            <item quantity="other">%1$d күн мурун жаңыртылды</item>
-        </plurals>
+        <item quantity="one">%1$d күн мурун жаңыртылды</item>
+        <item quantity="other">%1$d күн мурун жаңыртылды</item>
+    </plurals>
     <plurals name="item_count">
-            <item quantity="one">%1$d котормо</item>
-            <item quantity="other">%1$d котормо</item>
-        </plurals>
+        <item quantity="one">%1$d котормо</item>
+        <item quantity="other">%1$d котормо</item>
+    </plurals>
     <plurals name="place_count">
-            <item quantity="one">%1$d жер</item>
-            <item quantity="other">%1$d жер</item>
-        </plurals>
+        <item quantity="one">%1$d жер</item>
+        <item quantity="other">%1$d жер</item>
+    </plurals>
     <string name="advanced_settings">Кошумча жөндөөлөр</string>
     <string name="recent_history">Акыркы тарых</string>
     <string name="set_as_active">Активдүү кылып коюу</string>

@@ -2,7 +2,7 @@ package com.quranapp.android.utils.reader.atlas
 
 import ConcurrentCache
 import com.quranapp.android.db.ExternalQuranDatabase
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.reader.isPrebuiltAtlas
 import kotlinx.coroutines.Dispatchers
@@ -55,7 +55,7 @@ object QuranAtlasLoader {
 
                         val assetPath = AtlasManager.getPrebuiltAtlasAssetPath(bundleKey)
 
-                        PlatformServices.assets
+                        Platform.assets
                             .readAssetBytes(assetPath)
                             .let {
                                 ent = AtlasManager.importAtlasFromZip(it, bundleKey, db)

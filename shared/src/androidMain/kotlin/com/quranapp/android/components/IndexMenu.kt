@@ -72,7 +72,7 @@ import com.quranapp.android.generated.resources.titleExportData
 import com.quranapp.android.generated.resources.titleStorageCleanup
 import com.quranapp.android.navigation.AppRoute
 import com.quranapp.android.navigation.AppRoutes
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.utils.app.UrlsManager
 import kotlinx.coroutines.launch
@@ -106,21 +106,21 @@ private fun getItems(onDonate: () -> Unit): List<IndexMenuItemGroup> {
                     Res.drawable.dr_icon_settings,
                     Res.string.strTitleSettings,
                     onClick = {
-                        PlatformServices.navigator.navigate(AppRoute.Screen(AppRoutes.SETTINGS))
+                        Platform.navigator.navigate(AppRoute.Screen(AppRoutes.SETTINGS))
                     }
                 ),
                 IndexMenuItem(
                     Res.drawable.icon_clean,
                     Res.string.titleStorageCleanup,
                     onClick = {
-                        PlatformServices.navigator.navigate(AppRoute.Screen(AppRoutes.STORAGE_CLEANUP))
+                        Platform.navigator.navigate(AppRoute.Screen(AppRoutes.STORAGE_CLEANUP))
                     }
                 ),
                 IndexMenuItem(
                     Res.drawable.icon_import_export,
                     Res.string.titleExportData,
                     onClick = {
-                        PlatformServices.navigator.navigate(AppRoute.Screen(AppRoutes.EXPORT_IMPORT))
+                        Platform.navigator.navigate(AppRoute.Screen(AppRoutes.EXPORT_IMPORT))
                     }
                 ),
             )
@@ -131,14 +131,14 @@ private fun getItems(onDonate: () -> Unit): List<IndexMenuItemGroup> {
                     Res.drawable.dr_icon_info,
                     Res.string.strTitleAboutUs,
                     onClick = {
-                        PlatformServices.navigator.navigate(AppRoute.Screen(AppRoutes.ABOUT))
+                        Platform.navigator.navigate(AppRoute.Screen(AppRoutes.ABOUT))
                     }
                 ),
                 IndexMenuItem(
                     Res.drawable.dr_icon_rate,
                     Res.string.strTitleRateApp,
                     onClick = {
-                        PlatformServices.links.openStore()
+                        Platform.links.openStore()
                     }
                 ),
                 IndexMenuItem(
@@ -146,10 +146,10 @@ private fun getItems(onDonate: () -> Unit): List<IndexMenuItemGroup> {
                     Res.string.strTitleShareApp,
                     onClick = {
                         scope.launch {
-                            PlatformServices.links.shareText(
+                            Platform.links.shareText(
                                 text = getString(
                                     Res.string.strMsgShareApp,
-                                    PlatformServices.links.storeWebLink(),
+                                    Platform.links.storeWebLink(),
                                 ),
                                 chooserTitle = getString(Res.string.strTitleShareApp),
                             )
@@ -161,7 +161,7 @@ private fun getItems(onDonate: () -> Unit): List<IndexMenuItemGroup> {
                     Res.string.strTitleDownloadSunnahApp,
                     iconTint = colorScheme.primary,
                     onClick = {
-                        PlatformServices.links.openStore("com.alfaazplus.sunnah")
+                        Platform.links.openStore("com.alfaazplus.sunnah")
                     }
                 ),
                 IndexMenuItem(

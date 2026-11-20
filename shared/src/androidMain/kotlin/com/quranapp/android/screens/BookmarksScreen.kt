@@ -76,8 +76,8 @@ import com.quranapp.android.generated.resources.strTitleBookmarkDeleteAll
 import com.quranapp.android.generated.resources.strTitleBookmarkDeleteCount
 import com.quranapp.android.generated.resources.strTitleBookmarkDeleteThis
 import com.quranapp.android.generated.resources.strTitleBookmarks
-import com.quranapp.android.locale.formattedStringResource
-import com.quranapp.android.platform.PlatformServices
+
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.viewmodel.BookmarksViewModel
 import kotlinx.coroutines.launch
@@ -130,7 +130,7 @@ fun BookmarksScreen(vm: BookmarksViewModel = appViewModel()) {
                     }
                 }
                 if (message != null) {
-                    PlatformServices.messages.show(getString(message.messageRes))
+                    Platform.messages.show(getString(message.messageRes))
                 }
             }
         })
@@ -144,7 +144,7 @@ fun BookmarksScreen(vm: BookmarksViewModel = appViewModel()) {
         topBar = {
             AppBar(
                 title = if (selecting) {
-                    formattedStringResource(Res.string.strLabelSelectedCount, selectedIds.size)
+                    stringResource(Res.string.strLabelSelectedCount, selectedIds.size)
                 } else {
                     stringResource(Res.string.strTitleBookmarks)
                 }, actions = {

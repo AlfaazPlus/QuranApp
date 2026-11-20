@@ -20,7 +20,7 @@ import com.quranapp.android.generated.resources.nTimes
 import com.quranapp.android.generated.resources.once
 import com.quranapp.android.generated.resources.playbackCount
 import com.quranapp.android.generated.resources.twice
-import com.quranapp.android.locale.formattedStringResource
+
 import com.quranapp.android.preferences.RecitationPreferences
 import com.quranapp.android.utils.mediaplayer.AudioOption
 import com.quranapp.android.utils.mediaplayer.RecitationController
@@ -75,7 +75,7 @@ fun RepeatOptionsSheet(
                     titleStr = when (repeatCount) {
                         0 -> stringResource(Res.string.once)
                         1 -> stringResource(Res.string.twice)
-                        else -> formattedStringResource(Res.string.nTimes, repeatCount + 1)
+                        else -> stringResource(Res.string.nTimes, repeatCount + 1)
                     },
                     enabled = repeatSupported,
                     selected = repeatCount == currentRepeatCount,

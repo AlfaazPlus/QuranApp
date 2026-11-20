@@ -1,6 +1,5 @@
 package com.quranapp.android.utils.reader.atlas
 
-import android.graphics.Bitmap as AndroidBitmap
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.PorterDuff
@@ -14,6 +13,7 @@ import androidx.core.graphics.createBitmap
 import java.io.ByteArrayOutputStream
 import java.util.WeakHashMap
 import java.util.concurrent.ConcurrentHashMap
+import android.graphics.Bitmap as AndroidBitmap
 
 actual typealias AtlasBitmap = AndroidBitmap
 

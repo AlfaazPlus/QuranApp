@@ -29,8 +29,6 @@ import com.quranapp.android.components.common.ErrorMessageCard
 import com.quranapp.android.components.common.dialogs.AlertDialog
 import com.quranapp.android.components.common.dialogs.AlertDialogAction
 import com.quranapp.android.components.common.dialogs.AlertDialogActionStyle
-import com.quranapp.android.models.transls.TranslModel
-import com.quranapp.android.models.transls.TranslationGroupModel
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.extensions.appViewModel
 import com.quranapp.android.generated.resources.Res
@@ -40,6 +38,8 @@ import com.quranapp.android.generated.resources.nothingToCleanup
 import com.quranapp.android.generated.resources.strLabelCancel
 import com.quranapp.android.generated.resources.strLabelDelete
 import com.quranapp.android.generated.resources.strTitleTranslDelete
+import com.quranapp.android.models.transls.TranslModel
+import com.quranapp.android.models.transls.TranslationGroupModel
 import com.quranapp.android.viewmodel.TranslationEvent
 import com.quranapp.android.viewmodel.TranslationViewModel
 import kotlinx.coroutines.Dispatchers

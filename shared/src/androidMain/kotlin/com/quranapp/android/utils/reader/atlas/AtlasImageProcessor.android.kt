@@ -140,9 +140,9 @@ private fun decodeBand(
 ): Bitmap? {
     val region = Rect(0, top, width, top + rows)
     val canReuse = reusable != null &&
-        !reusable.isRecycled &&
-        reusable.width == width &&
-        reusable.height == rows
+            !reusable.isRecycled &&
+            reusable.width == width &&
+            reusable.height == rows
 
     if (canReuse) {
         val reused = decodeRegion(decoder, region, reusable)

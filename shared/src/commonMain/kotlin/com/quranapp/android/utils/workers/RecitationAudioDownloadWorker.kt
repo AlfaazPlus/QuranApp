@@ -158,7 +158,7 @@ class RecitationAudioDownloadWorker() : TaskWorker {
         private const val KEY_SUBTITLE = "subtitle"
         private const val KEY_RECITER_ID = "reciter_id"
         private const val KEY_CHAPTER_NO = "chapter_no"
-        private         const val KEY_KIND = "audio_kind"
+        private const val KEY_KIND = "audio_kind"
 
         fun uniqueWorkName(reciterId: String, chapterNo: Int): String {
             return "recitation-audio:$reciterId:$chapterNo"

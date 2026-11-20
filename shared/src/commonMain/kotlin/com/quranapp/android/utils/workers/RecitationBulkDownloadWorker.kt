@@ -17,6 +17,7 @@ import com.quranapp.android.utils.mediaplayer.RecitationAudioFileDownloader
 import com.quranapp.android.utils.mediaplayer.RecitationAudioKind
 import com.quranapp.android.utils.mediaplayer.RecitationDownloadProgressBus
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
+import com.quranapp.android.utils.mediaplayer.RecitationUtils
 import com.quranapp.android.utils.quran.QuranMeta
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async

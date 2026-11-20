@@ -4,12 +4,12 @@ import android.content.Context
 import androidx.lifecycle.viewModelScope
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.extensions.canProceed
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.task.TaskState
+import com.quranapp.android.utils.managers.AtlasDownloadManager
 import com.quranapp.android.utils.managers.ScriptFontsDownloadManager
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.QuranScriptVariant
-import com.quranapp.android.utils.managers.AtlasDownloadManager
 import com.quranapp.android.utils.reader.isPrebuiltAtlas
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -78,7 +78,7 @@ class ScriptsViewModel() : AppViewModel() {
 
     private fun downloadScript(key: String) {
         viewModelScope.launch {
-            if (!PlatformServices.networkMonitor.canProceed()) return@launch
+            if (!Platform.networkMonitor.canProceed()) return@launch
 
             ScriptFontsDownloadManager.startDownload(key)
             updateDownloadStatus(key, TaskState.Enqueued)
@@ -87,7 +87,7 @@ class ScriptsViewModel() : AppViewModel() {
 
     private fun downloadAtlas(context: Context, key: String, densityLevel: Int) {
         viewModelScope.launch {
-            if (!PlatformServices.networkMonitor.canProceed()) return@launch
+            if (!Platform.networkMonitor.canProceed()) return@launch
 
             AtlasDownloadManager.startDownload(key, densityLevel)
             updateDownloadStatus(key, TaskState.Enqueued)

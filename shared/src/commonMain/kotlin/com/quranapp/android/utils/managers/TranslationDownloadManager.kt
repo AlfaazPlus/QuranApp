@@ -3,7 +3,7 @@ package com.quranapp.android.utils.managers
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.quranapp.android.api.models.translation.TranslationBookInfoModel
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.task.ExistingTaskPolicy
 import com.quranapp.android.task.TaskParams
 import com.quranapp.android.task.TaskRequest
@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
-import kotlin.collections.iterator
 
 object TranslationDownloadManager {
     private const val TAG = "download_translation"
@@ -28,7 +27,7 @@ object TranslationDownloadManager {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     private var observeJob: Job? = null
 
-    private val taskManager get() = PlatformServices.system.taskManager
+    private val taskManager get() = Platform.system.taskManager
 
     fun initialize() {
         if (observeJob?.isActive == true) return

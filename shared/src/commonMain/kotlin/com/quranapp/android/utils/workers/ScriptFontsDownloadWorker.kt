@@ -6,7 +6,7 @@ import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.msgDownloadingFonts
 import com.quranapp.android.generated.resources.msgExtractingFonts
 import com.quranapp.android.generated.resources.textDownloading
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.task.ForegroundTaskInfo
 import com.quranapp.android.task.TaskContext
 import com.quranapp.android.task.TaskProgress
@@ -71,7 +71,7 @@ class ScriptFontsDownloadWorker() : TaskWorker {
 
         val url = "https://github.com/AlfaazPlus/QuranAppInventory/releases/download/qpc/$fileName"
         val tempFile =
-            PlatformServices.files.filesDirectory / "tmp_${System.currentTimeMillis()}_$fileName"
+            Platform.files.filesDirectory / "tmp_${System.currentTimeMillis()}_$fileName"
 
         try {
             val response = ApiClient.downloadStreaming(url)

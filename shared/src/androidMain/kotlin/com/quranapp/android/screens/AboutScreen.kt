@@ -35,7 +35,7 @@ import com.quranapp.android.generated.resources.strTitleAppVersion
 import com.quranapp.android.generated.resources.strTitleHelpSupport
 import com.quranapp.android.generated.resources.strTitlePrivacyPolicy
 import com.quranapp.android.generated.resources.strTitleSendFeedback
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.utils.app.APP_VERSION_NAME
 import com.quranapp.android.utils.app.UrlsManager
 import org.jetbrains.compose.resources.DrawableResource
@@ -66,7 +66,7 @@ private fun aboutItems(openLink: (String) -> Unit): List<AboutItem> {
             openLink(UrlsManager.URL_KEY_PRIVACY_POLICY)
         },
         AboutItem(Res.drawable.icon_github_2, Res.string.github) {
-            PlatformServices.links.browse(ApiConfig.GITHUB_REPOSITORY_URL)
+            Platform.links.browse(ApiConfig.GITHUB_REPOSITORY_URL)
         },
         AboutItem(Res.drawable.icon_discord, Res.string.discord) {
             openLink(UrlsManager.URL_KEY_DISCORD)
@@ -138,7 +138,7 @@ private fun VersionCard() {
             )
         }
     ) {
-        PlatformServices.system.clipboardManager.copy(APP_VERSION_NAME)
-        PlatformServices.messages.showClipboard("Version name copied")
+        Platform.system.clipboardManager.copy(APP_VERSION_NAME)
+        Platform.messages.showClipboard("Version name copied")
     }
 }

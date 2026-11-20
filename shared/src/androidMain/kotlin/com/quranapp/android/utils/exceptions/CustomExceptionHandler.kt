@@ -5,7 +5,7 @@ import android.content.Intent
 import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.lastCrashLog
 import com.quranapp.android.generated.resources.strLabelCopy
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.platform.notification.AppNotification
 import com.quranapp.android.platform.notification.NotificationAction
 import com.quranapp.android.platform.notification.NotificationChannels
@@ -51,7 +51,7 @@ class CustomExceptionHandler(
             actions = listOf(copyAction),
         )
 
-        PlatformServices.system.notificationManager.notify(
+        Platform.system.notificationManager.notify(
             CrashReceiver.NOTIFICATION_ID_CRASH,
             notification,
         )

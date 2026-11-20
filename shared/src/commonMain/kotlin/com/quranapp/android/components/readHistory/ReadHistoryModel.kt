@@ -48,7 +48,7 @@ class ReadHistoryModel(
         result = 31 * result + chapterNo
         result = 31 * result + fromVerseNo
         result = 31 * result + toVerseNo
-        result = 31 * result + (date?.hashCode() ?: 0)
+        result = 31 * result + date.hashCode()
         return result
     }
 }

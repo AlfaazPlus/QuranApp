@@ -62,7 +62,7 @@ import com.quranapp.android.generated.resources.titleOtherSettings
 import com.quranapp.android.generated.resources.wordByWord
 import com.quranapp.android.locale.LocalAppLocale
 import com.quranapp.android.locale.appLanguageOptions
-import com.quranapp.android.locale.formattedStringResource
+
 import com.quranapp.android.navigation.SettingRoutes
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.preferences.VersePreferences
@@ -90,7 +90,7 @@ fun SettingsMainScreen(
     val systemDefaultName = stringResource(Res.string.strLabelSystemDefault)
     val selectedLanguage = remember(appLocale, systemDefaultName) {
         val selected = appLanguageOptions.firstOrNull { it.tag == appLocale.storedTag }
-      
+
         when {
             selected == null -> ""
             selected.systemDefault -> systemDefaultName
@@ -103,7 +103,7 @@ fun SettingsMainScreen(
     val tafsirId = ReaderPreferences.observeTafsirId()
     val selectedTafsirName by produceState("", context, tafsirId) {
         tafsirId?.let {
-            TafsirManager.prepare( false) {
+            TafsirManager.prepare(false) {
                 value = TafsirManager.getModel(tafsirId)?.name ?: ""
             }
         }
@@ -174,7 +174,7 @@ fun SettingsMainScreen(
             SettingsItem(
                 title = Res.string.strTitleTranslations,
                 icon = Res.drawable.dr_icon_translations,
-                subtitleStr = formattedStringResource(Res.string.strLabelSelectedCount, slugs.size)
+                subtitleStr = stringResource(Res.string.strLabelSelectedCount, slugs.size)
             ) {
                 navController.navigate(SettingRoutes.TRANSLATIONS)
             }

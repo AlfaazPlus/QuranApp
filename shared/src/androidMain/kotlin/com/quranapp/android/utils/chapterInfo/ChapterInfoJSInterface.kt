@@ -1,7 +1,7 @@
 package com.quranapp.android.utils.chapterInfo
 
 import android.webkit.JavascriptInterface
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.utils.quran.QuranMeta
 
 class ChapterInfoJSInterface(
@@ -16,7 +16,7 @@ class ChapterInfoJSInterface(
             || fromVerse > verseCount
             || toVerse > verseCount
         ) {
-            PlatformServices.messages.show("Could not open references", long = true)
+            Platform.messages.show("Could not open references", long = true)
             return
         }
 

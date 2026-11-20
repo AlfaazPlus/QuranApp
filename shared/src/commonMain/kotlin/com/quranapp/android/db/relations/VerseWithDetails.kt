@@ -1,9 +1,9 @@
 package com.quranapp.android.db.relations
 
-import com.quranapp.android.models.Translation
 import com.quranapp.android.db.entities.quran.AyahEntity
 import com.quranapp.android.db.entities.quran.AyahWordEntity
 import com.quranapp.android.db.interfaces.SurahMethods
+import com.quranapp.android.models.Translation
 
 data class VerseWithDetails(
     val words: List<AyahWordEntity>,

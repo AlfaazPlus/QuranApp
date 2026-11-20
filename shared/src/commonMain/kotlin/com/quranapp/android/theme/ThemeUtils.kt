@@ -7,6 +7,8 @@ import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.strLabelSystemDefault
 import com.quranapp.android.generated.resources.strLabelThemeDark
 import com.quranapp.android.generated.resources.strLabelThemeLight
+import com.quranapp.android.platform.AppThemeMode
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.preferences.DataStoreManager
 import com.quranapp.android.preferences.PrefKey
 import com.quranapp.android.theme.colors.BaseColors
@@ -24,11 +26,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import org.jetbrains.compose.resources.StringResource
 
 object ThemeUtils {
-    const val THEME_MODE_DEFAULT = "app.theme.default"
-    const val THEME_MODE_LIGHT = "app.theme.light"
-    const val THEME_MODE_DARK = "app.theme.dark"
-
-    val KEY_THEME_MODE = PrefKey(stringPreferencesKey("v2.theme_mode"), THEME_MODE_DEFAULT)
+    val KEY_THEME_MODE =
+        PrefKey(stringPreferencesKey("v2.theme_mode"), AppThemeMode.System.storageKey)
     val KEY_THEME_COLOR = PrefKey(stringPreferencesKey("v2.theme_color"), THEME_COLOR_DEFAULT)
     val KEY_THEME_DYNAMIC_COLOR =
         PrefKey(booleanPreferencesKey("v2.theme_dynamic_color"), DEFAULT_DYNAMIC_COLOR)
@@ -44,20 +43,24 @@ object ThemeUtils {
 
     const val DEFAULT_DYNAMIC_COLOR = false
 
-    fun resolveThemeModeLabel(themeMode: String): StringResource {
+    fun resolveThemeModeLabel(themeMode: AppThemeMode): StringResource {
         return when (themeMode) {
-            THEME_MODE_LIGHT -> Res.string.strLabelThemeLight
-            THEME_MODE_DARK -> Res.string.strLabelThemeDark
-            else -> Res.string.strLabelSystemDefault
+            AppThemeMode.Light -> Res.string.strLabelThemeLight
+            AppThemeMode.Dark -> Res.string.strLabelThemeDark
+            AppThemeMode.System -> Res.string.strLabelSystemDefault
         }
     }
 
-    fun getThemeMode(): String {
-        return DataStoreManager.read(KEY_THEME_MODE)
+    fun applyNightMode(mode: AppThemeMode = getThemeMode()) {
+        Platform.environment.applyThemeMode(mode)
     }
 
-    suspend fun setThemeMode(themeMode: String) {
-        DataStoreManager.write(KEY_THEME_MODE, themeMode)
+    fun getThemeMode(): AppThemeMode {
+        return AppThemeMode.fromStorage(DataStoreManager.read(KEY_THEME_MODE))
+    }
+
+    suspend fun setThemeMode(themeMode: AppThemeMode) {
+        DataStoreManager.write(KEY_THEME_MODE, themeMode.storageKey)
     }
 
     fun getThemeColor(): String {
@@ -66,6 +69,17 @@ object ThemeUtils {
 
     fun getDynamicColor(): Boolean {
         return DataStoreManager.read(KEY_THEME_DYNAMIC_COLOR)
+    }
+
+    fun isDynamicColorSupported(): Boolean =
+        Platform.environment.isDynamicColorSupported
+
+    fun isDarkTheme(): Boolean {
+        return when (getThemeMode()) {
+            AppThemeMode.Light -> false
+            AppThemeMode.Dark -> true
+            AppThemeMode.System -> Platform.environment.isDarkTheme
+        }
     }
 
     suspend fun setThemeColor(themeColor: String) {

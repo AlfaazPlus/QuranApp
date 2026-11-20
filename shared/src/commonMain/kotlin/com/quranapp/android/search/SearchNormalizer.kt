@@ -2,7 +2,6 @@ package com.quranapp.android.search
 
 import java.text.Normalizer
 import java.util.Locale
-import kotlin.text.iterator
 
 object SearchNormalizer {
     fun normalize(input: String): String {

@@ -54,10 +54,8 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
-import com.quranapp.android.AndroidAppContext
 import com.quranapp.android.R
 import com.quranapp.android.activities.ActivityReader
-import com.quranapp.android.models.ChapterVersePair
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.app_name
@@ -68,11 +66,13 @@ import com.quranapp.android.generated.resources.strLabelPrevious
 import com.quranapp.android.generated.resources.strLabelSurah
 import com.quranapp.android.generated.resources.strTitleVerseRecitation
 import com.quranapp.android.generated.resources.textPreparingAudio
+import com.quranapp.android.models.ChapterVersePair
 import com.quranapp.android.preferences.RecitationPreferences
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.colorSchemeFromPreferences
 import com.quranapp.android.utils.extensions.dp2px
+import com.quranapp.android.utils.mediaplayer.AndroidRecitationController
 import com.quranapp.android.utils.mediaplayer.RecitationChapterArtwork
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
@@ -359,7 +359,7 @@ private suspend fun buildRecitationPlayerWidgetState(
     }.takeIf { it.isValid } ?: ChapterVersePair(1, 1)
 
     val repository = DatabaseProvider.getQuranRepository()
-    val controller = RecitationController.getInstance(AndroidAppContext.get())
+    val controller = AndroidRecitationController.getInstance(context)
     val connected = controller.isConnectedState.value
     val isPlaying = if (connected) controller.isPlaying else playbackState.isPlaying
     val isLoading = if (connected) {
@@ -430,7 +430,7 @@ fun startRecitationPlayerWidgetObserver(context: Context) {
     val app = context.applicationContext
 
     recitationPlayerWidgetScope.launch {
-        val controller = RecitationController.getInstance(app)
+        val controller = AndroidRecitationController.getInstance(context)
         combine(
             RecitationService.sharedState,
             controller.isPlayingState,
@@ -452,7 +452,7 @@ private suspend fun runRecitationControls(
     block: suspend RecitationController.() -> Unit,
 ) {
     withContext(Dispatchers.Main) {
-        RecitationController.getInstance(context).block()
+        AndroidRecitationController.getInstance(context).block()
     }
 }
 

@@ -20,7 +20,8 @@ object TranslationVersionStore {
         if (raw.isEmpty()) return mutableMapOf()
 
         return try {
-            JsonHelper.json.decodeFromString<Map<String, TranslationVersionEntry>>(raw).toMutableMap()
+            JsonHelper.json.decodeFromString<Map<String, TranslationVersionEntry>>(raw)
+                .toMutableMap()
         } catch (e: Exception) {
             Logger.saveError(e, "TranslationVersionStore.loadAll")
             mutableMapOf()

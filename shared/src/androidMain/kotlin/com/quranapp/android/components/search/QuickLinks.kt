@@ -31,17 +31,16 @@ import com.quranapp.android.generated.resources.strLabelSurah
 import com.quranapp.android.generated.resources.strLabelVerseWithChapNo
 import com.quranapp.android.generated.resources.tafsirForVerse
 import com.quranapp.android.locale.LocalAppLocale
-import com.quranapp.android.locale.formattedStringResource
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.navigation.AppRoutes
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.search.QuickLinkItem
 import com.quranapp.android.search.stableKey
 import com.quranapp.android.theme.alpha
+import com.quranapp.android.utils.miscellenous.Keys
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.viewmodel.QuranSearchViewModel
 import org.jetbrains.compose.resources.stringResource
-import com.quranapp.android.navigation.AppRoute
-import com.quranapp.android.platform.PlatformServices
-import com.quranapp.android.navigation.AppRoutes
-import com.quranapp.android.utils.miscellenous.Keys
 
 @Composable
 fun QuickLinks(viewModel: QuranSearchViewModel) {
@@ -77,19 +76,45 @@ fun QuickLinks(viewModel: QuranSearchViewModel) {
                                 }
 
                                 is QuickLinkItem.Tafsir -> {
-                                    PlatformServices.navigator.navigate(AppRoute.Screen(screen = AppRoutes.TAFSIR, extras = mapOf(Keys.READER_KEY_CHAPTER_NO to item.chapterNo, Keys.READER_KEY_VERSE_NO to item.verseNo)))
+                                    Platform.navigator.navigate(
+                                        AppRoute.Screen(
+                                            screen = AppRoutes.TAFSIR,
+                                            extras = mapOf(
+                                                Keys.READER_KEY_CHAPTER_NO to item.chapterNo,
+                                                Keys.READER_KEY_VERSE_NO to item.verseNo
+                                            )
+                                        )
+                                    )
                                 }
 
                                 is QuickLinkItem.Chapter -> {
-                                    PlatformServices.navigator.navigate(AppRoute.Reader(ReaderFactory.chapter(item.surah.surah.surahNo)))
+                                    Platform.navigator.navigate(
+                                        AppRoute.Reader(
+                                            ReaderFactory.chapter(
+                                                item.surah.surah.surahNo
+                                            )
+                                        )
+                                    )
                                 }
 
                                 is QuickLinkItem.Juz -> {
-                                    PlatformServices.navigator.navigate(AppRoute.Reader(ReaderFactory.juz(item.juzNo)))
+                                    Platform.navigator.navigate(
+                                        AppRoute.Reader(
+                                            ReaderFactory.juz(
+                                                item.juzNo
+                                            )
+                                        )
+                                    )
                                 }
 
                                 is QuickLinkItem.Hizb -> {
-                                    PlatformServices.navigator.navigate(AppRoute.Reader(ReaderFactory.hizb(item.hizbNo)))
+                                    Platform.navigator.navigate(
+                                        AppRoute.Reader(
+                                            ReaderFactory.hizb(
+                                                item.hizbNo
+                                            )
+                                        )
+                                    )
                                 }
                             }
                         },
@@ -103,7 +128,15 @@ fun QuickLinks(viewModel: QuranSearchViewModel) {
         data = quickRefData,
         onOpenInReader = { chapterNo, range ->
             quickRefData = null
-            PlatformServices.navigator.navigate(AppRoute.Reader(ReaderFactory.verseRange(chapterNo, range.first, range.last)))
+            Platform.navigator.navigate(
+                AppRoute.Reader(
+                    ReaderFactory.verseRange(
+                        chapterNo,
+                        range.first,
+                        range.last
+                    )
+                )
+            )
         },
         onClose = { quickRefData = null },
     )
@@ -125,24 +158,24 @@ private fun CompactQuickLinkCard(
         }
 
         is QuickLinkItem.Verse ->
-            formattedStringResource(
+            stringResource(
                 Res.string.strLabelVerseWithChapNo,
                 item.chapterNo,
                 item.verseNo
             )
 
         is QuickLinkItem.Tafsir ->
-            formattedStringResource(
+            stringResource(
                 Res.string.tafsirForVerse,
                 item.chapterNo,
                 item.verseNo,
             )
 
         is QuickLinkItem.Juz ->
-            formattedStringResource(Res.string.strLabelJuzNo, item.juzNo)
+            stringResource(Res.string.strLabelJuzNo, item.juzNo)
 
         is QuickLinkItem.Hizb ->
-            formattedStringResource(Res.string.labelHizbNo, item.hizbNo)
+            stringResource(Res.string.labelHizbNo, item.hizbNo)
     }
 
     val shape = RoundedCornerShape(8.dp)

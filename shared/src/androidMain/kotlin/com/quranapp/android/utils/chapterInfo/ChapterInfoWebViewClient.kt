@@ -11,7 +11,7 @@ import com.quranapp.android.generated.resources.noto_nastaliq_urdu_regular
 import com.quranapp.android.generated.resources.suracon
 import com.quranapp.android.html.AppWebViewClient
 import com.quranapp.android.models.ChapterInfoContentData
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.resources.ComposeResourceFiles
 import kotlinx.coroutines.runBlocking
 import java.net.URLConnection
@@ -52,7 +52,7 @@ class ChapterInfoWebViewClient(
         val inputStream = when (host) {
             "assets-file" -> {
                 runBlocking {
-                    PlatformServices.assets.readAssetBytes(
+                    Platform.assets.readAssetBytes(
                         uri.toString().removePrefix("https://assets-file/"),
                     ).inputStream()
                 }

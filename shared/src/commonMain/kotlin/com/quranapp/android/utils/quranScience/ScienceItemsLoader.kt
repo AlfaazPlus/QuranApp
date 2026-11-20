@@ -18,7 +18,7 @@ import com.quranapp.android.generated.resources.ic_science_physics
 import com.quranapp.android.generated.resources.ic_science_physiology
 import com.quranapp.android.generated.resources.ic_science_zoology
 import com.quranapp.android.models.QuranScienceItem
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
@@ -45,7 +45,7 @@ fun getQuranScienceDrawableRes(id: String): DrawableResource {
 suspend fun loadScienceItems(): List<QuranScienceItem> {
     val items = mutableListOf<QuranScienceItem>()
     val jsonArray = Json.parseToJsonElement(
-        PlatformServices.assets.readAssetText("science/index.json"),
+        Platform.assets.readAssetText("science/index.json"),
     ).jsonArray
 
     jsonArray.forEach {

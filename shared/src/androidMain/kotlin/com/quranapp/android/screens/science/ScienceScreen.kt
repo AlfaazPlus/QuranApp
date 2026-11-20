@@ -50,20 +50,18 @@ import com.quranapp.android.generated.resources.dr_icon_info
 import com.quranapp.android.generated.resources.quran_and_science
 import com.quranapp.android.generated.resources.strLabelGotIt
 import com.quranapp.android.generated.resources.strLabelScienceReferences
-import com.quranapp.android.locale.formattedStringResource
 import com.quranapp.android.models.QuranScienceItem
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.navigation.AppRoutes
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.grayscaleColorFilter
 import com.quranapp.android.theme.observeIsMonoPalette
-import com.quranapp.android.navigation.AppRoute
-import com.quranapp.android.utils.extensions.putKotlinSerializableExtra
 import com.quranapp.android.utils.miscellenous.Keys
 import com.quranapp.android.utils.quranScience.loadScienceItems
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import com.quranapp.android.platform.PlatformServices
-import com.quranapp.android.navigation.AppRoutes
 
 @Composable
 fun ScienceScreen() {
@@ -141,7 +139,7 @@ fun ItemCard(item: QuranScienceItem) {
 
     Card(
         onClick = {
-            PlatformServices.navigator.navigate(
+            Platform.navigator.navigate(
                 AppRoute.Screen(
                     screen = AppRoutes.QURAN_SCIENCE_CONTENT,
                     extras = mapOf(Keys.KEY_QURAN_SCIENCE_ITEM to item)
@@ -192,7 +190,7 @@ fun ItemCard(item: QuranScienceItem) {
                     modifier = Modifier.fillMaxWidth()
                 )
                 Text(
-                    text = formattedStringResource(
+                    text = stringResource(
                         Res.string.strLabelScienceReferences,
                         item.referencesCount
                     ),

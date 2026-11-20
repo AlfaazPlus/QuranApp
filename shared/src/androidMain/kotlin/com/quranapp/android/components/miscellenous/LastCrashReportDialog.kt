@@ -22,7 +22,7 @@ import com.quranapp.android.generated.resources.createIssue
 import com.quranapp.android.generated.resources.lastCrashLog
 import com.quranapp.android.generated.resources.pasteCrashLogGithubIssue
 import com.quranapp.android.generated.resources.strLabelCopy
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.preferences.AppPreferences
 import com.quranapp.android.utils.app.Logger
 import kotlinx.coroutines.Dispatchers
@@ -69,9 +69,9 @@ fun LastCrashReportDialog() {
                     val log = crashLog ?: return@AlertDialogAction
 
                     dismiss()
-                    PlatformServices.system.clipboardManager.copy(log)
+                    Platform.system.clipboardManager.copy(log)
                     scope.launch {
-                        PlatformServices.messages.showClipboard(
+                        Platform.messages.showClipboard(
                             getString(Res.string.copiedToClipboard),
                         )
                     }
@@ -85,14 +85,14 @@ fun LastCrashReportDialog() {
                     val log = crashLog ?: return@AlertDialogAction
 
                     dismiss()
-                    PlatformServices.system.clipboardManager.copy(log)
+                    Platform.system.clipboardManager.copy(log)
                     scope.launch {
-                        PlatformServices.messages.show(
+                        Platform.messages.show(
                             getString(Res.string.pasteCrashLogGithubIssue),
                             long = true
                         )
                     }
-                    PlatformServices.links.browse(ApiConfig.GITHUB_ISSUES_BUG_REPORT_URL)
+                    Platform.links.browse(ApiConfig.GITHUB_ISSUES_BUG_REPORT_URL)
                 },
             ),
         ),

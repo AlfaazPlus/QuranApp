@@ -11,7 +11,7 @@ import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.strMsgInvalidChapterNo
 import com.quranapp.android.generated.resources.strMsgInvalidJuzNo
 import com.quranapp.android.models.ChapterVersePair
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.reader.QuranPageItem
 import com.quranapp.android.reader.ReaderLayoutItem
@@ -645,7 +645,7 @@ class ReaderViewModel() : ReaderProviderViewModel() {
             }
 
             if (didSave) {
-                PlatformServices.system.shortcutManager.pushLastVersesShortcut(
+                Platform.system.shortcutManager.pushLastVersesShortcut(
                     readType = entity.readType,
                     readerMode = entity.readerMode,
                     chapterNo = entity.chapterNo,

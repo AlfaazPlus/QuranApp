@@ -3,16 +3,15 @@ package com.quranapp.android.utils.tafsir
 import com.quranapp.android.api.models.tafsir.TafsirInfoModel
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.tafsir.QuranTafsirDBHelper
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.importing.ImportException
 import com.quranapp.android.utils.importing.ImportFailure
 import com.quranapp.android.utils.importing.ImportManifest
 import com.quranapp.android.utils.translation.isCustomImportSlug
-import io.github.vinceglb.filekit.PlatformFile
-import io.github.vinceglb.filekit.readString
 
 object CustomTafsirImporter {
-    suspend fun import(manifest: ImportManifest, pickedFile: PlatformFile) {
+    suspend fun import(manifest: ImportManifest, location: String) {
         try {
             val existing = TafsirManager.getModel(manifest.slug)
 
@@ -22,7 +21,7 @@ object CustomTafsirImporter {
 
             val repository = DatabaseProvider.getQuranRepository()
             val models = parseTafsirImport(
-                pickedFile.readString(),
+                Platform.externalFiles.readText(location),
                 manifest.slug
             ) { chapterNo, verseNo ->
                 repository.isVerseValid4Chapter(chapterNo, verseNo)

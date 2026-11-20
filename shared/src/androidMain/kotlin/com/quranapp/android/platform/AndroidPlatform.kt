@@ -10,14 +10,14 @@ import android.os.Build
 import android.widget.Toast
 import androidx.core.net.toUri
 import com.quranapp.android.db.QURAN_DATABASE_NAME
-import com.quranapp.android.models.ChapterVersePair
 import com.quranapp.android.navigation.AndroidAppNavigator
 import com.quranapp.android.platform.clipboard.AndroidClipboardManager
+import com.quranapp.android.platform.files.AndroidExternalFiles
+import com.quranapp.android.platform.mediaplayer.AndroidMediaPlayer
 import com.quranapp.android.platform.notification.AndroidNotificationManager
 import com.quranapp.android.platform.shortcut.AndroidShortcutManager
 import com.quranapp.android.resources.ComposeResourceFiles
 import com.quranapp.android.task.AndroidTaskManager
-import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.reader.FontResolver
 import com.quranapp.platform.AppImageLoader
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,22 +36,24 @@ import java.util.zip.ZipFile
 fun installAndroidFileSystem(context: Context) {
     // Called from Application.attachBaseContext, where applicationContext is still null.
     ComposeResourceFiles.install(context)
-    PlatformServices.installFiles(AndroidAppFileSystem(context))
+    Platform.installFiles(AndroidAppFileSystem(context))
 }
 
 fun installAndroidPlatform(context: Context) {
     val app = context.applicationContext
     ComposeResourceFiles.install(app)
 
-    PlatformServices.install(
+    Platform.install(
         assets = DefaultAppAssets(),
         files = AndroidAppFileSystem(app),
+        externalFiles = AndroidExternalFiles(app),
         fonts = FontResolver.getInstance(app),
-        audio = AndroidAudioPlayer(app),
+        audio = AndroidMediaPlayer(app),
         links = AndroidAppLinks(app),
         messages = AndroidAppMessages(app),
         networkMonitor = AndroidNetworkMonitor(app),
         system = AndroidSystemServices(app),
+        environment = AndroidSystemEnvironment(app),
         navigator = AndroidAppNavigator(app),
     )
 }
@@ -251,20 +253,6 @@ private class AndroidAppLinks(
         } catch (_: ActivityNotFoundException) {
             Toast.makeText(context, "Failed to open.", Toast.LENGTH_SHORT).show()
         }
-    }
-}
-
-private class AndroidAudioPlayer(
-    context: Context,
-) : AudioPlayer {
-    private val controller = RecitationController.getInstance(context)
-
-    override fun playChapterVerse(chapterNo: Int, verseNo: Int) {
-        controller.playControl(ChapterVersePair(chapterNo, verseNo))
-    }
-
-    override fun pause() {
-        controller.pause()
     }
 }
 

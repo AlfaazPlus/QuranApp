@@ -5,7 +5,7 @@ import androidx.sqlite.execSQL
 import com.quranapp.android.db.openBundled
 import com.quranapp.android.db.textOrNull
 import com.quranapp.android.models.BookmarkModel
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.utils.app.AppFiles
 
 /**
@@ -14,7 +14,7 @@ import com.quranapp.android.utils.app.AppFiles
  */
 class BookmarkDbHelper() {
     fun getBookmarks(): ArrayList<BookmarkModel> {
-        val file = PlatformServices.files.databaseDirectory / DB_NAME
+        val file = Platform.files.databaseDirectory / DB_NAME
         if (!AppFiles.exists(file)) return arrayListOf()
 
         val connection = openBundled(file, DB_VERSION) { db ->

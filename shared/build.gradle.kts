@@ -95,7 +95,6 @@ kotlin {
             implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.8.0")
             implementation("com.apollographql.apollo:apollo-api:5.2.0")
             implementation("io.github.optimumcode:json-schema-validator:0.5.5")
-            implementation("io.github.vinceglb:filekit-dialogs-compose:0.17.1")
         }
 
         androidMain.dependencies {

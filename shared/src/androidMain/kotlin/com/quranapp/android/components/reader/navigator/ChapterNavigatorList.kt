@@ -53,7 +53,7 @@ import com.quranapp.android.generated.resources.dr_icon_search
 import com.quranapp.android.generated.resources.strHintSearch
 import com.quranapp.android.generated.resources.strHintSearchChapter
 import com.quranapp.android.generated.resources.strLabelVerseNo
-import com.quranapp.android.locale.formattedStringResource
+
 import com.quranapp.android.reader.ReaderMode
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.utils.quran.QuranMeta
@@ -286,7 +286,7 @@ private fun ChapterVerseList(
                         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
                     ) {
                         Text(
-                            formattedStringResource(Res.string.strLabelVerseNo, verseNo),
+                            stringResource(Res.string.strLabelVerseNo, verseNo),
                             modifier = Modifier
                                 .clickable {
                                     onVerseSelected(currentChapter.surahNo, verseNo)

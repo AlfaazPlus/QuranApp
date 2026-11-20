@@ -1,8 +1,19 @@
 package com.quranapp.android.components.collections
 
 import androidx.compose.ui.graphics.Color
-import com.quranapp.android.generated.resources.*
 import com.quranapp.android.generated.resources.Res
+import com.quranapp.android.generated.resources.col_book_open
+import com.quranapp.android.generated.resources.col_bookmark
+import com.quranapp.android.generated.resources.col_brain
+import com.quranapp.android.generated.resources.col_folder_open
+import com.quranapp.android.generated.resources.col_graduation
+import com.quranapp.android.generated.resources.col_heart
+import com.quranapp.android.generated.resources.col_mic_vocal
+import com.quranapp.android.generated.resources.col_moon_star
+import com.quranapp.android.generated.resources.col_shield_check
+import com.quranapp.android.generated.resources.col_sprout
+import com.quranapp.android.generated.resources.col_star
+import com.quranapp.android.generated.resources.col_sun
 import org.jetbrains.compose.resources.DrawableResource
 
 fun collectionColor(hex: String?): Color {

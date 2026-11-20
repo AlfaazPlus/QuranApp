@@ -30,10 +30,10 @@ import com.quranapp.android.generated.resources.image_saved
 import com.quranapp.android.generated.resources.image_share_failed
 import com.quranapp.android.generated.resources.strLabelShare
 import com.quranapp.android.generated.resources.strLabelVerseSerialWithChapter
-import com.quranapp.android.locale.formattedStringResource
+
 import com.quranapp.android.models.DataLoadError
 import com.quranapp.android.models.Translation
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.preferences.AppPreferences
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.utils.reader.FontResolver
@@ -55,6 +55,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.getString
+import org.jetbrains.compose.resources.stringResource
 import kotlin.math.abs
 
 private data class LoadedAtlasState(
@@ -147,7 +148,7 @@ fun ShareAsImageProvider(
 
         when {
             catalog == null -> {
-                templatesError = if (!PlatformServices.networkMonitor.isConnected) {
+                templatesError = if (!Platform.networkMonitor.isConnected) {
                     DataLoadError.NoConnection
                 } else {
                     DataLoadError.Failed
@@ -331,7 +332,7 @@ fun ShareAsImageProvider(
     }
 
     val citationText = if (verse != null) {
-        formattedStringResource(
+        stringResource(
             Res.string.strLabelVerseSerialWithChapter,
             verse!!.chapter.getCurrentName(),
             verse!!.chapterNo,
@@ -453,7 +454,7 @@ fun ShareAsImageProvider(
         scope.launch {
             val bitmap = buildExportBitmap()
             if (bitmap == null) {
-                PlatformServices.messages.show(getString(Res.string.image_share_failed))
+                Platform.messages.show(getString(Res.string.image_share_failed))
                 isExporting = false
                 return@launch
             }
@@ -464,7 +465,7 @@ fun ShareAsImageProvider(
                 getString(Res.string.strLabelShare),
             )
             if (!ok) {
-                PlatformServices.messages.show(getString(Res.string.image_share_failed))
+                Platform.messages.show(getString(Res.string.image_share_failed))
             }
             isExporting = false
         }
@@ -476,13 +477,13 @@ fun ShareAsImageProvider(
         scope.launch {
             val bitmap = buildExportBitmap()
             if (bitmap == null) {
-                PlatformServices.messages.show(getString(Res.string.image_save_failed))
+                Platform.messages.show(getString(Res.string.image_save_failed))
                 isExporting = false
                 return@launch
             }
 
             val ok = ShareImageExporter.saveToGallery(context, bitmap)
-            PlatformServices.messages.show(getString(if (ok) Res.string.image_saved else Res.string.image_save_failed))
+            Platform.messages.show(getString(if (ok) Res.string.image_saved else Res.string.image_save_failed))
             isExporting = false
         }
     }

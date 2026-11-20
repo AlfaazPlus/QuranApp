@@ -48,7 +48,6 @@ import com.quranapp.android.components.common.dialogs.BottomSheetBare
 import com.quranapp.android.components.common.dialogs.MessageDialog
 import com.quranapp.android.components.settings.TranslationDownloadList
 import com.quranapp.android.components.settings.TranslationSelectionMessages
-import com.quranapp.android.models.transls.TranslModel
 import com.quranapp.android.extensions.appViewModel
 import com.quranapp.android.extensions.verticalFadingEdge
 import com.quranapp.android.generated.resources.Res
@@ -59,6 +58,7 @@ import com.quranapp.android.generated.resources.strLabelClose
 import com.quranapp.android.generated.resources.strLabelRetry
 import com.quranapp.android.generated.resources.strMsgSomethingWrong
 import com.quranapp.android.generated.resources.strTitleDownloadTranslations
+import com.quranapp.android.models.transls.TranslModel
 import com.quranapp.android.viewmodel.TranslationDownloadEvent
 import com.quranapp.android.viewmodel.TranslationDownloadUiEvent
 import com.quranapp.android.viewmodel.TranslationDownloadViewModel

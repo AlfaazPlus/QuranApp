@@ -72,9 +72,11 @@ import com.quranapp.android.generated.resources.strLabelPlay
 import com.quranapp.android.generated.resources.strLabelRead
 import com.quranapp.android.generated.resources.strTitleVOTD
 import com.quranapp.android.models.ChapterVersePair
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.navigation.AppRoutes
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.tightTextStyle
-import com.quranapp.android.navigation.AppRoute
 import com.quranapp.android.utils.mediaplayer.WbwAudioPlayer
 import com.quranapp.android.utils.miscellenous.Keys
 import com.quranapp.android.utils.reader.ComposeUiConfig
@@ -87,8 +89,6 @@ import com.quranapp.android.viewmodel.VotdViewModel
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import com.quranapp.android.platform.PlatformServices
-import com.quranapp.android.navigation.AppRoutes
 
 @Composable
 fun VerseOfTheDay(
@@ -294,7 +294,7 @@ internal fun VotdContent(
                 tint = iconTint,
                 small = true,
                 onClick = {
-                    PlatformServices.navigator.navigate(
+                    Platform.navigator.navigate(
                         AppRoute.Screen(
                             screen = AppRoutes.SHARE_AS_IMAGE,
                             extras = mapOf(
@@ -310,7 +310,16 @@ internal fun VotdContent(
 
             FilledTonalButton(
                 modifier = Modifier.height(28.dp),
-                onClick = { PlatformServices.navigator.navigate(AppRoute.Reader(ReaderFactory.verse(verse.chapterNo, verse.verseNo))) },
+                onClick = {
+                    Platform.navigator.navigate(
+                        AppRoute.Reader(
+                            ReaderFactory.verse(
+                                verse.chapterNo,
+                                verse.verseNo
+                            )
+                        )
+                    )
+                },
                 contentPadding = PaddingValues(horizontal = 16.dp, vertical = 0.dp)
             ) {
                 Text(

@@ -74,11 +74,11 @@ import com.quranapp.android.generated.resources.strLabelCopy
 import com.quranapp.android.generated.resources.wbwSelectLanguage
 import com.quranapp.android.generated.resources.wordNo
 import com.quranapp.android.locale.LocalAppLocale
-import com.quranapp.android.locale.formattedStringResource
+
 import com.quranapp.android.navigation.AppRoute
 import com.quranapp.android.navigation.AppRoutes
 import com.quranapp.android.navigation.SettingRoutes
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.reader.ReaderLayoutItem
 import com.quranapp.android.repository.QuranRepository
@@ -331,9 +331,9 @@ private fun WordContent(
                         word,
                     )
 
-                    PlatformServices.system.clipboardManager.copy(text)
+                    Platform.system.clipboardManager.copy(text)
 
-                    PlatformServices.messages.showClipboard(
+                    Platform.messages.showClipboard(
                         getString(Res.string.copiedToClipboard),
                     )
                 }
@@ -394,7 +394,7 @@ private fun VerseContextHeader(
     val parts = buildList {
         if (chapterName.isNotBlank()) add(chapterName)
         add(appLocale.format($$"%1$d:%2$d", chapterNo, verseNo))
-        add(formattedStringResource(Res.string.wordNo, word.wordIndex + 1))
+        add(stringResource(Res.string.wordNo, word.wordIndex + 1))
     }
 
     Row(
@@ -520,7 +520,7 @@ private fun ArabicWordCard(
             } else {
                 TextButton(
                     onClick = {
-                        PlatformServices.navigator.navigate(
+                        Platform.navigator.navigate(
                             AppRoute.Screen(
                                 screen = AppRoutes.SETTINGS,
                                 extras = mapOf(Keys.NAV_DESTINATION to SettingRoutes.WWB)

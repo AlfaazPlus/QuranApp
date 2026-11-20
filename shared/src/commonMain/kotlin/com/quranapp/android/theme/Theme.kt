@@ -9,6 +9,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.quranapp.android.locale.LocalAppLocale
 import com.quranapp.android.locale.appLocaleFlow
+import com.quranapp.android.platform.AppThemeMode
 import com.quranapp.android.preferences.DataStoreManager
 
 @Composable
@@ -37,8 +38,8 @@ fun QuranAppTheme(
 }
 
 @Composable
-fun ThemeUtils.observeThemeMode(): String =
-    DataStoreManager.observe(ThemeUtils.KEY_THEME_MODE)
+fun ThemeUtils.observeThemeMode(): AppThemeMode =
+    AppThemeMode.fromStorage(DataStoreManager.observe(ThemeUtils.KEY_THEME_MODE))
 
 @Composable
 fun ThemeUtils.observeThemeColor(): String =
@@ -51,9 +52,9 @@ fun ThemeUtils.observeIsDynamicColor(): Boolean =
 @Composable
 fun ThemeUtils.observeDarkTheme(): Boolean {
     return when (observeThemeMode()) {
-        ThemeUtils.THEME_MODE_LIGHT -> false
-        ThemeUtils.THEME_MODE_DARK -> true
-        else -> isSystemInDarkTheme()
+        AppThemeMode.Light -> false
+        AppThemeMode.Dark -> true
+        AppThemeMode.System -> isSystemInDarkTheme()
     }
 }
 

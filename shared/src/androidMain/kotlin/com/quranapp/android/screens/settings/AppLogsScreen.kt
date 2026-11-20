@@ -64,7 +64,7 @@ import com.quranapp.android.generated.resources.strLabelCopy
 import com.quranapp.android.generated.resources.strLabelDelete
 import com.quranapp.android.generated.resources.suppressedLogs
 import com.quranapp.android.generated.resources.textNoLogsFound
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.miscellenous.DateUtils
@@ -201,7 +201,7 @@ private fun CrashLogs() {
                     .apply { remove(it) }
 
                 scope.launch {
-                    PlatformServices.messages.show(getString(Res.string.logRemoved))
+                    Platform.messages.show(getString(Res.string.logRemoved))
                 }
             }
         }
@@ -285,7 +285,7 @@ private fun SuppressedLogs() {
                     .apply { remove(it) }
 
                 scope.launch {
-                    PlatformServices.messages.show(getString(Res.string.logRemoved))
+                    Platform.messages.show(getString(Res.string.logRemoved))
                 }
             }
         }
@@ -359,9 +359,9 @@ private fun AppLogItem(log: AppLogModel, isCrash: Boolean, handleDelete: (AppLog
                     IconButton(
                         painter = painterResource(Res.drawable.icon_copy),
                         onClick = {
-                            PlatformServices.system.clipboardManager.copy(log.log)
+                            Platform.system.clipboardManager.copy(log.log)
                             scope.launch {
-                                PlatformServices.messages.showClipboard(
+                                Platform.messages.showClipboard(
                                     getString(Res.string.copiedToClipboard),
                                 )
                             }
@@ -374,14 +374,14 @@ private fun AppLogItem(log: AppLogModel, isCrash: Boolean, handleDelete: (AppLog
                 SimpleTooltip(text = stringResource(Res.string.github)) {
                     Button(
                         onClick = {
-                            PlatformServices.system.clipboardManager.copy(log.log)
+                            Platform.system.clipboardManager.copy(log.log)
                             scope.launch {
-                                PlatformServices.messages.show(
+                                Platform.messages.show(
                                     getString(Res.string.pasteCrashLogGithubIssue),
                                     long = true
                                 )
                             }
-                            PlatformServices.links.browse(ApiConfig.GITHUB_ISSUES_BUG_REPORT_URL)
+                            Platform.links.browse(ApiConfig.GITHUB_ISSUES_BUG_REPORT_URL)
                         },
                         modifier = Modifier.size(36.dp),
                         shape = RoundedCornerShape(100),

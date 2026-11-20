@@ -32,20 +32,18 @@ import com.quranapp.android.generated.resources.strTitleMajorSins
 import com.quranapp.android.generated.resources.titleEtiquetteVerses
 import com.quranapp.android.generated.resources.titleSolutionVerses
 import com.quranapp.android.generated.resources.topics
-import com.quranapp.android.locale.formattedStringResource
 import com.quranapp.android.models.ExclusiveVersesDataset
 import com.quranapp.android.models.QuranicTopicsStart
-import com.quranapp.android.search.CollectionSearchResult
 import com.quranapp.android.navigation.AppRoute
-import com.quranapp.android.utils.extensions.putKotlinSerializableExtra
+import com.quranapp.android.navigation.AppRoutes
+import com.quranapp.android.platform.Platform
+import com.quranapp.android.search.CollectionSearchResult
 import com.quranapp.android.utils.miscellenous.Keys
 import com.quranapp.android.utils.reader.ExclusiveVerseNavigator
 import com.quranapp.android.viewmodel.QuranSearchViewModel
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
-import com.quranapp.android.platform.PlatformServices
-import com.quranapp.android.navigation.AppRoutes
 
 @Composable
 fun ExclusiveSearchResults(
@@ -104,7 +102,7 @@ private fun ExclusiveSearchResultCard(
             onClick()
             when (result) {
                 is CollectionSearchResult.TopicsDbItem -> {
-                    PlatformServices.navigator.navigate(
+                    Platform.navigator.navigate(
                         AppRoute.Screen(
                             screen = AppRoutes.QURANIC_TOPICS,
                             extras = buildMap {
@@ -132,7 +130,7 @@ private fun ExclusiveSearchResultCard(
                 }
 
                 is CollectionSearchResult.ScienceTopicItem -> {
-                    PlatformServices.navigator.navigate(
+                    Platform.navigator.navigate(
                         AppRoute.Screen(
                             screen = AppRoutes.QURAN_SCIENCE_CONTENT,
                             extras = mapOf(Keys.KEY_QURAN_SCIENCE_ITEM to result.item)
@@ -171,7 +169,7 @@ private fun ExclusiveSearchResultCard(
 
                 is CollectionSearchResult.ScienceTopicItem -> {
                     Text(
-                        text = formattedStringResource(
+                        text = stringResource(
                             Res.string.strLabelScienceReferences,
                             result.item.referencesCount
                         ),

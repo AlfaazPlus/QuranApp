@@ -1,6 +1,5 @@
 package com.quranapp.android.components.settings
 
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -17,9 +16,9 @@ import com.quranapp.android.generated.resources.strLabelThemeLight
 import com.quranapp.android.generated.resources.strMsgThemeDark
 import com.quranapp.android.generated.resources.strMsgThemeDefault
 import com.quranapp.android.generated.resources.strTitleTheme
+import com.quranapp.android.platform.AppThemeMode
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.observeThemeMode
-import com.quranapp.android.theme.resolveThemeModeForDelegate
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 
@@ -30,16 +29,16 @@ fun ThemeSelectorSheet(isOpen: Boolean, onDismiss: () -> Unit) {
 
     val items = listOf(
         Triple(
-            ThemeUtils.THEME_MODE_DEFAULT,
+            AppThemeMode.System,
             Res.string.strLabelSystemDefault,
             Res.string.strMsgThemeDefault
         ),
         Triple(
-            ThemeUtils.THEME_MODE_DARK,
+            AppThemeMode.Dark,
             Res.string.strLabelThemeDark,
             Res.string.strMsgThemeDark
         ),
-        Triple(ThemeUtils.THEME_MODE_LIGHT, Res.string.strLabelThemeLight, null),
+        Triple(AppThemeMode.Light, Res.string.strLabelThemeLight, null),
     )
 
     BottomSheet(
@@ -61,11 +60,7 @@ fun ThemeSelectorSheet(isOpen: Boolean, onDismiss: () -> Unit) {
 
                         coroutineScope.launch {
                             ThemeUtils.setThemeMode(theme)
-                            AppCompatDelegate.setDefaultNightMode(
-                                ThemeUtils.resolveThemeModeForDelegate(
-                                    theme
-                                )
-                            )
+                            ThemeUtils.applyNightMode(theme)
                         }
                     }
                 )

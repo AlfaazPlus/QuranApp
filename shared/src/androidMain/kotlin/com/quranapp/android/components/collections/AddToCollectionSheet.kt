@@ -47,7 +47,7 @@ import com.quranapp.android.generated.resources.create
 import com.quranapp.android.generated.resources.strHintSearch
 import com.quranapp.android.generated.resources.strLabelUpdate
 import com.quranapp.android.generated.resources.verse_count
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.viewmodel.CollectionsViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -180,7 +180,7 @@ private fun Content(
                 scope.launch {
                     repository.applyVerseMembership(chapterNo, verseNo, current)
 
-                    PlatformServices.messages.show(getString(Res.string.collection_updated))
+                    Platform.messages.show(getString(Res.string.collection_updated))
 
                     onDismiss()
                 }

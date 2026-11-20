@@ -16,7 +16,7 @@ import com.quranapp.android.generated.resources.strLabelClose
 import com.quranapp.android.generated.resources.strMsgCouldNotOpenPage
 import com.quranapp.android.generated.resources.strMsgSomethingWrong
 import com.quranapp.android.generated.resources.strMsgTryLater
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.app.UrlsManager
 import kotlinx.coroutines.CancellationException
@@ -69,7 +69,7 @@ fun rememberInfoLinks(): (urlKey: String) -> Unit {
 
                 if (url.isNullOrEmpty()) return@launch
 
-                PlatformServices.links.browse(url)
+                Platform.links.browse(url)
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {

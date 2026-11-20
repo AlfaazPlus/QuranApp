@@ -534,41 +534,41 @@
     <string name="collection_updated">Подборки обновлены</string>
     <string name="updated_just_now">Обновлено только что</string>
     <plurals name="verse_count">
-            <item quantity="one">%1$d аят</item>
-            <item quantity="few">%1$d аята</item>
-            <item quantity="many">%1$d аятов</item>
-            <item quantity="other">%1$d аята</item>
-        </plurals>
+        <item quantity="one">%1$d аят</item>
+        <item quantity="few">%1$d аята</item>
+        <item quantity="many">%1$d аятов</item>
+        <item quantity="other">%1$d аята</item>
+    </plurals>
     <plurals name="updated_minutes">
-            <item quantity="one">Обновлено %1$d минуту назад</item>
-            <item quantity="few">Обновлено %1$d минуты назад</item>
-            <item quantity="many">Обновлено %1$d минут назад</item>
-            <item quantity="other">Обновлено %1$d минуты назад</item>
-        </plurals>
+        <item quantity="one">Обновлено %1$d минуту назад</item>
+        <item quantity="few">Обновлено %1$d минуты назад</item>
+        <item quantity="many">Обновлено %1$d минут назад</item>
+        <item quantity="other">Обновлено %1$d минуты назад</item>
+    </plurals>
     <plurals name="updated_hours">
-            <item quantity="one">Обновлено %1$d час назад</item>
-            <item quantity="few">Обновлено %1$d часа назад</item>
-            <item quantity="many">Обновлено %1$d часов назад</item>
-            <item quantity="other">Обновлено %1$d часа назад</item>
-        </plurals>
+        <item quantity="one">Обновлено %1$d час назад</item>
+        <item quantity="few">Обновлено %1$d часа назад</item>
+        <item quantity="many">Обновлено %1$d часов назад</item>
+        <item quantity="other">Обновлено %1$d часа назад</item>
+    </plurals>
     <plurals name="updated_days">
-            <item quantity="one">Обновлено %1$d день назад</item>
-            <item quantity="few">Обновлено %1$d дня назад</item>
-            <item quantity="many">Обновлено %1$d дней назад</item>
-            <item quantity="other">Обновлено %1$d дня назад</item>
-        </plurals>
+        <item quantity="one">Обновлено %1$d день назад</item>
+        <item quantity="few">Обновлено %1$d дня назад</item>
+        <item quantity="many">Обновлено %1$d дней назад</item>
+        <item quantity="other">Обновлено %1$d дня назад</item>
+    </plurals>
     <plurals name="item_count">
-            <item quantity="one">%1$d предмет</item>
-            <item quantity="few">%1$d предмета</item>
-            <item quantity="many">%1$d предметов</item>
-            <item quantity="other">%1$d предмета</item>
-        </plurals>
+        <item quantity="one">%1$d предмет</item>
+        <item quantity="few">%1$d предмета</item>
+        <item quantity="many">%1$d предметов</item>
+        <item quantity="other">%1$d предмета</item>
+    </plurals>
     <plurals name="place_count">
-            <item quantity="one">%1$d место</item>
-            <item quantity="few">%1$d места</item>
-            <item quantity="many">%1$d мест</item>
-            <item quantity="other">%1$d места</item>
-        </plurals>
+        <item quantity="one">%1$d место</item>
+        <item quantity="few">%1$d места</item>
+        <item quantity="many">%1$d мест</item>
+        <item quantity="other">%1$d места</item>
+    </plurals>
     <string name="advanced_settings">Дополнительные настройки</string>
     <string name="recent_history">Недавняя история</string>
     <string name="set_as_active">Сделать активным</string>

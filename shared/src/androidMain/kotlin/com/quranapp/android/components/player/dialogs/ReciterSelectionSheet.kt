@@ -50,7 +50,7 @@ import com.quranapp.android.generated.resources.strTitleSelectReciter
 import com.quranapp.android.navigation.AppRoute
 import com.quranapp.android.navigation.AppRoutes
 import com.quranapp.android.navigation.SettingRoutes
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.preferences.RecitationPreferences
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.utils.mediaplayer.RecitationAudioKind
@@ -301,7 +301,7 @@ private fun TranslationReciters(
 }
 
 private fun openDownloadsScreen(context: Context) {
-    PlatformServices.navigator.navigate(
+    Platform.navigator.navigate(
         AppRoute.Screen(
             screen = AppRoutes.SETTINGS,
             extras = mapOf(Keys.NAV_DESTINATION to SettingRoutes.RECITATION_DOWNLOAD)

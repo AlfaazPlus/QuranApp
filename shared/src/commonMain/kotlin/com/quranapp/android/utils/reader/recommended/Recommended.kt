@@ -1,7 +1,7 @@
 package com.quranapp.android.utils.reader.recommended
 
 import com.quranapp.android.locale.appFallbackLanguageCodes
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.utils.miscellenous.DateUtils
 import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.LocalDateTime
@@ -62,7 +62,7 @@ object Recommended {
 
     private suspend fun loadDocument(): RecommendedRulesDoc? = try {
         json.decodeFromString<RecommendedRulesDoc>(
-            PlatformServices.assets.readAssetText("verses/recommended/rules.json"),
+            Platform.assets.readAssetText("verses/recommended/rules.json"),
         )
     } catch (e: Exception) {
         null
@@ -70,7 +70,7 @@ object Recommended {
 
     private suspend fun loadStrings(): Map<String, RuleCopy> {
         val text = appFallbackLanguageCodes().firstNotNullOfOrNull { lang ->
-            PlatformServices.assets.readAssetTextOrNull("verses/recommended/lang_$lang.json")
+            Platform.assets.readAssetTextOrNull("verses/recommended/lang_$lang.json")
         } ?: ""
 
         if (text.isBlank()) return emptyMap()

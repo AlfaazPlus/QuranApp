@@ -105,11 +105,14 @@ import com.quranapp.android.generated.resources.strTitleTafsir
 import com.quranapp.android.generated.resources.strTitleVerseOptions
 import com.quranapp.android.generated.resources.verse_count
 import com.quranapp.android.models.ChapterVersePair
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.navigation.AppRoutes
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.reader.ReaderLayoutItem
 import com.quranapp.android.reader.ReaderPreparedData
 import com.quranapp.android.theme.alpha
+import com.quranapp.android.utils.miscellenous.Keys
 import com.quranapp.android.utils.reader.ComposeUiConfig
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.ReaderItemsBuilder
@@ -123,9 +126,6 @@ import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.pluralStringResource
 import org.jetbrains.compose.resources.stringResource
-import com.quranapp.android.navigation.AppRoute
-import com.quranapp.android.navigation.AppRoutes
-import com.quranapp.android.utils.miscellenous.Keys
 
 private data class CollectionScrollAnchor(
     val itemId: Long,
@@ -423,7 +423,7 @@ private fun CollectionDetailContent(
                     scope.launch {
                         vm.deleteCollection(collectionId)
 
-                        PlatformServices.messages.show(getString(Res.string.msg_collection_deleted))
+                        Platform.messages.show(getString(Res.string.msg_collection_deleted))
 
                         onBackPressedDispatcher?.onBackPressed()
                     }
@@ -645,13 +645,32 @@ private fun CollectionVerseActionBar(
                 painter = painterResource(Res.drawable.ic_book_open_text),
                 contentDescription = stringResource(Res.string.strTitleTafsir),
                 tint = iconTint,
-            ) { PlatformServices.navigator.navigate(AppRoute.Screen(screen = AppRoutes.TAFSIR, extras = mapOf(Keys.READER_KEY_CHAPTER_NO to verse.chapterNo, Keys.READER_KEY_VERSE_NO to verse.verseNo))) }
+            ) {
+                Platform.navigator.navigate(
+                    AppRoute.Screen(
+                        screen = AppRoutes.TAFSIR,
+                        extras = mapOf(
+                            Keys.READER_KEY_CHAPTER_NO to verse.chapterNo,
+                            Keys.READER_KEY_VERSE_NO to verse.verseNo
+                        )
+                    )
+                )
+            }
 
             VerseActionIconButton(
                 painter = painterResource(Res.drawable.dr_icon_open),
                 contentDescription = stringResource(Res.string.strLabelRead),
                 tint = iconTint,
-            ) { PlatformServices.navigator.navigate(AppRoute.Reader(ReaderFactory.verse(verse.chapterNo, verse.verseNo))) }
+            ) {
+                Platform.navigator.navigate(
+                    AppRoute.Reader(
+                        ReaderFactory.verse(
+                            verse.chapterNo,
+                            verse.verseNo
+                        )
+                    )
+                )
+            }
 
         }
         Spacer(modifier = Modifier.width(10.dp))

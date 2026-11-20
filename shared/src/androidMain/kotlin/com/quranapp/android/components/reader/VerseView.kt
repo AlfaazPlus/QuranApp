@@ -52,11 +52,11 @@ import com.quranapp.android.generated.resources.strLabelVerseSerialWithChapter
 import com.quranapp.android.generated.resources.strTitleTafsir
 import com.quranapp.android.generated.resources.strTitleVerseOptions
 import com.quranapp.android.generated.resources.strTitleVerseRecitation
-import com.quranapp.android.locale.formattedStringResource
+
 import com.quranapp.android.models.ChapterVersePair
 import com.quranapp.android.navigation.AppRoute
 import com.quranapp.android.navigation.AppRoutes
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.reader.ReaderLayoutItem
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.utils.mediaplayer.RecitationController
@@ -176,7 +176,7 @@ private fun VerseActionBar(
                 contentDescription = stringResource(Res.string.strTitleTafsir),
                 tint = iconTint,
             ) {
-                PlatformServices.navigator.navigate(
+                Platform.navigator.navigate(
                     AppRoute.Screen(
                         screen = AppRoutes.TAFSIR,
                         extras = mapOf(
@@ -292,7 +292,7 @@ fun VerseSerial(
     val chapterNo = verse.chapterNo
     val verseNo = verse.verseNo
 
-    val contentDescription = formattedStringResource(
+    val contentDescription = stringResource(
         Res.string.strDescVerseNoWithChapter,
         verse.chapter.getCurrentName(),
         verseNo
@@ -300,13 +300,13 @@ fun VerseSerial(
 
     Text(
         text = if (verse.includeChapterNameInSerial) {
-            formattedStringResource(
+            stringResource(
                 Res.string.strLabelVerseSerialWithChapter,
                 verse.chapter.getCurrentName(),
                 chapterNo,
                 verseNo
             )
-        } else formattedStringResource(
+        } else stringResource(
             Res.string.strLabelVerseSerial,
             chapterNo,
             verseNo
@@ -315,7 +315,7 @@ fun VerseSerial(
             .semantics { this.contentDescription = contentDescription }
             .clip(RoundedCornerShape(5.dp))
             .background(colorScheme.surfaceContainerLow)
-            .clickable { PlatformServices.system.clipboardManager.copy(contentDescription) }
+            .clickable { Platform.system.clipboardManager.copy(contentDescription) }
             .padding(horizontal = 8.dp, vertical = 4.dp),
         color = colorScheme.onSurface,
         style = typography.labelLarge,

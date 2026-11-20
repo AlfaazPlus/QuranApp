@@ -8,7 +8,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import com.quranapp.android.activities.base.BaseActivity
-import com.quranapp.android.components.ReferenceVerseModel
+import com.quranapp.android.models.ReferenceVerseModel
 import com.quranapp.android.screens.reference.ReferenceScreen
 import com.quranapp.android.theme.QuranAppTheme
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,7 +29,9 @@ class ActivityReference : BaseActivity() {
             }
 
             val referenceModel = remember(currentIntent) {
-                ReferenceVerseModel.fromBundle(currentIntent!!.extras)
+                ReferenceVerseModel.decode(
+                    currentIntent!!.getStringExtra(ReferenceVerseModel.KEY)
+                )
             } ?: return@setContent
 
             QuranAppTheme {

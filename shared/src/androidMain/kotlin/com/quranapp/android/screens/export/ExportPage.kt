@@ -19,7 +19,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.backup.BackupImportService
 import com.quranapp.android.backup.showBackupFailure
@@ -35,7 +34,6 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ExportPage() {
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val exportBytes = remember { mutableStateOf(ByteArray(0)) }
 
@@ -43,9 +41,9 @@ fun ExportPage() {
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode != Activity.RESULT_OK) return@rememberLauncherForActivityResult
-        val uri = result.data?.data ?: return@rememberLauncherForActivityResult
+        val location = result.data?.data?.toString() ?: return@rememberLauncherForActivityResult
         scope.launch(Dispatchers.IO) {
-            writeExport(context, uri, exportBytes.value)
+            writeExport(location, exportBytes.value)
         }
     }
 
@@ -95,7 +93,7 @@ fun ExportPage() {
                     } catch (error: Exception) {
                         Logger.saveError(error, "exportData")
                         withContext(Dispatchers.Main) {
-                            showBackupFailure(context, error)
+                            showBackupFailure(error)
                         }
                     }
                 }

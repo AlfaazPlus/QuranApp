@@ -534,35 +534,35 @@
     <string name="collection_updated">Coleções atualizadas</string>
     <string name="updated_just_now">Atualizado agora mesmo</string>
     <plurals name="verse_count">
-            <item quantity="one">%1$d versículo</item>
-            <item quantity="many">%1$d versículos</item>
-            <item quantity="other">%1$d versículos</item>
-        </plurals>
+        <item quantity="one">%1$d versículo</item>
+        <item quantity="many">%1$d versículos</item>
+        <item quantity="other">%1$d versículos</item>
+    </plurals>
     <plurals name="updated_minutes">
-            <item quantity="one">Atualizado há %1$d minuto</item>
-            <item quantity="many">Atualizado há %1$d minutos</item>
-            <item quantity="other">Atualizado há %1$d minutos</item>
-        </plurals>
+        <item quantity="one">Atualizado há %1$d minuto</item>
+        <item quantity="many">Atualizado há %1$d minutos</item>
+        <item quantity="other">Atualizado há %1$d minutos</item>
+    </plurals>
     <plurals name="updated_hours">
-            <item quantity="one">Atualizado há %1$d hora</item>
-            <item quantity="many">Atualizado há %1$d horas</item>
-            <item quantity="other">Atualizado há %1$d horas</item>
-        </plurals>
+        <item quantity="one">Atualizado há %1$d hora</item>
+        <item quantity="many">Atualizado há %1$d horas</item>
+        <item quantity="other">Atualizado há %1$d horas</item>
+    </plurals>
     <plurals name="updated_days">
-            <item quantity="one">Atualizado há %1$d dia</item>
-            <item quantity="many">Atualizado há %1$d dias</item>
-            <item quantity="other">Atualizado há %1$d dias</item>
-        </plurals>
+        <item quantity="one">Atualizado há %1$d dia</item>
+        <item quantity="many">Atualizado há %1$d dias</item>
+        <item quantity="other">Atualizado há %1$d dias</item>
+    </plurals>
     <plurals name="item_count">
-            <item quantity="one">%1$d item</item>
-            <item quantity="many">%1$d itens</item>
-            <item quantity="other">%1$d itens</item>
-        </plurals>
+        <item quantity="one">%1$d item</item>
+        <item quantity="many">%1$d itens</item>
+        <item quantity="other">%1$d itens</item>
+    </plurals>
     <plurals name="place_count">
-            <item quantity="one">%1$d local</item>
-            <item quantity="many">%1$d locais</item>
-            <item quantity="other">%1$d locais</item>
-        </plurals>
+        <item quantity="one">%1$d local</item>
+        <item quantity="many">%1$d locais</item>
+        <item quantity="other">%1$d locais</item>
+    </plurals>
     <string name="advanced_settings">Configurações avançadas</string>
     <string name="recent_history">Histórico recente</string>
     <string name="set_as_active">Definir como ativo</string>

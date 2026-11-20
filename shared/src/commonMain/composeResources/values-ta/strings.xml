@@ -524,29 +524,29 @@
     <string name="collection_updated">தொகுப்புகள் புதுப்பிக்கப்பட்டன</string>
     <string name="updated_just_now">இப்போதுதான் புதுப்பிக்கப்பட்டது</string>
     <plurals name="verse_count">
-            <item quantity="one">%1$d உரையாடல்</item>
-            <item quantity="other">%1$d உரையாடல்கள்</item>
-        </plurals>
+        <item quantity="one">%1$d உரையாடல்</item>
+        <item quantity="other">%1$d உரையாடல்கள்</item>
+    </plurals>
     <plurals name="updated_minutes">
-            <item quantity="one">%1$d நிமிடத்திற்கு முன் புதுப்பிக்கப்பட்டது</item>
-            <item quantity="other">%1$d நிமிடங்களுக்கு முன் புதுப்பிக்கப்பட்டது</item>
-        </plurals>
+        <item quantity="one">%1$d நிமிடத்திற்கு முன் புதுப்பிக்கப்பட்டது</item>
+        <item quantity="other">%1$d நிமிடங்களுக்கு முன் புதுப்பிக்கப்பட்டது</item>
+    </plurals>
     <plurals name="updated_hours">
-            <item quantity="one">%1$d மணி நேரத்திற்கு முன் புதுப்பிக்கப்பட்டது</item>
-            <item quantity="other">%1$d மணி நேரத்திற்கு முன் புதுப்பிக்கப்பட்டது</item>
-        </plurals>
+        <item quantity="one">%1$d மணி நேரத்திற்கு முன் புதுப்பிக்கப்பட்டது</item>
+        <item quantity="other">%1$d மணி நேரத்திற்கு முன் புதுப்பிக்கப்பட்டது</item>
+    </plurals>
     <plurals name="updated_days">
-            <item quantity="one">%1$d நாளுக்கு முன் புதுப்பிக்கப்பட்டது</item>
-            <item quantity="other">%1$d நாட்களுக்கு முன் புதுப்பிக்கப்பட்டது</item>
-        </plurals>
+        <item quantity="one">%1$d நாளுக்கு முன் புதுப்பிக்கப்பட்டது</item>
+        <item quantity="other">%1$d நாட்களுக்கு முன் புதுப்பிக்கப்பட்டது</item>
+    </plurals>
     <plurals name="item_count">
-            <item quantity="one">%1$d உருப்படி</item>
-            <item quantity="other">%1$d உருப்படிகள்</item>
-        </plurals>
+        <item quantity="one">%1$d உருப்படி</item>
+        <item quantity="other">%1$d உருப்படிகள்</item>
+    </plurals>
     <plurals name="place_count">
-            <item quantity="one">%1$d இடம்</item>
-            <item quantity="other">%1$d இடங்கள்</item>
-        </plurals>
+        <item quantity="one">%1$d இடம்</item>
+        <item quantity="other">%1$d இடங்கள்</item>
+    </plurals>
     <string name="advanced_settings">மேம்பட்ட அமைப்புகள்</string>
     <string name="recent_history">சமீபத்திய வரலாறு</string>
     <string name="set_as_active">செயலில் உள்ளதாக அமை</string>

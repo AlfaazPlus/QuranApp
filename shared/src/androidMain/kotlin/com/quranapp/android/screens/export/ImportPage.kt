@@ -1,10 +1,5 @@
 package com.quranapp.android.screens.export
 
-import android.app.Activity
-import android.content.Intent
-import android.net.Uri
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,11 +19,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -49,29 +42,22 @@ import com.quranapp.android.generated.resources.labelSelectFile
 import com.quranapp.android.generated.resources.strLabelCancel
 import com.quranapp.android.generated.resources.titleConfirmImport
 import com.quranapp.android.generated.resources.warnImportSettings
+import com.quranapp.android.platform.files.rememberDocumentPicker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
-private val uriSaver = Saver<Uri?, String>(
-    save = { it?.toString().orEmpty() },
-    restore = { saved -> saved.takeIf { it.isNotEmpty() }?.let(Uri::parse) },
-)
-
 @Composable
 fun ImportPage() {
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    var importUri by rememberSaveable(stateSaver = uriSaver) { mutableStateOf(null) }
+    var importLocation by rememberSaveable { mutableStateOf<String?>(null) }
     var fileName by rememberSaveable { mutableStateOf<String?>(null) }
-    val importLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode != Activity.RESULT_OK) return@rememberLauncherForActivityResult
-        val uri = result.data?.data ?: return@rememberLauncherForActivityResult
-        importUri = uri
-        fileName = readImportFileName(context, uri)
+    val pickDocument = rememberDocumentPicker(
+        mimeTypes = listOf("application/json", "application/gzip", "application/x-gzip"),
+    ) { location ->
+        importLocation = location
+        fileName = location?.let(::readImportFileName)
     }
     var selectedItems by rememberSaveable(stateSaver = exportSelectionSaver) {
         mutableStateOf(setOf<String>())
@@ -87,18 +73,7 @@ fun ImportPage() {
     ) {
         Spacer(modifier = Modifier.height(20.dp))
         OutlinedButton(
-            onClick = {
-                importLauncher.launch(
-                    Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                        addCategory(Intent.CATEGORY_OPENABLE)
-                        type = "*/*"
-                        putExtra(
-                            Intent.EXTRA_MIME_TYPES,
-                            arrayOf("application/json", "application/gzip", "application/x-gzip"),
-                        )
-                    },
-                )
-            },
+            onClick = pickDocument,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(52.dp),
@@ -163,11 +138,11 @@ fun ImportPage() {
                     text = stringResource(Res.string.labelImport),
                     style = AlertDialogActionStyle.Primary,
                     onClick = {
-                        val uri = importUri
-                        if (uri != null) {
+                        val location = importLocation
+                        if (location != null) {
                             confirmImport = false
                             scope.launch(Dispatchers.IO) {
-                                importBackup(context, uri, selectedScopes(selectedItems))
+                                importBackup(location, selectedScopes(selectedItems))
                             }
                         }
                     },

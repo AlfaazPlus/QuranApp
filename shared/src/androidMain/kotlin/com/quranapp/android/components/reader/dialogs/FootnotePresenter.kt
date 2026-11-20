@@ -47,7 +47,7 @@ import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.strLabelVerseSerialWithChapter
 import com.quranapp.android.generated.resources.strTitleFootnote
 import com.quranapp.android.generated.resources.strTitleFootnotes
-import com.quranapp.android.locale.formattedStringResource
+
 import com.quranapp.android.models.Footnote
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.repository.TranslationRepository
@@ -186,7 +186,7 @@ private fun Header(
         Text(
             text = buildAnnotatedString {
                 append(
-                    formattedStringResource(
+                    stringResource(
                         Res.string.strLabelVerseSerialWithChapter,
                         chapterName,
                         verse.chapterNo,

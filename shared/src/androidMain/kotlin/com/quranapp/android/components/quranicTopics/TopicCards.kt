@@ -26,15 +26,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.quranapp.android.models.ReferenceThumbnail
+import com.quranapp.android.models.ReferenceVerseModel
 import com.quranapp.android.db.entities.topics.RelationshipType
 import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.dr_icon_chevron_right
 import com.quranapp.android.generated.resources.strLabelVerseSerial
 import com.quranapp.android.generated.resources.strLabelViewAll
-import com.quranapp.android.locale.formattedStringResource
 import com.quranapp.android.navigation.AppRoute
 import com.quranapp.android.navigation.AppRoutes
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.repository.TopicVersePreview
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.utils.miscellenous.stripHtmlTags
@@ -219,16 +220,16 @@ internal fun VerseRefsCard(
 
         val description = topic.shortDescription ?: ""
 
-        PlatformServices.navigator.navigate(
+        Platform.navigator.navigate(
             AppRoute.Screen(
                 screen = AppRoutes.REFERENCE,
-                extras = buildMap {
-                    put("title", topic.title)
-                    put("desc", description.stripHtmlTags(true))
-                    put("chapters", chapters)
-                    put("verses", compressedRefs.toSet())
-                    topic.imageUrl?.let { put("thumbnail_url", it) }
-                },
+                extras = ReferenceVerseModel(
+                    title = topic.title,
+                    desc = description.stripHtmlTags(true),
+                    chapters = chapters,
+                    verses = compressedRefs.toSet(),
+                    thumbnail = topic.imageUrl?.let { ReferenceThumbnail.RemoteUrl(it) },
+                ).toExtras(),
             )
         )
     }
@@ -281,7 +282,7 @@ internal fun VerseRefsCard(
                         Modifier.padding(10.dp)
                     ) {
                         Text(
-                            text = formattedStringResource(
+                            text = stringResource(
                                 Res.string.strLabelVerseSerial,
                                 preview.chapterNo,
                                 preview.verseNo
@@ -291,7 +292,7 @@ internal fun VerseRefsCard(
                                 .background(colorScheme.surface)
                                 .clickable(
                                     onClick = {
-                                        PlatformServices.system.clipboardManager.copy("${preview.chapterNo}:${preview.verseNo}")
+                                        Platform.system.clipboardManager.copy("${preview.chapterNo}:${preview.verseNo}")
                                     },
                                 )
                                 .padding(horizontal = 8.dp, vertical = 4.dp),

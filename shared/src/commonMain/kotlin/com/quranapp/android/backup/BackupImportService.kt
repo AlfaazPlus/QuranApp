@@ -3,7 +3,8 @@ package com.quranapp.android.backup
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.entities.user.BookmarkEntity
 import com.quranapp.android.locale.appLocale
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.AppThemeMode
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.preferences.AppPreferences
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.preferences.RecitationPreferences
@@ -43,7 +44,7 @@ class BackupImportService() {
     private var cachedSchema: String? = null
 
     private suspend fun getSchema(): String {
-        return cachedSchema ?: PlatformServices.assets
+        return cachedSchema ?: Platform.assets
             .readAssetText("schemas/backup-v2.schema.json")
             .also { cachedSchema = it }
     }
@@ -107,7 +108,7 @@ class BackupImportService() {
         val locale = appLocale()
         values[SettingsContract.LOCALE] = JsonPrimitive(locale.storedTag)
         values[SettingsContract.NUMERAL_SYSTEM] = JsonPrimitive(locale.numeralSystem?.storageKey)
-        values[SettingsContract.THEME] = JsonPrimitive(ThemeUtils.getThemeMode())
+        values[SettingsContract.THEME] = JsonPrimitive(ThemeUtils.getThemeMode().storageKey)
         values[SettingsContract.THEME_COLOR] = JsonPrimitive(ThemeUtils.getThemeColor())
         values[SettingsContract.DYNAMIC_COLOR] = JsonPrimitive(ThemeUtils.getDynamicColor())
         values[SettingsContract.DAILY_REMINDER] =
@@ -200,7 +201,9 @@ class BackupImportService() {
             }
 
             SettingsContract.THEME -> {
-                ThemeUtils.setThemeMode((setting.value as SettingValue.Text).value)
+                ThemeUtils.setThemeMode(
+                    AppThemeMode.fromStorage((setting.value as SettingValue.Text).value),
+                )
             }
 
             SettingsContract.THEME_COLOR -> {

@@ -534,53 +534,53 @@
     <string name="collection_updated">تم تحديث المجموعات</string>
     <string name="updated_just_now">تم التحديث الآن</string>
     <plurals name="verse_count">
-            <item quantity="zero">%1$d آيات</item>
-            <item quantity="one">%1$d آية</item>
-            <item quantity="two">%1$d آيتان</item>
-            <item quantity="few">%1$d آيات</item>
-            <item quantity="many">%1$d آية</item>
-            <item quantity="other">%1$d آية</item>
-        </plurals>
+        <item quantity="zero">%1$d آيات</item>
+        <item quantity="one">%1$d آية</item>
+        <item quantity="two">%1$d آيتان</item>
+        <item quantity="few">%1$d آيات</item>
+        <item quantity="many">%1$d آية</item>
+        <item quantity="other">%1$d آية</item>
+    </plurals>
     <plurals name="updated_minutes">
-            <item quantity="zero">حُدّث قبل %1$d دقيقة</item>
-            <item quantity="one">حُدّث قبل %1$d دقيقة</item>
-            <item quantity="two">حُدّث قبل %1$d دقيقتين</item>
-            <item quantity="few">حُدّث قبل %1$d دقائق</item>
-            <item quantity="many">حُدّث قبل %1$d دقيقة</item>
-            <item quantity="other">حُدّث قبل %1$d دقيقة</item>
-        </plurals>
+        <item quantity="zero">حُدّث قبل %1$d دقيقة</item>
+        <item quantity="one">حُدّث قبل %1$d دقيقة</item>
+        <item quantity="two">حُدّث قبل %1$d دقيقتين</item>
+        <item quantity="few">حُدّث قبل %1$d دقائق</item>
+        <item quantity="many">حُدّث قبل %1$d دقيقة</item>
+        <item quantity="other">حُدّث قبل %1$d دقيقة</item>
+    </plurals>
     <plurals name="updated_hours">
-            <item quantity="zero">حُدّث قبل %1$d ساعة</item>
-            <item quantity="one">حُدّث قبل %1$d ساعة</item>
-            <item quantity="two">حُدّث قبل %1$d ساعتين</item>
-            <item quantity="few">حُدّث قبل %1$d ساعات</item>
-            <item quantity="many">حُدّث قبل %1$d ساعة</item>
-            <item quantity="other">حُدّث قبل %1$d ساعة</item>
-        </plurals>
+        <item quantity="zero">حُدّث قبل %1$d ساعة</item>
+        <item quantity="one">حُدّث قبل %1$d ساعة</item>
+        <item quantity="two">حُدّث قبل %1$d ساعتين</item>
+        <item quantity="few">حُدّث قبل %1$d ساعات</item>
+        <item quantity="many">حُدّث قبل %1$d ساعة</item>
+        <item quantity="other">حُدّث قبل %1$d ساعة</item>
+    </plurals>
     <plurals name="updated_days">
-            <item quantity="zero">حُدّث قبل %1$d يوم</item>
-            <item quantity="one">حُدّث قبل %1$d يوم</item>
-            <item quantity="two">حُدّث قبل %1$d يومين</item>
-            <item quantity="few">حُدّث قبل %1$d أيام</item>
-            <item quantity="many">حُدّث قبل %1$d يومًا</item>
-            <item quantity="other">حُدّث قبل %1$d يوم</item>
-        </plurals>
+        <item quantity="zero">حُدّث قبل %1$d يوم</item>
+        <item quantity="one">حُدّث قبل %1$d يوم</item>
+        <item quantity="two">حُدّث قبل %1$d يومين</item>
+        <item quantity="few">حُدّث قبل %1$d أيام</item>
+        <item quantity="many">حُدّث قبل %1$d يومًا</item>
+        <item quantity="other">حُدّث قبل %1$d يوم</item>
+    </plurals>
     <plurals name="item_count">
-            <item quantity="zero">%1$d عناصر</item>
-            <item quantity="one">%1$d عنصر</item>
-            <item quantity="two">%1$d عنصران</item>
-            <item quantity="few">%1$d عناصر</item>
-            <item quantity="many">%1$d عنصرًا</item>
-            <item quantity="other">%1$d عنصر</item>
-        </plurals>
+        <item quantity="zero">%1$d عناصر</item>
+        <item quantity="one">%1$d عنصر</item>
+        <item quantity="two">%1$d عنصران</item>
+        <item quantity="few">%1$d عناصر</item>
+        <item quantity="many">%1$d عنصرًا</item>
+        <item quantity="other">%1$d عنصر</item>
+    </plurals>
     <plurals name="place_count">
-            <item quantity="zero">%1$d مواضع</item>
-            <item quantity="one">%1$d موضع</item>
-            <item quantity="two">%1$d موضعان</item>
-            <item quantity="few">%1$d مواضع</item>
-            <item quantity="many">%1$d موضعًا</item>
-            <item quantity="other">%1$d موضع</item>
-        </plurals>
+        <item quantity="zero">%1$d مواضع</item>
+        <item quantity="one">%1$d موضع</item>
+        <item quantity="two">%1$d موضعان</item>
+        <item quantity="few">%1$d مواضع</item>
+        <item quantity="many">%1$d موضعًا</item>
+        <item quantity="other">%1$d موضع</item>
+    </plurals>
     <string name="advanced_settings">إعدادات متقدمة</string>
     <string name="recent_history">السجل الأخير</string>
     <string name="set_as_active">تعيين كنشط</string>

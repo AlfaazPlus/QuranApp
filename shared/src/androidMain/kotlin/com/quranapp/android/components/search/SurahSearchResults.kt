@@ -18,11 +18,11 @@ import com.quranapp.android.components.reader.navigator.ChapterCard
 import com.quranapp.android.db.relations.SurahWithLocalizations
 import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.noResults
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.viewmodel.QuranSearchViewModel
 import org.jetbrains.compose.resources.stringResource
-import com.quranapp.android.navigation.AppRoute
-import com.quranapp.android.platform.PlatformServices
 
 @Composable
 fun SurahSearchResults(
@@ -58,7 +58,7 @@ fun SurahSearchResults(
                 surah = it,
                 onClick = {
                     viewModel.commitOnIntentionalOutcome()
-                    PlatformServices.navigator.navigate(AppRoute.Reader(ReaderFactory.chapter(it.surah.surahNo)))
+                    Platform.navigator.navigate(AppRoute.Reader(ReaderFactory.chapter(it.surah.surahNo)))
                 },
             )
         }

@@ -531,29 +531,29 @@
     <string name="collection_updated">Koleksiyonlar güncellendi</string>
     <string name="updated_just_now">Az önce güncellendi</string>
     <plurals name="verse_count">
-            <item quantity="one">%1$d ayet</item>
-            <item quantity="other">%1$d ayet</item>
-        </plurals>
+        <item quantity="one">%1$d ayet</item>
+        <item quantity="other">%1$d ayet</item>
+    </plurals>
     <plurals name="updated_minutes">
-            <item quantity="one">%1$d dakika önce güncellendi</item>
-            <item quantity="other">%1$d dakika önce güncellendi</item>
-        </plurals>
+        <item quantity="one">%1$d dakika önce güncellendi</item>
+        <item quantity="other">%1$d dakika önce güncellendi</item>
+    </plurals>
     <plurals name="updated_hours">
-            <item quantity="one">%1$d saat önce güncellendi</item>
-            <item quantity="other">%1$d saat önce güncellendi</item>
-        </plurals>
+        <item quantity="one">%1$d saat önce güncellendi</item>
+        <item quantity="other">%1$d saat önce güncellendi</item>
+    </plurals>
     <plurals name="updated_days">
-            <item quantity="one">%1$d gün önce güncellendi</item>
-            <item quantity="other">%1$d gün önce güncellendi</item>
-        </plurals>
+        <item quantity="one">%1$d gün önce güncellendi</item>
+        <item quantity="other">%1$d gün önce güncellendi</item>
+    </plurals>
     <plurals name="item_count">
-            <item quantity="one">%1$d öğe</item>
-            <item quantity="other">%1$d öğe</item>
-        </plurals>
+        <item quantity="one">%1$d öğe</item>
+        <item quantity="other">%1$d öğe</item>
+    </plurals>
     <plurals name="place_count">
-            <item quantity="one">%1$d yer</item>
-            <item quantity="other">%1$d yer</item>
-        </plurals>
+        <item quantity="one">%1$d yer</item>
+        <item quantity="other">%1$d yer</item>
+    </plurals>
     <string name="advanced_settings">Gelişmiş ayarlar</string>
     <string name="recent_history">Son geçmiş</string>
     <string name="set_as_active">Aktif olarak ayarla</string>

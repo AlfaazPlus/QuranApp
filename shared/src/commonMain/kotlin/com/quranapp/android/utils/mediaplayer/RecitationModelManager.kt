@@ -9,8 +9,8 @@ import com.quranapp.android.api.models.recitation2.RecitationQuranModel
 import com.quranapp.android.api.models.recitation2.RecitationTranslationModel
 import com.quranapp.android.locale.appFallbackLanguageCodes
 import com.quranapp.android.preferences.RecitationPreferences
-import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.app.AppFiles
+import com.quranapp.android.utils.app.Logger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -158,7 +158,8 @@ object RecitationModelManager {
         val isBoth = audioOption == AudioOption.BOTH
         val isOnlyTranslation = audioOption == AudioOption.ONLY_TRANSLATION
 
-        val quranReciterName = if (!isOnlyTranslation) getSelectedQuranModel()?.getReciterName() else null
+        val quranReciterName =
+            if (!isOnlyTranslation) getSelectedQuranModel()?.getReciterName() else null
         val translationReciterName =
             if (isBoth || isOnlyTranslation) getSelectedTranslationModel()?.getReciterName() else null
 
@@ -174,18 +175,21 @@ object RecitationModelManager {
     }
 
     @OptIn(ExperimentalSerializationApi::class)
-    private suspend fun loadQuranFromLocal(): AvailableRecitationsModel? = withContext(Dispatchers.IO) {
-        val file = quranManifestFile()
-        if (!AppFiles.exists(file) || AppFiles.size(file) == 0L) return@withContext null
+    private suspend fun loadQuranFromLocal(): AvailableRecitationsModel? =
+        withContext(Dispatchers.IO) {
+            val file = quranManifestFile()
+            if (!AppFiles.exists(file) || AppFiles.size(file) == 0L) return@withContext null
 
-        try {
-            val model = JsonHelper.json.decodeFromString<AvailableRecitationsModel>(AppFiles.readText(file))
-            AvailableRecitationsModel(reciters = model.reciters.sortedBy { it.reciter })
-        } catch (e: Exception) {
-            Logger.saveError(e, "RecitationManager.loadQuranFromLocal")
-            null
+            try {
+                val model = JsonHelper.json.decodeFromString<AvailableRecitationsModel>(
+                    AppFiles.readText(file)
+                )
+                AvailableRecitationsModel(reciters = model.reciters.sortedBy { it.reciter })
+            } catch (e: Exception) {
+                Logger.saveError(e, "RecitationManager.loadQuranFromLocal")
+                null
+            }
         }
-    }
 
     @OptIn(ExperimentalSerializationApi::class)
     private suspend fun loadTranslationFromLocal(): AvailableRecitationTranslationsModel? =
@@ -204,15 +208,16 @@ object RecitationModelManager {
             }
         }
 
-    private suspend fun loadQuranFromNetwork(): AvailableRecitationsModel? = withContext(Dispatchers.IO) {
-        try {
-            downloadManifest(quranManifestFile(), ApiClient.getAvailableRecitations())
-            loadQuranFromLocal()
-        } catch (e: Exception) {
-            Logger.saveError(e, "RecitationManager.loadQuranFromNetwork")
-            null
+    private suspend fun loadQuranFromNetwork(): AvailableRecitationsModel? =
+        withContext(Dispatchers.IO) {
+            try {
+                downloadManifest(quranManifestFile(), ApiClient.getAvailableRecitations())
+                loadQuranFromLocal()
+            } catch (e: Exception) {
+                Logger.saveError(e, "RecitationManager.loadQuranFromNetwork")
+                null
+            }
         }
-    }
 
     private suspend fun loadTranslationFromNetwork(): AvailableRecitationTranslationsModel? =
         withContext(Dispatchers.IO) {
@@ -241,8 +246,8 @@ object RecitationModelManager {
                 FileSystem.SYSTEM.listRecursively(dir).forEach { path ->
                     val metadata = FileSystem.SYSTEM.metadataOrNull(path) ?: return@forEach
                     val isMp3 = metadata.isRegularFile &&
-                        (metadata.size ?: 0L) > 0L &&
-                        path.name.endsWith(".mp3", ignoreCase = true)
+                            (metadata.size ?: 0L) > 0L &&
+                            path.name.endsWith(".mp3", ignoreCase = true)
                     if (isMp3) {
                         mp3Count++
                         hasMp3 = true
@@ -272,7 +277,8 @@ object RecitationModelManager {
 
     private fun quranManifestFile(): Path = AppFiles.savedFile(DIR_NAME, QURAN_MANIFEST_FILENAME)
 
-    private fun translationManifestFile(): Path = AppFiles.savedFile(DIR_NAME, TRANSLATION_MANIFEST_FILENAME)
+    private fun translationManifestFile(): Path =
+        AppFiles.savedFile(DIR_NAME, TRANSLATION_MANIFEST_FILENAME)
 
     private fun downloadManifest(file: Path, text: String) {
         val temp = file.parent!! / "${file.name}.tmp"

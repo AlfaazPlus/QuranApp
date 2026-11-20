@@ -1,9 +1,11 @@
 package com.quranapp.android.utils.workers
 
+import com.quranapp.android.models.ReferenceVerseModel
 import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.labelRecommended
 import com.quranapp.android.navigation.AppRoute
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.navigation.AppRoutes
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.platform.notification.AppNotification
 import com.quranapp.android.platform.notification.NotificationCategory
 import com.quranapp.android.platform.notification.NotificationChannels
@@ -21,7 +23,6 @@ import com.quranapp.android.utils.reader.recommended.Recommended
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.getString
-import com.quranapp.android.navigation.AppRoutes
 
 class RecommendedReminderWorker() : TaskWorker {
     companion object {
@@ -68,7 +69,7 @@ class RecommendedReminderWorker() : TaskWorker {
             contentIntent = NotificationIntent.Route(route),
         )
 
-        PlatformServices.system.notificationManager.notify(NOTIFICATION_ID, notification)
+        Platform.system.notificationManager.notify(NOTIFICATION_ID, notification)
 
         VersePreferences.setRecommendedNotifDedupeState(epochDay, sig)
 
@@ -98,8 +99,8 @@ class RecommendedReminderWorker() : TaskWorker {
 
             is RecommendationRef.Verses -> {
                 val ranges = ref.spec.split(',')
-                val chapters = mutableListOf<Int>()
-                val verseSpecs = mutableListOf<String>()
+                val chapters = mutableSetOf<Int>()
+                val verseSpecs = mutableSetOf<String>()
 
                 for (rangeSpec in ranges) {
                     val trimmed = rangeSpec.trim()
@@ -109,16 +110,14 @@ class RecommendedReminderWorker() : TaskWorker {
                     verseSpecs.add(trimmed)
                 }
 
-                val desc = recommendation.description.takeIf { it.isNotBlank() }
-
                 AppRoute.Screen(
                     screen = AppRoutes.REFERENCE,
-                    extras = buildMap {
-                        put("title", recommendation.title)
-                        if (desc != null) put("desc", desc)
-                        put("chapters", chapters)
-                        put("verses", verseSpecs)
-                    }
+                    extras = ReferenceVerseModel(
+                        title = recommendation.title,
+                        desc = recommendation.description.takeIf { it.isNotBlank() },
+                        chapters = chapters,
+                        verses = verseSpecs,
+                    ).toExtras(),
                 )
             }
         }

@@ -40,6 +40,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.quranapp.android.models.ReferenceThumbnail
+import com.quranapp.android.models.ReferenceVerseModel
 import com.quranapp.android.components.common.AppBar
 import com.quranapp.android.components.common.BottomSheetMenu
 import com.quranapp.android.components.common.BottomSheetMenuItem
@@ -57,6 +59,9 @@ import com.quranapp.android.generated.resources.strTitleFeaturedDuas
 import com.quranapp.android.generated.resources.strTitleFilters
 import com.quranapp.android.locale.rememberLocalized
 import com.quranapp.android.models.PropheticDuaProphet
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.navigation.AppRoutes
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.grayscaleColorFilter
@@ -70,9 +75,6 @@ import org.jetbrains.compose.resources.stringResource
 import java.text.MessageFormat
 import java.util.regex.Pattern
 import kotlin.time.Duration.Companion.milliseconds
-import com.quranapp.android.navigation.AppRoute
-import com.quranapp.android.navigation.AppRoutes
-import com.quranapp.android.platform.PlatformServices
 
 @Composable
 fun PropheticDuasScreen(title: String? = null) {
@@ -213,16 +215,18 @@ private fun PropheticDuaListItem(prophet: PropheticDuaProphet) {
                     MessageFormat.format("{0} ({1})", prophet.name, prophet.honorific),
                 )
 
-                PlatformServices.navigator.navigate(
+                Platform.navigator.navigate(
                     AppRoute.Screen(
                         screen = AppRoutes.REFERENCE,
-                        extras = buildMap {
-                            put("title", refTitle)
-                            put("desc", getString(Res.string.strMsgReferenceDuas))
-                            put("chapters", prophet.chapters)
-                            put("verses", prophet.verses)
-                            prophet.thumbnail?.let { put("thumbnail_url", it) }
-                        },
+                        extras = ReferenceVerseModel(
+                            title = refTitle,
+                            desc = getString(Res.string.strMsgReferenceDuas),
+                            chapters = prophet.chapters,
+                            verses = prophet.verses,
+                            thumbnail = prophet.thumbnail?.let {
+                                ReferenceThumbnail.RemoteUrl(it)
+                            },
+                        ).toExtras(),
                     )
                 )
             }

@@ -35,7 +35,7 @@ import com.quranapp.android.generated.resources.previousChapter
 import com.quranapp.android.generated.resources.previousHizb
 import com.quranapp.android.generated.resources.previousJuz
 import com.quranapp.android.generated.resources.strLabelJuzNo
-import com.quranapp.android.locale.formattedStringResource
+
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.viewmodel.ReaderViewModel
 import com.quranapp.android.viewmodel.ReaderViewType
@@ -124,8 +124,8 @@ private fun BoxScope.Indicator(
 
     val previousSubtitle: String? = when {
         !prevEnabled -> null
-        vt is ReaderViewType.Juz -> formattedStringResource(Res.string.strLabelJuzNo, vt.juzNo - 1)
-        vt is ReaderViewType.Hizb -> formattedStringResource(Res.string.labelHizbNo, vt.hizbNo - 1)
+        vt is ReaderViewType.Juz -> stringResource(Res.string.strLabelJuzNo, vt.juzNo - 1)
+        vt is ReaderViewType.Hizb -> stringResource(Res.string.labelHizbNo, vt.hizbNo - 1)
         vt is ReaderViewType.Chapter -> previousChapterSubtitle
         else -> null
     }

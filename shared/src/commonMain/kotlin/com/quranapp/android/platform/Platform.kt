@@ -1,6 +1,8 @@
 package com.quranapp.android.platform
 
 import com.quranapp.android.navigation.AppNavigator
+import com.quranapp.android.platform.files.ExternalFiles
+import com.quranapp.android.platform.mediaplayer.MediaPlayer
 import com.quranapp.android.platform.notification.NotificationManager
 import com.quranapp.android.platform.shortcut.ShortcutManager
 import com.quranapp.android.task.TaskManager
@@ -66,11 +68,6 @@ interface FontLoader {
     ): Source?
 }
 
-interface AudioPlayer {
-    fun playChapterVerse(chapterNo: Int, verseNo: Int)
-    fun pause()
-}
-
 interface AppMessages {
     fun show(text: String, long: Boolean = false)
     fun showClipboard(text: String)
@@ -92,14 +89,16 @@ interface SystemServices {
     val clipboardManager: ClipboardManager
 }
 
-object PlatformServices {
+object Platform {
     lateinit var assets: AppAssets
         private set
     lateinit var files: AppFileSystem
         private set
+    lateinit var externalFiles: ExternalFiles
+        private set
     lateinit var fonts: FontLoader
         private set
-    lateinit var audio: AudioPlayer
+    lateinit var audio: MediaPlayer
         private set
     lateinit var links: AppLinks
         private set
@@ -108,6 +107,8 @@ object PlatformServices {
     lateinit var networkMonitor: NetworkMonitor
         private set
     lateinit var system: SystemServices
+        private set
+    lateinit var environment: SystemEnvironment
         private set
     lateinit var navigator: AppNavigator
         private set
@@ -119,22 +120,26 @@ object PlatformServices {
     fun install(
         assets: AppAssets,
         files: AppFileSystem,
+        externalFiles: ExternalFiles,
         fonts: FontLoader,
-        audio: AudioPlayer,
+        audio: MediaPlayer,
         links: AppLinks,
         messages: AppMessages,
         networkMonitor: NetworkMonitor,
         system: SystemServices,
+        environment: SystemEnvironment,
         navigator: AppNavigator,
     ) {
         this.assets = assets
         this.files = files
+        this.externalFiles = externalFiles
         this.fonts = fonts
         this.audio = audio
         this.links = links
         this.messages = messages
         this.networkMonitor = networkMonitor
         this.system = system
+        this.environment = environment
         this.navigator = navigator
     }
 }

@@ -524,29 +524,29 @@
     <string name="collection_updated">সংগ্রহ আপডেট হয়েছে</string>
     <string name="updated_just_now">এইমাত্র আপডেট হয়েছে</string>
     <plurals name="verse_count">
-            <item quantity="one">%1$dটি আয়াত</item>
-            <item quantity="other">%1$dটি আয়াত</item>
-        </plurals>
+        <item quantity="one">%1$dটি আয়াত</item>
+        <item quantity="other">%1$dটি আয়াত</item>
+    </plurals>
     <plurals name="updated_minutes">
-            <item quantity="one">%1$d মিনিট আগে আপডেট হয়েছে</item>
-            <item quantity="other">%1$d মিনিট আগে আপডেট হয়েছে</item>
-        </plurals>
+        <item quantity="one">%1$d মিনিট আগে আপডেট হয়েছে</item>
+        <item quantity="other">%1$d মিনিট আগে আপডেট হয়েছে</item>
+    </plurals>
     <plurals name="updated_hours">
-            <item quantity="one">%1$d ঘণ্টা আগে আপডেট হয়েছে</item>
-            <item quantity="other">%1$d ঘণ্টা আগে আপডেট হয়েছে</item>
-        </plurals>
+        <item quantity="one">%1$d ঘণ্টা আগে আপডেট হয়েছে</item>
+        <item quantity="other">%1$d ঘণ্টা আগে আপডেট হয়েছে</item>
+    </plurals>
     <plurals name="updated_days">
-            <item quantity="one">%1$d দিন আগে আপডেট হয়েছে</item>
-            <item quantity="other">%1$d দিন আগে আপডেট হয়েছে</item>
-        </plurals>
+        <item quantity="one">%1$d দিন আগে আপডেট হয়েছে</item>
+        <item quantity="other">%1$d দিন আগে আপডেট হয়েছে</item>
+    </plurals>
     <plurals name="item_count">
-            <item quantity="one">%1$dটি আইটেম</item>
-            <item quantity="other">%1$dটি আইটেম</item>
-        </plurals>
+        <item quantity="one">%1$dটি আইটেম</item>
+        <item quantity="other">%1$dটি আইটেম</item>
+    </plurals>
     <plurals name="place_count">
-            <item quantity="one">%1$dটি স্থান</item>
-            <item quantity="other">%1$dটি স্থান</item>
-        </plurals>
+        <item quantity="one">%1$dটি স্থান</item>
+        <item quantity="other">%1$dটি স্থান</item>
+    </plurals>
     <string name="advanced_settings">উন্নত সেটিংস</string>
     <string name="recent_history">সাম্প্রতিক ইতিহাস</string>
     <string name="set_as_active">সক্রিয় হিসেবে সেট করুন</string>

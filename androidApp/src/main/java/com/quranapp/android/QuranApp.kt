@@ -4,11 +4,11 @@ import android.app.Application
 import android.content.Context
 import android.os.Build
 import android.webkit.WebView
-import androidx.appcompat.app.AppCompatDelegate
 import com.quranapp.android.db.DatabaseProvider
-import com.quranapp.android.db.bookmark.UserDataMigrationManager
+import com.quranapp.android.db.UserDataMigrationManager
 import com.quranapp.android.db.createDatabaseBuilders
 import com.quranapp.android.locale.refreshAppLocale
+import com.quranapp.android.platform.AppThemeMode
 import com.quranapp.android.platform.installAndroidFileSystem
 import com.quranapp.android.platform.installAndroidPlatform
 import com.quranapp.android.preferences.DataStoreManager
@@ -16,7 +16,6 @@ import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.preferences.migrateLegacySharedPreferences
 import com.quranapp.android.search.SearchIndexScheduler
 import com.quranapp.android.theme.ThemeUtils
-import com.quranapp.android.theme.resolveThemeModeForDelegate
 import com.quranapp.android.utils.app.DownloadSourceUtils
 import com.quranapp.android.utils.exceptions.CustomExceptionHandler
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
@@ -40,7 +39,7 @@ class QuranApp : Application() {
 
     private fun updateTheme() {
         val mode = runBlocking { DataStoreManager.readFirst(ThemeUtils.KEY_THEME_MODE) }
-        AppCompatDelegate.setDefaultNightMode(ThemeUtils.resolveThemeModeForDelegate(mode))
+        ThemeUtils.applyNightMode(AppThemeMode.fromStorage(mode))
     }
 
     override fun onCreate() {
@@ -57,7 +56,7 @@ class QuranApp : Application() {
         DataStoreManager.init(filesDir.toOkioPath())
         migrateLegacySharedPreferences(this)
         ReaderPreferences.onTafsirSelected = { TafsirManager.setSavedTafsirKey(it) }
-        refreshAppLocale(applicationContext)
+        runBlocking { refreshAppLocale() }
         DownloadSourceUtils.resetDownloadSourceBaseUrl()
         updateTheme()
         startVotdWidgetPreferenceObserver(this)

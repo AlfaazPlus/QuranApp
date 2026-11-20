@@ -56,7 +56,7 @@ import com.quranapp.android.generated.resources.prophet_yusuf
 import com.quranapp.android.generated.resources.prophet_zakariyya
 import com.quranapp.android.locale.appLocale
 import com.quranapp.android.models.Prophet
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.utils.quran.parser.ParserUtils.prepareChapterText
 import com.quranapp.android.utils.quran.parser.ParserUtils.prepareChaptersList
 import com.quranapp.android.utils.quran.parser.ParserUtils.prepareVersesList
@@ -101,7 +101,7 @@ object QuranProphetParser {
     private suspend fun parseProphetsInternal(): List<Prophet> {
         val repository = DatabaseProvider.getQuranRepository()
         val catalog = json.decodeFromString<ProphetCatalogFile>(
-            PlatformServices.assets.readAssetText("quran_prophets.json"),
+            Platform.assets.readAssetText("quran_prophets.json"),
         )
         val prophetList = ArrayList<Prophet>(catalog.prophets.size)
 
@@ -126,7 +126,7 @@ object QuranProphetParser {
                 prophet.references = references
                 prophet.verses = prepareVersesList(references, true)
                 prophet.chapters = prepareChaptersList(prophet.verses)
-                prophet.inChapters = prepareChapterText( repository, prophet.chapters, 1)
+                prophet.inChapters = prepareChapterText(repository, prophet.chapters, 1)
             }
 
             prophetList.add(prophet)

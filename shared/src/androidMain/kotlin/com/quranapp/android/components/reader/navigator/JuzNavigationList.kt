@@ -46,7 +46,7 @@ import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.strHintSearch
 import com.quranapp.android.generated.resources.strHintSearchBy
 import com.quranapp.android.generated.resources.strLabelVerseWithChapNo
-import com.quranapp.android.locale.formattedStringResource
+
 import com.quranapp.android.models.ChapterVersePair
 import com.quranapp.android.reader.ReaderMode
 import com.quranapp.android.viewmodel.ReaderViewModel
@@ -289,7 +289,7 @@ internal fun NavigationVerseList(
                         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
                     ) {
                         Text(
-                            formattedStringResource(
+                            stringResource(
                                 Res.string.strLabelVerseWithChapNo,
                                 it.chapterNo,
                                 it.verseNo

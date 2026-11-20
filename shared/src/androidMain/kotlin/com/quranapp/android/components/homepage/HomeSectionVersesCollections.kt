@@ -43,18 +43,18 @@ import com.quranapp.android.generated.resources.titleEtiquetteVerses
 import com.quranapp.android.generated.resources.titleSolutionVerses
 import com.quranapp.android.models.ExclusiveVersesScreenKind
 import com.quranapp.android.models.QuranicTopicsStart
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.navigation.AppRoutes
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.grayscaleColorFilter
 import com.quranapp.android.theme.observeIsMonoPalette
-import com.quranapp.android.navigation.AppRoute
 import com.quranapp.android.utils.miscellenous.Keys
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import com.quranapp.android.platform.PlatformServices
-import com.quranapp.android.navigation.AppRoutes
 
 @Composable
 fun HomeSectionVersesCollections() {
@@ -66,7 +66,7 @@ fun HomeSectionVersesCollections() {
                 Res.string.strTitleFeaturedDuas,
                 Res.drawable.dr_icon_rabbana
             ) {
-                PlatformServices.navigator.navigate(
+                Platform.navigator.navigate(
                     AppRoute.Screen(
                         screen = AppRoutes.EXCLUSIVE_VERSES,
                         extras = mapOf(Keys.KEY_EXCLUSIVE_VERSES_KIND to ExclusiveVersesScreenKind.Dua.name)
@@ -77,7 +77,7 @@ fun HomeSectionVersesCollections() {
                 Res.string.titleSolutionVerses,
                 Res.drawable.dr_icon_read_quran
             ) {
-                PlatformServices.navigator.navigate(
+                Platform.navigator.navigate(
                     AppRoute.Screen(
                         screen = AppRoutes.EXCLUSIVE_VERSES,
                         extras = mapOf(Keys.KEY_EXCLUSIVE_VERSES_KIND to ExclusiveVersesScreenKind.Solution.name)
@@ -89,7 +89,7 @@ fun HomeSectionVersesCollections() {
                 Res.drawable.icon_veiled_muslim,
                 tint = false
             ) {
-                PlatformServices.navigator.navigate(
+                Platform.navigator.navigate(
                     AppRoute.Screen(
                         screen = AppRoutes.EXCLUSIVE_VERSES,
                         extras = mapOf(Keys.KEY_EXCLUSIVE_VERSES_KIND to ExclusiveVersesScreenKind.Etiquette.name)
@@ -101,7 +101,7 @@ fun HomeSectionVersesCollections() {
                 Res.drawable.icon_major_sins,
                 tint = false
             ) {
-                PlatformServices.navigator.navigate(
+                Platform.navigator.navigate(
                     AppRoute.Screen(
                         screen = AppRoutes.EXCLUSIVE_VERSES,
                         extras = mapOf(Keys.KEY_EXCLUSIVE_VERSES_KIND to ExclusiveVersesScreenKind.MajorSins.name)
@@ -113,19 +113,19 @@ fun HomeSectionVersesCollections() {
                 Res.drawable.prophets,
                 tint = false
             ) {
-                PlatformServices.navigator.navigate(AppRoute.Screen(AppRoutes.PROPHETS))
+                Platform.navigator.navigate(AppRoute.Screen(AppRoutes.PROPHETS))
             },
             VersesCollectionCard(
                 Res.string.quran_and_science,
                 Res.drawable.ic_science_embryology,
             ) {
-                PlatformServices.navigator.navigate(AppRoute.Screen(AppRoutes.QURAN_SCIENCE))
+                Platform.navigator.navigate(AppRoute.Screen(AppRoutes.QURAN_SCIENCE))
             },
             VersesCollectionCard(
                 Res.string.ontologyExplorer,
                 Res.drawable.hierarchy,
             ) {
-                PlatformServices.navigator.navigate(
+                Platform.navigator.navigate(
                     AppRoute.Screen(
                         screen = AppRoutes.QURANIC_TOPICS,
                         extras = mapOf(Keys.KEY_QURANIC_TOPICS_SCREEN_TYPE to QuranicTopicsStart.Ontology.name)
@@ -136,7 +136,7 @@ fun HomeSectionVersesCollections() {
                 Res.string.thematicTopics,
                 Res.drawable.dr_icon_read_quran,
             ) {
-                PlatformServices.navigator.navigate(
+                Platform.navigator.navigate(
                     AppRoute.Screen(
                         screen = AppRoutes.QURANIC_TOPICS,
                         extras = mapOf(Keys.KEY_QURANIC_TOPICS_SCREEN_TYPE to QuranicTopicsStart.Thematic.name)

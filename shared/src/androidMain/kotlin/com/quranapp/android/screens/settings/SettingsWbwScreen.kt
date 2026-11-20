@@ -76,7 +76,7 @@ import com.quranapp.android.generated.resources.wbwShowTransliterationMgs
 import com.quranapp.android.generated.resources.wbwTextSize
 import com.quranapp.android.generated.resources.wordByWord
 import com.quranapp.android.locale.LocalAppLocale
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.preferences.DataStoreManager
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.task.TaskState
@@ -102,7 +102,7 @@ fun SettingsWbwScreen() {
         wbwAudioDownloadViewModel.events.collect { event ->
             when (event) {
                 is WbwAudioDownloadUiEvent.ShowMessage -> {
-                    PlatformServices.messages.show(event.message, long = true)
+                    Platform.messages.show(event.message, long = true)
                 }
             }
         }

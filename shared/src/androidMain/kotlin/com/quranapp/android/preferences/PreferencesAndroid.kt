@@ -15,9 +15,9 @@ import com.quranapp.android.utils.reader.ReaderTextSizeUtils
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.isKFQPCScript
 import com.quranapp.android.utils.reader.isQuranAtlasScript
+import com.quranapp.android.utils.tafsir.TafsirUtils
 import com.quranapp.android.utils.translation.TranslationVersionStore
 import com.quranapp.android.utils.wbw.WbwVersionStore
-import com.quranapp.android.utils.tafsir.TafsirUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext

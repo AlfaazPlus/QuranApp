@@ -88,8 +88,8 @@ import com.quranapp.android.models.transls.TranslModel
 import com.quranapp.android.models.transls.TranslationGroupModel
 import com.quranapp.android.navigation.SettingRoutes
 import com.quranapp.android.preferences.AppPreferences
-import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.importing.ImportFieldId
+import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.translation.CustomTranslationImporter
 import com.quranapp.android.utils.translation.toTranslationManifest
 import com.quranapp.android.utils.translation.translationSlug

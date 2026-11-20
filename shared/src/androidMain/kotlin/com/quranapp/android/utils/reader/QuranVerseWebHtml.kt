@@ -11,9 +11,9 @@ import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.strLabelOpenInReader
 import com.quranapp.android.locale.AppLocale
 import com.quranapp.android.locale.appPlatformLocale
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.repository.QuranRepository
-import com.quranapp.android.utils.miscellenous.PlatformUtils
 import com.quranapp.android.utils.miscellenous.stripHtmlTags
 import com.quranapp.android.utils.reader.atlas.AtlasAyahRasterizer
 import com.quranapp.android.utils.reader.atlas.QuranAtlasBundle
@@ -171,7 +171,8 @@ private suspend fun verseWebAtlasRasterParams(
     colorScheme: ColorScheme,
     scriptCode: String,
 ): VerseWebAtlasRasterParams {
-    val density = PlatformUtils.density
+    val environment = Platform.environment
+    val density = environment.density
     val fontSizePx = scriptCode.getQuranScriptVerseTextSizeMediumSp() *
             density *
             ReaderPreferences.getArabicTextSizeMultiplier()
@@ -179,7 +180,7 @@ private suspend fun verseWebAtlasRasterParams(
     val lineHeightPx = fontSizePx * 1.5f
     val wordGapPx = fontSizePx * 0.15f
     val maxLineWidthPx =
-        (PlatformUtils.screenWidthPx - 72f * PlatformUtils.density).coerceAtLeast(240f)
+        (environment.screenWidthPx - 72f * density).coerceAtLeast(240f)
     val onSurfaceArgb = colorScheme.onSurface.toArgb()
 
     val colorHex = String.format(

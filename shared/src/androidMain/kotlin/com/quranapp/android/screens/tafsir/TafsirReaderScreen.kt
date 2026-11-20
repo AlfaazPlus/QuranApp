@@ -88,8 +88,9 @@ import com.quranapp.android.models.HtmlContentHost
 import com.quranapp.android.models.HtmlPage
 import com.quranapp.android.models.htmlContentHandle
 import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.navigation.AppRoutes
 import com.quranapp.android.navigation.SettingRoutes
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.observeDarkTheme
@@ -110,7 +111,6 @@ import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import java.util.Locale
-import com.quranapp.android.navigation.AppRoutes
 
 @Composable
 fun TafsirReaderScreen(
@@ -276,7 +276,7 @@ fun TafsirReaderScreen(
         data = quickRefData,
         onOpenInReader = { chapterNo, range ->
             quickRefData = null
-            PlatformServices.navigator.navigate(
+            Platform.navigator.navigate(
                 AppRoute.Reader(
                     ReaderFactory.verseRange(chapterNo, range.first, range.last)
                 )
@@ -349,7 +349,7 @@ private fun TafsirTopBar(
             }
             IconButton(
                 onClick = {
-                    PlatformServices.navigator.navigate(
+                    Platform.navigator.navigate(
                         AppRoute.Screen(
                             screen = AppRoutes.SETTINGS,
                             extras = mapOf(Keys.NAV_DESTINATION to SettingRoutes.TAFSIR)
@@ -569,7 +569,7 @@ private suspend fun buildTafsirHtml(
 
     val fullContent = alertBlock + linkifyTafsirReferences(content)
 
-    val boilerplate = PlatformServices.assets.readAssetText("tafsir/tafsir_page.html")
+    val boilerplate = Platform.assets.readAssetText("tafsir/tafsir_page.html")
 
     val rootVarsInner = colorScheme.toCssVariables() +
             "--tafsir-ar-size-mult:${readerTextSizeMultForCss(arabicReaderSizeMult)};" +
@@ -828,7 +828,7 @@ private suspend fun shareTafsir(
         append(plain)
     }
 
-    PlatformServices.links.shareText(
+    Platform.links.shareText(
         text,
         getString(Res.string.strLabelShare),
     )

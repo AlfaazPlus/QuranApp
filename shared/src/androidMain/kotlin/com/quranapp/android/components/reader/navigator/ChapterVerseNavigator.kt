@@ -54,7 +54,7 @@ import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.strHintSearch
 import com.quranapp.android.generated.resources.strHintSearchChapter
 import com.quranapp.android.generated.resources.strLabelVerseNo
-import com.quranapp.android.locale.formattedStringResource
+
 import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.viewmodel.ChapterNavigatorViewModel
@@ -328,7 +328,7 @@ private fun VerseSelectList(
                         ),
                     ) {
                         Text(
-                            formattedStringResource(Res.string.strLabelVerseNo, verseNo),
+                            stringResource(Res.string.strLabelVerseNo, verseNo),
                             modifier = Modifier
                                 .clickable { onToggleVerse(verseNo) }
                                 .padding(10.dp),

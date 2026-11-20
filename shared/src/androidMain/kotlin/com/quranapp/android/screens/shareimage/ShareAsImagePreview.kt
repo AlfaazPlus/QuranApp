@@ -92,7 +92,8 @@ fun ShareAsImagePreview(
                     }
 
                     scene != null -> {
-                        val activeBackground = if (scene.templateId == template?.id) previewBg else null
+                        val activeBackground =
+                            if (scene.templateId == template?.id) previewBg else null
 
                         Canvas(modifier = Modifier.fillMaxSize()) {
                             if (size.width > 0f && size.height > 0f) {

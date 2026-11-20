@@ -60,7 +60,7 @@ object DataStoreManager {
             runBlocking {
                 cachedPreferences.value = preferences.data.first()
             }
-            
+
             scope.launch {
                 preferences.data.collect { cachedPreferences.value = it }
             }

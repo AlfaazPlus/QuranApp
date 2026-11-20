@@ -527,29 +527,29 @@
     <string name="collection_updated">Na-update ang mga koleksyon</string>
     <string name="updated_just_now">Kaka-update lang</string>
     <plurals name="verse_count">
-            <item quantity="one">%1$d taludtod</item>
-            <item quantity="other">%1$d taludtod</item>
-        </plurals>
+        <item quantity="one">%1$d taludtod</item>
+        <item quantity="other">%1$d taludtod</item>
+    </plurals>
     <plurals name="updated_minutes">
-            <item quantity="one">Na-update %1$d minuto ang nakalipas</item>
-            <item quantity="other">Na-update %1$d minuto ang nakalipas</item>
-        </plurals>
+        <item quantity="one">Na-update %1$d minuto ang nakalipas</item>
+        <item quantity="other">Na-update %1$d minuto ang nakalipas</item>
+    </plurals>
     <plurals name="updated_hours">
-            <item quantity="one">Na-update %1$d oras ang nakalipas</item>
-            <item quantity="other">Na-update %1$d oras ang nakalipas</item>
-        </plurals>
+        <item quantity="one">Na-update %1$d oras ang nakalipas</item>
+        <item quantity="other">Na-update %1$d oras ang nakalipas</item>
+    </plurals>
     <plurals name="updated_days">
-            <item quantity="one">Na-update %1$d araw ang nakalipas</item>
-            <item quantity="other">Na-update %1$d araw ang nakalipas</item>
-        </plurals>
+        <item quantity="one">Na-update %1$d araw ang nakalipas</item>
+        <item quantity="other">Na-update %1$d araw ang nakalipas</item>
+    </plurals>
     <plurals name="item_count">
-            <item quantity="one">%1$d item</item>
-            <item quantity="other">%1$d items</item>
-        </plurals>
+        <item quantity="one">%1$d item</item>
+        <item quantity="other">%1$d items</item>
+    </plurals>
     <plurals name="place_count">
-            <item quantity="one">%1$d lugar</item>
-            <item quantity="other">mga %1$d lugar</item>
-        </plurals>
+        <item quantity="one">%1$d lugar</item>
+        <item quantity="other">mga %1$d lugar</item>
+    </plurals>
     <string name="advanced_settings">Mga advanced na setting</string>
     <string name="recent_history">Kamakailang kasaysayan</string>
     <string name="set_as_active">Itakda bilang aktibo</string>

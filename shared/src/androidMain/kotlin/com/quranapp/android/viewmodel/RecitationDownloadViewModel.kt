@@ -1,7 +1,6 @@
 package com.quranapp.android.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import com.quranapp.android.AndroidAppContext
 import com.quranapp.android.api.models.recitation2.RecitationModelBase
 import com.quranapp.android.api.models.recitation2.RecitationQuranModel
 import com.quranapp.android.api.models.recitation2.RecitationTranslationModel
@@ -12,7 +11,7 @@ import com.quranapp.android.generated.resources.recitationDownloadWaitForOtherRe
 import com.quranapp.android.generated.resources.strTitleChapInfoChapterNo
 import com.quranapp.android.generated.resources.strTitleFailed
 import com.quranapp.android.models.DataLoadError
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.task.ExistingTaskPolicy
 import com.quranapp.android.task.TaskState
 import com.quranapp.android.utils.app.AppFiles
@@ -20,9 +19,9 @@ import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.mediaplayer.RecitationAudioKind
 import com.quranapp.android.utils.mediaplayer.RecitationDownloadProgressBus
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
+import com.quranapp.android.utils.mediaplayer.RecitationUtils
 import com.quranapp.android.utils.mediaplayer.RecitationVersionManager
 import com.quranapp.android.utils.quran.QuranMeta
-import com.quranapp.android.utils.mediaplayer.RecitationUtils
 import com.quranapp.android.utils.workers.RecitationAudioDownloadWorker
 import com.quranapp.android.utils.workers.RecitationBulkDownloadWorker
 import kotlinx.coroutines.Dispatchers
@@ -63,7 +62,7 @@ private suspend fun loadParsedWorkState(
     quranReciterIds: List<String>,
     translationReciterIds: List<String>,
 ): ParsedWorkState {
-    val tm = PlatformServices.system.taskManager
+    val tm = Platform.system.taskManager
     val parsed = ParsedWorkState()
 
     suspend fun ingest(kind: RecitationAudioKind, reciterId: String) {
@@ -175,10 +174,9 @@ sealed interface RecitationDownloadUiEvent {
 @OptIn(FlowPreview::class)
 class RecitationDownloadViewModel() : AppViewModel() {
 
-    private val context get() = AndroidAppContext.get()
     private val modelManager = RecitationModelManager
-    private val versionManager = RecitationVersionManager.get(context)
-    private val taskManager get() = PlatformServices.system.taskManager
+    private val versionManager = RecitationVersionManager.get()
+    private val taskManager get() = Platform.system.taskManager
 
     private val recomputeMutex = Mutex()
 
@@ -267,7 +265,7 @@ class RecitationDownloadViewModel() : AppViewModel() {
     }
 
     private suspend fun loadReciters(forceRefresh: Boolean) {
-        if (forceRefresh && !PlatformServices.networkMonitor.isConnected) {
+        if (forceRefresh && !Platform.networkMonitor.isConnected) {
             _uiState.update { it.copy(isLoading = false, error = DataLoadError.NoConnection) }
             return
         }
@@ -486,7 +484,7 @@ class RecitationDownloadViewModel() : AppViewModel() {
         val model = findModel(kind, reciterId) ?: return
 
         viewModelScope.launch {
-            if (!PlatformServices.networkMonitor.canProceed()) return@launch
+            if (!Platform.networkMonitor.canProceed()) return@launch
 
             launch(Dispatchers.IO) {
                 try {
@@ -581,7 +579,7 @@ class RecitationDownloadViewModel() : AppViewModel() {
         val model = findModel(kind, reciterId) ?: return
 
         viewModelScope.launch {
-            if (!PlatformServices.networkMonitor.canProceed()) return@launch
+            if (!Platform.networkMonitor.canProceed()) return@launch
 
             launch(Dispatchers.IO) {
                 try {
@@ -624,7 +622,7 @@ class RecitationDownloadViewModel() : AppViewModel() {
         val model = findModel(kind, reciterId) ?: return
 
         viewModelScope.launch {
-            if (!PlatformServices.networkMonitor.canProceed()) return@launch
+            if (!Platform.networkMonitor.canProceed()) return@launch
 
             launch(Dispatchers.IO) {
                 try {

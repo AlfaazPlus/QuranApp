@@ -1,7 +1,7 @@
 package com.quranapp.android.utils
 
 import com.quranapp.android.db.relations.VerseWithDetails
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.preferences.VersePreferences
 import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.utils.quran.QuranMeta
@@ -64,7 +64,7 @@ object VerseUtils {
                     timestamp = createdAtMillis
                 )
 
-                PlatformServices.system.shortcutManager.pushVotdShortcut(chapterNo, verseNo)
+                Platform.system.shortcutManager.pushVotdShortcut(chapterNo, verseNo)
 
                 votdChapNo = chapterNo
                 votdVerseNo = verseNo

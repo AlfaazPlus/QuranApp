@@ -4,7 +4,7 @@ import androidx.sqlite.SQLiteConnection
 import androidx.sqlite.execSQL
 import com.quranapp.android.db.openBundled
 import com.quranapp.android.db.textOrNull
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.utils.miscellenous.DateUtils
 import okio.FileSystem
 
@@ -180,7 +180,7 @@ class SearchHistoryDBHelper() {
     }
 
     private fun <T> use(block: (SQLiteConnection) -> T): T {
-        val path = PlatformServices.files.databaseDirectory / DB_NAME
+        val path = Platform.files.databaseDirectory / DB_NAME
 
         FileSystem.SYSTEM.createDirectories(path)
 

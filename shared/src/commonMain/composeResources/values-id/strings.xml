@@ -526,23 +526,23 @@
     <string name="collection_updated">Koleksi diperbarui</string>
     <string name="updated_just_now">Baru saja diperbarui</string>
     <plurals name="verse_count">
-            <item quantity="other">%1$d ayat</item>
-        </plurals>
+        <item quantity="other">%1$d ayat</item>
+    </plurals>
     <plurals name="updated_minutes">
-            <item quantity="other">Diperbarui %1$d menit yang lalu</item>
-        </plurals>
+        <item quantity="other">Diperbarui %1$d menit yang lalu</item>
+    </plurals>
     <plurals name="updated_hours">
-            <item quantity="other">Diperbarui %1$d jam yang lalu</item>
-        </plurals>
+        <item quantity="other">Diperbarui %1$d jam yang lalu</item>
+    </plurals>
     <plurals name="updated_days">
-            <item quantity="other">Diperbarui %1$d hari yang lalu</item>
-        </plurals>
+        <item quantity="other">Diperbarui %1$d hari yang lalu</item>
+    </plurals>
     <plurals name="item_count">
-            <item quantity="other">%1$d item</item>
-        </plurals>
+        <item quantity="other">%1$d item</item>
+    </plurals>
     <plurals name="place_count">
-            <item quantity="other">%1$d tempat</item>
-        </plurals>
+        <item quantity="other">%1$d tempat</item>
+    </plurals>
     <string name="advanced_settings">Pengaturan lanjutan</string>
     <string name="recent_history">Riwayat terbaru</string>
     <string name="set_as_active">Jadikan aktif</string>

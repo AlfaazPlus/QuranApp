@@ -67,14 +67,15 @@ fun StorageCleanupScriptsScreen(
         withContext(Dispatchers.IO) {
             val list = mutableListOf<ScriptCleanupRow>()
 
-            QuranScriptUtils.fontDir().toFile().listFiles()?.filter { it.isDirectory }?.forEach { dir ->
-                val key = dir.name
-                val info = QuranScriptUtils.getKFQPCFontDownloadedCount(key)
+            QuranScriptUtils.fontDir().toFile().listFiles()?.filter { it.isDirectory }
+                ?.forEach { dir ->
+                    val key = dir.name
+                    val info = QuranScriptUtils.getKFQPCFontDownloadedCount(key)
 
-                if (info.downloaded > 0) {
-                    list.add(ScriptCleanupRow(scriptKey = key, fontCount = info.downloaded))
+                    if (info.downloaded > 0) {
+                        list.add(ScriptCleanupRow(scriptKey = key, fontCount = info.downloaded))
+                    }
                 }
-            }
 
             withContext(Dispatchers.Main) {
                 rows.clear()

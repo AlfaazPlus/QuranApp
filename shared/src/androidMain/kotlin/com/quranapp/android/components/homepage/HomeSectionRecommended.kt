@@ -22,13 +22,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.quranapp.android.models.ReferenceVerseModel
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.dr_icon_chevron_right
 import com.quranapp.android.generated.resources.strLabelSurah
 import com.quranapp.android.navigation.AppRoute
 import com.quranapp.android.navigation.AppRoutes
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.reader.recommended.Recommendation
 import com.quranapp.android.utils.reader.recommended.RecommendationRef
@@ -72,7 +73,7 @@ private fun RecommendationCard(
             .clickable {
                 when (val ref = recommendation.reference) {
                     is RecommendationRef.Chapter -> {
-                        PlatformServices.navigator.navigate(
+                        Platform.navigator.navigate(
                             AppRoute.Reader(ReaderFactory.chapter(ref.number))
                         )
                     }
@@ -91,15 +92,15 @@ private fun RecommendationCard(
                             verseSpecs.add(trimmed)
                         }
 
-                        PlatformServices.navigator.navigate(
+                        Platform.navigator.navigate(
                             AppRoute.Screen(
                                 screen = AppRoutes.REFERENCE,
-                                extras = buildMap {
-                                    put("title", recommendation.title)
-                                    put("desc", recommendation.description)
-                                    put("chapters", chapters)
-                                    put("verses", verseSpecs)
-                                },
+                                extras = ReferenceVerseModel(
+                                    title = recommendation.title,
+                                    desc = recommendation.description,
+                                    chapters = chapters,
+                                    verses = verseSpecs,
+                                ).toExtras(),
                             )
                         )
 

@@ -76,8 +76,9 @@ internal class AndroidTaskWorkerAdapter(
         }
 
         override suspend fun setForeground(info: ForegroundTaskInfo) {
-            val foregroundInfo = ForegroundNotificationProvider.instance?.buildForegroundInfo(info) as? ForegroundInfo
-                ?: defaultForegroundInfo(appContext, info, id)
+            val foregroundInfo =
+                ForegroundNotificationProvider.instance?.buildForegroundInfo(info) as? ForegroundInfo
+                    ?: defaultForegroundInfo(appContext, info, id)
 
             this@AndroidTaskWorkerAdapter.setForeground(foregroundInfo)
         }

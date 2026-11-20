@@ -1,6 +1,6 @@
 package com.quranapp.android.utils.mediaplayer
 
-import com.quranapp.android.locale.toFormatted
+import com.quranapp.android.utils.miscellenous.toFormatted
 
 object RecitationUtils {
     const val DIR_NAME = "recitations"

@@ -50,7 +50,7 @@ import com.quranapp.android.generated.resources.dr_quran_wallpaper
 import com.quranapp.android.generated.resources.strLabelOpenInReader
 import com.quranapp.android.generated.resources.strLabelSurah
 import com.quranapp.android.generated.resources.strLabelVerseNo
-import com.quranapp.android.locale.formattedStringResource
+
 import com.quranapp.android.models.ChapterVersePair
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.grayscaleColorFilter
@@ -164,7 +164,7 @@ fun ExtendedThumbnail(
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     Text(
-                        text = formattedStringResource(
+                        text = stringResource(
                             Res.string.strLabelVerseNo,
                             displayVerse.verseNo
                         ),
@@ -309,7 +309,7 @@ fun LandscapePlayerIdentity(
                     horizontalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
                     Text(
-                        text = formattedStringResource(
+                        text = stringResource(
                             Res.string.strLabelVerseNo,
                             displayVerse.verseNo
                         ),

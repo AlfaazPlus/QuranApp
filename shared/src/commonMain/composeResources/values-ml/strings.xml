@@ -529,29 +529,29 @@
     <string name="collection_updated">ശേഖരങ്ങൾ അപ്ഡേറ്റ് ചെയ്തു</string>
     <string name="updated_just_now">ഇപ്പോൾ അപ്ഡേറ്റ് ചെയ്തു</string>
     <plurals name="verse_count">
-            <item quantity="one">%1$d വാക്യം</item>
-            <item quantity="other">%1$d വാക്യങ്ങൾ</item>
-        </plurals>
+        <item quantity="one">%1$d വാക്യം</item>
+        <item quantity="other">%1$d വാക്യങ്ങൾ</item>
+    </plurals>
     <plurals name="updated_minutes">
-            <item quantity="one">%1$d മിനിറ്റ് മുമ്പ് അപ്ഡേറ്റ് ചെയ്തു</item>
-            <item quantity="other">%1$d മിനിറ്റ് മുമ്പ് അപ്ഡേറ്റ് ചെയ്തു</item>
-        </plurals>
+        <item quantity="one">%1$d മിനിറ്റ് മുമ്പ് അപ്ഡേറ്റ് ചെയ്തു</item>
+        <item quantity="other">%1$d മിനിറ്റ് മുമ്പ് അപ്ഡേറ്റ് ചെയ്തു</item>
+    </plurals>
     <plurals name="updated_hours">
-            <item quantity="one">%1$d മണിക്കൂർ മുമ്പ് അപ്ഡേറ്റ് ചെയ്തു</item>
-            <item quantity="other">%1$d മണിക്കൂർ മുമ്പ് അപ്ഡേറ്റ് ചെയ്തു</item>
-        </plurals>
+        <item quantity="one">%1$d മണിക്കൂർ മുമ്പ് അപ്ഡേറ്റ് ചെയ്തു</item>
+        <item quantity="other">%1$d മണിക്കൂർ മുമ്പ് അപ്ഡേറ്റ് ചെയ്തു</item>
+    </plurals>
     <plurals name="updated_days">
-            <item quantity="one">%1$d ദിവസം മുമ്പ് അപ്ഡേറ്റ് ചെയ്തു</item>
-            <item quantity="other">%1$d ദിവസം മുമ്പ് അപ്ഡേറ്റ് ചെയ്തു</item>
-        </plurals>
+        <item quantity="one">%1$d ദിവസം മുമ്പ് അപ്ഡേറ്റ് ചെയ്തു</item>
+        <item quantity="other">%1$d ദിവസം മുമ്പ് അപ്ഡേറ്റ് ചെയ്തു</item>
+    </plurals>
     <plurals name="item_count">
-            <item quantity="one">%1$d ഇനം</item>
-            <item quantity="other">%1$d ഇനങ്ങൾ</item>
-        </plurals>
+        <item quantity="one">%1$d ഇനം</item>
+        <item quantity="other">%1$d ഇനങ്ങൾ</item>
+    </plurals>
     <plurals name="place_count">
-            <item quantity="one">%1$d സ്ഥലം</item>
-            <item quantity="other">%1$d സ്ഥലങ്ങൾ</item>
-        </plurals>
+        <item quantity="one">%1$d സ്ഥലം</item>
+        <item quantity="other">%1$d സ്ഥലങ്ങൾ</item>
+    </plurals>
     <string name="advanced_settings">വിപുലമായ ക്രമീകരണങ്ങൾ</string>
     <string name="recent_history">സമീപകാല ഹിസ്റ്ററി</string>
     <string name="set_as_active">സജീവമായി സജ്ജമാക്കുക</string>

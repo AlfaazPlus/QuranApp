@@ -34,17 +34,16 @@ import com.quranapp.android.models.HtmlContentHost
 import com.quranapp.android.models.HtmlPage
 import com.quranapp.android.models.QuranScienceItem
 import com.quranapp.android.models.htmlContentHandle
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.theme.ThemeUtils
-import com.quranapp.android.theme.isDarkTheme
 import com.quranapp.android.theme.toCssVariables
 import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.quranScience.QuranScienceWebViewClient
 import com.quranapp.android.utils.reader.QuranVerseWebItem
 import com.quranapp.android.utils.reader.QuranVerseWebRequest
 import com.quranapp.android.utils.reader.buildQuranVerseWebAssets
-import com.quranapp.android.navigation.AppRoute
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -92,7 +91,7 @@ fun ScienceContentScreen(
         onOpenInReader = { chapterNo, range ->
             quickRefData = null
 
-            PlatformServices.navigator.navigate(
+            Platform.navigator.navigate(
                 AppRoute.Reader(
                     ReaderFactory.verseRange(chapterNo, range.first, range.last)
                 )
@@ -188,12 +187,12 @@ private suspend fun renderScienceDocument(
     val rootVarsInner =
         colorScheme.toCssVariables() + "--tafsir-ar-size-mult:1;--tafsir-tr-size-mult:1;"
 
-    val base = PlatformServices.assets.readAssetText("science/base.html")
-        .replace("{{THEME}}", if (ThemeUtils.isDarkTheme(context)) "dark" else "light")
+    val base = Platform.assets.readAssetText("science/base.html")
+        .replace("{{THEME}}", if (ThemeUtils.isDarkTheme()) "dark" else "light")
         .replace("{{ROOT_VARS}}", rootVarsInner)
 
     val topicHtml = appFallbackLanguageCodes().firstNotNullOfOrNull { code ->
-        PlatformServices.assets.readAssetTextOrNull("science/topics/$code/${item.path}")
+        Platform.assets.readAssetTextOrNull("science/topics/$code/${item.path}")
     }.orEmpty()
 
     atlasAyahImageCache.clear()

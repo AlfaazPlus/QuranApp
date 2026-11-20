@@ -41,7 +41,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.extensions.appViewModel
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.mediaplayer.RecitationServiceState
 import com.quranapp.android.utils.miscellenous.ErrorEvent
@@ -127,11 +127,11 @@ fun RecitationPlayerSheet(
         EventBus.events.collect {
             when (it) {
                 is ErrorEvent -> it.message?.let { text ->
-                    PlatformServices.messages.show(text, long = true)
+                    Platform.messages.show(text, long = true)
                 }
 
                 is MessageEvent -> it.message?.let { text ->
-                    PlatformServices.messages.show(text, long = true)
+                    Platform.messages.show(text, long = true)
                 }
             }
         }

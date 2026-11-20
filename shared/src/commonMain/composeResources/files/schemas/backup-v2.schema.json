@@ -4,7 +4,12 @@
   "title": "QuranApp backup V2",
   "type": "object",
   "additionalProperties": false,
-  "required": ["$schema", "formatVersion", "exportedAt", "data"],
+  "required": [
+    "$schema",
+    "formatVersion",
+    "exportedAt",
+    "data"
+  ],
   "properties": {
     "$schema": {
       "const": "https://schema.alfaazplus.com/quran/backup-v2.schema.json"
@@ -22,13 +27,19 @@
         "bookmarks": {
           "type": "array",
           "maxItems": 20000,
-          "items": { "$ref": "#/$defs/bookmark" }
+          "items": {
+            "$ref": "#/$defs/bookmark"
+          }
         },
-        "settings": { "$ref": "#/$defs/settings" },
+        "settings": {
+          "$ref": "#/$defs/settings"
+        },
         "collections": {
           "type": "array",
           "maxItems": 2000,
-          "items": { "$ref": "#/$defs/collection" }
+          "items": {
+            "$ref": "#/$defs/collection"
+          }
         }
       }
     }
@@ -46,48 +57,119 @@
     "bookmark": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "chapterNumber", "startVerseNumber", "endVerseNumber"],
+      "required": [
+        "id",
+        "chapterNumber",
+        "startVerseNumber",
+        "endVerseNumber"
+      ],
       "properties": {
-        "id": { "$ref": "#/$defs/uuid" },
-        "chapterNumber": { "type": "integer", "minimum": 1 },
-        "startVerseNumber": { "type": "integer", "minimum": 1 },
-        "endVerseNumber": { "type": "integer", "minimum": 1 },
-        "note": { "type": "string", "maxLength": 20000 },
-        "createdAt": { "$ref": "#/$defs/dateTime" },
-        "updatedAt": { "$ref": "#/$defs/dateTime" },
-        "legacyCreatedAtText": { "type": "string", "maxLength": 100 }
+        "id": {
+          "$ref": "#/$defs/uuid"
+        },
+        "chapterNumber": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "startVerseNumber": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "endVerseNumber": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "note": {
+          "type": "string",
+          "maxLength": 20000
+        },
+        "createdAt": {
+          "$ref": "#/$defs/dateTime"
+        },
+        "updatedAt": {
+          "$ref": "#/$defs/dateTime"
+        },
+        "legacyCreatedAtText": {
+          "type": "string",
+          "maxLength": 100
+        }
       }
     },
     "collection": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "name", "items"],
+      "required": [
+        "id",
+        "name",
+        "items"
+      ],
       "properties": {
-        "id": { "$ref": "#/$defs/uuid" },
-        "name": { "type": "string", "minLength": 1, "maxLength": 200 },
-        "description": { "type": "string", "maxLength": 20000 },
-        "iconKey": { "type": "string", "maxLength": 100 },
-        "color": { "type": "string", "maxLength": 50 },
-        "sortIndex": { "type": "integer" },
-        "createdAt": { "$ref": "#/$defs/dateTime" },
-        "updatedAt": { "$ref": "#/$defs/dateTime" },
+        "id": {
+          "$ref": "#/$defs/uuid"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 20000
+        },
+        "iconKey": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "color": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "sortIndex": {
+          "type": "integer"
+        },
+        "createdAt": {
+          "$ref": "#/$defs/dateTime"
+        },
+        "updatedAt": {
+          "$ref": "#/$defs/dateTime"
+        },
         "items": {
           "type": "array",
           "maxItems": 20000,
-          "items": { "$ref": "#/$defs/collectionItem" }
+          "items": {
+            "$ref": "#/$defs/collectionItem"
+          }
         }
       }
     },
     "collectionItem": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["chapterNumber", "verseNumber", "position"],
+      "required": [
+        "chapterNumber",
+        "verseNumber",
+        "position"
+      ],
       "properties": {
-        "chapterNumber": { "type": "integer", "minimum": 1 },
-        "verseNumber": { "type": "integer", "minimum": 1 },
-        "note": { "type": "string", "maxLength": 20000 },
-        "position": { "type": "integer", "minimum": 0 },
-        "addedAt": { "$ref": "#/$defs/dateTime" }
+        "chapterNumber": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "verseNumber": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "note": {
+          "type": "string",
+          "maxLength": 20000
+        },
+        "position": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "addedAt": {
+          "$ref": "#/$defs/dateTime"
+        }
       }
     },
     "settings": {
@@ -98,12 +180,21 @@
           "type": "object",
           "additionalProperties": true,
           "properties": {
-            "locale": { "type": "string", "minLength": 1 },
+            "locale": {
+              "type": "string",
+              "minLength": 1
+            },
             "numeralSystemId": {
               "type": "string",
-              "enum": ["latn", "arab", "arabext"]
+              "enum": [
+                "latn",
+                "arab",
+                "arabext"
+              ]
             },
-            "developerMode": { "type": "boolean" }
+            "developerMode": {
+              "type": "boolean"
+            }
           }
         },
         "appearance": {
@@ -112,13 +203,28 @@
           "properties": {
             "themeId": {
               "type": "string",
-              "enum": ["app.theme.default", "app.theme.light", "app.theme.dark"]
+              "enum": [
+                "app.theme.default",
+                "app.theme.light",
+                "app.theme.dark"
+              ]
             },
             "colorId": {
               "type": "string",
-              "enum": ["default", "amoled", "blue", "red", "purple", "mono", "violet", "yellow"]
+              "enum": [
+                "default",
+                "amoled",
+                "blue",
+                "red",
+                "purple",
+                "mono",
+                "violet",
+                "yellow"
+              ]
             },
-            "dynamicColor": { "type": "boolean" }
+            "dynamicColor": {
+              "type": "boolean"
+            }
           }
         },
         "reminders": {
@@ -129,7 +235,9 @@
               "type": "object",
               "additionalProperties": true,
               "properties": {
-                "enabled": { "type": "boolean" }
+                "enabled": {
+                  "type": "boolean"
+                }
               }
             }
           }
@@ -140,12 +248,20 @@
           "properties": {
             "sourceId": {
               "type": "string",
-              "enum": ["alfaazplus", "github", "jsdelivr"]
+              "enum": [
+                "alfaazplus",
+                "github",
+                "jsdelivr"
+              ]
             }
           }
         },
-        "reader": { "$ref": "#/$defs/readerSettings" },
-        "audio": { "$ref": "#/$defs/audioSettings" }
+        "reader": {
+          "$ref": "#/$defs/readerSettings"
+        },
+        "audio": {
+          "$ref": "#/$defs/audioSettings"
+        }
       }
     },
     "readerSettings": {
@@ -156,7 +272,11 @@
           "type": "object",
           "additionalProperties": true,
           "properties": {
-            "speed": { "type": "number", "minimum": 1, "maximum": 10 }
+            "speed": {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 10
+            }
           }
         },
         "display": {
@@ -165,12 +285,21 @@
           "properties": {
             "styleId": {
               "type": "string",
-              "enum": ["mode_vbv", "mode_reading", "mode_translation"]
+              "enum": [
+                "mode_vbv",
+                "mode_reading",
+                "mode_translation"
+              ]
             },
-            "keepScreenOn": { "type": "boolean" },
+            "keepScreenOn": {
+              "type": "boolean"
+            },
             "layoutId": {
               "type": "string",
-              "enum": ["page", "flow"]
+              "enum": [
+                "page",
+                "flow"
+              ]
             }
           }
         },
@@ -182,28 +311,49 @@
               "type": "object",
               "additionalProperties": true,
               "properties": {
-                "enabled": { "type": "boolean" },
-                "scale": { "type": "number", "minimum": 0.5, "maximum": 2 }
+                "enabled": {
+                  "type": "boolean"
+                },
+                "scale": {
+                  "type": "number",
+                  "minimum": 0.5,
+                  "maximum": 2
+                }
               }
             },
             "tafsir": {
               "type": "object",
               "additionalProperties": true,
               "properties": {
-                "scale": { "type": "number", "minimum": 0.5, "maximum": 2 }
+                "scale": {
+                  "type": "number",
+                  "minimum": 0.5,
+                  "maximum": 2
+                }
               }
             },
             "translation": {
               "type": "object",
               "additionalProperties": true,
               "properties": {
-                "scale": { "type": "number", "minimum": 0.5, "maximum": 2 }
+                "scale": {
+                  "type": "number",
+                  "minimum": 0.5,
+                  "maximum": 2
+                }
               }
             },
-            "scriptId": { "type": "string", "minLength": 1 },
+            "scriptId": {
+              "type": "string",
+              "minLength": 1
+            },
             "scriptVariantId": {
               "type": "string",
-              "enum": ["", "indopak_16", "indopak_15"]
+              "enum": [
+                "",
+                "indopak_16",
+                "indopak_15"
+              ]
             }
           }
         },
@@ -211,24 +361,47 @@
           "type": "object",
           "additionalProperties": true,
           "properties": {
-            "sourceId": { "type": "string", "minLength": 1 },
-            "showTranslation": { "type": "boolean" },
-            "showTransliteration": { "type": "boolean" },
-            "tooltipTranslation": { "type": "boolean" },
-            "tooltipTransliteration": { "type": "boolean" },
-            "recitation": { "type": "boolean" },
-            "scale": { "type": "number", "minimum": 0.5, "maximum": 2 }
+            "sourceId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "showTranslation": {
+              "type": "boolean"
+            },
+            "showTransliteration": {
+              "type": "boolean"
+            },
+            "tooltipTranslation": {
+              "type": "boolean"
+            },
+            "tooltipTransliteration": {
+              "type": "boolean"
+            },
+            "recitation": {
+              "type": "boolean"
+            },
+            "scale": {
+              "type": "number",
+              "minimum": 0.5,
+              "maximum": 2
+            }
           }
         },
         "content": {
           "type": "object",
           "additionalProperties": true,
           "properties": {
-            "tafsirId": { "type": "string", "minLength": 1 },
+            "tafsirId": {
+              "type": "string",
+              "minLength": 1
+            },
             "translationIds": {
               "type": "array",
               "uniqueItems": true,
-              "items": { "type": "string", "minLength": 1 }
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
             }
           }
         }
@@ -242,31 +415,57 @@
           "type": "object",
           "additionalProperties": true,
           "properties": {
-            "speed": { "type": "number", "minimum": 0.1, "maximum": 3 },
+            "speed": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
             "mode": {
               "type": "string",
-              "enum": ["only_quran", "only_translation", "both"]
+              "enum": [
+                "only_quran",
+                "only_translation",
+                "both"
+              ]
             },
             "endBehaviour": {
               "type": "string",
-              "enum": ["stop_playback", "next_chapter", "repeat_chapter"]
+              "enum": [
+                "stop_playback",
+                "next_chapter",
+                "repeat_chapter"
+              ]
             },
-            "repeatCount": { "type": "integer", "minimum": 0, "maximum": 9 },
-            "verseGroupSize": { "type": "integer", "minimum": 1, "maximum": 10 }
+            "repeatCount": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9
+            },
+            "verseGroupSize": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10
+            }
           }
         },
         "recitation": {
           "type": "object",
           "additionalProperties": true,
           "properties": {
-            "reciterId": { "type": "string", "minLength": 1 }
+            "reciterId": {
+              "type": "string",
+              "minLength": 1
+            }
           }
         },
         "translation": {
           "type": "object",
           "additionalProperties": true,
           "properties": {
-            "voiceId": { "type": "string", "minLength": 1 }
+            "voiceId": {
+              "type": "string",
+              "minLength": 1
+            }
           }
         }
       }

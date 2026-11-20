@@ -1,6 +1,5 @@
 package com.quranapp.android.screens.onboarding
 
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,14 +28,13 @@ import com.quranapp.android.generated.resources.strLabelThemeLight
 import com.quranapp.android.generated.resources.strMsgThemeDark
 import com.quranapp.android.generated.resources.strMsgThemeDefault
 import com.quranapp.android.generated.resources.theme_colors
+import com.quranapp.android.platform.AppThemeMode
 import com.quranapp.android.screens.settings.themeColorItems
 import com.quranapp.android.theme.ThemeUtils
-import com.quranapp.android.theme.isDynamicColorSupported
 import com.quranapp.android.theme.observeDarkTheme
 import com.quranapp.android.theme.observeIsDynamicColor
 import com.quranapp.android.theme.observeThemeColor
 import com.quranapp.android.theme.observeThemeMode
-import com.quranapp.android.theme.resolveThemeModeForDelegate
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 
@@ -51,17 +49,17 @@ fun OnboardingThemePage() {
 
     val items = listOf(
         Triple(
-            ThemeUtils.THEME_MODE_DEFAULT,
+            AppThemeMode.System,
             Res.string.strLabelSystemDefault,
             Res.string.strMsgThemeDefault,
         ),
         Triple(
-            ThemeUtils.THEME_MODE_DARK,
+            AppThemeMode.Dark,
             Res.string.strLabelThemeDark,
             Res.string.strMsgThemeDark,
         ),
         Triple(
-            ThemeUtils.THEME_MODE_LIGHT,
+            AppThemeMode.Light,
             Res.string.strLabelThemeLight,
             null,
         ),
@@ -87,9 +85,7 @@ fun OnboardingThemePage() {
                     onClick = {
                         scope.launch {
                             ThemeUtils.setThemeMode(mode)
-                            AppCompatDelegate.setDefaultNightMode(
-                                ThemeUtils.resolveThemeModeForDelegate(mode),
-                            )
+                            ThemeUtils.applyNightMode(mode)
                         }
                     },
                 )

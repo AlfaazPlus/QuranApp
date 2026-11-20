@@ -46,7 +46,6 @@ import com.quranapp.android.theme.colors.ThemePurpleColors
 import com.quranapp.android.theme.colors.ThemeRedColors
 import com.quranapp.android.theme.colors.ThemeVioletColors
 import com.quranapp.android.theme.colors.ThemeYellowColors
-import com.quranapp.android.theme.isDynamicColorSupported
 import com.quranapp.android.theme.observeDarkTheme
 import com.quranapp.android.theme.observeIsDynamicColor
 import com.quranapp.android.theme.observeThemeColor

@@ -17,7 +17,6 @@ import com.quranapp.android.db.entities.user.CollectionEntity
 import com.quranapp.android.db.entities.user.CollectionItemEntity
 import com.quranapp.android.db.entities.user.ReadHistoryEntity
 import com.quranapp.android.utils.miscellenous.DateUtils
-import kotlin.time.Clock
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 

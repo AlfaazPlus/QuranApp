@@ -2,7 +2,7 @@ package com.quranapp.android.utils.managers
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.task.ExistingTaskPolicy
 import com.quranapp.android.task.TaskParams
 import com.quranapp.android.task.TaskRequest
@@ -16,7 +16,6 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.launch
-import kotlin.collections.iterator
 
 object ScriptFontsDownloadManager {
     private const val TAG = "download_script_font"
@@ -26,7 +25,7 @@ object ScriptFontsDownloadManager {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     private var observeJob: Job? = null
 
-    private val taskManager get() = PlatformServices.system.taskManager
+    private val taskManager get() = Platform.system.taskManager
 
     fun initialize() {
         if (observeJob?.isActive == true) return

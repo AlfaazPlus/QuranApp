@@ -60,8 +60,9 @@ import com.quranapp.android.generated.resources.strLabelOpenInReader
 import com.quranapp.android.generated.resources.strLabelVerseSerialWithChapter
 import com.quranapp.android.generated.resources.strLabelVerseWithChapNameAndNo
 import com.quranapp.android.locale.LocalAppLocale
-import com.quranapp.android.locale.formattedStringResource
 import com.quranapp.android.models.Translation
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.alpha
@@ -81,8 +82,6 @@ import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.stringResource
 import org.json.JSONArray
 import org.json.JSONException
-import com.quranapp.android.navigation.AppRoute
-import com.quranapp.android.platform.PlatformServices
 
 private data class SimilarVerseListRow(
     val entity: SimilarVerseEntity,
@@ -263,7 +262,14 @@ fun SimilarVersesSheet(
                             arabicStyle = quranTextStyle(row.pageNo),
                             translationStyle = translationTextStyle,
                             onOpenInReader = {
-                                PlatformServices.navigator.navigate(AppRoute.Reader(ReaderFactory.verse(row.surahNo, row.verseNo)))
+                                Platform.navigator.navigate(
+                                    AppRoute.Reader(
+                                        ReaderFactory.verse(
+                                            row.surahNo,
+                                            row.verseNo
+                                        )
+                                    )
+                                )
                                 onDismiss()
                             },
                         )
@@ -338,7 +344,7 @@ private fun SimilarVerseItem(
                 Modifier.weight(1f)
             ) {
                 Text(
-                    text = formattedStringResource(
+                    text = stringResource(
                         Res.string.strLabelVerseSerialWithChapter,
                         row.surahName,
                         row.surahNo,
@@ -349,7 +355,7 @@ private fun SimilarVerseItem(
                 )
 
                 Text(
-                    text = formattedStringResource(
+                    text = stringResource(
                         Res.string.similarVerseRowMeta,
                         row.entity.coverage,
                         row.entity.score,

@@ -46,9 +46,9 @@ import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.noResults
 import com.quranapp.android.generated.resources.strLabelVerseSerial
 import com.quranapp.android.generated.resources.strMsgSearchNoResultsFoundAbsolute
-import com.quranapp.android.locale.formattedStringResource
+
 import com.quranapp.android.navigation.AppRoute
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.search.SearchResult
 import com.quranapp.android.search.SearchResultMatch
 import com.quranapp.android.search.SearchSnippet
@@ -131,7 +131,7 @@ fun TextSearchResults(
         data = quickRefData,
         onOpenInReader = { chapterNo, range ->
             quickRefData = null
-            PlatformServices.navigator.navigate(
+            Platform.navigator.navigate(
                 AppRoute.Reader(
                     ReaderFactory.verseRange(
                         chapterNo,
@@ -168,7 +168,7 @@ private fun TextSearchResultCard(result: SearchResult, onClick: (SearchResult) -
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = formattedStringResource(
+                    text = stringResource(
                         Res.string.strLabelVerseSerial,
                         result.chapterNo,
                         result.verseNo
@@ -178,7 +178,7 @@ private fun TextSearchResultCard(result: SearchResult, onClick: (SearchResult) -
                         .background(colorScheme.background)
                         .clickable(
                             onClick = {
-                                PlatformServices.system.clipboardManager.copy("${result.chapterNo}:${result.verseNo}")
+                                Platform.system.clipboardManager.copy("${result.chapterNo}:${result.verseNo}")
                             },
                         )
                         .padding(horizontal = 8.dp, vertical = 4.dp),

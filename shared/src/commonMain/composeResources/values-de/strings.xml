@@ -534,29 +534,29 @@
     <string name="collection_updated">Sammlungen aktualisiert</string>
     <string name="updated_just_now">Gerade aktualisiert</string>
     <plurals name="verse_count">
-            <item quantity="one">%1$d Vers</item>
-            <item quantity="other">%1$d Verse</item>
-        </plurals>
+        <item quantity="one">%1$d Vers</item>
+        <item quantity="other">%1$d Verse</item>
+    </plurals>
     <plurals name="updated_minutes">
-            <item quantity="one">Vor %1$d Minute aktualisiert</item>
-            <item quantity="other">Vor %1$d Minuten aktualisiert</item>
-        </plurals>
+        <item quantity="one">Vor %1$d Minute aktualisiert</item>
+        <item quantity="other">Vor %1$d Minuten aktualisiert</item>
+    </plurals>
     <plurals name="updated_hours">
-            <item quantity="one">Vor %1$d Stunde aktualisiert</item>
-            <item quantity="other">Vor %1$d Stunden aktualisiert</item>
-        </plurals>
+        <item quantity="one">Vor %1$d Stunde aktualisiert</item>
+        <item quantity="other">Vor %1$d Stunden aktualisiert</item>
+    </plurals>
     <plurals name="updated_days">
-            <item quantity="one">Vor %1$d Tag aktualisiert</item>
-            <item quantity="other">Vor %1$d Tagen aktualisiert</item>
-        </plurals>
+        <item quantity="one">Vor %1$d Tag aktualisiert</item>
+        <item quantity="other">Vor %1$d Tagen aktualisiert</item>
+    </plurals>
     <plurals name="item_count">
-            <item quantity="one">%1$d Objekt</item>
-            <item quantity="other">%1$d Objekte</item>
-        </plurals>
+        <item quantity="one">%1$d Objekt</item>
+        <item quantity="other">%1$d Objekte</item>
+    </plurals>
     <plurals name="place_count">
-            <item quantity="one">%1$d Ort</item>
-            <item quantity="other">%1$d Orte</item>
-        </plurals>
+        <item quantity="one">%1$d Ort</item>
+        <item quantity="other">%1$d Orte</item>
+    </plurals>
     <string name="advanced_settings">Erweiterte Einstellungen</string>
     <string name="recent_history">Letzter Verlauf</string>
     <string name="set_as_active">Als aktiv festlegen</string>

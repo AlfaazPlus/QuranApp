@@ -111,7 +111,8 @@ import com.quranapp.android.generated.resources.strTitleSelectReciter
 import com.quranapp.android.generated.resources.twice
 import com.quranapp.android.generated.resources.whenChapterEnds
 import com.quranapp.android.locale.LocalAppLocale
-import com.quranapp.android.locale.formattedStringResource
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.preferences.RecitationPreferences
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.utils.mediaplayer.AudioEndBehaviour
@@ -128,8 +129,6 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import kotlin.math.abs
 import kotlin.time.Duration.Companion.milliseconds
-import com.quranapp.android.navigation.AppRoute
-import com.quranapp.android.platform.PlatformServices
 
 val PlayerBgColor = Color(0xFF000000)
 val PlayerContentColor = Color.White
@@ -232,7 +231,14 @@ fun ExpandedPlayer(
                     onCollapse = onCollapse,
                     onOpenInReader = {
                         if (onSyncRequest != null) onSyncRequest(true)
-                        else PlatformServices.navigator.navigate(AppRoute.Reader(ReaderFactory.verse(verse.chapterNo, verse.verseNo)))
+                        else Platform.navigator.navigate(
+                            AppRoute.Reader(
+                                ReaderFactory.verse(
+                                    verse.chapterNo,
+                                    verse.verseNo
+                                )
+                            )
+                        )
                     }
                 )
             }
@@ -601,7 +607,7 @@ private fun PlayerConfigurations(
                     !repeatSupported -> stringResource(Res.string.notSupported)
                     repeatCount == 0 -> stringResource(Res.string.once)
                     repeatCount == 1 -> stringResource(Res.string.twice)
-                    else -> formattedStringResource(Res.string.nTimes, repeatCount + 1)
+                    else -> stringResource(Res.string.nTimes, repeatCount + 1)
                 },
                 onClick = {
                     showRepeatOptions.value = true

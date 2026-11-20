@@ -82,11 +82,10 @@ import com.quranapp.android.generated.resources.strLabelVerses
 import com.quranapp.android.generated.resources.strMsgReadHistoryDeleteAll
 import com.quranapp.android.generated.resources.strMsgReadHistoryNoItems
 import com.quranapp.android.generated.resources.strTitleReadHistory
-import com.quranapp.android.locale.formattedStringResource
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.reader.ReaderMode
 import com.quranapp.android.theme.alpha
-import com.quranapp.android.navigation.AppRoute
-import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.utils.reader.ReadType
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.reader.getQuranScriptName
@@ -113,7 +112,7 @@ fun ReadHistoryScreen(vm: ReadHistoryViewModel = appViewModel()) {
 
     val openHistory: (ReadHistoryEntity) -> Unit = { history ->
         ReaderFactory.fromHistory(history)?.let {
-            PlatformServices.navigator.navigate(AppRoute.Reader(it))
+            Platform.navigator.navigate(AppRoute.Reader(it))
         }
     }
 
@@ -522,7 +521,7 @@ private fun ClearAllHistoryDialog(
 @Composable
 fun ReadHistoryEntity.titleLabel(chapterName: String): String {
     if (readerMode == ReaderMode.Reading.value || readerMode == ReaderMode.Translation.value) {
-        return pageNo?.let { formattedStringResource(Res.string.strLabelPageNo, it) } ?: "-"
+        return pageNo?.let { stringResource(Res.string.strLabelPageNo, it) } ?: "-"
     } else {
         return when (ReadType.fromValue(readType)) {
             ReadType.Chapter -> stringResource(
@@ -530,8 +529,8 @@ fun ReadHistoryEntity.titleLabel(chapterName: String): String {
                 chapterName
             )
 
-            ReadType.Juz -> formattedStringResource(Res.string.strLabelJuzNo, divisionNo)
-            ReadType.Hizb -> formattedStringResource(Res.string.labelHizbNo, divisionNo)
+            ReadType.Juz -> stringResource(Res.string.strLabelJuzNo, divisionNo)
+            ReadType.Hizb -> stringResource(Res.string.labelHizbNo, divisionNo)
         }
     }
 }
@@ -552,9 +551,9 @@ fun ReaderMode.iconRes() = when (this) {
 @Composable
 fun ReadHistoryEntity.subtitleLabel(chapterName: String): String? {
     val verseLabel = if (fromVerseNo == toVerseNo) {
-        formattedStringResource(Res.string.strLabelVerseNo, fromVerseNo)
+        stringResource(Res.string.strLabelVerseNo, fromVerseNo)
     } else {
-        formattedStringResource(Res.string.strLabelVerses, fromVerseNo, toVerseNo)
+        stringResource(Res.string.strLabelVerses, fromVerseNo, toVerseNo)
 
     }
     if (readerMode == ReaderMode.Reading.value || readerMode == ReaderMode.Translation.value) {

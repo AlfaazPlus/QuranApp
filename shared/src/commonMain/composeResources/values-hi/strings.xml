@@ -532,29 +532,29 @@
     <string name="collection_updated">संग्रह अपडेट हो गए</string>
     <string name="updated_just_now">अभी अपडेट हुआ</string>
     <plurals name="verse_count">
-            <item quantity="one">%1$d आयत</item>
-            <item quantity="other">%1$d आयतें</item>
-        </plurals>
+        <item quantity="one">%1$d आयत</item>
+        <item quantity="other">%1$d आयतें</item>
+    </plurals>
     <plurals name="updated_minutes">
-            <item quantity="one">%1$d मिनट पहले अपडेट हुआ</item>
-            <item quantity="other">%1$d मिनट पहले अपडेट हुआ</item>
-        </plurals>
+        <item quantity="one">%1$d मिनट पहले अपडेट हुआ</item>
+        <item quantity="other">%1$d मिनट पहले अपडेट हुआ</item>
+    </plurals>
     <plurals name="updated_hours">
-            <item quantity="one">%1$d घंटा पहले अपडेट हुआ</item>
-            <item quantity="other">%1$d घंटे पहले अपडेट हुआ</item>
-        </plurals>
+        <item quantity="one">%1$d घंटा पहले अपडेट हुआ</item>
+        <item quantity="other">%1$d घंटे पहले अपडेट हुआ</item>
+    </plurals>
     <plurals name="updated_days">
-            <item quantity="one">%1$d दिन पहले अपडेट हुआ</item>
-            <item quantity="other">%1$d दिन पहले अपडेट हुआ</item>
-        </plurals>
+        <item quantity="one">%1$d दिन पहले अपडेट हुआ</item>
+        <item quantity="other">%1$d दिन पहले अपडेट हुआ</item>
+    </plurals>
     <plurals name="item_count">
-            <item quantity="one">%1$d आइटम</item>
-            <item quantity="other">%1$d आइटम</item>
-        </plurals>
+        <item quantity="one">%1$d आइटम</item>
+        <item quantity="other">%1$d आइटम</item>
+    </plurals>
     <plurals name="place_count">
-            <item quantity="one">%1$d जगह</item>
-            <item quantity="other">%1$d जगह</item>
-        </plurals>
+        <item quantity="one">%1$d जगह</item>
+        <item quantity="other">%1$d जगह</item>
+    </plurals>
     <string name="advanced_settings">उन्नत सेटिंग्स</string>
     <string name="recent_history">हाल का इतिहास</string>
     <string name="set_as_active">सक्रिय के रूप में सेट करें</string>

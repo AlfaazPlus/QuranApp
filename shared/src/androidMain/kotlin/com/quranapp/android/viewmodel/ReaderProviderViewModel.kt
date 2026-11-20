@@ -3,8 +3,8 @@ package com.quranapp.android.viewmodel
 import androidx.lifecycle.viewModelScope
 import com.quranapp.android.AndroidAppContext
 import com.quranapp.android.db.DatabaseProvider
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.preferences.ReaderPreferences
-import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.reader.FontResolver
 import com.quranapp.android.utils.reader.atlas.QuranAtlasBundle
 import com.quranapp.android.utils.reader.atlas.QuranAtlasLoader
@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.stateIn
 open class ReaderProviderViewModel() : AppViewModel() {
     private val context get() = AndroidAppContext.get()
 
-    val controller = RecitationController.getInstance(context)
+    val controller = Platform.audio.controller
     val userRepository get() = DatabaseProvider.getUserRepository()
     val repository get() = DatabaseProvider.getQuranRepository()
     val fontResolver = FontResolver.getInstance(context)

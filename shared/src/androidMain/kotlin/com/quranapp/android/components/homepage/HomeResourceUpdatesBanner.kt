@@ -25,7 +25,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.generated.resources.Res
@@ -37,20 +36,19 @@ import com.quranapp.android.generated.resources.strTitleTranslations
 import com.quranapp.android.generated.resources.updateAvailable
 import com.quranapp.android.generated.resources.wordByWord
 import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.navigation.AppRoutes
 import com.quranapp.android.navigation.SettingRoutes
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.utils.mediaplayer.RecitationVersionManager
 import com.quranapp.android.utils.miscellenous.Keys
 import com.quranapp.android.utils.translation.TranslationVersionManager
 import com.quranapp.android.utils.wbw.WbwVersionManager
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import com.quranapp.android.platform.PlatformServices
-import com.quranapp.android.navigation.AppRoutes
 
 @Composable
 fun HomeResourceUpdatesBanner() {
-    val context = LocalContext.current
-    val recitationManager = remember { RecitationVersionManager.get(context) }
+    val recitationManager = remember { RecitationVersionManager.get() }
     val translationManager = remember { TranslationVersionManager.get() }
     val wbwManager = remember { WbwVersionManager.get() }
 
@@ -72,7 +70,7 @@ fun HomeResourceUpdatesBanner() {
     if (total <= 0) return
 
     val openRoute: (String) -> Unit = { targetRoute ->
-        PlatformServices.navigator.navigate(
+        Platform.navigator.navigate(
             AppRoute.Screen(
                 screen = AppRoutes.SETTINGS,
                 extras = mapOf(Keys.NAV_DESTINATION to targetRoute)

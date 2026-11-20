@@ -56,10 +56,10 @@ import com.quranapp.android.generated.resources.strLabelReport
 import com.quranapp.android.generated.resources.strLabelShare
 import com.quranapp.android.generated.resources.strTitleFootnotes
 import com.quranapp.android.generated.resources.strTitleReaderVerseInformation
-import com.quranapp.android.locale.formattedStringResource
-import com.quranapp.android.platform.PlatformServices
-import com.quranapp.android.theme.alpha
 import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.navigation.AppRoutes
+import com.quranapp.android.platform.Platform
+import com.quranapp.android.theme.alpha
 import com.quranapp.android.utils.miscellenous.Keys
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.DrawableResource
@@ -67,7 +67,6 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import com.quranapp.android.navigation.AppRoutes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -136,7 +135,7 @@ private fun VodSheetContent(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
-    val title = formattedStringResource(
+    val title = stringResource(
         Res.string.strTitleReaderVerseInformation,
         verse.chapter.getCurrentName(),
         verse.verseNo
@@ -177,7 +176,7 @@ private fun VodSheetContent(
                         onFootnotes(verse)
                     } else {
                         scope.launch {
-                            PlatformServices.messages.show(
+                            Platform.messages.show(
                                 getString(Res.string.noFootnotesForThisVerse),
                                 long = true
                             )
@@ -196,7 +195,7 @@ private fun VodSheetContent(
                         onSimilarVerses(verse)
                     } else {
                         scope.launch {
-                            PlatformServices.messages.show(
+                            Platform.messages.show(
                                 getString(Res.string.noSimilarVerses),
                                 long = true
                             )
@@ -210,7 +209,7 @@ private fun VodSheetContent(
                 labelRes = Res.string.shareAsImage,
                 onClick = {
                     onDismiss()
-                    PlatformServices.navigator.navigate(
+                    Platform.navigator.navigate(
                         AppRoute.Screen(
                             screen = AppRoutes.SHARE_AS_IMAGE,
                             extras = mapOf(
@@ -239,7 +238,7 @@ private fun VodSheetContent(
                 labelRes = Res.string.strLabelReport,
                 onClick = {
                     onDismiss()
-                    PlatformServices.links.browse(ApiConfig.GITHUB_ISSUES_VERSE_REPORT_URL)
+                    Platform.links.browse(ApiConfig.GITHUB_ISSUES_VERSE_REPORT_URL)
                 },
             )
         }

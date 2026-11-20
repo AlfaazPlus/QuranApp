@@ -66,9 +66,9 @@ import com.quranapp.android.generated.resources.strMsgEnterValidRange
 import com.quranapp.android.generated.resources.strMsgShareRange
 import com.quranapp.android.generated.resources.strTitleFootnotes
 import com.quranapp.android.generated.resources.strTitleShareVerse
-import com.quranapp.android.locale.formattedStringResource
+
 import com.quranapp.android.models.Translation
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.repository.TranslationRepository
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.utils.miscellenous.HYPHEN
@@ -190,9 +190,9 @@ fun VerseShareSheet(
 
                             if (text.isNullOrEmpty()) return@launch
 
-                            PlatformServices.system.clipboardManager.copy(text)
+                            Platform.system.clipboardManager.copy(text)
 
-                            PlatformServices.messages.showClipboard(clipboardMsg)
+                            Platform.messages.showClipboard(clipboardMsg)
                         }
 
                         onDismiss()
@@ -213,7 +213,7 @@ fun VerseShareSheet(
 
                             if (text.isNullOrEmpty()) return@launch
 
-                            PlatformServices.links.shareText(text, shareTitle)
+                            Platform.links.shareText(text, shareTitle)
 
                             onDismiss()
                         }
@@ -272,7 +272,7 @@ private fun AdvancedShareForm(
 
     if (state.useVerseRange) {
         Text(
-            text = formattedStringResource(
+            text = stringResource(
                 Res.string.strMsgShareRange,
                 1,
                 vwd.chapter.surah.ayahCount

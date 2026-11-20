@@ -8,7 +8,7 @@ import com.quranapp.android.extensions.canProceed
 import com.quranapp.android.models.DataLoadError
 import com.quranapp.android.models.transls.TranslModel
 import com.quranapp.android.models.transls.TranslationGroupModel
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.search.SearchIndexScheduler
 import com.quranapp.android.task.TaskState
@@ -234,7 +234,7 @@ class TranslationViewModel() : AppViewModel() {
         if (!_uiState.value.outdatedSlugs.contains(slug)) return
 
         viewModelScope.launch {
-            if (!PlatformServices.networkMonitor.canProceed()) return@launch
+            if (!Platform.networkMonitor.canProceed()) return@launch
             val remoteInfo = versionManager.getRemoteBookInfo(slug)
                 ?: DatabaseProvider.getTranslationRepository()
                     .let { factory ->

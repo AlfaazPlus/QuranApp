@@ -5,8 +5,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import com.quranapp.android.components.common.AlertCard
 import com.quranapp.android.components.common.AlertType
-import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.importing.ImportFieldId
+import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.translation.importLanguages
 import com.quranapp.android.utils.translation.isCustomImportSlug
 import com.quranapp.android.utils.translation.translationSlug

@@ -9,6 +9,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.annotation.OptIn
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
@@ -45,10 +46,13 @@ import com.quranapp.android.generated.resources.strTitleReaderChapters
 import com.quranapp.android.generated.resources.strTitleSelectReciter
 import com.quranapp.android.locale.appLocale
 import com.quranapp.android.models.ChapterVersePair
-import com.quranapp.android.preferences.RecitationPreferences
-import com.quranapp.android.preferences.RecitationPreferences.RECITATION_MIN_REPEAT_COUNT
 import com.quranapp.android.navigation.AppRoute
 import com.quranapp.android.navigation.toIntent
+import com.quranapp.android.platform.mediaplayer.AndroidMediaCacheManager
+import com.quranapp.android.platform.mediaplayer.AudioClip
+import com.quranapp.android.platform.mediaplayer.ClipMetadata
+import com.quranapp.android.preferences.RecitationPreferences
+import com.quranapp.android.preferences.RecitationPreferences.RECITATION_MIN_REPEAT_COUNT
 import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.miscellenous.ErrorEvent
 import com.quranapp.android.utils.miscellenous.EventBus
@@ -73,7 +77,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import org.jetbrains.compose.resources.getString
-import kotlin.time.Duration.Companion.milliseconds
 
 @OptIn(UnstableApi::class)
 class RecitationService : MediaLibraryService() {
@@ -144,7 +147,7 @@ class RecitationService : MediaLibraryService() {
 
     override fun onCreate() {
         super.onCreate()
-        audioRepository = RecitationAudioRepository(this)
+        audioRepository = RecitationAudioRepository()
 
         initializePlayer()
         initializeMediaSession()
@@ -215,9 +218,8 @@ class RecitationService : MediaLibraryService() {
     }
 
     private fun initializePlayer() {
-        val cache = RecitationStreamCache.get(this)
         val cacheDataSourceFactory = CacheDataSource.Factory()
-            .setCache(cache)
+            .setCache(AndroidMediaCacheManager.getSimpleCache(this))
             .setUpstreamDataSourceFactory(DefaultHttpDataSource.Factory())
             .setFlags(CacheDataSource.FLAG_IGNORE_CACHE_ON_ERROR)
 
@@ -758,7 +760,7 @@ class RecitationService : MediaLibraryService() {
 
         val queue = if (plan != null) {
             MediaSession.MediaItemsWithStartPosition(
-                plan.items,
+                plan.items.map { it.toMediaItem() },
                 plan.firstIndexForVerse(startVerse),
                 0L,
             )
@@ -893,8 +895,7 @@ class RecitationService : MediaLibraryService() {
         if (verses.isEmpty()) return null
 
         val trackCount = tracks.size
-        val items = ArrayList<MediaItem>(verses.size * trackCount)
-        val metadataBuilder = buildMediaMetadata(chapterNo, verses.first())
+        val clips = ArrayList<AudioClip>(verses.size * trackCount)
         val chunkSize = if (trackCount > 1) RecitationPreferences.getVerseGroupSize() else 1
         var index = 0
 
@@ -906,34 +907,28 @@ class RecitationService : MediaLibraryService() {
                     val vt = track.timingMetadata!!.getVerseTiming(verseNo) ?: return null
                     if (!isValidTimingWindow(vt.startMs, vt.endMs)) continue
 
-                    items.add(
-                        MediaItem.Builder()
-                            .setMediaId(
-                                "${
-                                    if (track.kind == RecitationAudioKind.QURAN) RecitationAudioKind.QURAN.type
-                                    else RecitationAudioKind.TRANSLATION.type
-                                }:$chapterNo:$verseNo"
-                            )
-                            .setUri(track.audioUri)
-                            .setMediaMetadata(
-                                metadataBuilder
-                                    .setTitle(buildTitle(chapterNo, verseNo))
-                                    .build()
-                            )
-                            .setClippingConfiguration(
-                                MediaItem.ClippingConfiguration.Builder()
-                                    .setStartPositionMs(vt.startMs)
-                                    .setEndPositionMs(vt.endMs)
-                                    .build(),
-                            )
-                            .build(),
+                    clips.add(
+                        AudioClip(
+                            id = "${
+                                if (track.kind == RecitationAudioKind.QURAN) RecitationAudioKind.QURAN.type
+                                else RecitationAudioKind.TRANSLATION.type
+                            }:$chapterNo:$verseNo",
+                            uri = track.audioUri,
+                            startMs = vt.startMs,
+                            endMs = vt.endMs,
+                            metadata = ClipMetadata(
+                                title = buildTitle(chapterNo, verseNo),
+                                chapterNo = chapterNo,
+                                verseNo = verseNo,
+                            ),
+                        ),
                     )
                 }
             }
             index = endIndex
         }
 
-        return if (items.isEmpty()) null else VerseClipPlan.from(items)
+        return if (clips.isEmpty()) null else VerseClipPlan.from(clips)
     }
 
     private fun isValidTimingWindow(startMs: Long, endMs: Long): Boolean {
@@ -962,7 +957,7 @@ class RecitationService : MediaLibraryService() {
     ): MediaItem {
         return MediaItem.Builder()
             .setMediaId("chapter_$chapterNo")
-            .setUri(audio.audioUri)
+            .setUri(audio.audioUri.toUri())
             .setMediaMetadata(buildMediaMetadata(chapterNo, startVerse).build())
             .build()
     }
@@ -1087,26 +1082,16 @@ class RecitationService : MediaLibraryService() {
                     sharedWordIndex.value = -1
                 }
 
-                val nextBoundaryMs = if (hasWordTiming) {
-                    activeVt?.getNextSegmentBoundaryMs(position)
-                        ?: if (!isClippedPlaylist) timing.getNextVerseStartMs(position) else null
-                } else if (!isClippedPlaylist) {
-                    activeVt?.takeIf { position < it.endMs }?.endMs
-                        ?: timing.getNextVerseStartMs(position)
-                } else {
-                    null
-                }
+                val delayDuration = AdaptiveTimingCalculator.calculateDelay(
+                    positionMs = position,
+                    playbackSpeed = player.playbackParameters.speed,
+                    activeTiming = activeVt,
+                    chapterTiming = timing,
+                    isClippedPlaylist = isClippedPlaylist,
+                    hasWordTiming = hasWordTiming,
+                )
 
-                val delayMs = if (nextBoundaryMs != null && nextBoundaryMs > position) {
-                    val speed = player.playbackParameters.speed.coerceAtLeast(0.1f)
-                    val remainingRealMs = ((nextBoundaryMs - position) / speed).toLong()
-                    val maxPollMs = if (hasWordTiming) 250L else 500L
-                    remainingRealMs.coerceIn(1L, maxPollMs)
-                } else {
-                    if (hasWordTiming) 50L else 200L
-                }
-
-                delay(delayMs.milliseconds)
+                delay(delayDuration)
             }
         }
     }
@@ -1231,8 +1216,8 @@ class RecitationService : MediaLibraryService() {
 
         val currentIndex = player.exoPlayer.currentMediaItemIndex
         val item = plan.items.getOrNull(currentIndex) ?: return
-        val startMs = item.clippingConfiguration.startPositionMs
-        val endMs = item.clippingConfiguration.endPositionMs
+        val startMs = item.startMs
+        val endMs = item.endMs
         if (!isValidTimingWindow(startMs, endMs)) return
 
         val clipDurationMs = endMs - startMs

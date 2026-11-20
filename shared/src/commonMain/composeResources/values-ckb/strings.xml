@@ -531,29 +531,29 @@
     <string name="collection_updated">کۆکراوەکان نوێکرانەوە</string>
     <string name="updated_just_now">هەر ئێستا نوێکرایەوە</string>
     <plurals name="verse_count">
-            <item quantity="one">%1$d ئایەت</item>
-            <item quantity="other">%1$d ئایەت</item>
-        </plurals>
+        <item quantity="one">%1$d ئایەت</item>
+        <item quantity="other">%1$d ئایەت</item>
+    </plurals>
     <plurals name="updated_minutes">
-            <item quantity="one">%1$d خولەک لەمەوبەر نوێکرایەوە</item>
-            <item quantity="other">%1$d خولەک لەمەوبەر نوێکرایەوە</item>
-        </plurals>
+        <item quantity="one">%1$d خولەک لەمەوبەر نوێکرایەوە</item>
+        <item quantity="other">%1$d خولەک لەمەوبەر نوێکرایەوە</item>
+    </plurals>
     <plurals name="updated_hours">
-            <item quantity="one">%1$d کاتژمێر لەمەوبەر نوێکرایەوە</item>
-            <item quantity="other">%1$d کاتژمێر لەمەوبەر نوێکرایەوە</item>
-        </plurals>
+        <item quantity="one">%1$d کاتژمێر لەمەوبەر نوێکرایەوە</item>
+        <item quantity="other">%1$d کاتژمێر لەمەوبەر نوێکرایەوە</item>
+    </plurals>
     <plurals name="updated_days">
-            <item quantity="one">%1$d ڕۆژ لەمەوبەر نوێکرایەوە</item>
-            <item quantity="other">%1$d ڕۆژ لەمەوبەر نوێکرایەوە</item>
-        </plurals>
+        <item quantity="one">%1$d ڕۆژ لەمەوبەر نوێکرایەوە</item>
+        <item quantity="other">%1$d ڕۆژ لەمەوبەر نوێکرایەوە</item>
+    </plurals>
     <plurals name="item_count">
-            <item quantity="one">%1$d بابەت</item>
-            <item quantity="other">%1$d بابەت</item>
-        </plurals>
+        <item quantity="one">%1$d بابەت</item>
+        <item quantity="other">%1$d بابەت</item>
+    </plurals>
     <plurals name="place_count">
-            <item quantity="one">%1$d شوێن</item>
-            <item quantity="other">%1$d شوێن</item>
-        </plurals>
+        <item quantity="one">%1$d شوێن</item>
+        <item quantity="other">%1$d شوێن</item>
+    </plurals>
     <string name="advanced_settings">ڕێکخستنە پێشکەوتووەکان</string>
     <string name="recent_history">مێژووی دوایی</string>
     <string name="set_as_active">وەک چالاک دایبنێ</string>

@@ -33,9 +33,10 @@ import com.quranapp.android.generated.resources.icon_star_filled
 import com.quranapp.android.generated.resources.icon_star_outlined
 import com.quranapp.android.generated.resources.strLabelJuzNo
 import com.quranapp.android.locale.LocalAppLocale
-import com.quranapp.android.locale.formattedStringResource
+
 import com.quranapp.android.theme.alpha
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun JuzCard(
@@ -96,7 +97,7 @@ fun JuzCard(
                 verticalArrangement = Arrangement.spacedBy(2.dp),
             ) {
                 Text(
-                    text = formattedStringResource(Res.string.strLabelJuzNo, juz.unitNo),
+                    text = stringResource(Res.string.strLabelJuzNo, juz.unitNo),
                     style = MaterialTheme.typography.titleSmall,
                     color = colorScheme.onSurface,
                     maxLines = 2,

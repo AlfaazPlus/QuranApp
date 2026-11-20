@@ -1,6 +1,5 @@
 package com.quranapp.android.screens.chapterInfo
 
-import android.app.Activity
 import android.webkit.ConsoleMessage
 import android.webkit.WebChromeClient
 import androidx.compose.animation.AnimatedVisibility
@@ -58,6 +57,8 @@ import com.quranapp.android.models.ChapterInfoContentData
 import com.quranapp.android.models.HtmlContentHost
 import com.quranapp.android.models.HtmlPage
 import com.quranapp.android.models.htmlContentHandle
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.chapterInfo.ChapterInfoJSInterface
@@ -69,8 +70,6 @@ import com.quranapp.android.viewmodel.ChapterInfoUiState
 import com.quranapp.android.viewmodel.ChapterInfoViewModel
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import com.quranapp.android.navigation.AppRoute
-import com.quranapp.android.platform.PlatformServices
 
 @Composable
 fun ChapterInfoScreen(
@@ -160,7 +159,15 @@ fun ChapterInfoScreen(
         data = quickRefData,
         onOpenInReader = { chapterNo, range ->
             quickRefData = null
-            PlatformServices.navigator.navigate(AppRoute.Reader(ReaderFactory.verseRange(chapterNo, range.first, range.last)))
+            Platform.navigator.navigate(
+                AppRoute.Reader(
+                    ReaderFactory.verseRange(
+                        chapterNo,
+                        range.first,
+                        range.last
+                    )
+                )
+            )
         },
         onClose = { quickRefData = null },
     )

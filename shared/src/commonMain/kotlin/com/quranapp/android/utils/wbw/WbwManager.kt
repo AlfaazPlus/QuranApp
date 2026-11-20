@@ -3,8 +3,8 @@ package com.quranapp.android.utils.wbw
 import com.quranapp.android.api.ApiClient
 import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.models.wbw.AvailableWbwInfoModel
-import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.app.AppFiles
+import com.quranapp.android.utils.app.Logger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock

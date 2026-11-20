@@ -5,7 +5,7 @@ import com.quranapp.android.api.ApiClient
 import com.quranapp.android.api.downloadTo
 import com.quranapp.android.api.fetchInventoryStreamingResponse
 import com.quranapp.android.api.resolveInventoryUrl
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.app.Logger
 import com.quranapp.platform.AppImageRequest
@@ -109,12 +109,12 @@ object VerseTemplateManager {
                 return@withLock target
             }
 
-            if (!PlatformServices.networkMonitor.isConnected) {
+            if (!Platform.networkMonitor.isConnected) {
                 return@withLock null
             }
 
             val tmpFile =
-                PlatformServices.files.cacheDirectory / "${target.name}.${System.currentTimeMillis()}.tmp"
+                Platform.files.cacheDirectory / "${target.name}.${System.currentTimeMillis()}.tmp"
 
             try {
                 val response = fetchInventoryStreamingResponse(template.bgSrc)
@@ -164,7 +164,7 @@ object VerseTemplateManager {
 
         if (AppFiles.size(file) <= 0L) return null
 
-        return PlatformServices.files.imageLoader.load(
+        return Platform.files.imageLoader.load(
             AppImageRequest(
                 data = file,
                 width = reqWidth,
@@ -175,7 +175,7 @@ object VerseTemplateManager {
     }
 
     fun clearPreviewCache() {
-        PlatformServices.files.imageLoader.clear()
+        Platform.files.imageLoader.clear()
         VerseTemplateRenderer.clearLogoCache()
     }
 
@@ -195,12 +195,12 @@ object VerseTemplateManager {
 
     private suspend fun loadNetwork(): VerseTemplateCatalog? =
         withContext(Dispatchers.IO) {
-            if (!PlatformServices.networkMonitor.isConnected) {
+            if (!Platform.networkMonitor.isConnected) {
                 return@withContext null
             }
 
             try {
-                val path = PlatformServices.files.cacheDirectory / "available_templates.json.gz"
+                val path = Platform.files.cacheDirectory / "available_templates.json.gz"
                 val body = ApiClient.getAvailableTemplates()
                 body.downloadTo(
                     path,

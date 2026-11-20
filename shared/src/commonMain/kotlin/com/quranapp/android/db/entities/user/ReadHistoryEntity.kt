@@ -4,7 +4,6 @@ import androidx.room3.ColumnInfo
 import androidx.room3.Entity
 import androidx.room3.PrimaryKey
 import com.quranapp.android.utils.miscellenous.DateUtils
-import kotlin.time.Clock
 
 @Entity(tableName = "read_history")
 data class ReadHistoryEntity(

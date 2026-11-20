@@ -34,10 +34,10 @@ import com.quranapp.android.generated.resources.strLabelGotIt
 import com.quranapp.android.generated.resources.strLabelOff
 import com.quranapp.android.generated.resources.strLabelOn
 import com.quranapp.android.generated.resources.strTitleVOTD
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.preferences.VersePreferences
-import com.quranapp.android.scheduling.RecommendedReminderScheduler
-import com.quranapp.android.scheduling.VerseOfTheDayScheduler
+import com.quranapp.android.utils.scheduling.RecommendedReminderScheduler
+import com.quranapp.android.utils.scheduling.VerseOfTheDayScheduler
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 
@@ -141,7 +141,7 @@ fun DailyReminderSheet(
                 onClick = {
                     permissionState?.let {
                         if (showPermissionDialog.second == true) {
-                            PlatformServices.links.openAppSettings()
+                            Platform.links.openAppSettings()
                         } else {
                             it.launchPermissionRequest()
                         }

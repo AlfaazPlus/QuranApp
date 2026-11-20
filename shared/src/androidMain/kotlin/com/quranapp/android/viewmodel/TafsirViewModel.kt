@@ -6,7 +6,7 @@ import com.quranapp.android.components.tafsir.TafsirGroupModel
 import com.quranapp.android.db.tafsir.QuranTafsirDBHelper
 import com.quranapp.android.extensions.canProceed
 import com.quranapp.android.models.DataLoadError
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.preferences.AppActionsPreferences
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.task.TaskState
@@ -100,7 +100,7 @@ class TafsirViewModel() : AppViewModel() {
     }
 
     private fun loadTafsirs(force: Boolean) {
-        if (force && !PlatformServices.networkMonitor.isConnected) {
+        if (force && !Platform.networkMonitor.isConnected) {
             _uiState.update { it.copy(isLoading = false, error = DataLoadError.NoConnection) }
             return
         }
@@ -227,7 +227,7 @@ class TafsirViewModel() : AppViewModel() {
         val tafsirInfo = findTafsirByKey(key) ?: return
 
         viewModelScope.launch {
-            if (!PlatformServices.networkMonitor.canProceed()) return@launch
+            if (!Platform.networkMonitor.canProceed()) return@launch
 
             TafsirDownloadManager.startDownload(tafsirInfo)
             updateDownloadStatus(key, TaskState.Enqueued)

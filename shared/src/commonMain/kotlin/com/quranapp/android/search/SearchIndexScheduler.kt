@@ -1,7 +1,7 @@
 package com.quranapp.android.search
 
 import com.quranapp.android.db.searchindex.SEARCH_INDEX_CONTENT_VERSION
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.preferences.OtherPreferences
 import com.quranapp.android.task.ExistingTaskPolicy
 import com.quranapp.android.task.TaskBackoffPolicy
@@ -16,7 +16,7 @@ object SearchIndexScheduler {
     const val INDEXING_TAG = "translation_search_indexing"
 
     private fun workManager(): TaskManager =
-        PlatformServices.system.taskManager
+        Platform.system.taskManager
 
     private fun buildRequest(
         mode: String,

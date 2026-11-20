@@ -16,11 +16,11 @@ import com.quranapp.android.generated.resources.strTitleSuccess
 import com.quranapp.android.models.DataLoadError
 import com.quranapp.android.models.transls.TranslModel
 import com.quranapp.android.models.transls.TranslationGroupModel
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.preferences.AppActionsPreferences
+import com.quranapp.android.task.TaskState
 import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.app.Logger
-import com.quranapp.android.task.TaskState
 import com.quranapp.android.utils.managers.TranslationDownloadManager
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.translation.TranslationVersionManager
@@ -98,7 +98,7 @@ class TranslationDownloadViewModel() : AppViewModel() {
     }
 
     private fun loadAvailableTranslations(force: Boolean) {
-        if (force && !PlatformServices.networkMonitor.isConnected) {
+        if (force && !Platform.networkMonitor.isConnected) {
             _uiState.update { it.copy(isLoading = false, error = DataLoadError.NoConnection) }
             return
         }
@@ -237,7 +237,7 @@ class TranslationDownloadViewModel() : AppViewModel() {
                 return@launch
             }
 
-            if (!PlatformServices.networkMonitor.canProceed()) {
+            if (!Platform.networkMonitor.canProceed()) {
                 return@launch
             }
 

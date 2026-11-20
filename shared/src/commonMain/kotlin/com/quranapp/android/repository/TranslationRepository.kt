@@ -15,7 +15,7 @@ import com.quranapp.android.db.entities.translation.TranslationVerseEntity
 import com.quranapp.android.db.translation.TranslationLegacyCopy
 import com.quranapp.android.models.Footnote
 import com.quranapp.android.models.Translation
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.quran.QuranConstants
@@ -230,7 +230,7 @@ class TranslationRepository(
             if (current != null && current >= required) continue
 
             val path = TranslUtils.getPrebuiltTranslPath(bookInfo.slug) ?: continue
-            val text = PlatformServices.assets.readAssetText(path)
+            val text = Platform.assets.readAssetText(path)
 
             storeParsed(rawDao, bookInfo, text)
         }

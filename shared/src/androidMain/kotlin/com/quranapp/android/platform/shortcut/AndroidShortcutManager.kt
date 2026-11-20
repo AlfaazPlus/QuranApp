@@ -2,7 +2,6 @@ package com.quranapp.android.platform.shortcut
 
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat

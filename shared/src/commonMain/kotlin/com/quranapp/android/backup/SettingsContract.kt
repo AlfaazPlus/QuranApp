@@ -2,6 +2,7 @@ package com.quranapp.android.backup
 
 import com.quranapp.android.locale.LOCALE_DEFAULT
 import com.quranapp.android.locale.NumeralSystem
+import com.quranapp.android.platform.AppThemeMode
 import com.quranapp.android.reader.ReaderMode
 import com.quranapp.android.reader.ReadingLayout
 import com.quranapp.android.theme.ThemeUtils
@@ -95,11 +96,7 @@ object SettingsContract {
             THEME,
             SettingKind.TEXT,
             true,
-            allowed = setOf(
-                ThemeUtils.THEME_MODE_DEFAULT,
-                ThemeUtils.THEME_MODE_LIGHT,
-                ThemeUtils.THEME_MODE_DARK,
-            ),
+            allowed = AppThemeMode.entries.map { it.storageKey }.toSet(),
             v1Key = "config.theme",
         ),
         SettingSpec(

@@ -25,7 +25,8 @@ class TranslationSearchIndexWorker() : TaskWorker {
     override suspend fun doWork(context: TaskContext): TaskResult = withContext(Dispatchers.IO) {
         when (val mode = context.params.get<String>(KEY_MODE)) {
             MODE_REMOVE -> {
-                val slug = context.params.get<String>(KEY_SLUG) ?: return@withContext TaskResult.Failure()
+                val slug =
+                    context.params.get<String>(KEY_SLUG) ?: return@withContext TaskResult.Failure()
 
                 removeSlug(slug)
 
@@ -33,7 +34,8 @@ class TranslationSearchIndexWorker() : TaskWorker {
             }
 
             MODE_SLUG -> {
-                val slug = context.params.get<String>(KEY_SLUG) ?: return@withContext TaskResult.Failure()
+                val slug =
+                    context.params.get<String>(KEY_SLUG) ?: return@withContext TaskResult.Failure()
 
                 buildIndexForSlugIfNeeded(slug)
 

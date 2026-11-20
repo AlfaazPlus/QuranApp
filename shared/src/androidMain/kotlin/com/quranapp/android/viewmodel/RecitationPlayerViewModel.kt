@@ -1,9 +1,8 @@
 package com.quranapp.android.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import com.quranapp.android.AndroidAppContext
 import com.quranapp.android.db.DatabaseProvider
-import com.quranapp.android.utils.mediaplayer.RecitationController
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.utils.mediaplayer.RecitationServiceState
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -11,7 +10,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 
 class RecitationPlayerViewModel() : AppViewModel() {
-    val controller = RecitationController.getInstance(AndroidAppContext.get())
+    val controller = Platform.audio.controller
     val repository get() = DatabaseProvider.getQuranRepository()
 
     init {

@@ -25,10 +25,10 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.api.ApiConfig
@@ -40,18 +40,19 @@ import com.quranapp.android.generated.resources.learnMore
 import com.quranapp.android.generated.resources.strLabelSystemDefault
 import com.quranapp.android.generated.resources.strTitleAppLanguage
 import com.quranapp.android.generated.resources.translationHelp
+import com.quranapp.android.locale.LOCALE_DEFAULT
 import com.quranapp.android.locale.LocalAppLocale
 import com.quranapp.android.locale.NumeralSystem
 import com.quranapp.android.locale.appLanguageOptions
 import com.quranapp.android.locale.appLocaleForLanguageChange
-import com.quranapp.android.locale.normalizedLanguageTag
+import com.quranapp.android.locale.languageCodeOf
+import com.quranapp.android.locale.languageDisplayName
 import com.quranapp.android.locale.numeralSystemsForLanguage
-import com.quranapp.android.locale.platformLocale
 import com.quranapp.android.locale.setAppLocale
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.theme.alpha
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
-import java.util.Locale
 
 data class LanguageModel(
     val rawLanguageTag: String,
@@ -62,34 +63,34 @@ data class LanguageModel(
 
 @Composable
 fun LanguageSelectionScreen() {
-    val context = LocalContext.current
-    val platformLocale = LocalAppLocale.current.platformLocale
+    val scope = rememberCoroutineScope()
+    val appLocale = LocalAppLocale.current
     val systemDefaultName = stringResource(Res.string.strLabelSystemDefault)
 
-    val languages = remember(platformLocale, systemDefaultName) {
+    val languages = remember(appLocale.languageTag, systemDefaultName) {
         appLanguageOptions.map { option ->
             val rawLanguageTag = option.tag
             val nativeName = if (option.systemDefault) systemDefaultName else option.nativeName
-            val locale = if (rawLanguageTag == "default") {
-                null
+            val language = if (rawLanguageTag == LOCALE_DEFAULT) {
+                ""
             } else {
-                Locale.forLanguageTag(rawLanguageTag.normalizedLanguageTag())
+                languageCodeOf(rawLanguageTag)
             }
-
-            val localizedName =
-                locale?.getDisplayName(platformLocale)?.replaceFirstChar { it.uppercase() }
-                    ?: nativeName
+            val localizedName = if (rawLanguageTag == LOCALE_DEFAULT) {
+                nativeName
+            } else {
+                languageDisplayName(rawLanguageTag, appLocale.languageTag)
+            }
 
             LanguageModel(
                 rawLanguageTag,
-                locale?.language ?: "",
+                language,
                 localizedName,
                 nativeName
             )
         }
     }
 
-    val appLocale = LocalAppLocale.current
     var committed by remember(appLocale.storedTag, appLocale.numeralSystem) {
         mutableStateOf(appLocale.storedTag to appLocale.numeralSystem)
     }
@@ -112,11 +113,9 @@ fun LanguageSelectionScreen() {
     }
 
     fun save(selectedTag: String, selectedNumeral: NumeralSystem?) {
-        val applied = appLocaleForLanguageChange(context, selectedTag, selectedNumeral)
-
-        setAppLocale(context, applied)
-
+        val applied = appLocaleForLanguageChange(selectedTag, selectedNumeral)
         committed = applied.storedTag to applied.numeralSystem
+        scope.launch { setAppLocale(applied) }
     }
 
     val selectedTag = committed.first
@@ -158,7 +157,7 @@ fun LanguageSelectionScreen() {
                         Text(
                             stringResource(Res.string.learnMore),
                             modifier = Modifier.clickable {
-                                PlatformServices.links.browse(ApiConfig.GITHUB_REPOSITORY_URL)
+                                Platform.links.browse(ApiConfig.GITHUB_REPOSITORY_URL)
                             },
                             style = typography.bodyMedium.copy(
                                 fontWeight = FontWeight.Medium

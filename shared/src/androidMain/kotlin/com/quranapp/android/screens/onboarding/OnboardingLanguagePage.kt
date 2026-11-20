@@ -13,9 +13,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.components.common.RadioItem
 import com.quranapp.android.extensions.verticalFadingEdge
@@ -26,16 +26,16 @@ import com.quranapp.android.locale.LocalAppLocale
 import com.quranapp.android.locale.NumeralSystem
 import com.quranapp.android.locale.appLanguageOptions
 import com.quranapp.android.locale.appLocaleForLanguageChange
-import com.quranapp.android.locale.normalizedLanguageTag
+import com.quranapp.android.locale.languageCodeOf
 import com.quranapp.android.locale.numeralSystemsForLanguage
 import com.quranapp.android.locale.setAppLocale
 import com.quranapp.android.screens.settings.NumeralSystemChipRow
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
-import java.util.Locale
 
 @Composable
 fun OnboardingLanguagePage() {
-    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     val appLocale = LocalAppLocale.current
     val systemDefaultName = stringResource(Res.string.strLabelSystemDefault)
     var committed by remember(appLocale.storedTag, appLocale.numeralSystem) {
@@ -44,9 +44,9 @@ fun OnboardingLanguagePage() {
     val listState = rememberLazyListState()
 
     fun save(selectedTag: String, selectedNumeral: NumeralSystem?) {
-        val applied = appLocaleForLanguageChange(context, selectedTag, selectedNumeral)
-        setAppLocale(context, applied)
+        val applied = appLocaleForLanguageChange(selectedTag, selectedNumeral)
         committed = applied.storedTag to applied.numeralSystem
+        scope.launch { setAppLocale(applied) }
     }
 
     val selectedTag = committed.first
@@ -72,7 +72,7 @@ fun OnboardingLanguagePage() {
                 val languageCode = if (v == LOCALE_DEFAULT) {
                     ""
                 } else {
-                    Locale.forLanguageTag(v.normalizedLanguageTag()).language
+                    languageCodeOf(v)
                 }
                 val numeralItems = numeralSystemsForLanguage(languageCode)
 

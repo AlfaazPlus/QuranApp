@@ -20,7 +20,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.generated.resources.Res
@@ -28,18 +27,17 @@ import com.quranapp.android.generated.resources.dr_icon_update_app
 import com.quranapp.android.generated.resources.recitationDownloadBannerUpdateAvailable
 import com.quranapp.android.generated.resources.strLabelManage
 import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.navigation.AppRoutes
 import com.quranapp.android.navigation.SettingRoutes
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.utils.mediaplayer.RecitationVersionManager
 import com.quranapp.android.utils.miscellenous.Keys
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import com.quranapp.android.platform.PlatformServices
-import com.quranapp.android.navigation.AppRoutes
 
 @Composable
 fun RecitationUpdateBanner() {
-    val context = LocalContext.current
-    val versionManager = remember { RecitationVersionManager.get(context) }
+    val versionManager = remember { RecitationVersionManager.get() }
     val state by versionManager.updateUiState.collectAsState()
 
     if (!state.hasOutdatedDownloads) return
@@ -76,7 +74,7 @@ fun RecitationUpdateBanner() {
 
             FilledTonalButton(
                 onClick = {
-                    PlatformServices.navigator.navigate(
+                    Platform.navigator.navigate(
                         AppRoute.Screen(
                             screen = AppRoutes.SETTINGS,
                             extras = mapOf(Keys.NAV_DESTINATION to SettingRoutes.RECITATION_DOWNLOAD)

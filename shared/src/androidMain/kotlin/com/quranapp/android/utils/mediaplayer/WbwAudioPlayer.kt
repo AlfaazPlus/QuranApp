@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import androidx.annotation.OptIn
+import androidx.core.net.toUri
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
@@ -18,12 +19,13 @@ import androidx.media3.datasource.cache.LeastRecentlyUsedCacheEvictor
 import androidx.media3.datasource.cache.SimpleCache
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
+import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.app.Logger
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import java.io.File
+import okio.FileSystem
 
 @OptIn(UnstableApi::class)
 object WbwAudioPlayer {
@@ -45,15 +47,15 @@ object WbwAudioPlayer {
             oneOffSimpleCache?.let { return it }
 
             val app = context.applicationContext
-            val dir = File(app.cacheDir, "exo_wbw_one_off_cache")
-            if (!dir.exists()) {
-                dir.mkdirs()
+            val dir = Platform.files.cacheDirectory / "exo_wbw_one_off_cache"
+            if (!AppFiles.exists(dir)) {
+                FileSystem.SYSTEM.createDirectories(dir)
             }
 
             val evictor = LeastRecentlyUsedCacheEvictor(ONE_OFF_CACHE_MAX_BYTES)
             val dbProvider = StandaloneDatabaseProvider(app)
 
-            return SimpleCache(dir, evictor, dbProvider).also {
+            return SimpleCache(dir.toFile(), evictor, dbProvider).also {
                 oneOffSimpleCache = it
             }
         }
@@ -172,7 +174,7 @@ object WbwAudioPlayer {
         )
 
         if (source == null) {
-            return if (!PlatformServices.networkMonitor.isConnected) {
+            return if (!Platform.networkMonitor.isConnected) {
                 WbwAudioPlayResult.NoInternet
             } else {
                 WbwAudioPlayResult.NoChapterAudio
@@ -186,14 +188,14 @@ object WbwAudioPlayer {
                 mutex.withLock {
                     try {
                         cancelIdleRelease()
-                        RecitationController.getInstance(app).pause()
+                        Platform.audio.controller.pause()
 
                         val exo = getOrCreatePlayer(context).apply {
                             stop()
                             clearMediaItems()
                             setMediaItem(
                                 MediaItem.Builder()
-                                    .setUri(source.uri)
+                                    .setUri(source.uriString.toUri())
                                     .build(),
                             )
                         }
@@ -211,7 +213,7 @@ object WbwAudioPlayer {
             is WbwWordPlaybackSource.Chapter -> {
                 if (
                     WbwAudioRepository.getTimingCount() == 0 &&
-                    !PlatformServices.networkMonitor.isConnected
+                    !Platform.networkMonitor.isConnected
                 ) {
                     return WbwAudioPlayResult.NoInternet
                 }
@@ -223,7 +225,7 @@ object WbwAudioPlayer {
                     val count = WbwAudioRepository.getTimingCount()
 
                     return when {
-                        count == 0 && !PlatformServices.networkMonitor.isConnected ->
+                        count == 0 && !Platform.networkMonitor.isConnected ->
                             WbwAudioPlayResult.NoInternet
 
                         else -> WbwAudioPlayResult.TimingsNotLoaded
@@ -241,14 +243,14 @@ object WbwAudioPlayer {
                 mutex.withLock {
                     try {
                         cancelIdleRelease()
-                        RecitationController.getInstance(app).pause()
+                        Platform.audio.controller.pause()
 
                         val exo = getOrCreatePlayer(context).apply {
                             stop()
                             clearMediaItems()
                             setMediaItem(
                                 MediaItem.Builder()
-                                    .setUri(source.uri)
+                                    .setUri(source.uriString.toUri())
                                     .setClippingConfiguration(
                                         MediaItem.ClippingConfiguration.Builder()
                                             .setStartPositionMs(timing.startMillis)

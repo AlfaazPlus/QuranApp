@@ -6,7 +6,7 @@ import com.quranapp.android.generated.resources.honorificMuhammad
 import com.quranapp.android.generated.resources.honorificProphet
 import com.quranapp.android.locale.appLocale
 import com.quranapp.android.models.PropheticDuaProphet
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.utils.quran.parser.ParserUtils.prepareChapterText
 import com.quranapp.android.utils.quran.parser.ParserUtils.prepareChaptersList
 import com.quranapp.android.utils.quran.parser.ParserUtils.prepareVersesList
@@ -48,7 +48,7 @@ object QuranPropheticDuasParser {
     private suspend fun parseDuasInternal(): List<PropheticDuaProphet> {
         val repository = DatabaseProvider.getQuranRepository()
         val catalog = json.decodeFromString<PropheticDuaFile>(
-            PlatformServices.assets.readAssetText("quran_prophetic_duas.json"),
+            Platform.assets.readAssetText("quran_prophetic_duas.json"),
         )
         val prophetList = ArrayList<PropheticDuaProphet>(catalog.prophets.size)
 

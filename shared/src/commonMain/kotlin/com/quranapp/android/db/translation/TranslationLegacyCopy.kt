@@ -9,7 +9,7 @@ import com.quranapp.android.db.ExternalQuranDatabase
 import com.quranapp.android.db.entities.translation.TranslationBookEntity
 import com.quranapp.android.db.entities.translation.TranslationFootnoteEntity
 import com.quranapp.android.db.entities.translation.TranslationVerseEntity
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.quran.QuranMeta
 import kotlinx.serialization.json.Json
@@ -29,7 +29,7 @@ class TranslationLegacyCopy(
 ) {
 
     suspend fun copyIfPresent() {
-        val file = PlatformServices.files.databaseDirectory / OLD_DB_NAME
+        val file = Platform.files.databaseDirectory / OLD_DB_NAME
         if (!AppFiles.exists(file)) return
 
         val connection = driver.open(
@@ -189,7 +189,7 @@ class TranslationLegacyCopy(
 
     private fun deleteOldFiles() {
         val fs = FileSystem.SYSTEM
-        val directory = PlatformServices.files.databaseDirectory
+        val directory = Platform.files.databaseDirectory
         val name = OLD_DB_NAME
 
         listOf(

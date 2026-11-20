@@ -7,7 +7,7 @@ import com.quranapp.android.generated.resources.strLabelVerseSerialWithChapter
 import com.quranapp.android.generated.resources.strTitleVOTD
 import com.quranapp.android.models.ChapterVersePair
 import com.quranapp.android.navigation.AppRoute
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.platform.notification.AppNotification
 import com.quranapp.android.platform.notification.NotificationCategory
 import com.quranapp.android.platform.notification.NotificationChannels
@@ -91,6 +91,6 @@ class VerseOfTheDayWorker() : TaskWorker {
             contentIntent = NotificationIntent.Route(readerRoute),
         )
 
-        PlatformServices.system.notificationManager.notify(NOTIFICATION_ID, notification)
+        Platform.system.notificationManager.notify(NOTIFICATION_ID, notification)
     }
 }

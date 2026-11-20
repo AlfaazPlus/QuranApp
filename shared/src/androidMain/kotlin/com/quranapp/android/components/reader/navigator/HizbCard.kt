@@ -31,9 +31,10 @@ import com.quranapp.android.generated.resources.icon_star_filled
 import com.quranapp.android.generated.resources.icon_star_outlined
 import com.quranapp.android.generated.resources.labelHizbNo
 import com.quranapp.android.locale.LocalAppLocale
-import com.quranapp.android.locale.formattedStringResource
+
 import com.quranapp.android.theme.alpha
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun HizbCard(
@@ -94,7 +95,7 @@ fun HizbCard(
                 verticalArrangement = Arrangement.spacedBy(2.dp),
             ) {
                 Text(
-                    text = formattedStringResource(Res.string.labelHizbNo, hizb.unitNo),
+                    text = stringResource(Res.string.labelHizbNo, hizb.unitNo),
                     style = MaterialTheme.typography.titleSmall,
                     color = colorScheme.onSurface,
                     maxLines = 2,

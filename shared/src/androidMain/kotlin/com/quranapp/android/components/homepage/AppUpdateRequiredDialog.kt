@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -27,8 +26,7 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun AppUpdateRequiredDialog() {
-    val context = LocalContext.current
-    val updateManager = remember { UpdateManager.getInstance(context) }
+    val updateManager = remember { UpdateManager.getInstance() }
     val message = stringResource(Res.string.strMsgUpdateAvailable2Continue)
     val splitAt = message.indexOf('\n')
     val title = if (splitAt >= 0) message.substring(0, splitAt) else message

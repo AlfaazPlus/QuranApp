@@ -20,10 +20,9 @@ import com.quranapp.android.generated.resources.strTitleChapInfoRukus
 import com.quranapp.android.generated.resources.strTitleMadani
 import com.quranapp.android.generated.resources.strTitleMakki
 import com.quranapp.android.generated.resources.verses
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.colorSchemeFromPreferences
-import com.quranapp.android.theme.isDarkTheme
 import com.quranapp.android.theme.toCssHex
 import com.quranapp.android.theme.toCssRgba
 import com.quranapp.android.utils.app.AppFiles
@@ -209,7 +208,7 @@ class ChapterInfoViewModel() : AppViewModel() {
         }
 
         // Need network
-        if (!PlatformServices.networkMonitor.isConnected) {
+        if (!Platform.networkMonitor.isConnected) {
             return LoadOutcome.NoNetwork
         }
 
@@ -239,7 +238,7 @@ class ChapterInfoViewModel() : AppViewModel() {
         val surah = meta.surah
         val isMeccan = surah.revelationType == RevelationType.meccan
 
-        val theme = if (ThemeUtils.isDarkTheme(context)) "dark" else "light"
+        val theme = if (ThemeUtils.isDarkTheme()) "dark" else "light"
         val colorScheme = ThemeUtils.colorSchemeFromPreferences(context)
         val textDirection = if (langCode.isRtlLanguageCode()) "rtl" else "ltr"
         val chapterIcon = QuranGlyphs.Chapter.get(state.chapterNo) + QuranGlyphs.Chapter.getPrefix()
@@ -262,7 +261,7 @@ class ChapterInfoViewModel() : AppViewModel() {
             else Res.string.strTitleMadani,
         )
 
-        val template = PlatformServices.assets.readAssetText("chapter_info/chapter_info_page.html")
+        val template = Platform.assets.readAssetText("chapter_info/chapter_info_page.html")
 
         return template
             .replace("{{STYLE}}", buildChapterInfoThemeStyle(colorScheme))

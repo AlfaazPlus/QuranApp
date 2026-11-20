@@ -7,7 +7,7 @@ import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.msgChapterAddedToFavourites
 import com.quranapp.android.generated.resources.msgChapterRemovedFromFavourites
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.preferences.DataStoreManager
 import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.miscellenous.Keys
@@ -118,7 +118,7 @@ class ReaderIndexViewModel() : AppViewModel() {
             Json.encodeToString(curr.toMutableList().apply { add(0, chapterNo) })
         )
 
-        PlatformServices.messages.show(getString(Res.string.msgChapterAddedToFavourites))
+        Platform.messages.show(getString(Res.string.msgChapterAddedToFavourites))
     }
 
     suspend fun removeFromFavourites(chapterNo: Int, curr: List<Int>) {
@@ -127,7 +127,7 @@ class ReaderIndexViewModel() : AppViewModel() {
             Json.encodeToString(curr - chapterNo)
         )
 
-        PlatformServices.messages.show(getString(Res.string.msgChapterRemovedFromFavourites))
+        Platform.messages.show(getString(Res.string.msgChapterRemovedFromFavourites))
     }
 
     companion object {

@@ -7,7 +7,7 @@ import com.quranapp.android.api.models.tafsir.TafsirModel
 import com.quranapp.android.db.bindTextOrNull
 import com.quranapp.android.db.openBundled
 import com.quranapp.android.db.textOrNull
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import okio.FileSystem
 
 private const val DB_NAME = "QuranTafsir.db"
@@ -227,7 +227,7 @@ class QuranTafsirDBHelper() {
     }
 
     private fun <T> use(block: (SQLiteConnection) -> T): T {
-        val file = PlatformServices.files.databaseDirectory / DB_NAME
+        val file = Platform.files.databaseDirectory / DB_NAME
 
         FileSystem.SYSTEM.createDirectories(file)
 

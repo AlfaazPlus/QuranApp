@@ -5,11 +5,10 @@ import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import com.quranapp.android.html.AppWebViewClient
 import com.quranapp.android.locale.appPlatformLocale
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.platform.toInputStream
 import com.quranapp.android.theme.ThemeUtils
-import com.quranapp.android.theme.isDarkTheme
-import com.quranapp.android.navigation.AppRoute
 import com.quranapp.android.utils.reader.FontResolver
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import kotlinx.coroutines.runBlocking
@@ -61,7 +60,7 @@ open class QuranScienceWebViewClient(
                 headers["Access-Control-Allow-Origin"] = "*"
 
                 val data = runBlocking {
-                    PlatformServices.assets.readAssetBytes(
+                    Platform.assets.readAssetBytes(
                         uri.toString().substring("https://assets-file/".length),
                     ).inputStream()
                 }
@@ -103,7 +102,7 @@ open class QuranScienceWebViewClient(
                     .openQuranArabicFont(
                         quranArabicScriptCode,
                         pageNo,
-                        ThemeUtils.isDarkTheme(ctx),
+                        ThemeUtils.isDarkTheme(),
                     )
                     ?.toInputStream()
                     ?: return null
@@ -142,7 +141,7 @@ open class QuranScienceWebViewClient(
             if (host == "quranapp.verse.ref") {
                 onOpenReference(chapterNo, fromVerse, toVerse)
             } else if (host == "quranapp.verse.reader") {
-                PlatformServices.navigator.navigate(
+                Platform.navigator.navigate(
                     AppRoute.Reader(
                         ReaderFactory.verseRange(chapterNo, fromVerse, toVerse)
                     )

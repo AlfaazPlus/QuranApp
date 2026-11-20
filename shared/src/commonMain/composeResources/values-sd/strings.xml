@@ -524,29 +524,29 @@
     <string name="collection_updated">مجموعا اپڊيٽ ٿي ويا</string>
     <string name="updated_just_now">هاڻي ئي اپڊيٽ ٿيو</string>
     <plurals name="verse_count">
-            <item quantity="one">%1$d آيت</item>
-            <item quantity="other">%1$d آيتون</item>
-        </plurals>
+        <item quantity="one">%1$d آيت</item>
+        <item quantity="other">%1$d آيتون</item>
+    </plurals>
     <plurals name="updated_minutes">
-            <item quantity="one">%1$d منٽ اڳ اپڊيٽ ٿيو</item>
-            <item quantity="other">%1$d منٽ اڳ اپڊيٽ ٿيو</item>
-        </plurals>
+        <item quantity="one">%1$d منٽ اڳ اپڊيٽ ٿيو</item>
+        <item quantity="other">%1$d منٽ اڳ اپڊيٽ ٿيو</item>
+    </plurals>
     <plurals name="updated_hours">
-            <item quantity="one">%1$d ڪلاڪ اڳ اپڊيٽ ٿيو</item>
-            <item quantity="other">%1$d ڪلاڪ اڳ اپڊيٽ ٿيو</item>
-        </plurals>
+        <item quantity="one">%1$d ڪلاڪ اڳ اپڊيٽ ٿيو</item>
+        <item quantity="other">%1$d ڪلاڪ اڳ اپڊيٽ ٿيو</item>
+    </plurals>
     <plurals name="updated_days">
-            <item quantity="one">%1$d ڏينهن اڳ اپڊيٽ ٿيو</item>
-            <item quantity="other">%1$d ڏينهن اڳ اپڊيٽ ٿيو</item>
-        </plurals>
+        <item quantity="one">%1$d ڏينهن اڳ اپڊيٽ ٿيو</item>
+        <item quantity="other">%1$d ڏينهن اڳ اپڊيٽ ٿيو</item>
+    </plurals>
     <plurals name="item_count">
-            <item quantity="one">%1$d آئٽم</item>
-            <item quantity="other">%1$d آئٽمَ</item>
-        </plurals>
+        <item quantity="one">%1$d آئٽم</item>
+        <item quantity="other">%1$d آئٽمَ</item>
+    </plurals>
     <plurals name="place_count">
-            <item quantity="one">%1$d جڳهه</item>
-            <item quantity="other">%1$d جڳھون</item>
-        </plurals>
+        <item quantity="one">%1$d جڳهه</item>
+        <item quantity="other">%1$d جڳھون</item>
+    </plurals>
     <string name="advanced_settings">اعلي سيٽنگون</string>
     <string name="recent_history">تازو پڙهيل</string>
     <string name="set_as_active">فعال طور تي سيٽ ڪريو</string>

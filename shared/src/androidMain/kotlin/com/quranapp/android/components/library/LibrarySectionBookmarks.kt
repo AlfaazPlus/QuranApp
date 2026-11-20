@@ -48,13 +48,13 @@ import com.quranapp.android.generated.resources.strLabelVerseNo
 import com.quranapp.android.generated.resources.strLabelVerses
 import com.quranapp.android.generated.resources.strMsgBookmarkNoItems
 import com.quranapp.android.generated.resources.strTitleBookmarks
-import com.quranapp.android.theme.alpha
 import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.navigation.AppRoutes
+import com.quranapp.android.platform.Platform
+import com.quranapp.android.theme.alpha
 import com.quranapp.android.viewmodel.BookmarksViewModel
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import com.quranapp.android.platform.PlatformServices
-import com.quranapp.android.navigation.AppRoutes
 
 @Composable
 fun LibrarySectionBookmarks() {
@@ -76,7 +76,7 @@ fun LibrarySectionBookmarks() {
             headerRightContent = if (recentBookmarks.isNotEmpty()) {
                 {
                     SectionHeaderViewAll {
-                        PlatformServices.navigator.navigate(AppRoute.Screen(AppRoutes.BOOKMARK))
+                        Platform.navigator.navigate(AppRoute.Screen(AppRoutes.BOOKMARK))
                     }
                 }
             } else null,

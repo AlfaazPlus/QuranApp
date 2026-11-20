@@ -534,29 +534,29 @@
     <string name="collection_updated">مجموعے اپ ڈیٹ ہو گئے</string>
     <string name="updated_just_now">ابھی اپ ڈیٹ ہوا</string>
     <plurals name="verse_count">
-            <item quantity="one">%1$d آیت</item>
-            <item quantity="other">%1$d آیات</item>
-        </plurals>
+        <item quantity="one">%1$d آیت</item>
+        <item quantity="other">%1$d آیات</item>
+    </plurals>
     <plurals name="updated_minutes">
-            <item quantity="one">%1$d منٹ پہلے اپ ڈیٹ ہوا</item>
-            <item quantity="other">%1$d منٹ پہلے اپ ڈیٹ ہوا</item>
-        </plurals>
+        <item quantity="one">%1$d منٹ پہلے اپ ڈیٹ ہوا</item>
+        <item quantity="other">%1$d منٹ پہلے اپ ڈیٹ ہوا</item>
+    </plurals>
     <plurals name="updated_hours">
-            <item quantity="one">%1$d گھنٹا پہلے اپ ڈیٹ ہوا</item>
-            <item quantity="other">%1$d گھنٹے پہلے اپ ڈیٹ ہوا</item>
-        </plurals>
+        <item quantity="one">%1$d گھنٹا پہلے اپ ڈیٹ ہوا</item>
+        <item quantity="other">%1$d گھنٹے پہلے اپ ڈیٹ ہوا</item>
+    </plurals>
     <plurals name="updated_days">
-            <item quantity="one">%1$d دن پہلے اپ ڈیٹ ہوا</item>
-            <item quantity="other">%1$d دن پہلے اپ ڈیٹ ہوا</item>
-        </plurals>
+        <item quantity="one">%1$d دن پہلے اپ ڈیٹ ہوا</item>
+        <item quantity="other">%1$d دن پہلے اپ ڈیٹ ہوا</item>
+    </plurals>
     <plurals name="item_count">
-            <item quantity="one">%1$d آئٹم</item>
-            <item quantity="other">%1$d آئٹم</item>
-        </plurals>
+        <item quantity="one">%1$d آئٹم</item>
+        <item quantity="other">%1$d آئٹم</item>
+    </plurals>
     <plurals name="place_count">
-            <item quantity="one">%1$d جگہ</item>
-            <item quantity="other">%1$d جگہ</item>
-        </plurals>
+        <item quantity="one">%1$d جگہ</item>
+        <item quantity="other">%1$d جگہ</item>
+    </plurals>
     <string name="advanced_settings">اعلیٰ ترتیبات</string>
     <string name="recent_history">حالیہ سرگزشت</string>
     <string name="set_as_active">فعال کے طور پر سیٹ کریں</string>

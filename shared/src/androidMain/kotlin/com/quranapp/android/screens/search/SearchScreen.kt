@@ -91,7 +91,7 @@ import com.quranapp.android.generated.resources.strTitleInfo
 import com.quranapp.android.generated.resources.strTitleReaderChapters
 import com.quranapp.android.generated.resources.titleGlobalSearch
 import com.quranapp.android.generated.resources.topics
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.search.SearchResult
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.viewmodel.QuranSearchViewModel
@@ -326,7 +326,7 @@ private fun SearchBox(viewModel: QuranSearchViewModel) {
                                     val stateLabel = getString(
                                         if (enabled) Res.string.strLabelOn else Res.string.strLabelOff,
                                     )
-                                    PlatformServices.messages.show(
+                                    Platform.messages.show(
                                         "$stateLabel: ${getString(Res.string.searchTipArabic)}",
                                         long = true,
                                     )

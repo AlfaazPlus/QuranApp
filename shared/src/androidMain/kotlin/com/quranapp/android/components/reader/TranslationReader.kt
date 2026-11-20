@@ -83,7 +83,7 @@ import com.quranapp.android.generated.resources.strLabelPageNo
 import com.quranapp.android.generated.resources.strLabelSurah
 import com.quranapp.android.generated.resources.strTitleReaderHizb
 import com.quranapp.android.locale.LocalAppLocale
-import com.quranapp.android.locale.formattedStringResource
+
 import com.quranapp.android.models.ChapterVersePair
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.reader.TranslationPageItem
@@ -674,7 +674,7 @@ internal fun TranslationBookPageHeader(
     val typography = MaterialTheme.typography
     val scheme = colorScheme
     val juzLabel =
-        if (juzNo > 0) formattedStringResource(Res.string.strLabelJuzNo, juzNo) else ""
+        if (juzNo > 0) stringResource(Res.string.strLabelJuzNo, juzNo) else ""
     val hizbLabel =
         hizbNos
             .filter { it > 0 }
@@ -724,7 +724,7 @@ internal fun TranslationBookPageHeader(
             }
 
             Text(
-                text = formattedStringResource(Res.string.strLabelPageNo, pageNo),
+                text = stringResource(Res.string.strLabelPageNo, pageNo),
                 style = typography.labelMedium.merge(tightTextStyle),
                 color = scheme.onBackground.alpha(0.75f),
                 modifier = Modifier

@@ -1,6 +1,6 @@
 package com.quranapp.android.utils.app
 
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import okio.FileSystem
 import okio.GzipSource
 import okio.IOException
@@ -11,7 +11,7 @@ object AppFiles {
     private const val SAVED_DATA_ROOT = "downloaded/saved_data"
     private const val LOGS_ROOT = "logs"
 
-    private val files get() = PlatformServices.files
+    private val files get() = Platform.files
 
     fun savedDir(name: String, vararg nested: String): Path {
         return files.resourceDirectory(relative(SAVED_DATA_ROOT, name, *nested))

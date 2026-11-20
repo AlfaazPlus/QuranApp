@@ -534,29 +534,29 @@
     <string name="collection_updated">સંગ્રહ અપડેટ થયા</string>
     <string name="updated_just_now">હમણાં જ અપડેટ થયું</string>
     <plurals name="verse_count">
-            <item quantity="one">%1$d આયત</item>
-            <item quantity="other">%1$d આયતો</item>
-        </plurals>
+        <item quantity="one">%1$d આયત</item>
+        <item quantity="other">%1$d આયતો</item>
+    </plurals>
     <plurals name="updated_minutes">
-            <item quantity="one">%1$d મિનિટ પહેલાં અપડેટ થયું</item>
-            <item quantity="other">%1$d મિનિટ પહેલાં અપડેટ થયું</item>
-        </plurals>
+        <item quantity="one">%1$d મિનિટ પહેલાં અપડેટ થયું</item>
+        <item quantity="other">%1$d મિનિટ પહેલાં અપડેટ થયું</item>
+    </plurals>
     <plurals name="updated_hours">
-            <item quantity="one">%1$d કલાક પહેલાં અપડેટ થયું</item>
-            <item quantity="other">%1$d કલાક પહેલાં અપડેટ થયું</item>
-        </plurals>
+        <item quantity="one">%1$d કલાક પહેલાં અપડેટ થયું</item>
+        <item quantity="other">%1$d કલાક પહેલાં અપડેટ થયું</item>
+    </plurals>
     <plurals name="updated_days">
-            <item quantity="one">%1$d દિવસ પહેલાં અપડેટ થયું</item>
-            <item quantity="other">%1$d દિવસ પહેલાં અપડેટ થયું</item>
-        </plurals>
+        <item quantity="one">%1$d દિવસ પહેલાં અપડેટ થયું</item>
+        <item quantity="other">%1$d દિવસ પહેલાં અપડેટ થયું</item>
+    </plurals>
     <plurals name="item_count">
-            <item quantity="one">%1$d આઇટમ</item>
-            <item quantity="other">%1$d આઇટમ</item>
-        </plurals>
+        <item quantity="one">%1$d આઇટમ</item>
+        <item quantity="other">%1$d આઇટમ</item>
+    </plurals>
     <plurals name="place_count">
-            <item quantity="one">%1$d સ્થાન</item>
-            <item quantity="other">%1$d સ્થાનો</item>
-        </plurals>
+        <item quantity="one">%1$d સ્થાન</item>
+        <item quantity="other">%1$d સ્થાનો</item>
+    </plurals>
     <string name="advanced_settings">અદ્યતન સેટિંગ્સ</string>
     <string name="recent_history">તાજેતરનો ઇતિહાસ</string>
     <string name="set_as_active">સક્રિય તરીકે સેટ કરો</string>

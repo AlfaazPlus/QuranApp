@@ -5,7 +5,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.quranapp.android.AndroidAppContext
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.db.relations.SurahWithLocalizations
 import com.quranapp.android.db.search.SearchHistoryDBHelper
@@ -45,8 +44,6 @@ class QuranSearchViewModel() : AppViewModel() {
     companion object {
         const val SEARCH_PAGE_SIZE = 10
     }
-
-    private val context get() = AndroidAppContext.get()
 
     private val repository get() = DatabaseProvider.getQuranRepository()
     private val searchHistoryDb = SearchHistoryDBHelper()

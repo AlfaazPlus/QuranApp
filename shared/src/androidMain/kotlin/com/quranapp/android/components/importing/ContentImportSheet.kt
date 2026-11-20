@@ -1,6 +1,5 @@
 package com.quranapp.android.components.importing
 
-import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -66,16 +65,13 @@ import com.quranapp.android.generated.resources.ic_upload
 import com.quranapp.android.generated.resources.noResults
 import com.quranapp.android.generated.resources.strHintSearch
 import com.quranapp.android.generated.resources.strLabelCancel
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
+import com.quranapp.android.platform.files.rememberDocumentPicker
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.utils.importing.ImportException
 import com.quranapp.android.utils.importing.ImportFailure
 import com.quranapp.android.utils.importing.ImportFieldId
 import com.quranapp.android.utils.importing.ImportManifest
-import io.github.vinceglb.filekit.PlatformFile
-import io.github.vinceglb.filekit.dialogs.FileKitType
-import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
-import io.github.vinceglb.filekit.name
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -101,11 +97,6 @@ private val formSaver = listSaver<Map<ImportFieldId, String>, String>(
     },
 )
 
-private val uriSaver = listSaver<Uri?, String>(
-    save = { listOf(it?.toString().orEmpty()) },
-    restore = { saved -> saved.first().takeIf { it.isNotEmpty() }?.let(Uri::parse) },
-)
-
 @Composable
 fun ContentImportSheet(
     isOpen: Boolean,
@@ -118,19 +109,21 @@ fun ContentImportSheet(
     details: @Composable (Map<ImportFieldId, String>) -> Unit = {},
     canSubmit: (Map<ImportFieldId, String>) -> Boolean = { true },
     buildManifest: (Map<ImportFieldId, String>) -> ImportManifest,
-    onImport: suspend (ImportManifest, PlatformFile) -> Unit,
+    onImport: suspend (ImportManifest, String) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     val initialValues = remember(fields) { fields.associate { it.id to "" } }
     var values by rememberSaveable(stateSaver = formSaver) { mutableStateOf(initialValues) }
-    var pickedFile by remember { mutableStateOf<PlatformFile?>(null) }
+    var pickedLocation by remember { mutableStateOf<String?>(null) }
+    var pickedName by remember { mutableStateOf<String?>(null) }
     var importing by remember { mutableStateOf(false) }
     var importError by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(isOpen) {
         if (!isOpen) {
             values = initialValues
-            pickedFile = null
+            pickedLocation = null
+            pickedName = null
             importError = null
         }
     }
@@ -139,11 +132,13 @@ fun ContentImportSheet(
         values[field.id].orEmpty().isNotBlank()
     }
 
-    val fileLauncher = rememberFilePickerLauncher(
-        type = FileKitType.Image,
-        onError = { failure -> importError = failure.message },
-    ) {
-        pickedFile = it
+    val pickDocument = rememberDocumentPicker(
+        mimeTypes = listOf("*/*"),
+    ) { location ->
+        pickedLocation = location
+        pickedName = location?.let { Platform.externalFiles.displayName(it) }
+            ?: location?.substringAfterLast('/')
+        importError = null
     }
 
     BottomSheet(
@@ -156,7 +151,7 @@ fun ContentImportSheet(
         dismissible = false,
         actions = {
             TextButton(
-                onClick = { PlatformServices.links.browse(doc.url()) },
+                onClick = { Platform.links.browse(doc.url()) },
                 contentPadding = PaddingValues(horizontal = 8.dp),
             ) {
                 Icon(
@@ -197,7 +192,7 @@ fun ContentImportSheet(
                     .clip(RoundedCornerShape(12.dp))
                     .background(colorScheme.surfaceContainerLow)
                     .clickable(enabled = !importing) {
-                        fileLauncher.launch()
+                        pickDocument()
                     }
                     .padding(horizontal = 14.dp, vertical = 12.dp),
                 verticalAlignment = Alignment.CenterVertically,
@@ -211,7 +206,7 @@ fun ContentImportSheet(
                 )
 
                 Text(
-                    text = pickedFile?.name ?: "Select file",
+                    text = pickedName ?: "Select file",
                     modifier = Modifier.weight(1f),
                     style = typography.bodyLarge,
                     maxLines = 1,
@@ -250,9 +245,9 @@ fun ContentImportSheet(
 
             Button(
                 modifier = Modifier.weight(1f),
-                enabled = requiredFilled && pickedFile != null && canSubmit(values) && !importing,
+                enabled = requiredFilled && pickedLocation != null && canSubmit(values) && !importing,
                 onClick = {
-                    val file = pickedFile ?: return@Button
+                    val location = pickedLocation ?: return@Button
 
                     scope.launch {
                         importing = true
@@ -261,14 +256,14 @@ fun ContentImportSheet(
                         val failure = withContext(Dispatchers.IO) {
                             runCatching {
                                 val manifest = buildManifest(values)
-                                onImport(manifest, file)
+                                onImport(manifest, location)
                             }.exceptionOrNull()
                         }
 
                         importing = false
 
                         if (failure == null) {
-                            PlatformServices.messages.show(successMessage, long = true)
+                            Platform.messages.show(successMessage, long = true)
 
                             onImported()
                             onDismiss()
@@ -283,7 +278,7 @@ fun ContentImportSheet(
                                     else -> "This file does not match the required format"
                                 }
 
-                                PlatformServices.messages.show(message, long = true)
+                                Platform.messages.show(message, long = true)
                             }
                         }
                     }

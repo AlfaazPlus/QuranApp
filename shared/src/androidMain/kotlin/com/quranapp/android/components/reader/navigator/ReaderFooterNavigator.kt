@@ -42,7 +42,7 @@ import com.quranapp.android.generated.resources.previousHizb
 import com.quranapp.android.generated.resources.previousJuz
 import com.quranapp.android.generated.resources.strLabelJuzNo
 import com.quranapp.android.generated.resources.strLabelTop
-import com.quranapp.android.locale.formattedStringResource
+
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.ReaderIntentData
 import com.quranapp.android.utils.reader.ReaderLaunchParams
@@ -107,12 +107,12 @@ fun ReaderFooterNavigator(
 
     val previousSubtitle: String? = when {
         !prevEnabled -> null
-        viewType is ReaderViewType.Juz -> formattedStringResource(
+        viewType is ReaderViewType.Juz -> stringResource(
             Res.string.strLabelJuzNo,
             viewType.juzNo - 1
         )
 
-        viewType is ReaderViewType.Hizb -> formattedStringResource(
+        viewType is ReaderViewType.Hizb -> stringResource(
             Res.string.labelHizbNo,
             viewType.hizbNo - 1
         )
@@ -123,12 +123,12 @@ fun ReaderFooterNavigator(
 
     val nextSubtitle: String? = when {
         !nextEnabled -> null
-        viewType is ReaderViewType.Juz -> formattedStringResource(
+        viewType is ReaderViewType.Juz -> stringResource(
             Res.string.strLabelJuzNo,
             viewType.juzNo + 1
         )
 
-        viewType is ReaderViewType.Hizb -> formattedStringResource(
+        viewType is ReaderViewType.Hizb -> stringResource(
             Res.string.labelHizbNo,
             viewType.hizbNo + 1
         )

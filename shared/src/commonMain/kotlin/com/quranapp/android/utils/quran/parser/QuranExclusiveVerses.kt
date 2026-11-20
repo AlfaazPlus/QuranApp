@@ -6,7 +6,7 @@ import com.quranapp.android.locale.appFallbackLanguageCodes
 import com.quranapp.android.locale.appLocale
 import com.quranapp.android.models.ExclusiveVerse
 import com.quranapp.android.models.ExclusiveVersesDataset
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.Json
@@ -53,14 +53,14 @@ object QuranExclusiveVerses {
     private suspend fun parseFromAssetsUncached(
         filename: String,
     ): List<ExclusiveVerse> {
-        val map = PlatformServices.assets.readAssetText("verses/$filename/map.json")
+        val map = Platform.assets.readAssetText("verses/$filename/map.json")
 
         val filenameWithExt = "$filename.json"
         val fallbackPath = "verses/$filename/en/$filenameWithExt"
-        val fallbackTexts = PlatformServices.assets.readAssetText(fallbackPath)
+        val fallbackTexts = Platform.assets.readAssetText(fallbackPath)
 
         val localeTexts = appFallbackLanguageCodes().firstNotNullOfOrNull { code ->
-            PlatformServices.assets.readAssetTextOrNull("verses/$filename/$code/$filenameWithExt")
+            Platform.assets.readAssetTextOrNull("verses/$filename/$code/$filenameWithExt")
         } ?: fallbackTexts
 
         return parseVersesInternal(

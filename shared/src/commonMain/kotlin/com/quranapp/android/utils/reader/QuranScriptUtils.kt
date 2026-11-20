@@ -9,8 +9,8 @@ import com.quranapp.android.generated.resources.preview_kfqpc_v4_tajweed_dark
 import com.quranapp.android.generated.resources.preview_uthmani_hafs
 import com.quranapp.android.generated.resources.uthmanic_hafs
 import com.quranapp.android.locale.appFallbackLanguageCodes
-import com.quranapp.android.locale.toFormatted
 import com.quranapp.android.utils.app.AppFiles
+import com.quranapp.android.utils.miscellenous.toFormatted
 import com.quranapp.android.utils.reader.QuranScriptUtils.SCRIPT_NAMES
 import com.quranapp.android.utils.reader.QuranScriptUtils.VARIANT_NAMES
 import okio.FileSystem

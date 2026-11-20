@@ -75,8 +75,8 @@ import com.quranapp.android.generated.resources.strLabelVersesWithColon
 import com.quranapp.android.generated.resources.strTitleBookmarkDeleteThis
 import com.quranapp.android.generated.resources.strTitleNote
 import com.quranapp.android.generated.resources.verses
-import com.quranapp.android.locale.formattedStringResource
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.reader.ReaderLayoutItem
 import com.quranapp.android.reader.ReaderPreparedData
@@ -94,7 +94,6 @@ import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import com.quranapp.android.navigation.AppRoute
 
 data class BookmarkViewerData(
     val chapterNo: Int,
@@ -234,7 +233,7 @@ private fun BookmarkViewerSheetContent(
                     onClick = {
                         coroutineScope.launch {
                             val message = repo.removeFromBookmark(chapterNo, fromVerseNo, toVerseNo)
-                            PlatformServices.messages.show(
+                            Platform.messages.show(
                                 getString(message.messageRes),
                             )
                             onClose()
@@ -298,7 +297,15 @@ private fun BookmarkViewerSheetContent(
             if (data.showOpenInReaderButton && !editing) {
                 Button(
                     onClick = {
-                        PlatformServices.navigator.navigate(AppRoute.Reader(ReaderFactory.verseRange(chapterNo, fromVerseNo, toVerseNo)))
+                        Platform.navigator.navigate(
+                            AppRoute.Reader(
+                                ReaderFactory.verseRange(
+                                    chapterNo,
+                                    fromVerseNo,
+                                    toVerseNo
+                                )
+                            )
+                        )
                         onClose()
                     },
                     modifier = Modifier
@@ -335,7 +342,7 @@ private fun BookmarkHeader(
                 text = if (fromVerseNo == toVerseNo) {
                     stringResource(Res.string.strLabelVerseNoWithColon, fromVerseNo)
                 } else {
-                    formattedStringResource(
+                    stringResource(
                         Res.string.strLabelVersesWithColon,
                         fromVerseNo,
                         toVerseNo

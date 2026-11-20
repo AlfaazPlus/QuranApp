@@ -4,11 +4,11 @@ import com.quranapp.android.api.models.translation.TranslationBookInfoModel
 import com.quranapp.android.api.safeInt
 import com.quranapp.android.api.safeLong
 import com.quranapp.android.api.safeString
-import com.quranapp.android.locale.toFormatted
 import com.quranapp.android.models.transls.TranslModel
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.app.Logger
+import com.quranapp.android.utils.miscellenous.toFormatted
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
@@ -120,7 +120,7 @@ object TranslUtils {
     private suspend fun readPrebuiltManifest(path: String): JsonObject? {
         return runCatching {
             prebuiltJson.parseToJsonElement(
-                PlatformServices.assets.readAssetText(path)
+                Platform.assets.readAssetText(path)
             ).jsonObject
         }.onFailure {
             Logger.saveError(it, "TranslUtils.readPrebuiltManifest")

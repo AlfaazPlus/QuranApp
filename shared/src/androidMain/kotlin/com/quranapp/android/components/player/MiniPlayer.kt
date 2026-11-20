@@ -56,7 +56,7 @@ import com.quranapp.android.generated.resources.strLabelPlay
 import com.quranapp.android.generated.resources.strLabelVerseSerialWithChapter
 import com.quranapp.android.generated.resources.verseSyncOff
 import com.quranapp.android.generated.resources.verseSyncOn
-import com.quranapp.android.locale.formattedStringResource
+
 import com.quranapp.android.models.ChapterVersePair
 import com.quranapp.android.preferences.RecitationPreferences
 import com.quranapp.android.theme.alpha
@@ -127,7 +127,7 @@ fun MiniPlayer(
 
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = formattedStringResource(
+                    text = stringResource(
                         Res.string.strLabelVerseSerialWithChapter,
                         chapterName,
                         verse.chapterNo,

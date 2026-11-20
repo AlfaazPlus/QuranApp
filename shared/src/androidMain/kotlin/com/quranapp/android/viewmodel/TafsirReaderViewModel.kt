@@ -10,7 +10,7 @@ import com.quranapp.android.db.relations.SurahWithLocalizations
 import com.quranapp.android.db.tafsir.QuranTafsirDBHelper
 import com.quranapp.android.locale.appLocale
 import com.quranapp.android.models.ChapterVersePair
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.colorSchemeFromPreferences
@@ -304,7 +304,7 @@ class TafsirReaderViewModel() : AppViewModel() {
                             return@withContext LoadOutcome.NotFound
                         }
 
-                        if (!PlatformServices.networkMonitor.isConnected) {
+                        if (!Platform.networkMonitor.isConnected) {
                             return@withContext LoadOutcome.NoNetwork
                         }
 

@@ -1,9 +1,5 @@
 package com.quranapp.android.screens.export
 
-import android.app.Activity
-import android.content.Intent
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -47,13 +43,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.backup.AutoBackup
 import com.quranapp.android.backup.ExportKeys
 import com.quranapp.android.backup.disableAutoBackup
 import com.quranapp.android.backup.enableAutoBackup
-import com.quranapp.android.backup.persistBackupFile
 import com.quranapp.android.components.common.AlertCard
 import com.quranapp.android.components.common.AppBar
 import com.quranapp.android.components.common.ListItem
@@ -89,12 +83,13 @@ import com.quranapp.android.generated.resources.strTitleBookmarks
 import com.quranapp.android.generated.resources.strTitleSettings
 import com.quranapp.android.generated.resources.titleExportData
 import com.quranapp.android.generated.resources.viewFile
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
+import com.quranapp.android.platform.files.rememberDocumentPicker
 import com.quranapp.android.preferences.BackupPreferences
+import com.quranapp.android.utils.app.Logger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okio.Path.Companion.toPath
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
@@ -222,12 +217,11 @@ private fun AutoBackupSheet(
     isOpen: Boolean,
     onDismiss: () -> Unit,
 ) {
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val enabled = BackupPreferences.observeEnabled()
     val documentPath = BackupPreferences.observeDocumentPath()
     val fileName = remember(documentPath) {
-        documentPath.takeIf { it.isNotBlank() }?.let { AutoBackup.displayName(it.toPath()) }
+        documentPath.takeIf { it.isNotBlank() }?.let { AutoBackup.displayName(it) }
     }
 
     LaunchedEffect(documentPath) {
@@ -235,42 +229,32 @@ private fun AutoBackupSheet(
         withContext(Dispatchers.IO) { AutoBackup.ensureAvailable() }
     }
 
-    val fileLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode != Activity.RESULT_OK) return@rememberLauncherForActivityResult
-        val uri = result.data?.data ?: return@rememberLauncherForActivityResult
-        if (!persistBackupFile(context, uri, result.data?.flags ?: 0)) {
-            scope.launch {
-                PlatformServices.messages.show(
-                    getString(Res.string.autoBackupFailed),
-                    long = true
-                )
-            }
-            return@rememberLauncherForActivityResult
-        }
+    val pickFile = rememberDocumentPicker(
+        mimeTypes = listOf("application/gzip", "application/json", "application/x-gzip"),
+    ) { location ->
+        if (location == null) return@rememberDocumentPicker
 
         scope.launch(Dispatchers.IO) {
-            enableAutoBackup(uri.toString())
+            try {
+                enableAutoBackup(location)
+            } catch (error: Exception) {
+                Logger.saveError(error, "AutoBackupSheet")
+                withContext(Dispatchers.Main) {
+                    Platform.messages.show(
+                        getString(Res.string.autoBackupFailed),
+                        long = true,
+                    )
+                }
+            }
         }
-    }
-
-    val pickFile = {
-        fileLauncher.launch(
-            Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-                addCategory(Intent.CATEGORY_OPENABLE)
-                type = "application/gzip"
-                putExtra(Intent.EXTRA_TITLE, AutoBackup.FILE_NAME)
-            },
-        )
     }
 
     val viewFile = {
-        val opened = documentPath.isNotBlank() && AutoBackup.openFile(documentPath.toPath())
+        val opened = documentPath.isNotBlank() && AutoBackup.openFile(documentPath)
 
         if (!opened) {
             scope.launch {
-                PlatformServices.messages.show(
+                Platform.messages.show(
                     getString(Res.string.autoBackupOpenFailed),
                     long = true
                 )

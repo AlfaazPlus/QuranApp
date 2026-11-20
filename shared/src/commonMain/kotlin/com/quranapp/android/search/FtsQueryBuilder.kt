@@ -2,7 +2,6 @@ package com.quranapp.android.search
 
 import java.text.Normalizer
 import java.util.concurrent.ConcurrentHashMap
-import kotlin.text.iterator
 
 data class SearchSnippet(
     val text: String,

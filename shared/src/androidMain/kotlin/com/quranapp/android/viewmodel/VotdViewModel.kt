@@ -16,6 +16,7 @@ import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.preferences.VersePreferences
 import com.quranapp.android.reader.ReaderLayoutItem
 import com.quranapp.android.theme.alpha
+import com.quranapp.android.utils.VerseUtils
 import com.quranapp.android.utils.reader.ComposeUiConfig
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.ReaderTextSizeUtils
@@ -25,7 +26,6 @@ import com.quranapp.android.utils.reader.VerseActions
 import com.quranapp.android.utils.reader.atlas.QuranAtlasBundle
 import com.quranapp.android.utils.reader.buildTranslationAnnotatedString
 import com.quranapp.android.utils.reader.getTranslationTextStyle
-import com.quranapp.android.utils.VerseUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

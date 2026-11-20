@@ -6,7 +6,7 @@ import com.quranapp.android.api.models.translation.TranslationBookInfoModel
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.textDownloading
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.search.SearchIndexScheduler
 import com.quranapp.android.task.ForegroundTaskInfo
 import com.quranapp.android.task.TaskContext
@@ -62,7 +62,7 @@ class TranslationDownloadWorker() : TaskWorker {
         bookInfo: TranslationBookInfoModel
     ) = withContext(Dispatchers.IO) {
         val tmpFile =
-            PlatformServices.files.cacheDirectory / "${bookInfo.slug}.${System.currentTimeMillis()}.json"
+            Platform.files.cacheDirectory / "${bookInfo.slug}.${System.currentTimeMillis()}.json"
 
         try {
             val response = ApiClient.getTranslation(bookInfo.downloadPath)

@@ -524,23 +524,23 @@
     <string name="collection_updated">合集已更新</string>
     <string name="updated_just_now">刚刚更新</string>
     <plurals name="verse_count">
-            <item quantity="other">共 %1$d 节</item>
-        </plurals>
+        <item quantity="other">共 %1$d 节</item>
+    </plurals>
     <plurals name="updated_minutes">
-            <item quantity="other">%1$d 分钟前更新</item>
-        </plurals>
+        <item quantity="other">%1$d 分钟前更新</item>
+    </plurals>
     <plurals name="updated_hours">
-            <item quantity="other">%1$d 小时前更新</item>
-        </plurals>
+        <item quantity="other">%1$d 小时前更新</item>
+    </plurals>
     <plurals name="updated_days">
-            <item quantity="other">%1$d 天前更新</item>
-        </plurals>
+        <item quantity="other">%1$d 天前更新</item>
+    </plurals>
     <plurals name="item_count">
-            <item quantity="other">共 %1$d 项</item>
-        </plurals>
+        <item quantity="other">共 %1$d 项</item>
+    </plurals>
     <plurals name="place_count">
-            <item quantity="other">共 %1$d 处</item>
-        </plurals>
+        <item quantity="other">共 %1$d 处</item>
+    </plurals>
     <string name="advanced_settings">高级设置</string>
     <string name="recent_history">最近历史</string>
     <string name="set_as_active">设为当前</string>

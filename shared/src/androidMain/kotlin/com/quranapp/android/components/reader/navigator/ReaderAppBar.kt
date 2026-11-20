@@ -94,13 +94,14 @@ import com.quranapp.android.generated.resources.strLabelPageNo
 import com.quranapp.android.generated.resources.strLabelSelectTranslations
 import com.quranapp.android.generated.resources.strTitleReaderHizb
 import com.quranapp.android.generated.resources.strTitleSettings
-import com.quranapp.android.locale.formattedStringResource
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.navigation.AppRoutes
 import com.quranapp.android.navigation.SettingRoutes
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.reader.ReaderMode
 import com.quranapp.android.reader.ReadingLayout
 import com.quranapp.android.theme.alpha
-import com.quranapp.android.navigation.AppRoute
 import com.quranapp.android.utils.miscellenous.Keys
 import com.quranapp.android.utils.reader.toQuranMushafId
 import com.quranapp.android.viewmodel.ReaderUiState
@@ -111,8 +112,6 @@ import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import kotlin.math.roundToInt
-import com.quranapp.android.platform.PlatformServices
-import com.quranapp.android.navigation.AppRoutes
 
 internal data class ReaderAppBarDimensions(
     val statusBarHeight: Dp,
@@ -467,7 +466,7 @@ private fun StickyHeaderModeVbV(
                     )
 
                     is ReaderViewType.Hizb -> Text(
-                        text = formattedStringResource(Res.string.labelHizbNo, vt.hizbNo),
+                        text = stringResource(Res.string.labelHizbNo, vt.hizbNo),
                         style = typography.labelLarge,
                         color = colorScheme.primary,
                     )
@@ -601,7 +600,7 @@ private fun StickyHeaderModeMushaf(
                 ) {
                     if (currentPageNo != null) {
                         Text(
-                            formattedStringResource(Res.string.strLabelPageNo, currentPageNo),
+                            stringResource(Res.string.strLabelPageNo, currentPageNo),
                             style = typography.labelLarge.copy(
                                 lineHeightStyle = LineHeightStyle.Default.copy(
                                     mode = LineHeightStyle.Mode.Tight,
@@ -673,7 +672,7 @@ private fun StickyHeaderModeTranslation(
             ) {
                 if (currentPageNo != null) {
                     Text(
-                        formattedStringResource(Res.string.strLabelPageNo, currentPageNo),
+                        stringResource(Res.string.strLabelPageNo, currentPageNo),
                         style = typography.labelLarge,
                         color = colorScheme.primary,
                     )
@@ -838,7 +837,7 @@ fun FullscreenReaderHeader(
         )
 
         Text(
-            text = currentPageNo?.let { formattedStringResource(Res.string.strLabelPageNo, it) }
+            text = currentPageNo?.let { stringResource(Res.string.strLabelPageNo, it) }
                 .orEmpty(),
             modifier = Modifier.weight(1f),
             style = MaterialTheme.typography.titleSmall,
@@ -932,7 +931,7 @@ private fun ReadingLayoutSwitch(modifier: Modifier = Modifier) {
 }
 
 fun openReaderSetting(context: Context, destination: String?) {
-    PlatformServices.navigator.navigate(
+    Platform.navigator.navigate(
         AppRoute.Screen(
             screen = AppRoutes.SETTINGS,
             extras = buildMap {

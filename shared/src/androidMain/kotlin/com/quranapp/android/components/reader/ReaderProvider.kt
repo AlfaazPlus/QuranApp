@@ -33,7 +33,8 @@ import com.quranapp.android.generated.resources.strMsgNoInternetLong
 import com.quranapp.android.generated.resources.wbwAudioCouldNotPlay
 import com.quranapp.android.generated.resources.wbwAudioTimingsCouldNotLoad
 import com.quranapp.android.models.ChapterVersePair
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.mediaplayer.RecitationController
@@ -51,7 +52,6 @@ import com.quranapp.android.viewmodel.ReaderProviderViewModel
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
-import com.quranapp.android.navigation.AppRoute
 
 val LocalReaderViewModel = staticCompositionLocalOf<ReaderProviderViewModel> {
     error("ReaderProviderViewModel not provided")
@@ -158,19 +158,19 @@ fun ReaderProvider(
                     word.wordIndex,
                 )) {
                     WbwAudioPlayResult.Success -> Unit
-                    WbwAudioPlayResult.NoInternet -> PlatformServices.messages.show(
+                    WbwAudioPlayResult.NoInternet -> Platform.messages.show(
                         getString(Res.string.strMsgNoInternetLong),
                         long = true,
                     )
 
-                    WbwAudioPlayResult.TimingsNotLoaded -> PlatformServices.messages.show(
+                    WbwAudioPlayResult.TimingsNotLoaded -> Platform.messages.show(
                         getString(Res.string.wbwAudioTimingsCouldNotLoad),
                         long = true,
                     )
 
                     WbwAudioPlayResult.Unknown,
                     WbwAudioPlayResult.InvalidTiming,
-                    WbwAudioPlayResult.NoChapterAudio -> PlatformServices.messages.show(
+                    WbwAudioPlayResult.NoChapterAudio -> Platform.messages.show(
                         getString(Res.string.wbwAudioCouldNotPlay),
                         long = true,
                     )
@@ -214,7 +214,7 @@ fun ReaderProvider(
                             val message = viewModel.userRepository.addToBookmark(
                                 chapterNo = chapterNo, verseRange, note = null
                             )
-                            PlatformServices.messages.show(getString(message.messageRes))
+                            Platform.messages.show(getString(message.messageRes))
                         }
                     }
 
@@ -298,7 +298,15 @@ fun ReaderProvider(
         data = quickReferenceData,
         onOpenInReader = { chapterNo, range ->
             quickReferenceData = null
-            PlatformServices.navigator.navigate(AppRoute.Reader(ReaderFactory.verseRange(chapterNo, range.first, range.last)))
+            Platform.navigator.navigate(
+                AppRoute.Reader(
+                    ReaderFactory.verseRange(
+                        chapterNo,
+                        range.first,
+                        range.last
+                    )
+                )
+            )
         },
         onClose = {
             quickReferenceData = null

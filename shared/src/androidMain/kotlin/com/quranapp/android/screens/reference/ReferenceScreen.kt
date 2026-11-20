@@ -72,8 +72,8 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.quranapp.android.api.resolveInventoryUrl
-import com.quranapp.android.components.ReferenceThumbnail
-import com.quranapp.android.components.ReferenceVerseModel
+import com.quranapp.android.models.ReferenceThumbnail
+import com.quranapp.android.models.ReferenceVerseModel
 import com.quranapp.android.components.common.Chip
 import com.quranapp.android.components.common.IconButton
 import com.quranapp.android.components.common.Loader
@@ -101,10 +101,10 @@ import com.quranapp.android.generated.resources.strLabelBookmark
 import com.quranapp.android.generated.resources.strLabelOpenInReader
 import com.quranapp.android.generated.resources.strMsgTranslNoneSelected
 import com.quranapp.android.locale.AppLocale
-import com.quranapp.android.locale.readAppLocale
+import com.quranapp.android.locale.appLocale
 import com.quranapp.android.models.ChapterVersePair
 import com.quranapp.android.navigation.AppRoute
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.preferences.AppPreferences
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.reader.ReaderLayoutItem
@@ -430,7 +430,7 @@ private fun ReferenceScreenContent(
                                                         slugs = translationSlugs,
                                                     )
 
-                                                    PlatformServices.navigator.navigate(
+                                                    Platform.navigator.navigate(
                                                         AppRoute.Reader(
                                                             params
                                                         )
@@ -799,7 +799,7 @@ private suspend fun buildReferenceRows(
 
     if (segments.isEmpty()) return@coroutineScope
 
-    val locale = readAppLocale(context)
+    val locale = appLocale()
     val chunkRequests = buildChunkRequests(segments)
     val sectionTitleBySegmentIndex = buildSectionTitlesBySegment(
         segments = segments,

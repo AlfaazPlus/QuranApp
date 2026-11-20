@@ -31,7 +31,7 @@ import com.quranapp.android.generated.resources.dr_icon_history
 import com.quranapp.android.generated.resources.strMsgReadShowupHere
 import com.quranapp.android.navigation.AppRoute
 import com.quranapp.android.navigation.AppRoutes
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.reader.ReaderMode
 import com.quranapp.android.screens.accentColor
 import com.quranapp.android.screens.iconRes
@@ -59,7 +59,7 @@ fun LibrarySectionReadHistory() {
             headerRightContent = if (recentHistories.isNotEmpty()) {
                 {
                     SectionHeaderViewAll {
-                        PlatformServices.navigator.navigate(AppRoute.Screen(AppRoutes.READ_HISTORY))
+                        Platform.navigator.navigate(AppRoute.Screen(AppRoutes.READ_HISTORY))
                     }
                 }
             } else null,
@@ -79,7 +79,7 @@ fun LibrarySectionReadHistory() {
                         chapterName = chapterNames[history.chapterNo].orEmpty(),
                         onOpen = {
                             ReaderFactory.fromHistory(history)?.let {
-                                PlatformServices.navigator.navigate(AppRoute.Reader(it))
+                                Platform.navigator.navigate(AppRoute.Reader(it))
                             }
                         },
                     )

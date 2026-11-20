@@ -5,6 +5,7 @@ import com.quranapp.android.api.safeInt
 import com.quranapp.android.api.safeJsonArray
 import com.quranapp.android.api.safeString
 import com.quranapp.android.db.DatabaseProvider
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.search.SearchIndexScheduler
 import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.importing.ImportException
@@ -13,8 +14,6 @@ import com.quranapp.android.utils.importing.ImportManifest
 import com.quranapp.android.utils.quran.QuranConstants
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.TranslUtils
-import io.github.vinceglb.filekit.PlatformFile
-import io.github.vinceglb.filekit.readString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
@@ -23,13 +22,13 @@ import kotlinx.serialization.json.jsonObject
 object CustomTranslationImporter {
     private const val MAX_VERSE_NUMBER = 286
 
-    suspend fun import(manifest: ImportManifest, file: PlatformFile) {
+    suspend fun import(manifest: ImportManifest, location: String) {
         try {
             if (TranslUtils.isPrebuilt(manifest.slug)) {
                 throw ImportException(ImportFailure.RESERVED)
             }
 
-            val text = file.readString()
+            val text = Platform.externalFiles.readText(location)
             val root = try {
                 Json.parseToJsonElement(text).jsonObject
             } catch (error: Exception) {

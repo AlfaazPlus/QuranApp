@@ -140,7 +140,7 @@ class WbwAudioDownloadWorker() : TaskWorker {
         private const val KEY_URL = "url"
         private const val KEY_OUTPUT_PATH = "output_path"
         private const val KEY_CHAPTER_NO = "chapter_no"
-        private         const val KEY_AUDIO_ID = "audio_id"
+        private const val KEY_AUDIO_ID = "audio_id"
 
         fun uniqueWorkName(chapterNo: Int): String = "wbw-audio-chapter:$chapterNo"
 

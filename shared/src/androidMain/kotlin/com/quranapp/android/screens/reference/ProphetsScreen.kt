@@ -40,6 +40,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.quranapp.android.models.ReferenceThumbnail
+import com.quranapp.android.models.ReferenceVerseModel
 import com.quranapp.android.components.common.AppBar
 import com.quranapp.android.components.common.BottomSheetMenu
 import com.quranapp.android.components.common.BottomSheetMenuItem
@@ -56,6 +58,9 @@ import com.quranapp.android.generated.resources.strTitleFilters
 import com.quranapp.android.generated.resources.strTitleProphets
 import com.quranapp.android.locale.rememberLocalized
 import com.quranapp.android.models.Prophet
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.navigation.AppRoutes
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.grayscaleColorFilter
@@ -69,9 +74,6 @@ import org.jetbrains.compose.resources.stringResource
 import java.text.MessageFormat
 import java.util.regex.Pattern
 import kotlin.time.Duration.Companion.milliseconds
-import com.quranapp.android.navigation.AppRoute
-import com.quranapp.android.navigation.AppRoutes
-import com.quranapp.android.platform.PlatformServices
 
 @Composable
 fun ProphetsScreen() {
@@ -212,16 +214,18 @@ private fun ProphetListItem(prophet: Prophet) {
                     prophet.verses.size,
                 )
 
-                PlatformServices.navigator.navigate(
+                Platform.navigator.navigate(
                     AppRoute.Screen(
                         screen = AppRoutes.REFERENCE,
-                        extras = buildMap {
-                            put("title", title)
-                            put("desc", desc)
-                            put("chapters", prophet.chapters)
-                            put("verses", prophet.verses)
-                            prophet.thumbnail?.let { put("thumbnail_url", it) }
-                        },
+                        extras = ReferenceVerseModel(
+                            title = title,
+                            desc = desc,
+                            chapters = prophet.chapters,
+                            verses = prophet.verses,
+                            thumbnail = prophet.thumbnail?.let {
+                                ReferenceThumbnail.RemoteUrl(it)
+                            },
+                        ).toExtras(),
                     )
                 )
             }

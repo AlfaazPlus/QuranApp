@@ -8,7 +8,7 @@ import com.quranapp.android.db.ExternalQuranDatabase
 import com.quranapp.android.db.entities.atlas.AtlasBundleEntity
 import com.quranapp.android.db.entities.atlas.AtlasWordShapeEntity
 import com.quranapp.android.platform.AppZipArchive
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.utils.app.AppFiles
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
@@ -75,7 +75,7 @@ object AtlasManager {
         db: ExternalQuranDatabase,
     ): AtlasBundleEntity? = withContext(Dispatchers.IO) {
         lock.withLock {
-            val tmpFile = PlatformServices.files.cacheDirectory / "${bundleKey}_atlas_import.zip"
+            val tmpFile = Platform.files.cacheDirectory / "${bundleKey}_atlas_import.zip"
 
             try {
                 FileSystem.SYSTEM.sink(tmpFile).buffer().use { sink ->
@@ -95,7 +95,7 @@ object AtlasManager {
         bundleKey: String,
         db: ExternalQuranDatabase,
     ): AtlasBundleEntity {
-        PlatformServices.files.zipReader.open(zipFile).use { zip ->
+        Platform.files.zipReader.open(zipFile).use { zip ->
             val entries = zip.entries()
                 .associateBy { normalizeZipPath(it) }
 

@@ -5,7 +5,7 @@ import com.quranapp.android.extensions.canProceed
 import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.wbwAudioBulkWaitForChapterDownloads
 import com.quranapp.android.generated.resources.wbwAudioChapterWaitForBulk
-import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.platform.Platform
 import com.quranapp.android.task.ExistingTaskPolicy
 import com.quranapp.android.task.TaskState
 import com.quranapp.android.utils.app.Logger
@@ -41,7 +41,7 @@ private class ParsedWbwWorkState {
 private fun TaskState.isActive(): Boolean = isEnqueued || isRunning
 
 private suspend fun loadParsedWbwWorkState(audioId: String): ParsedWbwWorkState {
-    val tm = PlatformServices.system.taskManager
+    val tm = Platform.system.taskManager
     val parsed = ParsedWbwWorkState()
 
     val bulkActive = tm.infosByTag(WbwAudioBulkDownloadWorker.bulkTag(audioId)).first()
@@ -74,7 +74,7 @@ sealed interface WbwAudioDownloadUiEvent {
 @OptIn(FlowPreview::class)
 class WbwAudioDownloadViewModel() : AppViewModel() {
 
-    private val taskManager get() = PlatformServices.system.taskManager
+    private val taskManager get() = Platform.system.taskManager
 
     private val recomputeMutex = Mutex()
 
@@ -110,7 +110,7 @@ class WbwAudioDownloadViewModel() : AppViewModel() {
 
     fun downloadChapter(audioId: String, chapterNo: Int) {
         viewModelScope.launch {
-            if (!PlatformServices.networkMonitor.canProceed()) return@launch
+            if (!Platform.networkMonitor.canProceed()) return@launch
 
             launch(Dispatchers.IO) {
                 try {
@@ -172,7 +172,7 @@ class WbwAudioDownloadViewModel() : AppViewModel() {
 
     fun startBulkDownload(audioId: String) {
         viewModelScope.launch {
-            if (!PlatformServices.networkMonitor.canProceed()) return@launch
+            if (!Platform.networkMonitor.canProceed()) return@launch
 
             launch(Dispatchers.IO) {
                 try {
