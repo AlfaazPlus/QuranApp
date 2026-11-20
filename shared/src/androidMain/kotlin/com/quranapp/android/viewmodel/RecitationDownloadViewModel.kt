@@ -1,0 +1,747 @@
+package com.quranapp.android.viewmodel
+
+import androidx.lifecycle.viewModelScope
+import com.quranapp.android.api.models.recitation2.RecitationModelBase
+import com.quranapp.android.api.models.recitation2.RecitationQuranModel
+import com.quranapp.android.api.models.recitation2.RecitationTranslationModel
+import com.quranapp.android.extensions.canProceed
+import com.quranapp.android.generated.resources.Res
+import com.quranapp.android.generated.resources.downloadRecitations
+import com.quranapp.android.generated.resources.recitationDownloadWaitForOtherReciter
+import com.quranapp.android.generated.resources.strTitleChapInfoChapterNo
+import com.quranapp.android.generated.resources.strTitleFailed
+import com.quranapp.android.models.DataLoadError
+import com.quranapp.android.platform.Platform
+import com.quranapp.android.task.ExistingTaskPolicy
+import com.quranapp.android.task.TaskState
+import com.quranapp.android.utils.app.AppFiles
+import com.quranapp.android.utils.app.Logger
+import com.quranapp.android.utils.mediaplayer.RecitationAudioKind
+import com.quranapp.android.utils.mediaplayer.RecitationDownloadProgressBus
+import com.quranapp.android.utils.mediaplayer.RecitationModelManager
+import com.quranapp.android.utils.mediaplayer.RecitationUtils
+import com.quranapp.android.utils.mediaplayer.RecitationVersionManager
+import com.quranapp.android.utils.quran.QuranMeta
+import com.quranapp.android.utils.workers.RecitationAudioDownloadWorker
+import com.quranapp.android.utils.workers.RecitationBulkDownloadWorker
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withContext
+import org.jetbrains.compose.resources.getString
+import java.util.concurrent.ConcurrentHashMap
+import kotlin.time.Duration.Companion.milliseconds
+
+/** Task state emits often during batching; debounce expensive per-reciter disk scans. */
+private val WORK_INFO_DEBOUNCE_MS = 300.milliseconds
+
+private const val RECITER_STATS_PARALLELISM = 4
+
+private class ParsedWorkState {
+    val activeChapters = mutableMapOf<String, MutableSet<Int>>()
+    val activeBulks = mutableSetOf<String>()
+    val inProgressCounts = mutableMapOf<String, Int>()
+}
+
+private fun TaskState.isActive(): Boolean = isEnqueued || isRunning
+
+private suspend fun loadParsedWorkState(
+    quranReciterIds: List<String>,
+    translationReciterIds: List<String>,
+): ParsedWorkState {
+    val tm = Platform.system.taskManager
+    val parsed = ParsedWorkState()
+
+    suspend fun ingest(kind: RecitationAudioKind, reciterId: String) {
+        val audioStates = tm.infosByTag(
+            RecitationAudioDownloadWorker.reciterTag(reciterId, kind),
+        ).first()
+
+        val audioActive = audioStates.count { it.state.isActive() }
+        if (audioActive > 0) {
+            parsed.inProgressCounts[reciterId] =
+                (parsed.inProgressCounts[reciterId] ?: 0) + audioActive
+
+            RecitationDownloadProgressBus.snapshotKeys().forEach { key ->
+                val (rid, chapterNo) = RecitationDownloadProgressBus.parseBusKey(key)
+                    ?: return@forEach
+                if (rid == reciterId) {
+                    parsed.activeChapters.getOrPut(reciterId) { mutableSetOf() }.add(chapterNo)
+                }
+            }
+        }
+
+        val bulkActive = tm.infosByTag(
+            RecitationBulkDownloadWorker.reciterTag(reciterId, kind),
+        ).first().any { it.state.isActive() }
+
+        if (bulkActive) {
+            parsed.activeBulks.add(reciterId)
+            parsed.inProgressCounts[reciterId] =
+                (parsed.inProgressCounts[reciterId] ?: 0) + 1
+        }
+    }
+
+    for (id in quranReciterIds) ingest(RecitationAudioKind.QURAN, id)
+    for (id in translationReciterIds) ingest(RecitationAudioKind.TRANSLATION, id)
+
+    return parsed
+}
+
+data class RecitationBatchDownloadState(
+    val downloadedCount: Int,
+    val inProgressCount: Int,
+    val needsAudioUpdate: Boolean = false,
+    val totalChapters: Int = QuranMeta.chapterRange.last,
+) {
+    val isComplete: Boolean get() = downloadedCount >= totalChapters
+    val hasActiveWork: Boolean get() = inProgressCount > 0
+}
+
+data class RecitationSelectedReciter(
+    val kind: RecitationAudioKind,
+    val id: String,
+    val name: String,
+)
+
+data class RecitationChapterSheetData(
+    val reciter: RecitationSelectedReciter,
+    val downloadedChapters: Set<Int> = emptySet(),
+    val activeChapters: Set<Int> = emptySet(),
+    val bulkDownloadActive: Boolean = false,
+)
+
+data class RecitationDownloadUiState(
+    val isLoading: Boolean = true,
+    val quranReciters: List<RecitationQuranModel> = emptyList(),
+    val translationReciters: List<RecitationTranslationModel> = emptyList(),
+    val error: DataLoadError? = null,
+    val downloadStates: Map<String, RecitationBatchDownloadState> = emptyMap(),
+    val chapterSheet: RecitationChapterSheetData? = null,
+)
+
+sealed interface RecitationDownloadEvent {
+    object Refresh : RecitationDownloadEvent
+    data class StartDownload(val kind: RecitationAudioKind, val reciterId: String) :
+        RecitationDownloadEvent
+
+    data class CancelDownload(val kind: RecitationAudioKind, val reciterId: String) :
+        RecitationDownloadEvent
+
+    data class UpdateReciter(val kind: RecitationAudioKind, val reciterId: String) :
+        RecitationDownloadEvent
+
+    data class OpenChapterSheet(
+        val kind: RecitationAudioKind,
+        val reciterId: String,
+        val name: String,
+    ) : RecitationDownloadEvent
+
+    object CloseChapterSheet : RecitationDownloadEvent
+
+    data class DownloadChapter(
+        val kind: RecitationAudioKind,
+        val reciterId: String,
+        val chapterNo: Int,
+    ) : RecitationDownloadEvent
+
+    data class CancelChapter(val reciterId: String, val chapterNo: Int) : RecitationDownloadEvent
+
+    data class DeleteChapter(
+        val kind: RecitationAudioKind,
+        val reciterId: String,
+        val chapterNo: Int,
+    ) : RecitationDownloadEvent
+}
+
+sealed interface RecitationDownloadUiEvent {
+    data class ShowMessage(val title: String, val message: String?) : RecitationDownloadUiEvent
+}
+
+@OptIn(FlowPreview::class)
+class RecitationDownloadViewModel() : AppViewModel() {
+
+    private val modelManager = RecitationModelManager
+    private val versionManager = RecitationVersionManager.get()
+    private val taskManager get() = Platform.system.taskManager
+
+    private val recomputeMutex = Mutex()
+
+    private val _uiState = MutableStateFlow(RecitationDownloadUiState())
+    val uiState: StateFlow<RecitationDownloadUiState> = _uiState.asStateFlow()
+
+    private val _events = MutableSharedFlow<RecitationDownloadUiEvent>()
+    val events = _events.asSharedFlow()
+
+    private val downloadedCache = ConcurrentHashMap<String, Set<Int>>()
+
+    init {
+        viewModelScope.launch {
+            loadReciters(forceRefresh = false)
+        }
+
+        viewModelScope.launch {
+            combine(
+                taskManager.isRunningByTag(RecitationAudioDownloadWorker.TAG),
+                taskManager.isRunningByTag(RecitationBulkDownloadWorker.TAG),
+                RecitationDownloadProgressBus.state,
+            ) { _, _, _ -> }
+                .debounce(WORK_INFO_DEBOUNCE_MS)
+                .collect {
+                    triggerRecompute()
+                }
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            versionManager.refreshOutdatedState()
+        }
+
+        viewModelScope.launch {
+            versionManager.updateUiState.collect {
+                triggerRecompute()
+            }
+        }
+    }
+
+    fun onEvent(event: RecitationDownloadEvent) {
+        when (event) {
+            is RecitationDownloadEvent.Refresh -> viewModelScope.launch {
+                downloadedCache.clear()
+                loadReciters(forceRefresh = true)
+            }
+
+            is RecitationDownloadEvent.StartDownload ->
+                startBatchDownload(event.kind, event.reciterId)
+
+            is RecitationDownloadEvent.CancelDownload ->
+                cancelBatchDownload(event.kind, event.reciterId)
+
+            is RecitationDownloadEvent.UpdateReciter ->
+                updateReciter(event.kind, event.reciterId)
+
+            is RecitationDownloadEvent.OpenChapterSheet -> {
+                _uiState.update {
+                    it.copy(
+                        chapterSheet = RecitationChapterSheetData(
+                            reciter = RecitationSelectedReciter(
+                                kind = event.kind,
+                                id = event.reciterId,
+                                name = event.name,
+                            ),
+                        ),
+                    )
+                }
+                viewModelScope.launch(Dispatchers.IO) {
+                    triggerRecompute()
+                }
+            }
+
+            is RecitationDownloadEvent.CloseChapterSheet -> {
+                _uiState.update { it.copy(chapterSheet = null) }
+            }
+
+            is RecitationDownloadEvent.DownloadChapter ->
+                downloadChapter(event.kind, event.reciterId, event.chapterNo)
+
+            is RecitationDownloadEvent.CancelChapter ->
+                cancelChapterDownload(event.reciterId, event.chapterNo)
+
+            is RecitationDownloadEvent.DeleteChapter ->
+                deleteChapter(event.kind, event.reciterId, event.chapterNo)
+        }
+    }
+
+    private suspend fun loadReciters(forceRefresh: Boolean) {
+        if (forceRefresh && !Platform.networkMonitor.isConnected) {
+            _uiState.update { it.copy(isLoading = false, error = DataLoadError.NoConnection) }
+            return
+        }
+
+        _uiState.update { it.copy(isLoading = true, error = null) }
+
+        try {
+            if (forceRefresh) {
+                modelManager.forceRefreshQuran = true
+                modelManager.forceRefreshTranslation = true
+            }
+
+            val quran = modelManager.getAllQuranModel(forceRefresh = forceRefresh)
+            val translation = modelManager.getAllTranslationModel(forceRefresh = forceRefresh)
+
+            val qList = quran?.reciters.orEmpty()
+            val tList = translation?.reciters.orEmpty()
+
+            _uiState.update {
+                it.copy(
+                    isLoading = false,
+                    quranReciters = qList,
+                    translationReciters = tList,
+                    error = if (qList.isEmpty() && tList.isEmpty()) DataLoadError.Failed else null,
+                )
+            }
+
+            triggerRecompute()
+        } catch (e: Exception) {
+            Logger.saveError(e, "RecitationDownloadViewModel.loadReciters")
+            _uiState.update {
+                it.copy(isLoading = false, error = DataLoadError.Failed)
+            }
+        }
+    }
+
+    private fun recomputeStates() {
+        viewModelScope.launch(Dispatchers.Default) {
+            recomputeMutex.withLock {
+                val state = _uiState.value
+
+                if (state.quranReciters.isEmpty() && state.translationReciters.isEmpty()) {
+                    return@withLock
+                }
+
+                val parsedState = loadParsedWorkState(
+                    quranReciterIds = state.quranReciters.map { it.id },
+                    translationReciterIds = state.translationReciters.map { it.id },
+                )
+
+                withContext(Dispatchers.IO) {
+                    pruneRecitationProgressStaleEntries(parsedState)
+                }
+
+                val io = Dispatchers.IO.limitedParallelism(RECITER_STATS_PARALLELISM)
+
+                coroutineScope {
+                    val quranPairs = state.quranReciters.map { model ->
+                        async(io) {
+                            val key = stateKey(RecitationAudioKind.QURAN, model.id)
+
+                            key to computeStateForReciter(
+                                model.id,
+                                key,
+                                parsedState,
+                            )
+                        }
+                    }
+
+                    val transPairs = state.translationReciters.map { model ->
+                        async(io) {
+                            val key = stateKey(RecitationAudioKind.TRANSLATION, model.id)
+                            key to computeStateForReciter(
+                                model.id,
+                                key,
+                                parsedState,
+                            )
+                        }
+                    }
+
+                    val newMap = mutableMapOf<String, RecitationBatchDownloadState>()
+
+                    quranPairs.forEach { deferred ->
+                        val (k, v) = deferred.await()
+                        newMap[k] = v
+                    }
+
+                    transPairs.forEach { deferred ->
+                        val (k, v) = deferred.await()
+                        newMap[k] = v
+                    }
+
+                    val completedReciters = mutableSetOf<String>()
+                    for ((key, current) in newMap) {
+                        val previous = state.downloadStates[key]
+                        if (previous?.hasActiveWork == true &&
+                            !current.hasActiveWork &&
+                            current.isComplete
+                        ) {
+                            completedReciters.add(reciterIdFromStateKey(key))
+                        }
+                    }
+
+                    _uiState.update { prev ->
+                        val refreshedSheet = prev.chapterSheet?.let { sheet ->
+                            val r = sheet.reciter
+                            val downloaded = getDownloadedChapters(r.id)
+                            sheet.copy(
+                                downloadedChapters = downloaded,
+                                activeChapters = activeChaptersForReciter(
+                                    r.id,
+                                    parsedState,
+                                    downloaded,
+                                ),
+                                bulkDownloadActive = parsedState.activeBulks.contains(r.id),
+                            )
+                        }
+                        prev.copy(
+                            downloadStates = newMap,
+                            chapterSheet = refreshedSheet,
+                        )
+                    }
+
+                    if (completedReciters.isNotEmpty()) {
+                        withContext(Dispatchers.IO) {
+                            completedReciters.forEach { reciterId ->
+                                versionManager.markAudioUpdated(reciterId)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun pruneRecitationProgressStaleEntries(parsedState: ParsedWorkState) {
+        val activeChapterKeys = HashSet<String>()
+
+        parsedState.activeChapters.forEach { (rid, chapters) ->
+            chapters.forEach { ch ->
+                activeChapterKeys.add(RecitationDownloadProgressBus.key(rid, ch))
+            }
+        }
+
+        RecitationDownloadProgressBus.prune { key ->
+            if (key in activeChapterKeys) return@prune false
+            val (rid, ch) = RecitationDownloadProgressBus.parseBusKey(key) ?: return@prune true
+
+            if (parsedState.activeBulks.contains(rid)) {
+                if (ch !in getDownloadedChapters(rid)) {
+                    return@prune false
+                }
+            }
+            true
+        }
+    }
+
+    private fun activeChaptersForReciter(
+        reciterId: String,
+        parsedState: ParsedWorkState,
+        downloaded: Set<Int>,
+    ): Set<Int> {
+        if (parsedState.activeBulks.contains(reciterId)) {
+            return QuranMeta.chapterRange.filter { it !in downloaded }.toSet()
+        }
+        return parsedState.activeChapters[reciterId] ?: emptySet()
+    }
+
+    private fun hasAnotherReciterActiveDownload(
+        parsedState: ParsedWorkState,
+        reciterId: String,
+    ): Boolean {
+        return parsedState.inProgressCounts.any { it.key != reciterId && it.value > 0 }
+    }
+
+    private fun computeStateForReciter(
+        reciterId: String,
+        stateKey: String,
+        parsedState: ParsedWorkState,
+    ): RecitationBatchDownloadState {
+        val inProgress = parsedState.inProgressCounts[reciterId] ?: 0
+
+        val prevState = _uiState.value.downloadStates[stateKey]
+        val hadActiveWork = prevState?.hasActiveWork == true
+
+        val forceRecheckDisk =
+            hadActiveWork || inProgress > 0 || !downloadedCache.containsKey(reciterId)
+
+        val downloaded = getDownloadedChapters(reciterId, forceRecheckDisk).size
+
+        return RecitationBatchDownloadState(
+            downloadedCount = downloaded,
+            inProgressCount = inProgress,
+            needsAudioUpdate = downloaded > 0 && versionManager.needsAudioUpdate(reciterId),
+        )
+    }
+
+    private fun getDownloadedChapters(reciterId: String, forceRecheck: Boolean = false): Set<Int> {
+        if (forceRecheck) {
+            val set = mutableSetOf<Int>()
+            for (chapterNo in QuranMeta.chapterRange) {
+                val f = modelManager.getRecitationAudioFile(reciterId, chapterNo)
+                if (AppFiles.size(f) > 0L) {
+                    set.add(chapterNo)
+                }
+            }
+            downloadedCache[reciterId] = set
+            return set
+        }
+        return downloadedCache.getOrPut(reciterId) {
+            getDownloadedChapters(reciterId, forceRecheck = true)
+        }
+    }
+
+    private fun downloadChapter(kind: RecitationAudioKind, reciterId: String, chapterNo: Int) {
+        val model = findModel(kind, reciterId) ?: return
+
+        viewModelScope.launch {
+            if (!Platform.networkMonitor.canProceed()) return@launch
+
+            launch(Dispatchers.IO) {
+                try {
+                    val parsedState = loadParsedWorkState(
+                        quranReciterIds = _uiState.value.quranReciters.map { it.id },
+                        translationReciterIds = _uiState.value.translationReciters.map { it.id },
+                    )
+
+                    if (hasAnotherReciterActiveDownload(parsedState, reciterId)) {
+                        _events.emit(
+                            RecitationDownloadUiEvent.ShowMessage(
+                                title = getString(Res.string.downloadRecitations),
+                                message = getString(Res.string.recitationDownloadWaitForOtherReciter),
+                            ),
+                        )
+                        return@launch
+                    }
+
+                    if (parsedState.activeBulks.contains(reciterId)) {
+                        return@launch
+                    }
+
+                    val url =
+                        RecitationUtils.prepareAudioUrl(model.urlTemplate, chapterNo)
+                            ?: return@launch
+
+                    val outputPath =
+                        modelManager.getRecitationAudioFile(reciterId, chapterNo).toString()
+
+                    val request = RecitationAudioDownloadWorker.oneTimeRequest(
+                        url = url,
+                        outputPath = outputPath,
+                        title = model.getReciterName(),
+                        subtitle = getString(Res.string.strTitleChapInfoChapterNo) + " $chapterNo",
+                        reciterId = reciterId,
+                        audioKind = kind,
+                        chapterNo = chapterNo,
+                    )
+
+                    taskManager.enqueueUnique(
+                        RecitationAudioDownloadWorker.uniqueWorkName(reciterId, chapterNo),
+                        ExistingTaskPolicy.KEEP,
+                        request,
+                    )
+                } catch (e: Exception) {
+                    Logger.saveError(e, "RecitationDownloadViewModel.downloadChapter")
+
+                    viewModelScope.launch {
+                        _events.emit(
+                            RecitationDownloadUiEvent.ShowMessage(
+                                title = getString(Res.string.strTitleFailed),
+                                message = e.message,
+                            ),
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun cancelChapterDownload(reciterId: String, chapterNo: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                taskManager.cancelUnique(
+                    RecitationAudioDownloadWorker.uniqueWorkName(reciterId, chapterNo),
+                )
+                triggerRecompute()
+            } catch (e: Exception) {
+                Logger.saveError(e, "RecitationDownloadViewModel.cancelChapterDownload")
+            }
+        }
+    }
+
+    private fun deleteChapter(
+        @Suppress("UNUSED_PARAMETER") kind: RecitationAudioKind,
+        reciterId: String,
+        chapterNo: Int
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                AppFiles.delete(modelManager.getRecitationAudioFile(reciterId, chapterNo))
+                downloadedCache.remove(reciterId)
+
+                triggerRecompute()
+            } catch (e: Exception) {
+                Logger.saveError(e, "RecitationDownloadViewModel.deleteChapter")
+            }
+        }
+    }
+
+    private fun startBatchDownload(kind: RecitationAudioKind, reciterId: String) {
+        val model = findModel(kind, reciterId) ?: return
+
+        viewModelScope.launch {
+            if (!Platform.networkMonitor.canProceed()) return@launch
+
+            launch(Dispatchers.IO) {
+                try {
+                    val parsedState = loadParsedWorkState(
+                        quranReciterIds = _uiState.value.quranReciters.map { it.id },
+                        translationReciterIds = _uiState.value.translationReciters.map { it.id },
+                    )
+                    val stateKey = stateKey(kind, reciterId)
+                    val myState = computeStateForReciter(reciterId, stateKey, parsedState)
+                    if (myState.hasActiveWork) return@launch
+
+                    if (hasAnotherReciterActiveDownload(parsedState, reciterId)) {
+                        _events.emit(
+                            RecitationDownloadUiEvent.ShowMessage(
+                                title = getString(Res.string.downloadRecitations),
+                                message = getString(Res.string.recitationDownloadWaitForOtherReciter),
+                            ),
+                        )
+                        return@launch
+                    }
+
+                    enqueueBatchDownload(kind, reciterId, model)
+                } catch (e: Exception) {
+                    Logger.saveError(e, "RecitationDownloadViewModel.startBatchDownload")
+
+                    viewModelScope.launch {
+                        _events.emit(
+                            RecitationDownloadUiEvent.ShowMessage(
+                                title = getString(Res.string.strTitleFailed),
+                                message = e.message,
+                            ),
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun updateReciter(kind: RecitationAudioKind, reciterId: String) {
+        val model = findModel(kind, reciterId) ?: return
+
+        viewModelScope.launch {
+            if (!Platform.networkMonitor.canProceed()) return@launch
+
+            launch(Dispatchers.IO) {
+                try {
+                    val parsedState = loadParsedWorkState(
+                        quranReciterIds = _uiState.value.quranReciters.map { it.id },
+                        translationReciterIds = _uiState.value.translationReciters.map { it.id },
+                    )
+                    if (hasAnotherReciterActiveDownload(parsedState, reciterId)) {
+                        _events.emit(
+                            RecitationDownloadUiEvent.ShowMessage(
+                                title = getString(Res.string.downloadRecitations),
+                                message = getString(Res.string.recitationDownloadWaitForOtherReciter),
+                            ),
+                        )
+                        return@launch
+                    }
+
+                    taskManager.cancelUnique(
+                        RecitationBulkDownloadWorker.uniqueWorkName(reciterId, kind),
+                    )
+                    taskManager.cancelByTag(
+                        RecitationAudioDownloadWorker.reciterTag(
+                            reciterId,
+                            kind
+                        )
+                    )
+                    taskManager.cancelByTag(
+                        RecitationBulkDownloadWorker.reciterTag(
+                            reciterId,
+                            kind
+                        )
+                    )
+
+                    modelManager.deleteReciterAudioDirectory(reciterId)
+                    downloadedCache.remove(reciterId)
+
+                    enqueueBatchDownload(kind, reciterId, model)
+                    triggerRecompute()
+                } catch (e: Exception) {
+                    Logger.saveError(e, "RecitationDownloadViewModel.updateReciter")
+                }
+            }
+        }
+    }
+
+    private fun cancelBatchDownload(kind: RecitationAudioKind, reciterId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                taskManager.cancelUnique(
+                    RecitationBulkDownloadWorker.uniqueWorkName(
+                        reciterId,
+                        kind
+                    )
+                )
+                taskManager.cancelByTag(
+                    RecitationAudioDownloadWorker.reciterTag(
+                        reciterId,
+                        kind
+                    )
+                )
+                taskManager.cancelByTag(
+                    RecitationBulkDownloadWorker.reciterTag(
+                        reciterId,
+                        kind
+                    )
+                )
+
+                triggerRecompute()
+            } catch (e: Exception) {
+                Logger.saveError(e, "RecitationDownloadViewModel.cancelBatchDownload")
+            }
+        }
+    }
+
+    private fun findModel(kind: RecitationAudioKind, reciterId: String): RecitationModelBase? {
+        return when (kind) {
+            RecitationAudioKind.QURAN ->
+                _uiState.value.quranReciters.find { it.id == reciterId }
+
+            RecitationAudioKind.TRANSLATION ->
+                _uiState.value.translationReciters.find { it.id == reciterId }
+        }
+    }
+
+    private suspend fun triggerRecompute() {
+        recomputeStates()
+    }
+
+    private fun enqueueBatchDownload(
+        kind: RecitationAudioKind,
+        reciterId: String,
+        model: RecitationModelBase,
+    ) {
+        val request = RecitationBulkDownloadWorker.oneTimeRequest(
+            reciterId = reciterId,
+            kind = kind,
+            urlTemplate = model.urlTemplate,
+            displayTitle = model.getReciterName(),
+        )
+
+        taskManager.enqueueUnique(
+            RecitationBulkDownloadWorker.uniqueWorkName(reciterId, kind),
+            ExistingTaskPolicy.KEEP,
+            request,
+        )
+    }
+
+    companion object {
+        fun stateKey(kind: RecitationAudioKind, reciterId: String): String =
+            "${kind.name}:$reciterId"
+
+        private fun reciterIdFromStateKey(stateKey: String): String {
+            val idx = stateKey.indexOf(':')
+            return if (idx >= 0 && idx < stateKey.length - 1) {
+                stateKey.substring(idx + 1)
+            } else {
+                stateKey
+            }
+        }
+    }
+}
+

@@ -1,0 +1,344 @@
+package com.quranapp.android.viewmodel
+
+import androidx.lifecycle.viewModelScope
+import com.quranapp.android.AndroidAppContext
+import com.quranapp.android.api.ApiClient
+import com.quranapp.android.api.JsonHelper
+import com.quranapp.android.api.models.translation.TranslationBookInfoModel
+import com.quranapp.android.db.DatabaseProvider
+import com.quranapp.android.extensions.canProceed
+import com.quranapp.android.generated.resources.Res
+import com.quranapp.android.generated.resources.strMsgTranslDownloaded
+import com.quranapp.android.generated.resources.strMsgTranslFailedToDownload
+import com.quranapp.android.generated.resources.strMsgTryLater
+import com.quranapp.android.generated.resources.strTitleFailed
+import com.quranapp.android.generated.resources.strTitleSuccess
+import com.quranapp.android.models.DataLoadError
+import com.quranapp.android.models.transls.TranslModel
+import com.quranapp.android.models.transls.TranslationGroupModel
+import com.quranapp.android.platform.Platform
+import com.quranapp.android.preferences.AppActionsPreferences
+import com.quranapp.android.task.TaskState
+import com.quranapp.android.utils.app.AppFiles
+import com.quranapp.android.utils.app.Logger
+import com.quranapp.android.utils.managers.TranslationDownloadManager
+import com.quranapp.android.utils.reader.TranslUtils
+import com.quranapp.android.utils.translation.TranslationVersionManager
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.longOrNull
+import org.jetbrains.compose.resources.getString
+import java.util.LinkedList
+
+data class TranslationDownloadUiState(
+    val isLoading: Boolean = true,
+    val groups: List<TranslationGroupModel> = emptyList(),
+    val error: DataLoadError? = null,
+    val downloadStates: Map<String, TaskState> = emptyMap(),
+    val isAnyDownloadCompleted: Boolean = false,
+    val searchQuery: String = "",
+)
+
+sealed interface TranslationDownloadEvent {
+    object Refresh : TranslationDownloadEvent
+    data class ToggleGroup(val langCode: String) : TranslationDownloadEvent
+    data class DownloadTranslation(val slug: String) : TranslationDownloadEvent
+    data class CancelDownload(val slug: String) : TranslationDownloadEvent
+    data class Search(val query: String) : TranslationDownloadEvent
+}
+
+sealed interface TranslationDownloadUiEvent {
+    data class ShowMessage(val title: String, val message: String?) : TranslationDownloadUiEvent
+}
+
+class TranslationDownloadViewModel() : AppViewModel() {
+    private val _uiState = MutableStateFlow(TranslationDownloadUiState())
+    val uiState: StateFlow<TranslationDownloadUiState> = _uiState.asStateFlow()
+
+    private val _events = MutableSharedFlow<TranslationDownloadUiEvent>()
+    val events = _events.asSharedFlow()
+
+    private val context get() = AndroidAppContext.get()
+    private val versionManager = TranslationVersionManager.get()
+
+    init {
+        TranslationDownloadManager.initialize()
+        loadAvailableTranslations(force = AppActionsPreferences.getFetchTranslationsForce())
+        observeDownloadStates()
+        viewModelScope.launch {
+            versionManager.refreshOutdatedState()
+        }
+    }
+
+    private fun observeDownloadStates() {
+        viewModelScope.launch {
+            TranslationDownloadManager.observeDownloadsAsFlow().collect { (key, status) ->
+                updateDownloadStatus(key, status)
+            }
+        }
+    }
+
+    fun onEvent(event: TranslationDownloadEvent) {
+        when (event) {
+            is TranslationDownloadEvent.Refresh -> loadAvailableTranslations(force = true)
+            is TranslationDownloadEvent.ToggleGroup -> toggleGroup(event.langCode)
+            is TranslationDownloadEvent.DownloadTranslation -> downloadTranslation(event.slug)
+            is TranslationDownloadEvent.CancelDownload -> cancelDownload(event.slug)
+            is TranslationDownloadEvent.Search -> _uiState.update { it.copy(searchQuery = event.query) }
+        }
+    }
+
+    private fun loadAvailableTranslations(force: Boolean) {
+        if (force && !Platform.networkMonitor.isConnected) {
+            _uiState.update { it.copy(isLoading = false, error = DataLoadError.NoConnection) }
+            return
+        }
+
+        _uiState.update { it.copy(isLoading = true, error = null) }
+
+        viewModelScope.launch {
+            try {
+                val manifestFile = TranslUtils.availableDownloadsFile()
+
+                val data = ApiClient.getAvailableTranslations()
+                data.let { data ->
+                    AppFiles.createFile(manifestFile)
+                    manifestFile.toFile().writeText(data)
+
+                    val groups = parseAvailableTranslations(data)
+
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            groups = groups,
+                            error = null
+                        )
+                    }
+                }
+            } catch (e: Exception) {
+                Logger.saveError(e, "TranslationDownloadViewModel.loadAvailableTranslations")
+
+                _uiState.update {
+                    it.copy(isLoading = false, error = DataLoadError.Failed)
+                }
+            }
+        }
+    }
+
+    private suspend fun parseAvailableTranslations(data: String): List<TranslationGroupModel> {
+        val translationGroups = LinkedList<TranslationGroupModel>()
+
+        val downloadedSlugs =
+            DatabaseProvider.getTranslationRepository().let { factory ->
+                factory.getDownloadedSlugs()
+            }
+
+        val obj = JsonHelper.json.parseToJsonElement(data).jsonObject
+        obj["translations"]?.jsonObject?.let { translations ->
+
+            val isAnyDownloadInProgress = TranslationDownloadManager.isAnyDownloading()
+
+            for (langCode in translations.keys) {
+                val translationsForLanguageCode = translations[langCode]?.jsonObject
+                val slugs = translationsForLanguageCode?.keys ?: continue
+
+                val groupModel = TranslationGroupModel(langCode)
+                val translationItems = ArrayList<TranslModel>()
+
+                for (slug in slugs) {
+                    if (slug in downloadedSlugs) continue
+
+                    val model = readTranslInfo(
+                        langCode,
+                        slug,
+                        translationsForLanguageCode[slug]!!.jsonObject
+                    )
+
+                    if (isAnyDownloadInProgress) {
+                        model.isDownloadingDisabled = true
+                    }
+
+                    model.isDownloading = TranslationDownloadManager.isDownloading(slug)
+
+                    groupModel.langName = model.bookInfo.langName
+                    groupModel.isExpanded = groupModel.isExpanded || model.isDownloading
+
+                    translationItems.add(model)
+                }
+
+                // If no translation was added in this language category, skip
+                if (translationItems.isEmpty()) continue
+
+                groupModel.translations = translationItems
+                translationGroups.add(groupModel)
+            }
+        }
+
+        AppActionsPreferences.setFetchTranslationsForce(false)
+        return translationGroups
+    }
+
+    private fun readTranslInfo(
+        langCode: String,
+        slug: String,
+        translObject: JsonObject
+    ): TranslModel {
+        val bookInfo = TranslationBookInfoModel(slug)
+        bookInfo.langCode = langCode
+        bookInfo.bookName = translObject["book"]?.jsonPrimitive?.contentOrNull ?: ""
+        bookInfo.authorName = translObject["author"]?.jsonPrimitive?.contentOrNull ?: ""
+        bookInfo.displayName = translObject["displayName"]?.jsonPrimitive?.contentOrNull ?: ""
+        bookInfo.langName = translObject["langName"]?.jsonPrimitive?.contentOrNull ?: ""
+        bookInfo.version = translObject["version"]?.jsonPrimitive?.longOrNull
+            ?: 1L
+        bookInfo.lastUpdated = bookInfo.version
+        bookInfo.downloadPath = translObject["downloadPath"]?.jsonPrimitive?.contentOrNull ?: ""
+        return TranslModel(bookInfo)
+    }
+
+    private fun toggleGroup(langCode: String) {
+        _uiState.update { state ->
+            val updatedGroups = state.groups.map { group ->
+                if (group.langCode == langCode) {
+                    TranslationGroupModel(group.langCode).apply {
+                        langName = group.langName
+                        translations = group.translations
+                        isExpanded = !group.isExpanded
+                    }
+                } else {
+                    group
+                }
+            }
+            state.copy(groups = updatedGroups)
+        }
+    }
+
+    private fun downloadTranslation(slug: String) {
+        val model = findTranslationBySlug(slug) ?: return
+        val bookInfo = model.bookInfo
+
+        if (TranslationDownloadManager.isDownloading(bookInfo.slug)) {
+            updateDownloadStatus(bookInfo.slug, TaskState.Enqueued)
+            return
+        }
+
+        viewModelScope.launch {
+            if (isDownloaded(bookInfo.slug)) {
+                updateDownloadStatus(bookInfo.slug, TaskState.Succeeded())
+                return@launch
+            }
+
+            if (!Platform.networkMonitor.canProceed()) {
+                return@launch
+            }
+
+            updateDownloadStatus(bookInfo.slug, TaskState.Enqueued)
+            TranslationDownloadManager.startDownload(bookInfo)
+        }
+    }
+
+    private fun cancelDownload(key: String) {
+        TranslationDownloadManager.stopDownload(key)
+        updateDownloadStatus(key, TaskState.Cancelled)
+    }
+
+    private fun updateDownloadStatus(slug: String, status: TaskState) {
+        val bookInfo = findTranslationBySlug(slug)?.bookInfo ?: return
+
+        _uiState.update { state ->
+            var newState = state
+            val newDownloadStates = state.downloadStates.toMutableMap()
+            val newGroups = state.groups.toMutableList()
+
+            // Remove completed/cancelled states, keep failed for retry UI
+            when (status) {
+                is TaskState.Failed -> {
+                    viewModelScope.launch {
+                        _events.emit(
+                            TranslationDownloadUiEvent.ShowMessage(
+                                title = getString(Res.string.strTitleFailed),
+                                message = getString(
+                                    Res.string.strMsgTranslFailedToDownload,
+                                    bookInfo.bookName
+                                ) +
+                                        " " + getString(Res.string.strMsgTryLater)
+                            )
+                        )
+                    }
+                    newDownloadStates.remove(slug)
+                }
+
+                is TaskState.Succeeded -> {
+                    viewModelScope.launch {
+                        _events.emit(
+                            TranslationDownloadUiEvent.ShowMessage(
+                                title = getString(Res.string.strTitleSuccess),
+                                message = getString(
+                                    Res.string.strMsgTranslDownloaded,
+                                    bookInfo.bookName
+                                )
+                            )
+                        )
+                    }
+
+                    newDownloadStates.remove(slug)
+                    viewModelScope.launch {
+                        versionManager.markTranslationUpdated(slug)
+                    }
+
+                    // remove from available list
+                    for (group in newGroups) {
+                        val iterator = group.translations.iterator()
+                        while (iterator.hasNext()) {
+                            val t = iterator.next()
+                            if (t.bookInfo.slug == slug) {
+                                iterator.remove()
+                                break
+                            }
+                        }
+                    }
+
+                    newState = newState.copy(isAnyDownloadCompleted = true)
+                }
+
+                TaskState.Cancelled -> {
+                    newDownloadStates.remove(slug)
+                }
+
+                else -> {
+                    newDownloadStates[slug] = status
+                }
+            }
+
+            newState.copy(
+                downloadStates = newDownloadStates,
+                groups = newGroups.filterNot { it.translations.isEmpty() }
+            )
+        }
+    }
+
+    private fun findTranslationBySlug(slug: String): TranslModel? {
+        for (group in _uiState.value.groups) {
+            for (t in group.translations) {
+                if (t.bookInfo.slug == slug) {
+                    return t
+                }
+            }
+        }
+
+        return null
+    }
+
+    private suspend fun isDownloaded(slug: String): Boolean {
+        return DatabaseProvider.getTranslationRepository().isDownloaded(slug)
+    }
+}

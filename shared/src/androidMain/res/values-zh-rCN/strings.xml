@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="strTitleFootnote">脚注</string>
+    <string name="strTitleFootnotes">脚注</string>
+    <string name="strTitleVOTD">每日经文</string>
+    <string name="strHintSearch">搜索</string>
+    <string name="desc_votd_widget">每天获得一句经文</string>
+    <string name="recitationPlayer">诵读播放器</string>
+    <string name="desc_recitation_player_widget">在主屏幕控制古兰经诵读</string>
+</resources>

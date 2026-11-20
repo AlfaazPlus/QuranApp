@@ -1,0 +1,207 @@
+package com.quranapp.android.components.library
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.InlineTextContent
+import androidx.compose.foundation.text.appendInlineContent
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.typography
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.Placeholder
+import androidx.compose.ui.text.PlaceholderVerticalAlign
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.quranapp.android.components.reader.dialogs.BookmarkViewerData
+import com.quranapp.android.components.reader.dialogs.BookmarkViewerSheet
+import com.quranapp.android.db.entities.user.BookmarkEntity
+import com.quranapp.android.extensions.appViewModel
+import com.quranapp.android.generated.resources.Res
+import com.quranapp.android.generated.resources.dr_icon_chevron_right
+import com.quranapp.android.generated.resources.dr_icon_edit
+import com.quranapp.android.generated.resources.ic_bookmark
+import com.quranapp.android.generated.resources.strLabelVerseNo
+import com.quranapp.android.generated.resources.strLabelVerses
+import com.quranapp.android.generated.resources.strMsgBookmarkNoItems
+import com.quranapp.android.generated.resources.strTitleBookmarks
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.navigation.AppRoutes
+import com.quranapp.android.platform.Platform
+import com.quranapp.android.theme.alpha
+import com.quranapp.android.viewmodel.BookmarksViewModel
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+
+@Composable
+fun LibrarySectionBookmarks() {
+    val viewModel = appViewModel<BookmarksViewModel>()
+    val recentBookmarks by viewModel.recentBookmarks.collectAsStateWithLifecycle()
+    val chapterNames by viewModel.chapterNames.collectAsStateWithLifecycle()
+
+    val context = LocalContext.current
+    var viewerData by remember { mutableStateOf<BookmarkViewerData?>(null) }
+
+    BookmarkViewerSheet(data = viewerData, onClose = { viewerData = null })
+
+    Column(
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        SectionTitle(
+            iconRes = Res.drawable.ic_bookmark,
+            title = stringResource(Res.string.strTitleBookmarks),
+            headerRightContent = if (recentBookmarks.isNotEmpty()) {
+                {
+                    SectionHeaderViewAll {
+                        Platform.navigator.navigate(AppRoute.Screen(AppRoutes.BOOKMARK))
+                    }
+                }
+            } else null,
+        )
+
+        when {
+            recentBookmarks.isEmpty() -> {
+                SectionEmptyMessage(
+                    message = stringResource(Res.string.strMsgBookmarkNoItems),
+                )
+            }
+
+            else -> {
+                LibraryPreviewList(items = recentBookmarks) { bookmark ->
+                    BookmarkCard(
+                        bookmark = bookmark,
+                        chapterName = chapterNames.get(bookmark.chapterNo).orEmpty(),
+                        onClick = {
+                            viewerData = BookmarkViewerData(
+                                chapterNo = bookmark.chapterNo,
+                                fromVerse = bookmark.fromVerseNo,
+                                toVerse = bookmark.toVerseNo,
+                            )
+                        },
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun BookmarkCard(
+    bookmark: BookmarkEntity,
+    chapterName: String,
+    onClick: () -> Unit,
+) {
+    val verseLabel = if (bookmark.fromVerseNo == bookmark.toVerseNo) {
+        stringResource(Res.string.strLabelVerseNo, bookmark.fromVerseNo)
+    } else {
+        stringResource(Res.string.strLabelVerses, bookmark.fromVerseNo, bookmark.toVerseNo)
+    }
+
+    Column(
+        modifier = Modifier
+            .clickable(onClick = onClick)
+            .padding(horizontal = 14.dp, vertical = 12.dp)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Surface(
+                modifier = Modifier.size(42.dp),
+                shape = RoundedCornerShape(12.dp),
+                color = colorScheme.surfaceVariant.copy(alpha = 0.55f),
+            ) {
+                Box(contentAlignment = Alignment.Center) {
+                    Text(
+                        text = bookmark.chapterNo.toString(),
+                        style = typography.bodyLarge,
+                        fontWeight = FontWeight.Light,
+                        color = colorScheme.onSurface,
+                    )
+                }
+            }
+
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = chapterName,
+                    style = typography.labelLarge,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    color = colorScheme.onSurface,
+                )
+
+                Text(
+                    text = verseLabel,
+                    style = typography.bodyMedium,
+                    color = colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.padding(top = 3.dp),
+                )
+            }
+
+            Icon(
+                painter = painterResource(Res.drawable.dr_icon_chevron_right),
+                contentDescription = null,
+                modifier = Modifier.size(18.dp),
+                tint = colorScheme.onSurfaceVariant.alpha(0.65f)
+            )
+        }
+
+        bookmark.note?.takeIf { it.isNotBlank() }?.let { note ->
+            Text(
+                text = buildAnnotatedString {
+                    appendInlineContent("user_note", "[icon]")
+                    append(" ")
+                    append(bookmark.note.orEmpty().take(50))
+                },
+                inlineContent = mapOf(
+                    "user_note" to InlineTextContent(
+                        Placeholder(
+                            width = 16.sp,
+                            height = 16.sp,
+                            placeholderVerticalAlign = PlaceholderVerticalAlign.Center,
+                        )
+                    ) {
+                        Icon(
+                            painter = painterResource(Res.drawable.dr_icon_edit),
+                            contentDescription = null,
+                            tint = Color.Gray,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    },
+                ),
+                style = MaterialTheme.typography.bodyMedium,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.padding(start = 58.dp, top = 8.dp),
+                fontStyle = FontStyle.Italic,
+            )
+        }
+    }
+}

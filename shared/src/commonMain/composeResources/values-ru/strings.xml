@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="honorificMuhammad">ﷺ</string>
+    <string name="honorificProphet">алейхис-салям</string>
+    <string name="prophetAdam">Адам</string>
+    <string name="prophetAlyasaa">Аль-Яса</string>
+    <string name="prophetAyyub">Айюб</string>
+    <string name="prophetDawud">Давуд</string>
+    <string name="prophetDhulkifl">Зуль-Кифль</string>
+    <string name="prophetHarun">Харун</string>
+    <string name="prophetHud">Худ</string>
+    <string name="prophetIbrahim">Ибрахим</string>
+    <string name="prophetIdrees">Идрис</string>
+    <string name="prophetIliyas">Ильяс</string>
+    <string name="prophetIsa">Иса</string>
+    <string name="prophetIshaq">Исхак</string>
+    <string name="prophetIsmail">Исмаил</string>
+    <string name="prophetLut">Лут</string>
+    <string name="prophetMuhammad">Мухаммад</string>
+    <string name="prophetMusa">Муса</string>
+    <string name="prophetNuh">Нух</string>
+    <string name="prophetSaleh">Салих</string>
+    <string name="prophetShuaib">Шуайб</string>
+    <string name="prophetSulayman">Сулейман</string>
+    <string name="prophetYahya">Яхья</string>
+    <string name="prophetYaqub">Якуб</string>
+    <string name="prophetYunus">Юнус</string>
+    <string name="prophetYusuf">Юсуф</string>
+    <string name="prophetZakariyya">Закария</string>
+    <string name="strTitleAppVersion">Версия приложения</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp – бесплатное open-source приложение для чтения и изучения Священного Корана с переводами. Приложение имеет удобный и чистый интерфейс с такими функциями, как толкование, декламация, напоминания и многое другое.
+    \n
+    \nСКАЧАТЬ СЕЙЧАС:
+    \n%1$s</string>
+    <string name="strLabelRemove">Убрать</string>
+    <string name="strLabelDelete">Удалить</string>
+    <string name="strLabelRemoveAll">Удалить все</string>
+    <string name="strLabelCopy">Копировать</string>
+    <string name="strLabelBack">Назад</string>
+    <string name="strLabelTop">Вверх</string>
+    <string name="strLabelDone">Готово</string>
+    <string name="strLabelOpen">Открыть</string>
+    <string name="strLabelRead">Читать »</string>
+    <string name="strLabelViewAll">Просмотреть все</string>
+    <string name="strLabelSkip">Пропустить</string>
+    <string name="strLabelNext">Следующий</string>
+    <string name="strLabelStart">Начать</string>
+    <string name="labelDownload">Загрузить</string>
+    <string name="strLabelUpdate">Обновить</string>
+    <string name="strLabelOn">Включено</string>
+    <string name="strLabelOff">Выключено</string>
+    <string name="strLabelThemeDark">Тёмная</string>
+    <string name="strLabelThemeLight">Светлая</string>
+    <string name="strLabelClose">Закрыть</string>
+    <string name="strLabelGotIt">Понятно</string>
+    <string name="strLabelCancel">Отмена</string>
+    <string name="strLabelApply">Применить</string>
+    <string name="strLabelRetry">Повторить</string>
+    <string name="strLabelEdit">Редактировать</string>
+    <string name="strLabelOpenInReader">Открыть в ридере</string>
+    <string name="strLabelSystemDefault">Системная</string>
+    <string name="strLabelPreviousVerse">Предыдущий аят</string>
+    <string name="strLabelVerseNo" formatted="false">Аят %1$d</string>
+    <string name="strLabelVerses" formatted="false">Аяты %1$d–%2$d</string>
+    <string name="strLabelVerseNoWithColon" formatted="false">Аят : %1$d</string>
+    <string name="strLabelVersesWithColon" formatted="false">Аяты : %1$d–%2$d</string>
+    <string name="strLabelVerseWithChapNo" formatted="false">Аят %1$d:%2$d</string>
+    <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
+    <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
+    <string name="strLabelVerseWithChapNameAndNo" formatted="false">Сура %1$s %2$d: Аят %3$d</string>
+    <string name="strLabelVerseWithChapNameWithBar" formatted="false">Сура %1$s │ Аят %2$d</string>
+    <string name="strTitleTranslations">Переводы</string>
+    <string name="downloadRecitations">Загрузить чтения</string>
+    <string name="strTitleScripts">Шрифты</string>
+    <string name="strLabelNextVerse">Следующий аят</string>
+    <string name="labelPreviousTafsir">Предыдущее толкование</string>
+    <string name="labelNextTafsir">Следующее толкование</string>
+    <string name="strLabelSurah" formatted="false">Сура %1$s</string>
+    <string name="strLabelPageNo" formatted="false">Страница %1$d</string>
+    <string name="strLabelJuzNo" formatted="false">Джуз %1$d</string>
+    <string name="strLabelFeatureQuranMiniInfo" formatted="false">Глава No. %1$d │ Аяты %2$d–%3$d</string>
+    <string name="strTitleHolyQuran">Священный Коран</string>
+    <string name="strTitleQuran">Коран</string>
+    <string name="strTitleMakki">Мекканская</string>
+    <string name="strTitleMadani">Мединская</string>
+    <string name="strTitleFootnote">Примечание</string>
+    <string name="strTitleFootnotes">Примечания</string>
+    <string name="noFootnotesForThisVerse">Нет примечаний для этого аята.</string>
+    <string name="strTitleReaderChapters">Главы</string>
+    <string name="strTitleReaderJuz">Джуз (Раздел)</string>
+    <string name="strTitleVerseOptions">Настройки аятов</string>
+    <string name="strTitleVerseRecitation">Чтение аята</string>
+    <string name="strTitleReaderVerseInformation" formatted="false">Сура %1$s : %2$d</string>
+    <string name="strTitleGotoVerseNo" formatted="false">Перейти к аяту %1$d</string>
+    <string name="strTitleReadVerseRange" formatted="false">Читать аяты %1$d - %2$d</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">Читать толкование аята %1$d</string>
+    <string name="strTitleReaderTextSizeArabic">Размер арабского текста</string>
+    <string name="strTitleReaderTextSizeTransl">Размер текста перевода</string>
+    <string name="titleReaderTextSizeTafsir">Размер текста Тафсира</string>
+    <string name="strTitleSettings">Настройки</string>
+    <string name="strTitleBookmark">Закладка</string>
+    <string name="strTitleSendFeedback">Отправить отзыв</string>
+    <string name="strTitleHelpSupport">Помощь и Поддержка</string>
+    <string name="strTitleAboutUs">О нас</string>
+    <string name="strTitleBookmarks">Закладки</string>
+    <string name="strTitleShareApp">Поделиться приложением</string>
+    <string name="strTitleSelectTafsir">Выбрать Тафсир</string>
+    <string name="strTitleAddNote">Добавить заметку</string>
+    <string name="strTitleNote">Заметка</string>
+    <string name="strTitleRateApp">Оценить приложение</string>
+    <string name="strTitleFilters">Фильтры</string>
+    <string name="strTitleMenu">Меню</string>
+    <string name="strTitleTafsir">Тафсир</string>
+    <string name="strTitleAboutSurah">О Суре</string>
+    <string name="strTitleDownloadTranslations">Загрузить</string>
+    <string name="strTitleRecitations">Чтения</string>
+    <string name="strTitleSelectReciter">Выбрать чтеца</string>
+    <string name="audioOption">Настройки аудио</string>
+    <string name="playbackSpeed">Скорость воспроизведения</string>
+    <string name="audioOnlyArabic">Проигрывать только арабский</string>
+    <string name="audioOnlyTranslation">Проигрывать только перевод</string>
+    <string name="audioBothArabicTranslation">Проигрывать и арабский текст и перевод</string>
+    <string name="strTitleBookmarkDeleteThis">Удалить эту закладку?</string>
+    <string name="strTitleBookmarkDeleteAll">Удалить все закладки?</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">Удалить%1$d закладок?</string>
+    <string name="strTitleTranslDelete">Удалить перевод?</string>
+    <string name="strMsgBookmarkNoItems">Нет закладок</string>
+    <string name="strMsgBookmarkDeleteSelected">Выбранные закладки будут удалены.</string>
+    <string name="strMsgBookmarkDeleteAll">Все закладки будут удалены.</string>
+    <string name="strMsgReadShowupHere">Ваша история чтения будет показана здесь.</string>
+    <string name="strTitleReadHistory">История чтения</string>
+    <string name="strMsgSearchWordPart">Искать часть слова</string>
+    <string name="strMsgSearchWordPartExample">Например: \"вер\" в слове \"верующие\"</string>
+    <string name="strDescVerseNoWithChapter" formatted="false">Сура %1$s, аят номер %2$d.</string>
+    <string name="strMsgNoInternet">Пожалуйста, проверьте подключение.</string>
+    <string name="strMsgPropheticDuaInQuran" formatted="false">Дуа для %1$s в Коране</string>
+    <string name="strMsgNoInternetLong">Нет подключения. Убедитесь, что у вас включён Wi-Fi или мобильные данные и попробуйте снова.</string>
+    <string name="strMsgSomethingWrong">Что-то пошло не так!</string>
+    <string name="verseSyncOff">Синхронизация аятов : ВЫКЛ</string>
+    <string name="pasteCrashLogGithubIssue">Журнал был скопирован в буфер обмена. Пожалуйста, вставьте его в жалобу на GitHub.</string>
+    <string name="storageCleanupMessage">Освободите место, удалив неиспользуемые ресурсы. Закладки и настройки удалены не будут.
+    \n
+    \nСледующие ресурсы могут быть очищены:</string>
+    <string name="msgRecitationCleanup" formatted="false">Все сохранённые чтения %1$s будут удалены. Чтобы удалить чтения отдельно по сурам, перейдите в настройки.</string>
+    <string name="nScriptsAndFonts" formatted="false">%1$d шрифтов и %2$d суб-шрифтов</string>
+    <string name="msgNoFavouriteChapters">Избранные главы будут отображаться здесь.</string>
+    <string name="strPreviewTextTransl">С Именем Аллаха, Милостивого, Милосердного</string>
+    <string name="msgResourceDownloadSource">Используйте эту опцию чтобы загрузить Коран из другого источника, если этот не работает</string>
+    <string name="titleArabicTextToggle">Показать арабский текст аята</string>
+    <string name="msgArabicTextToggle">Отключение этой опции скроет арабский текст аятов во всём приложении.</string>
+    <string name="titleKeepScreenOnWhileReading">Не выключать экран при чтении</string>
+    <string name="msgKeepScreenOnWhileReading">Экран не будет гаснуть, пока открыт режим чтения. Отключите, чтобы экономить заряд.</string>
+    <string name="strTitleTheme">Тема</string>
+    <string name="strLabelShare">Поделиться</string>
+    <string name="strLabelReport">Пожаловаться</string>
+    <string name="continue_reading_2">Продолжить читать »</string>
+    <string name="strTitleFeaturedDuas">Дуа в Коране</string>
+    <string name="strTitleProphets">Пророки</string>
+    <string name="titleSolutionVerses">Решения в Коране</string>
+    <string name="titleEtiquetteVerses">Этикет в Коране</string>
+    <string name="strTitleShareVerse">Поделиться аятом</string>
+    <string name="strTitleFeaturedQuran">Рекомендуется к прочтению</string>
+    <string name="strTitleVOTD">Аят Дня</string>
+    <string name="strTitleChapInfoRukus">Руку</string>
+    <string name="strTitleChapInfoPages">Страниц</string>
+    <string name="strTitleChapInfoRevOrder">По порядку ниспосылания</string>
+    <string name="strTitleFeaturedProphets">Пророки в Коране</string>
+    <string name="strTitlePrivacyPolicy">Политика конфиденциальности</string>
+    <string name="strTitleFailed">Ошибка</string>
+    <string name="strTitleSuccess">Успех</string>
+    <string name="strChapInfoSeeMore">Узнать больше ›</string>
+    <string name="strTitleChapInfoChapterNo">Номер главы</string>
+    <string name="strTitleChapInfoJuzNo">Джуз Нет.</string>
+    <string name="verses">Аятов</string>
+    <string name="strTitleChapInfoRevType">По периоду ниспосылания</string>
+    <string name="strMsgChapInfoFailedLoad">Не удалось загрузить сведения о суре. Пожалуйста, попробуйте позже.</string>
+    <string name="strTitleAppSettings">Настройки приложения</string>
+    <string name="strTitleReaderSettings">Настройки ридера</string>
+    <string name="titleOtherSettings">Другие настройки</string>
+    <string name="strTitleAppLanguage">Язык приложения</string>
+    <string name="strTitleNoInternet">Нет подключения</string>
+    <string name="strLabelPlay">Воспроизвести</string>
+    <string name="strLabelPause">Пауза</string>
+    <string name="strLabelRemoveBookmark">Удалить из закладок</string>
+    <string name="strLabelBookmark">В закладки</string>
+    <string name="strLabelVerseRange">Диапазон аятов</string>
+    <string name="strLabelSelectTranslations">Выберите переводы</string>
+    <string name="strLabelSelectTranslation">Выберите перевод</string>
+    <string name="strLabelWhatsappStyling">В стиле WhatsApp</string>
+    <string name="strLabelIncludeArabic">Включая арабский текст</string>
+    <string name="strLabelOrder">Порядок</string>
+    <string name="strLabelSelectedCount" formatted="false">%1$d выбрано</string>
+    <string name="strLabelMoreTranslations" formatted="false">+ ещё более %1$d переводов</string>
+    <string name="strLabelSelectVerse">Выберите аяты</string>
+    <string name="strLabelCurrentVerse">Текущий аят</string>
+    <string name="strLabelIncludeFootnotes">Включая примечания</string>
+    <string name="includeBookmarkNote">Включить заметку закладки (если есть)</string>
+    <string name="strLabelQuickLinks">Быстрый переход</string>
+    <string name="strLabelLater">Позже</string>
+    <string name="strHintSearch">Поиск</string>
+    <string name="strHintSearchQuran">Введите запрос, например: \"Жизнь\"</string>
+    <string name="strHintSearchProphet">Искать пророка</string>
+    <string name="strHintSearchChapter">Искать суру</string>
+    <string name="strHintFromVerse">От аята</string>
+    <string name="strHintToVerse">До аята</string>
+    <string name="strHintBookmarkViewerNote">Напишите дополнительные заметки для этой закладки…</string>
+    <string name="strMsgThemeDark">Тёмная тема уменьшает потребление энергии.</string>
+    <string name="strMsgThemeDefault">Установить согласно настройкам системы.</string>
+    <string name="strMsgInvalidJuzNo" formatted="false">%1$d не является допустимым номером джуза (раздела)</string>
+    <string name="strMsgBookmarkAdded">Аят успешно добавлен в закладки</string>
+    <string name="strMsgBookmarkAddFailed">Не удалось добавить аят в закладки</string>
+    <string name="strMsgBookmarkAddedAlready">Аят уже добавлен в закладки</string>
+    <string name="strMsgBookmarkRemoved">Аят успешно удалён из закладок</string>
+    <string name="strMsgBookmarkRemoveFailed">Не удалось удалить аят из закладок</string>
+    <string name="strMsgInvalidChapterNo" formatted="false">%1$d не является допустимым номером суры</string>
+    <string name="strMsgReadHistoryNoItems">Нет истории чтения</string>
+    <string name="strMsgReadHistoryDeleteAll">Все истории чтения будут удалены.</string>
+    <string name="strMsgBookmarkDate" formatted="false">%1$s в %2$s</string>
+    <string name="strMsgBookmarkDateToday" formatted="false">Сегодня в %1$s</string>
+    <string name="strMsgHistoryRemove">Удалить эту историю?</string>
+    <string name="strMsgHistoryRemoved" formatted="false">\"%1$s\" удалена из истории</string>
+    <string name="strMsgSearchMultResultsFound" formatted="false">Всего совпадений найдено в %1$s: %2$d</string>
+    <string name="strMsgSearchOneResultFoundIn" formatted="false">Только 1 совпадение найдено в %1$s</string>
+    <string name="strMsgSearchNoResultsFoundIn" formatted="false">Не найдено совпадений в %1$s. Пожалуйста, проверьте фильтры поиска или поищите в другом переводе.</string>
+    <string name="strMsgSearchNoResultsFound">Не найдено совпадений. Пожалуйста, проверьте фильтры поиска или поищите в другом переводе.</string>
+    <string name="strMsgSearchNoResultsFoundAbsolute">Не найдено совпадений. Пожалуйста, проверьте фильтры поиска.</string>
+    <string name="strMsgShareRange" formatted="false">Введите диапазон между %1$d–%2$d</string>
+    <string name="strMsgEnterValidRange">Пожалуйста, введите допустимый диапазон</string>
+    <string name="strMsgTranslFailedToDownload" formatted="false">Не удалось загрузить \"%1$s\".</string>
+    <string name="strMsgTranslDownloaded" formatted="false">Загружено: \"%1$s\".</string>
+    <string name="strMsgTranslNoneSelected">Не выбран ни один перевод. Перейдите в настройки, чтобы найти перевод.</string>
+    <string name="strMsgTranslSelectionLimit" formatted="false">Максимум %1$d переводов может быть выбрано за раз. Во избежание падения производительности, пожалуйста, отмените выбор перевода прежде чем выбрать другой.</string>
+    <string name="strDescAddToBookmarks">Добавить в закладки</string>
+    <string name="strDescGoBack">Вернуться</string>
+    <string name="strDescClose">Закрыть</string>
+    <string name="strMsgTryLater">Пожалуйста, попробуйте позже.</string>
+    <string name="strMsgCouldNotOpenPage">Не удалось открыть страницу.</string>
+    <string name="strLabelNavHome">Главная</string>
+    <string name="strLabelNavSearch">Поиск</string>
+    <string name="library">Библиотека</string>
+    <string name="strTextPleaseWait">Пожалуйста, подождите…</string>
+    <string name="strAyatulKursi">Аят аль-Курсий</string>
+    <string name="strTitleInfo">Информация!</string>
+    <string name="strTitleOops">Ой!</string>
+    <string name="strMsgUpdateAvailable">ДОСТУПНО ОБНОВЛЕНИЕ! Пожалуйста, обновите приложение для доступа к новейшим функциям.</string>
+    <string name="strMsgUpdateAvailable4Dialog">ДОСТУПНО ОБНОВЛЕНИЕ!
+    \nПожалуйста, обновите приложение.</string>
+    <string name="strMsgUpdateAvailable2Continue">ТРЕБУЕТСЯ ОБНОВЛЕНИЕ!
+    \nПожалуста, обновите приложение, чтобы продолжить.</string>
+    <string name="strLabelAllChapters">Все главы</string>
+    <string name="strMsgDuaFor" formatted="false">Дуа за %1$s</string>
+    <string name="strMsgReferenceInQuran" formatted="false">%1$s в Коране</string>
+    <string name="strMsgReferenceDuas">Собрано несколько дуа из Корана.</string>
+    <string name="titleDownloadScriptResources">Загрузить ресурсы для этого шрифта?</string>
+    <string name="suppressedLogs">Журналы выгрузки</string>
+    <string name="logRemoved">Журнал удалён</string>
+    <string name="labelFreeUpSpace">Освободить место</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s
+    \n%2$s
+    \n
+    \nВам будет необходимо загрузить это снова.</string>
+    <string name="onboardDescTranslations">Вы всегда можете изменить это позже. Вы можете загрузить больше переводов в настройках.</string>
+    <string name="labelArabic">Арабский</string>
+    <string name="labelTranslation">Перевод</string>
+    <string name="titleRemoveFromFavourites">Удалить из избранного</string>
+    <string name="msgClearReadHistory">Очистить историю чтения</string>
+    <string name="msgClearSearchHistory">Очистить историю</string>
+    <string name="onboardDescTheme">Вы всегда можете изменить это позже.</string>
+    <string name="msgChapterAddedToFavourites">Сура добавлена в избранное.</string>
+    <string name="msgChapterRemovedFromFavourites">Сура удалена из избранного.</string>
+    <string name="textNoLogsFound">Журналы не найдены</string>
+    <string name="titleResourceDownloadSource">Источник загрузки ресурсов</string>
+    <string name="strMsgDuaOf" formatted="false">Дуа для %1$s</string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false">Найдены аяты, относящиеся к %1$s, в %2$d местах.</string>
+    <string name="msgDownloadKFQPCResources">Перед использованием этого шрифта необходимо загрузить следующие ресурсы:</string>
+    <string name="msgDownloadFontsSize" formatted="false">Размер загрузки: ~%1$dMB\nПосле загрузки приложение будет использовать ~%2$dMB.</string>
+    <string name="msgDownloadingFonts">Шрифты загружаются</string>
+    <string name="textDownloading">Загрузка…</string>
+    <string name="lastCrashLog">Последний журнал сбоев</string>
+    <string name="appLogs">Журналы приложения</string>
+    <string name="crashLogs">Журналы сбоев</string>
+    <string name="createIssue">Создать жалобу</string>
+    <string name="copiedToClipboard">Скопировано в буфер обмена.</string>
+    <string name="github">GitHub</string>
+    <string name="msgVerseReminderNotifPermission">Требуется разрешение на уведомления, чтобы включить напоминания об аятах.</string>
+    <string name="titleStorageCleanup">Очистка хранилища</string>
+    <string name="translationCanBeFreedUp" formatted="false">%1$d загруженных переводов могут быть удалены.</string>
+    <string name="recitationCanBeFreedUp" formatted="false">%1$d сохранённых файлов чтения %2$d чтецов могут быть удалены.</string>
+    <string name="scriptCanBeFreedUp" formatted="false">%1$d загруженных шрифтов могут быть удалены.</string>
+    <string name="tafseerCanBeFreedUp" formatted="false">%1$d сохранённых толкований могут быть удалены.</string>
+    <string name="titleRecitationCleanup">Удалить чтение?</string>
+    <string name="titleScriptCleanup">Удалить шрифт?</string>
+    <string name="msgScriptCleanup" formatted="false">%1$s шрифт будет удалён. Для использования вам будет необходимо его перезагрузить.</string>
+    <string name="nFiles" formatted="false">%1$d файлов</string>
+    <string name="nothingToCleanup">Нет данных для очистки.</string>
+    <string name="noItems">Нет предметов</string>
+    <string name="noResults">Результатов не найдено</string>
+    <string name="verseSyncOn">Синхронизация аятов : ВКЛ</string>
+    <string name="inPlaces" formatted="false">в %1$s</string>
+    <string name="inPlacesMore" formatted="false">в %1$s и ещё в %2$d других</string>
+    <string name="onboardDescLanguage">Используйте приложение на вашем языке. Вы всегда сможете изменить его позже.</string>
+    <string name="desc_votd_widget">Получать новое стихотворение каждый день</string>
+    <string name="startAutoScroll">Запустить авто промотку</string>
+    <string name="titleExportData">Экспорт &amp; Импорт</string>
+    <string name="labelExport">Экспорт</string>
+    <string name="labelImport">Импорт</string>
+    <string name="msgExportSuccess">Успешно экспортировано</string>
+    <string name="autoBackup">Автоматическая копия</string>
+    <string name="autoBackupDetails">Закладки, подборки и настройки сохраняются в файл, который вы выбираете. Этот файл обновляется примерно раз в день.</string>
+    <string name="labelBackupFile">Файл</string>
+    <string name="labelBackupSchedule">Как часто</string>
+    <string name="autoBackupSchedule">Примерно раз в день</string>
+    <string name="autoBackupNoFile">Файл не выбран</string>
+    <string name="viewFile">Открыть файл</string>
+    <string name="changeFile">Сменить файл</string>
+    <string name="autoBackupOpenFailed">Не удалось открыть файл</string>
+    <string name="autoBackupSaved">Копия сохранена</string>
+    <string name="autoBackupFailed">Не удалось сохранить копию</string>
+    <string name="autoBackupFileDeleted">Файл, который вы выбрали для автоматической копии, удалён. Закладки, подборки и настройки не будут сохраняться, пока вы не выберете новый файл.</string>
+    <string name="importSummary" formatted="false">Импорт завершён. Добавлено %1$d, обновлено %2$d, без изменений %3$d, пропущено %4$d, конфликтов %5$d, неподдерживаемых настроек %6$d.</string>
+    <string name="backupFailed">Не удалось прочитать эту копию.</string>
+    <string name="backupUnsupportedVersion">Эта копия создана более новой версией приложения.</string>
+    <string name="backupTooLarge">Этот файл копии слишком большой, чтобы его открыть.</string>
+    <string name="autoScroll">Авто промотка</string>
+    <string name="stopAutoScroll">Остановить автопрокрутку</string>
+    <string name="autoScrollSpeed">Установка скорости</string>
+    <string name="warnImportSettings">Импорт настроек заменит ваши текущие настройки.</string>
+    <string name="labelExportSelected" formatted="false">Экспорт выбранного (%1$d)</string>
+    <string name="labelImportSelected" formatted="false">Импорт выбранного (%1$d)</string>
+    <string name="labelCollections">Подборки</string>
+    <string name="msgExportSettings">Тема, чтение и рецитация</string>
+    <string name="msgImportSettings">Заменит тему, чтение и рецитацию</string>
+    <string name="msgExportBookmarks">Ваши закладки и заметки к ним</string>
+    <string name="msgImportBookmarks">Добавит закладки и заметки к ним</string>
+    <string name="msgExportCollections">Ваши подборки, аяты и заметки</string>
+    <string name="msgImportCollections">Объединяет подборки с одинаковым названием и сохраняет имеющиеся аяты и заметки</string>
+    <string name="labelSelectFile">Выбрать файл</string>
+    <string name="titleConfirmImport">Импортировать выбранное?</string>
+    <string name="msgExtractingFonts">Извлечение шрифтов</string>
+    <string name="strLabelDownloaded">Скачано</string>
+    <string name="strTitleDeleteTafsir">Удалить Тафсир?</string>
+    <string name="strMsgDeleteTafsir" formatted="false">Вы уверены что хотите удалить \"%1$s\"? Это удалит скачанные на ваше устройство данные тафсира.</string>
+    <string name="strTitleMajorSins">Тяжкие Грехи в Коране</string>
+    <string name="titleCancelDownload">Отменить загрузку?</string>
+    <string name="yesCancelDownload">Да, отменить</string>
+    <string name="noContinueDownload">Нет, продолжить</string>
+    <string name="readingTafsirMultiVerses">Чтение тафсира для нескольких строф:</string>
+    <string name="clear">Очистить</string>
+    <string name="strLabelAll">Все</string>
+    <string name="strLabelPrevious">Предыдущий</string>
+    <string name="nextChapter">Следующая сура</string>
+    <string name="previousChapter">Предыдущая сура</string>
+    <string name="nextJuz">Следующий джуз</string>
+    <string name="previousJuz">Предыдущий джуз</string>
+    <string name="nextHizb">Следующий хизб</string>
+    <string name="previousHizb">Предыдущий хизб</string>
+    <string name="strLabelRukuNo" formatted="false">Руку %1$d</string>
+    <string name="endOfPageNo" formatted="false">Конец страницы %1$d</string>
+    <string name="endOfRukuNo" formatted="false">Конец руку %1$d</string>
+    <string name="endOfRubNo" formatted="false">Конец руб %1$d</string>
+    <string name="endOfManzilNo" formatted="false">Конец манзиля %1$d</string>
+    <string name="tafsirForVerse" formatted="false">Тафсир к аяту %1$d:%2$d</string>
+    <string name="textSizes">Размеры текста</string>
+    <string name="strTitleReaderHizb">Хизб</string>
+    <string name="labelHizbNo" formatted="false">Хизб %1$d</string>
+    <string name="sajda">Саджда</string>
+    <string name="filterSectionLength">Длина суры</string>
+    <string name="any">Любая</string>
+    <string name="withSajda">С садждой</string>
+    <string name="withoutSajda">Без саджды</string>
+    <string name="chapterFilterLengthShort">Короткие (&lt;50 аятов)</string>
+    <string name="chapterFilterLengthMedium">Средние (50–150 аятов)</string>
+    <string name="chapterFilterLengthLong">Длинные (150+ аятов)</string>
+    <string name="clearFilters">Очистить фильтры</string>
+    <string name="chapterFilters">Фильтры сур</string>
+    <string name="strMsgReciterDownloadHint">Скачайте аудио чтеца для офлайн-прослушивания и более плавного воспроизведения.</string>
+    <string name="recitationDownloadChaptersProgress" formatted="false">%1$d / %2$d сур</string>
+    <string name="recitationDownloadAllComplete">Все суры скачаны</string>
+    <string name="recitationDownloadConfirmTitle">Скачать аудио</string>
+    <string name="recitationDownloadConfirmMessage">Скачать все суры этого чтеца? Это может занять значительный объем памяти и трафика.</string>
+    <string name="recitationDownloadSomeFailed">Не удалось скачать некоторые суры. Нажмите «Повторить», чтобы снова поставить их в очередь.</string>
+    <string name="recitationDownloadWaitForOtherReciter">Уже идет загрузка другого чтеца. Дождитесь окончания или отмените её перед началом новой.</string>
+    <string name="recitationBulkDownloadNotifProgress" formatted="false">Скачано сур: %1$d / %2$d</string>
+    <string name="recitationBulkEnqueueNotifTitle">Подготовка к загрузке аудио</string>
+    <string name="recitationBulkEnqueueNotifText" formatted="false">%1$s — в очереди %2$d из %3$d</string>
+    <string name="playbackCount">Количество повторов</string>
+    <string name="titleRecitationGroupSize">Размер группы аятов</string>
+    <string name="msgRecitationGroupSize">Выберите, сколько аятов Корана будет воспроизводиться перед началом перевода. Например: если вы выберете 3, прозвучат 3 аята Корана, а затем их переводы.</string>
+    <string name="labelRecommended">Рекомендуется</string>
+    <string name="modeVerseByVerse">Поаятный режим</string>
+    <string name="modeMushaf">Режим Мусхафа</string>
+    <string name="readingLayoutFlow">Прокрутка</string>
+    <string name="readingLayoutPage">Страница Мусхафа</string>
+    <string name="noNoteProvided">Заметка отсутствует…</string>
+    <string name="dailyReminderMsg">Получать ежедневное уведомление-напоминание.</string>
+    <string name="titleGlobalSearch">Глобальный поиск</string>
+    <string name="searchIndexingInProgress">Подготовка поиска. Пока индексация не завершена, некоторые результаты могут не отображаться.</string>
+    <string name="search_match">Тип совпадения</string>
+    <string name="search_match_any_words">Любые слова</string>
+    <string name="search_match_any_words_desc">Найти результаты, содержащие одно или несколько слов из запроса.</string>
+    <string name="search_match_all_words">Все слова</string>
+    <string name="search_match_all_words_desc">Найти результаты, содержащие все слова из запроса.</string>
+    <string name="search_match_exact_phrase">Точная фраза</string>
+    <string name="search_match_exact_phrase_desc">Найти слова в том же порядке, например «день воскресения».</string>
+    <string name="strHintSearchBy">Поиск джуза или суры</string>
+    <string name="strHintSearchHizb">Поиск хизба или суры</string>
+    <string name="strHintSearchPage">Поиск страницы</string>
+    <string name="strMsgNoVerseTiming">Воспроизведение всей суры без синхронизации аятов</string>
+    <string name="textPreparingAudio">Подготовка аудио…</string>
+    <string name="notification_permission">Разрешение на уведомления</string>
+    <string name="onboardDescTafsir">Выберите комментарий (тафсир) для чтения вместе с аятами. Вы можете скачивать и управлять тафсирами в настройках.</string>
+    <string name="labelTransliteration">Транслитерация</string>
+    <string name="favourites">Избранное</string>
+    <string name="strMsgSearchHistoryDeleteAll">Вся история поиска будет удалена.</string>
+    <string name="donate">Поддержать нас</string>
+    <string name="quran_and_science">Коран и наука</string>
+    <string name="topics">Темы</string>
+    <string name="about_this_page">Об этой странице</string>
+    <string name="about_quran_science_msg">Материалы на этой странице взяты из книги доктора Закира Найка «Коран и современная наука: совместимы или несовместимы»\n\nИзображения приведены только для иллюстрации.</string>
+    <string name="strLabelScienceReferences" formatted="false">%1$d ссылок</string>
+    <string name="once">Один раз</string>
+    <string name="twice">Дважды</string>
+    <string name="nTimes" formatted="false">%1$d раз(а)</string>
+    <string name="msgRepeat">Установите количество повторов каждого аята перед переходом к следующему. Доступно только при включенной опции «Только арабский» в настройках аудио.</string>
+    <string name="notSupported">Не поддерживается</string>
+    <string name="missingTimingData" formatted="false">Отсутствуют данные о времени для %1$s — воспроизведение невозможно.</string>
+    <string name="expandedPlayerModeControls">Управление</string>
+    <string name="expandedPlayerModeSpotlight">Фокус</string>
+    <string name="theme_default">По умолчанию</string>
+    <string name="theme_blue">Синяя</string>
+    <string name="theme_red">Красная</string>
+    <string name="theme_purple">Пурпурная</string>
+    <string name="theme_violet">Фиолетовая</string>
+    <string name="theme_yellow">Желтая</string>
+    <string name="theme_mono">Монохромная</string>
+    <string name="theme_amoled">Амолед</string>
+    <string name="theme_colors">Цвета темы</string>
+    <string name="theme_mode">Режим темы</string>
+    <string name="dynamic_color">Динамический цвет</string>
+    <string name="dynamic_color_description">Изменять цвет темы в зависимости от системных цветов</string>
+    <string name="textSizeVerseByVerseOnly">Эта настройка не применяется в режиме Мусхафа.</string>
+    <string name="sortBy">Сортировать по</string>
+    <string name="alphabetically">По алфавиту</string>
+    <string name="chronological">В хронологическом порядке</string>
+    <string name="translationHelp">Не видите своего языка? Помогите перевести или улучшить его, чтобы сделать Коран доступным для большего числа людей!</string>
+    <string name="learnMore">Узнать больше</string>
+    <string name="wordByWord">Пословно</string>
+    <string name="selectWbwLanguage">Выберите язык</string>
+    <string name="wbwShowTranslation">Показать перевод</string>
+    <string name="wbwShowTransliteration">Показать транслитерацию</string>
+    <string name="wbwShowTransliterationMgs">Если доступно для выбранного языка</string>
+    <string name="wbwRecitation">Чтение по словам</string>
+    <string name="wbwRecitationMsg">Проигрывать аудио при нажатии на слово</string>
+    <string name="wbwTextSize">Размер текста</string>
+    <string name="noWbwAvailable">Скачайте языковой пакет ниже, чтобы включить пословные функции.</string>
+    <string name="deleteData">Удалить данные?</string>
+    <string name="wordNo" formatted="false">Слово %1$d</string>
+    <string name="playWord">Прослушать слово</string>
+    <string name="previousWord">Предыдущее слово</string>
+    <string name="nextWord">Следующее слово</string>
+    <string name="wbwSelectLanguage">Выберите язык пословного отображения</string>
+    <string name="results">Результаты</string>
+    <string name="titleRecentSearches">Последние поиски</string>
+    <string name="searchInQuran">Поиск в Коране</string>
+    <string name="searchTipsTitle">Советы по поиску</string>
+    <string name="searchTipDirectVerse">Перейти к аяту или тафсиру напрямую</string>
+    <string name="searchTipChapter">Поиск по сурам</string>
+    <string name="searchTipDirectJuz">Переходите к «Сура 30», «Джуз 30» или «Хизб 30»</string>
+    <string name="searchTipTranslation">Поиск в переводах</string>
+    <string name="searchTipArabic">Поиск в тексте Корана</string>
+    <string name="enterFullscreen">Полный экран</string>
+    <string name="exitFullscreen">Выйти из полного экрана</string>
+    <string name="belowWord">Под словом</string>
+    <string name="inTooltip">В подсказке</string>
+    <string name="discord">Discord</string>
+    <string name="strTitleDownloadSunnahApp">Скачать SunnahApp</string>
+    <string name="tajweedColors">Цвета таджвида</string>
+    <string name="similarVerses">Похожие аяты</string>
+    <string name="noSimilarVerses">Для этого аята нет похожих аятов.</string>
+    <string name="countSimilarVerses" formatted="false">У %1$s есть %2$d похожих аятов</string>
+    <string name="similarVerseRowMeta" formatted="false">%1$d%% совпадение · оценка %2$d</string>
+    <string name="moreOptions">Другие параметры</string>
+    <string name="whenChapterEnds">Когда сура заканчивается</string>
+    <string name="whenChapterEndsDesc">Выберите, что делать после завершения воспроизведения текущей суры.</string>
+    <string name="stopPlayback">Остановить воспроизведение</string>
+    <string name="playNextSurah">Воспроизвести следующую суру</string>
+    <string name="repeatCurrentSurah">Повторять текущую суру</string>
+    <string name="reset">Сбросить</string>
+    <string name="selectAll">Выбрать все</string>
+    <string name="filterTranslationsDisabledNote">Переводы не ищутся, пока включён поиск по арабскому тексту.</string>
+    <string name="filterTranslationsEmpty">Переводы ещё не загружены.</string>
+    <string name="wbwAudioTimingsCouldNotLoad">Не удалось загрузить тайминги слов. Проверьте подключение и попробуйте снова.</string>
+    <string name="wbwAudioCouldNotPlay">Не удалось воспроизвести аудио слова.</string>
+    <string name="wbwAudioDownloadHint">Скачайте пословное аудио для офлайн-прослушивания и более плавного воспроизведения.</string>
+    <string name="wbwAudio">Пословное аудио</string>
+    <string name="wbwAudioDownloadAll">Скачать все</string>
+    <string name="wbwAudioDownloadAllConfirm">Скачать пословное аудио чтения для всех сур? Это может занять много памяти и мобильного трафика.</string>
+    <string name="wbwAudioBulkWaitForChapterDownloads">Дождитесь завершения загрузки отдельных сур перед загрузкой всего.</string>
+    <string name="wbwAudioChapterWaitForBulk">Дождитесь завершения полной загрузки перед загрузкой одной суры.</string>
+    <string name="ontologyExplorer">Навигатор по темам</string>
+    <string name="thematicTopics">Темы по категориям</string>
+    <string name="englishContentOnly">Содержимое этой страницы доступно только на английском языке.</string>
+    <string name="estimatedSize" formatted="false">Предполагаемый размер: %1$s</string>
+    <string name="msgPreparingPrebuiltAtlas">Подготавливается текст Корана в первый раз. Это займет несколько секунд.</string>
+    <string name="create">Создать</string>
+    <string name="strLabelManage">Управлять</string>
+    <string name="update_note">Изменить заметку</string>
+    <string name="updateAvailable">Доступно обновление</string>
+    <string name="recitationDownloadUpdateConfirmTitle">Обновить аудио</string>
+    <string name="recitationDownloadUpdateConfirmMessage">Для этого чтеца доступна новая версия аудио. При обновлении скачанные суры будут заменены.</string>
+    <string name="recitationDownloadBannerUpdateAvailable">Для скачанных чтений доступны обновления.</string>
+    <string name="continue_reading">Продолжить чтение</string>
+    <string name="recitationPlayer">Плеер чтения</string>
+    <string name="desc_recitation_player_widget">Управляйте чтением Корана с главного экрана</string>
+    <string name="my_collections">Мои подборки</string>
+    <string name="add_to_collection">Добавить в подборку</string>
+    <string name="remove_from_collection">Убрать из подборки</string>
+    <string name="msg_remove_from_collection">Аят будет убран из подборки. Заметки к нему тоже удалятся.</string>
+    <string name="no_collections">Подборок пока нет.</string>
+    <string name="no_collection_items">В этой подборке нет аятов. Соберите любимые аяты в подборки, чтобы быстро к ним возвращаться.</string>
+    <string name="create_collection">Создать подборку</string>
+    <string name="update_collection">Изменить подборку</string>
+    <string name="select_color">Выбрать цвет</string>
+    <string name="select_icon">Выбрать значок</string>
+    <string name="create_new_collection">Новая подборка</string>
+    <string name="collection_name">Название</string>
+    <string name="collection_name_hint">Введите название</string>
+    <string name="description">Описание</string>
+    <string name="collection_description_hint">Введите описание</string>
+    <string name="msg_collection_deleted">Подборка удалена.</string>
+    <string name="delete_collection">Удалить подборку</string>
+    <string name="msg_delete_collection">Подборка и сохранённые в ней аяты будут удалены. Закладки останутся.</string>
+    <string name="collection_note_hint">Напишите здесь дополнительную заметку к этому аяту…</string>
+    <string name="collection_updated">Подборки обновлены</string>
+    <string name="updated_just_now">Обновлено только что</string>
+    <plurals name="verse_count">
+        <item quantity="one">%1$d аят</item>
+        <item quantity="few">%1$d аята</item>
+        <item quantity="many">%1$d аятов</item>
+        <item quantity="other">%1$d аята</item>
+    </plurals>
+    <plurals name="updated_minutes">
+        <item quantity="one">Обновлено %1$d минуту назад</item>
+        <item quantity="few">Обновлено %1$d минуты назад</item>
+        <item quantity="many">Обновлено %1$d минут назад</item>
+        <item quantity="other">Обновлено %1$d минуты назад</item>
+    </plurals>
+    <plurals name="updated_hours">
+        <item quantity="one">Обновлено %1$d час назад</item>
+        <item quantity="few">Обновлено %1$d часа назад</item>
+        <item quantity="many">Обновлено %1$d часов назад</item>
+        <item quantity="other">Обновлено %1$d часа назад</item>
+    </plurals>
+    <plurals name="updated_days">
+        <item quantity="one">Обновлено %1$d день назад</item>
+        <item quantity="few">Обновлено %1$d дня назад</item>
+        <item quantity="many">Обновлено %1$d дней назад</item>
+        <item quantity="other">Обновлено %1$d дня назад</item>
+    </plurals>
+    <plurals name="item_count">
+        <item quantity="one">%1$d предмет</item>
+        <item quantity="few">%1$d предмета</item>
+        <item quantity="many">%1$d предметов</item>
+        <item quantity="other">%1$d предмета</item>
+    </plurals>
+    <plurals name="place_count">
+        <item quantity="one">%1$d место</item>
+        <item quantity="few">%1$d места</item>
+        <item quantity="many">%1$d мест</item>
+        <item quantity="other">%1$d места</item>
+    </plurals>
+    <string name="advanced_settings">Дополнительные настройки</string>
+    <string name="recent_history">Недавняя история</string>
+    <string name="set_as_active">Сделать активным</string>
+    <string name="shareAsImage">Создать изображение</string>
+    <string name="customize">Настроить</string>
+    <string name="templates">Шаблоны</string>
+    <string name="image_saved">Изображение сохранено</string>
+    <string name="image_save_failed">Не удалось сохранить изображение</string>
+    <string name="image_share_failed">Не удалось поделиться изображением</string>
+    <string name="content">Содержание</string>
+    <string name="arabic_only">Только арабский</string>
+    <string name="translation_only">Только перевод</string>
+    <string name="arabic_and_translation">Арабский и перевод</string>
+    <string name="shareImageFitRejected">Этот аят слишком длинный для выбранного шаблона. Покажите меньше текста или выберите другой шаблон.</string>
+    <string name="tajweed_silent_letter">Идгам</string>
+    <string name="tajweed_normal_madd">Маад 2 секунды</string>
+    <string name="tajweed_separated_madd">Разрешенный маад 2 или 4 или 6 секунд</string>
+    <string name="tajweed_connected_madd">Необходимо Маад 4 или 5 секунд</string>
+    <string name="tajweed_necessary_madd">Необходимо Маад 6 секунд</string>
+    <string name="tajweed_ghunna">Ихфа и Гунна</string>
+    <string name="tajweed_qalqala">Калькала</string>
+    <string name="tajweed_tafkhim">Тафхим</string>
+</resources>

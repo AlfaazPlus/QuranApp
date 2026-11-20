@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="strHintSearch">Buscar</string>
+    <string name="strTitleFootnote">Notas al pie</string>
+    <string name="strTitleFootnotes">Notas</string>
+    <string name="strTitleVOTD">Verso del día</string>
+    <string name="desc_votd_widget">Obtener un verso nuevo cada día</string>
+    <string name="recitationPlayer">Reproductor de recitación</string>
+    <string name="desc_recitation_player_widget">Controla la recitación del Corán desde la pantalla de inicio</string>
+</resources>

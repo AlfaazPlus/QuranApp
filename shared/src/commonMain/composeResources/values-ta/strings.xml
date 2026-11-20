@@ -1,0 +1,572 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="honorificMuhammad">ﷺ</string>
+    <string name="honorificProphet">அலைஹிஸ் ஸலாம்</string>
+    <string name="prophetAdam">ஆதம்</string>
+    <string name="prophetAlyasaa">அல்-யஸ்அ</string>
+    <string name="prophetAyyub">ஐயூப்</string>
+    <string name="prophetDawud">தாவூத்</string>
+    <string name="prophetDhulkifl">ழுல் கிஃப்ல்</string>
+    <string name="prophetHarun">ஹாரூன்</string>
+    <string name="prophetHud">ஹூத்</string>
+    <string name="prophetIbrahim">இப்ராஹீம்</string>
+    <string name="prophetIdrees">இத்ரீஸ்</string>
+    <string name="prophetIliyas">இல்யாஸ்</string>
+    <string name="prophetIsa">ஈஸா இப்னு மரியம்</string>
+    <string name="prophetIshaq">இஸ்ஹாக்</string>
+    <string name="prophetIsmail">இஸ்மாயீல்</string>
+    <string name="prophetLut">லூத்</string>
+    <string name="prophetMuhammad">முஹம்மது</string>
+    <string name="prophetMusa">மூஸா</string>
+    <string name="prophetNuh">நூஹ்</string>
+    <string name="prophetSaleh">சாலிஹ்</string>
+    <string name="prophetShuaib">ஷுவைப்</string>
+    <string name="prophetSulayman">சுலைமான்</string>
+    <string name="prophetYahya">யஹ்யா</string>
+    <string name="prophetYaqub">யஅகூப்</string>
+    <string name="prophetYunus">யூனுஸ்</string>
+    <string name="prophetYusuf">யூசுப்</string>
+    <string name="prophetZakariyya">ஜகரிய்யா</string>
+    <string name="labelPreviousTafsir">முந்தைய தஃப்சிர்</string>
+    <string name="labelNextTafsir">அடுத்த தஃப்சிர்</string>
+    <string name="strLabelSurah" formatted="false">சூரா %1$s</string>
+    <string name="strLabelJuzNo" formatted="false">சூச் %1$d</string>
+    <string name="strLabelRemoveBookmark">புத்தகக்குறியை அகற்று</string>
+    <string name="strLabelWhatsappStyling">வாட்ச்அப் ச்டைலிங்</string>
+    <string name="strLabelIncludeArabic">அரபு சேர்க்கவும்</string>
+    <string name="strHintToVerse">வசனத்திற்கு</string>
+    <string name="strMsgInvalidJuzNo" formatted="false">%1$d என்பது செல்லுபடியாகும் சூச் (பாரா) இல்லை.</string>
+    <string name="strMsgBookmarkAdded">உரையாடல் புக்மார்க்குகளில் வெற்றிகரமாக சேர்க்கப்பட்டது</string>
+    <string name="strMsgBookmarkNoItems">புக்மார்க்குகள் இல்லை</string>
+    <string name="strMsgBookmarkDate" formatted="false">%2$s இல் %1$s</string>
+    <string name="strMsgShareRange" formatted="false">%1$d - %2$d க்கு இடையில் வரம்பை உள்ளிடவும்</string>
+    <string name="strMsgEnterValidRange">சரியான வரம்பை உள்ளிடவும்</string>
+    <string name="strDescGoBack">திரும்பிச் செல்லுங்கள்</string>
+    <string name="strMsgUpdateAvailable">புதுப்பிப்பு கிடைக்கிறது! அண்மைக் கால அம்சங்களைப் பெற பயன்பாட்டைப் புதுப்பிக்கவும்.</string>
+    <string name="translationCanBeFreedUp" formatted="false">%1$d பதிவிறக்கம் செய்யப்பட்ட மொழிபெயர்ப்புகளை விடுவிக்க முடியும்.</string>
+    <string name="nFiles" formatted="false">%1$d கோப்புகள்</string>
+    <string name="strTitleAppVersion">பயன்பாட்டு பதிப்பு</string>
+    <string name="strMsgShareApp" formatted="false">குர்ஆனாப் என்பது மொழிபெயர்ப்புகளுடன் உன்னத குர்ஆனைப் படித்து ஆராய ஒரு இலவச மற்றும் திறந்த மூல பயன்பாடாகும். இந்த பயன்பாடு தஃப்சிர், பாராயணம், நினைவூட்டல் மற்றும் பல அம்சங்களுடன் ஒரு நல்ல மற்றும் தூய்மையான இடைமுகத்தைக் கொண்டுள்ளது.\n\n இப்போது பதிவிறக்கவும்:\n %1$s</string>
+    <string name="strLabelClose">மூடு</string>
+    <string name="strLabelGotIt">கிடைத்தது</string>
+    <string name="strLabelCancel">ரத்துசெய்</string>
+    <string name="strLabelApply">இடு</string>
+    <string name="strLabelRemove">அகற்று</string>
+    <string name="strLabelDelete">நீக்கு</string>
+    <string name="strLabelCopy">நகலெடு</string>
+    <string name="strLabelBack">பின்</string>
+    <string name="strLabelTop">மேலே</string>
+    <string name="strLabelRemoveAll">அனைத்தையும் அகற்று</string>
+    <string name="strLabelRetry">மீண்டும் முயற்சிக்கவும்</string>
+    <string name="strLabelEdit">தொகு</string>
+    <string name="strLabelDone">முடிந்தது</string>
+    <string name="strLabelOpen">திற</string>
+    <string name="strLabelOpenInReader">வாசகரில் திறந்திருக்கும்</string>
+    <string name="strLabelRead">படிக்க »</string>
+    <string name="strLabelViewAll">அனைத்தையும் காண்க</string>
+    <string name="strLabelSkip">தவிர்</string>
+    <string name="strLabelNext">அடுத்தது</string>
+    <string name="strLabelStart">தொடங்கு</string>
+    <string name="labelDownload">பதிவிறக்கம்</string>
+    <string name="strLabelUpdate">புதுப்பிப்பு</string>
+    <string name="strLabelOn">ஆன்</string>
+    <string name="strLabelOff">அணை</string>
+    <string name="strLabelThemeDark">இருண்ட</string>
+    <string name="strLabelThemeLight">ஒளி</string>
+    <string name="strLabelSystemDefault">கணினி இயல்புநிலை</string>
+    <string name="strLabelPreviousVerse">முந்தைய உரையாடல்</string>
+    <string name="strLabelNextVerse">அடுத்த உரையாடல்</string>
+    <string name="strLabelPageNo" formatted="false">பக்கம் %1$d</string>
+    <string name="strLabelVerseNo" formatted="false">உரையாடல் %1$d</string>
+    <string name="strLabelVerses" formatted="false">வசனங்கள் %1$d - %2$d</string>
+    <string name="strLabelVerseNoWithColon" formatted="false">வசனம்: %1$d</string>
+    <string name="strLabelVersesWithColon" formatted="false">வசனங்கள்: %1$d - %2$d</string>
+    <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
+    <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d: %3$d</string>
+    <string name="strLabelVerseWithChapNameAndNo" formatted="false">சூரா %1$s %2$d: உரையாடல் %3$d</string>
+    <string name="strLabelVerseWithChapNo" formatted="false">உரையாடல் %1$d: %2$d</string>
+    <string name="strLabelVerseWithChapNameWithBar" formatted="false">சூரா %1$s │ உரையாடல் %2$d</string>
+    <string name="strLabelFeatureQuranMiniInfo" formatted="false">அத்தியாயம் எண் %1$d │ வசனங்கள் %2$d - %3$d</string>
+    <string name="strTitleHolyQuran">புனித குர்ஆன்</string>
+    <string name="strTitleQuran">குர்ஆன்</string>
+    <string name="strTitleFootnote">அடிக்குறிப்பு</string>
+    <string name="strTitleFootnotes">அடிக்குறிப்புகள்</string>
+    <string name="strTitleMakki">மெக்கான்</string>
+    <string name="strTitleMadani">அவர்கள் மத்தியச்தம் செய்கிறார்கள்</string>
+    <string name="noFootnotesForThisVerse">இந்த வசனத்திற்கு அடிக்குறிப்புகள் எதுவும் இல்லை.</string>
+    <string name="strTitleReaderChapters">அத்தியாயங்கள்</string>
+    <string name="strTitleReaderJuz">நீதிபதி (க்கு)</string>
+    <string name="strTitleVerseOptions">உரையாடல் விருப்பங்கள்</string>
+    <string name="strTitleVerseRecitation">உரையாடல் பாராயணம்</string>
+    <string name="strTitleReaderVerseInformation" formatted="false">சூரா %1$s: %2$d</string>
+    <string name="strTitleGotoVerseNo" formatted="false">%1$d வசனத்திற்குச் செல்லுங்கள்</string>
+    <string name="strTitleReadVerseRange" formatted="false">வசனங்களைப் படியுங்கள் %1$d - %2$d</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">%1$d வசனத்தின் தஃப்சீரைப் படியுங்கள்</string>
+    <string name="strTitleReaderTextSizeArabic">அரபு உரை அளவு</string>
+    <string name="strTitleReaderTextSizeTransl">மொழிபெயர்ப்பு உரை அளவு</string>
+    <string name="titleReaderTextSizeTafsir">தஃப்சிர் உரை அளவு</string>
+    <string name="strTitleSettings">அமைப்புகள்</string>
+    <string name="strTitleBookmark">புத்தககுறி</string>
+    <string name="strTitleSendFeedback">கருத்துக்களை அனுப்பவும்</string>
+    <string name="strTitleHelpSupport">உதவி &amp; உதவி</string>
+    <string name="strTitleAboutUs">எங்களைப் பற்றி</string>
+    <string name="strTitleBookmarks">புக்மார்க்குகள்</string>
+    <string name="strTitleShareApp">பயன்பாட்டைப் பகிரவும்</string>
+    <string name="strTitleAddNote">குறிப்பைச் சேர்க்கவும்</string>
+    <string name="strTitleNote">குறிப்பு</string>
+    <string name="strTitleRateApp">விகித பயன்பாடு</string>
+    <string name="strTitleFilters">வடிப்பான்கள்</string>
+    <string name="strTitleTafsir">தஃப்சிர்</string>
+    <string name="strTitleSelectTafsir">தஃப்சிர் தேர்ந்தெடுக்கவும்</string>
+    <string name="strTitleMenu">பட்டியல்</string>
+    <string name="strTitleAboutSurah">சூராவைப் பற்றி</string>
+    <string name="strTitleTranslations">மொழிபெயர்ப்புகள்</string>
+    <string name="strTitleDownloadTranslations">பதிவிறக்கம்</string>
+    <string name="strTitleRecitations">பாராயணங்கள்</string>
+    <string name="strTitleSelectReciter">ரிப்பிட்டரைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="downloadRecitations">பாராய்ப்புகளைப் பதிவிறக்கவும்</string>
+    <string name="audioOption">ஆடியோ விருப்பம்</string>
+    <string name="playbackSpeed">பின்னணி விரைவு</string>
+    <string name="audioOnlyTranslation">மொழிபெயர்ப்பை மட்டும் விளையாடுங்கள்</string>
+    <string name="audioOnlyArabic">அரபு மட்டுமே விளையாடுங்கள்</string>
+    <string name="audioBothArabicTranslation">அரபு மற்றும் மொழிபெயர்ப்பு இரண்டையும் விளையாடுங்கள்</string>
+    <string name="strTitleScripts">ச்கிரிப்ட்கள்</string>
+    <string name="strTitleBookmarkDeleteThis">இந்த புத்தகக்குறியை அகற்றவா?</string>
+    <string name="strTitleBookmarkDeleteAll">அனைத்து புக்மார்க்குகளையும் அகற்றவா?</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">%1$d புக்மார்க்குகளை அகற்றவா?</string>
+    <string name="strTitleTranslDelete">மொழிபெயர்ப்பை நீக்கவா?</string>
+    <string name="strTitleShareVerse">வசனத்தைப் பகிரவும்</string>
+    <string name="strTitleFeaturedQuran">சிறப்பு வாசிப்பு</string>
+    <string name="strTitleVOTD">அன்றைய உரையாடல்</string>
+    <string name="strTitleProphets">தீர்க்கதரிசிகள்</string>
+    <string name="titleEtiquetteVerses">குர்ஆனில் ஆசாரம்</string>
+    <string name="strTitleFeaturedDuas">குர்ஆனில் துவாச்</string>
+    <string name="titleSolutionVerses">குர்ஆனில் இருந்து தீர்வுகள்</string>
+    <string name="strTitleFeaturedProphets">குர்ஆனில் தீர்க்கதரிசிகள்</string>
+    <string name="strTitlePrivacyPolicy">தனியுரிமைக் கொள்கை</string>
+    <string name="strTitleFailed">தோல்வியுற்றது</string>
+    <string name="strTitleSuccess">செய்</string>
+    <string name="strChapInfoSeeMore">மேலும் தகவலைக் காண்க</string>
+    <string name="strTitleChapInfoChapterNo">அத்தியாயம் எண்</string>
+    <string name="strTitleChapInfoJuzNo">நீதிபதி எண்.</string>
+    <string name="verses">வசனங்கள்</string>
+    <string name="strTitleChapInfoRukus">லண்டன்</string>
+    <string name="strTitleChapInfoPages">பக்கங்கள்</string>
+    <string name="strTitleChapInfoRevOrder">வெளிப்பாடு ஒழுங்கு</string>
+    <string name="strTitleChapInfoRevType">வெளிப்பாடு வகை</string>
+    <string name="strTitleAppSettings">பயன்பாட்டு அமைப்புகள்</string>
+    <string name="strTitleReaderSettings">வாசகர் அமைப்புகள்</string>
+    <string name="strMsgChapInfoFailedLoad">சூரா தகவல்களை ஏற்றுவதில் தோல்வி. தயவுசெய்து பின்னர் மீண்டும் முயற்சிக்கவும்.</string>
+    <string name="titleOtherSettings">பிற அமைப்புகள்</string>
+    <string name="strTitleAppLanguage">பயன்பாட்டு மொழி</string>
+    <string name="strTitleTheme">கருப்பொருள்</string>
+    <string name="strTitleNoInternet">இணையம் இல்லை</string>
+    <string name="strLabelPlay">விளையாடுங்கள்</string>
+    <string name="strLabelPause">இடைநிறுத்தம்</string>
+    <string name="strLabelBookmark">புத்தககுறி</string>
+    <string name="strLabelShare">பங்கு</string>
+    <string name="strLabelReport">அறிக்கை</string>
+    <string name="continue_reading_2">தொடர்ந்து படிக்க »</string>
+    <string name="strLabelOrder">ஒழுங்கு</string>
+    <string name="strLabelMoreTranslations" formatted="false">+%1$d மேலும் மொழிபெயர்ப்புகள்</string>
+    <string name="strLabelSelectedCount" formatted="false">%1$d தேர்ந்தெடுக்கப்பட்டது</string>
+    <string name="strLabelSelectVerse">வசனங்களைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="strLabelCurrentVerse">தற்போதைய உரையாடல்</string>
+    <string name="strLabelVerseRange">உரையாடல் வரம்பு</string>
+    <string name="strLabelSelectTranslations">மொழிபெயர்ப்புகளைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="strLabelSelectTranslation">மொழிபெயர்ப்பைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="strLabelIncludeFootnotes">அடிக்குறிப்புகளைச் சேர்க்கவும்</string>
+    <string name="includeBookmarkNote">புத்தகக்குறி குறிப்பை சேர்க்கவும் (இருந்தால்)</string>
+    <string name="strLabelQuickLinks">விரைவான இணைப்புகள்</string>
+    <string name="strLabelLater">பின்னர்</string>
+    <string name="strHintSearch">தேடல்</string>
+    <string name="strHintSearchQuran">எ.கா., \"வாழ்க்கை\" என்ற வார்த்தையைத் தட்டச்சு செய்க</string>
+    <string name="strHintSearchProphet">தீர்க்கதரிசியைத் தேடுங்கள்</string>
+    <string name="strHintSearchChapter">சூராவைத் தேடுங்கள்</string>
+    <string name="strHintFromVerse">வசனத்திலிருந்து</string>
+    <string name="strHintBookmarkViewerNote">இந்த புக்மார்க்கில் கூடுதல் குறிப்பை இங்கே எழுதுங்கள்…</string>
+    <string name="strMsgThemeDark">இருண்ட முறை மின் நுகர்வு குறைக்கிறது.</string>
+    <string name="strMsgThemeDefault">கணினி அமைப்புகளின்படி சரிசெய்யவும்.</string>
+    <string name="strMsgInvalidChapterNo" formatted="false">%1$d என்பது செல்லுபடியாகும் சூரா இல்லை.</string>
+    <string name="strMsgBookmarkAddFailed">உரையாடல் புக்மார்க்குகளில் சேர்க்கத் தவறிவிட்டது</string>
+    <string name="strMsgBookmarkAddedAlready">உரையாடல் ஏற்கனவே புக்மார்க்குகளில் சேர்க்கப்பட்டுள்ளது</string>
+    <string name="strMsgBookmarkRemoved">உரையாடல் புக்மார்க்குகளிலிருந்து வெற்றிகரமாக அகற்றப்பட்டது</string>
+    <string name="strMsgBookmarkRemoveFailed">உரையாடல் புக்மார்க்குகளிலிருந்து அகற்றத் தவறிவிட்டது</string>
+    <string name="strMsgBookmarkDeleteSelected">தேர்ந்தெடுக்கப்பட்ட புக்மார்க்குகள் அகற்றப்படும்.</string>
+    <string name="strMsgBookmarkDeleteAll">அனைத்து புக்மார்க்குகளும் அகற்றப்படும்.</string>
+    <string name="strMsgReadShowupHere">உங்கள் வாசிப்பு வரலாறு இங்கே காண்பிக்கப்படும்.</string>
+    <string name="strTitleReadHistory">வரலாற்றைப் படியுங்கள்</string>
+    <string name="strMsgReadHistoryNoItems">வரலாறு இல்லை</string>
+    <string name="strMsgReadHistoryDeleteAll">அனைத்து வாசிப்பு வரலாறுகளும் அகற்றப்படும்.</string>
+    <string name="strMsgBookmarkDateToday" formatted="false">இன்று %1$s</string>
+    <string name="strMsgHistoryRemove">இந்த வரலாற்றை அகற்றவா?</string>
+    <string name="strMsgHistoryRemoved" formatted="false">\"%1$s\" வரலாற்றிலிருந்து அகற்றப்பட்டது</string>
+    <string name="strMsgSearchMultResultsFound" formatted="false">மொத்த முடிவுகள் %1$s இல் காணப்படுகின்றன: %2$d</string>
+    <string name="strMsgSearchOneResultFoundIn" formatted="false">%1$s இல் 1 முடிவு மட்டுமே காணப்படுகிறது</string>
+    <string name="strMsgSearchNoResultsFoundIn" formatted="false">%1$s இல் எந்த முடிவுகளும் காணப்படவில்லை. தேடல் வடிப்பான்களைச் சரிபார்க்கவும் அல்லது மற்றொரு மொழிபெயர்ப்பில் தேடவும்.</string>
+    <string name="strMsgSearchNoResultsFound">முடிவுகள் எதுவும் கிடைக்கவில்லை. தேடல் வடிப்பான்களைச் சரிபார்க்கவும் அல்லது மற்றொரு மொழிபெயர்ப்பில் தேடவும்.</string>
+    <string name="strMsgSearchNoResultsFoundAbsolute">முடிவுகள் எதுவும் கிடைக்கவில்லை. தேடல் வடிப்பான்களை சரிபார்க்கவும்.</string>
+    <string name="strMsgSearchWordPart">சொல் பகுதியைத் தேடுங்கள்</string>
+    <string name="strMsgSearchWordPartExample">உதாரணமாக: \'மனிதகுலத்தில்\' மனிதன் \'</string>
+    <string name="strMsgTranslFailedToDownload" formatted="false">\"%1$s\" ஐ பதிவிறக்குவதில் தோல்வி.</string>
+    <string name="strMsgTranslDownloaded" formatted="false">பதிவிறக்கம்: \"%1$s\".</string>
+    <string name="strMsgTranslNoneSelected">மொழிபெயர்ப்பு எதுவும் தேர்ந்தெடுக்கப்படவில்லை. மொழிபெயர்ப்புகளைக் கண்டறிய அமைப்புகளுக்குச் செல்லவும்.</string>
+    <string name="strMsgTranslSelectionLimit" formatted="false">அதிகபட்சம் %1$d மொழிபெயர்ப்புகளை ஒரே நேரத்தில் தேர்ந்தெடுக்கலாம். மற்றொன்றைத் தேர்ந்தெடுப்பதற்கு முன் ஒன்றைத் தேர்ந்தெடுக்கவும். செயல்திறன் இழப்பைத் தவிர்ப்பது இது.</string>
+    <string name="strDescAddToBookmarks">புக்மார்க்குகளில் சேர்க்கவும்</string>
+    <string name="strDescClose">மூடு</string>
+    <string name="strDescVerseNoWithChapter" formatted="false">சூரா %1$s, உரையாடல் எண் %2$d.</string>
+    <string name="strMsgNoInternet">உங்கள் இணைய இணைப்பை சரிபார்க்கவும்.</string>
+    <string name="strMsgNoInternetLong">இணைய இணைப்பு இல்லை. வைஃபை அல்லது செல்லுலார் தரவு இயக்கப்பட்டிருப்பதை உறுதிசெய்து, மீண்டும் முயற்சிக்கவும்.</string>
+    <string name="strMsgSomethingWrong">ஏதோ தவறு நடந்தது!</string>
+    <string name="strMsgTryLater">தயவுசெய்து பின்னர் மீண்டும் முயற்சிக்கவும்.</string>
+    <string name="strMsgCouldNotOpenPage">பக்கத்தைத் திறக்க முடியவில்லை.</string>
+    <string name="strLabelNavHome">வீடு</string>
+    <string name="strLabelNavSearch">தேடல்</string>
+    <string name="library">நூலகம்</string>
+    <string name="strTextPleaseWait">தயவுசெய்து காத்திருங்கள்…</string>
+    <string name="strAyatulKursi">அயதுல் நாற்காலிகள்</string>
+    <string name="strTitleInfo">தகவல்!</string>
+    <string name="strMsgUpdateAvailable4Dialog">புதுப்பிப்பு கிடைக்கிறது!\n பயன்பாட்டைப் புதுப்பிக்கவும்.</string>
+    <string name="strTitleOops">அச்சச்சோ!</string>
+    <string name="strMsgUpdateAvailable2Continue">புதுப்பிப்பு தேவை!\n தொடர பயன்பாட்டைப் புதுப்பிக்கவும்.</string>
+    <string name="strLabelAllChapters">அனைத்து அத்தியாயங்களும்</string>
+    <string name="strMsgDuaOf" formatted="false">%1$s இல் இரண்டு</string>
+    <string name="strMsgDuaFor" formatted="false">%1$s க்கு DUA</string>
+    <string name="strMsgReferenceInQuran" formatted="false">குர்ஆனில் %1$s</string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false">மொத்த %2$d இடங்களில் %1$s தொடர்பான வசனங்களைக் கண்டறிந்தது.</string>
+    <string name="strMsgPropheticDuaInQuran" formatted="false">குர்ஆனில் %1$s இல் இரண்டு</string>
+    <string name="strMsgReferenceDuas">குர்ஆனில் இருந்து சில துவாக்களை சேகரித்தார்.</string>
+    <string name="titleDownloadScriptResources">இந்த ச்கிரிப்டுக்கான ஆதாரங்களைப் பதிவிறக்கவா?</string>
+    <string name="msgDownloadKFQPCResources">இந்த ச்கிரிப்டைப் பயன்படுத்துவதற்கு முன்பு பின்வரும் ஆதாரங்கள் பதிவிறக்க வேண்டும்:</string>
+    <string name="msgDownloadFontsSize" formatted="false">பதிவிறக்க அளவு: ~%1$dMB\nபதிவிறக்கத்திற்குப் பிறகு, செயலி சுமார் ~%2$dMB பயன்படுத்தும்.</string>
+    <string name="msgDownloadingFonts">எழுத்துருக்களைப் பதிவிறக்குகிறது</string>
+    <string name="textDownloading">பதிவிறக்கம்…</string>
+    <string name="lastCrashLog">கடைசி செயலிழப்பு பதிவு</string>
+    <string name="appLogs">பயன்பாட்டு பதிவுகள்</string>
+    <string name="crashLogs">செயலிழப்பு பதிவுகள்</string>
+    <string name="suppressedLogs">அடக்கப்பட்ட பதிவுகள்</string>
+    <string name="logRemoved">பதிவு அகற்றப்பட்டது</string>
+    <string name="createIssue">சிக்கலை உருவாக்கவும்</string>
+    <string name="copiedToClipboard">இடைநிலைப்பலகைக்கு நகலெடுக்கப்பட்டது.</string>
+    <string name="pasteCrashLogGithubIssue">பதிவு இடைநிலைப்பலகைக்கு நகலெடுக்கப்பட்டுள்ளது. தயவுசெய்து அதை அறிவிலிமையம் பிரச்சினையில் ஒட்டவும்.</string>
+    <string name="github">கிரப்</string>
+    <string name="msgVerseReminderNotifPermission">உரையாடல் நினைவூட்டலை இயக்க அறிவிப்பு இசைவு தேவை.</string>
+    <string name="titleStorageCleanup">சேமிப்பக தூய்மைப்படுத்துதல்</string>
+    <string name="storageCleanupMessage">பயன்படுத்தப்படாத பதிவிறக்கம் செய்யப்பட்ட வளங்களை நீக்குவதன் மூலம் இடத்தை விடுவிக்கவும். இது எந்த புக்மார்க்குகள் அல்லது அமைப்புகளையும் நீக்காது.\n\n பின்வரும் வளங்களை விடுவிக்க முடியும்:</string>
+    <string name="recitationCanBeFreedUp" formatted="false">%2$d மறுபயன்பாட்டாளர்களிடமிருந்து %1$d சேமிக்கப்பட்ட பாராயணக் கோப்புகளை விடுவிக்க முடியும்.</string>
+    <string name="scriptCanBeFreedUp" formatted="false">%1$d பதிவிறக்கம் செய்யப்பட்ட ச்கிரிப்ட்கள் மற்றும் அவற்றின் எழுத்துருக்களை விடுவிக்க முடியும்.</string>
+    <string name="tafseerCanBeFreedUp" formatted="false">%1$d சேமித்த தஃப்சிர் தூய்மை செய்யப்படலாம்.</string>
+    <string name="labelFreeUpSpace">இலவச இடம்</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s\n %2$s\n\n நீங்கள் அதை மீண்டும் பதிவிறக்கம் செய்ய வேண்டும்.</string>
+    <string name="titleRecitationCleanup">பாராயணத்தை நீக்கவா?</string>
+    <string name="msgRecitationCleanup" formatted="false">%1$s இலிருந்து சேமிக்கப்பட்ட அனைத்து பாராயணங்களும் நீக்கப்படும். தனிப்பட்ட முறையில் சூரா வாரியாக பாராயணங்களை நீக்க, அமைப்புகளுக்குச் செல்லவும்।</string>
+    <string name="titleScriptCleanup">ச்கிரிப்டை நீக்கவா?</string>
+    <string name="msgScriptCleanup" formatted="false">%1$s ஸ்கிரிப்ட் மற்றும் அதன் சேமிக்கப்பட்ட அனைத்து எழுத்துருக்களும் நீக்கப்படும். அவற்றைப் பயன்படுத்த நீங்கள் மீண்டும் பதிவிறக்க வேண்டும்.</string>
+    <string name="nScriptsAndFonts" formatted="false">%1$d ச்கிரிப்டுகள் மற்றும் %2$d எழுத்துருக்கள்</string>
+    <string name="nothingToCleanup">தூய்மை செய்ய எதுவும் இல்லை.</string>
+    <string name="noItems">உருப்படிகள் இல்லை</string>
+    <string name="verseSyncOn">உரையாடல் ஒத்திசைவு: ஆன்</string>
+    <string name="verseSyncOff">உரையாடல் ஒத்திசைவு: ஆஃப்</string>
+    <string name="inPlaces" formatted="false">%1$s இல்</string>
+    <string name="inPlacesMore" formatted="false">%1$s &amp; %2$d இல்</string>
+    <string name="onboardDescLanguage">உங்கள் மொழியில் பயன்பாட்டை தனிப்பயனாக்குங்கள். இதை நீங்கள் எப்போதும் பின்னர் மாற்றலாம்.</string>
+    <string name="onboardDescTheme">இதை நீங்கள் எப்போதும் பின்னர் மாற்றலாம்.</string>
+    <string name="onboardDescTranslations">இதை நீங்கள் எப்போதும் பின்னர் மாற்றலாம். அமைப்புகளிலிருந்து கூடுதல் மொழிபெயர்ப்புகளை நீங்கள் பதிவிறக்கம் செய்யலாம்.</string>
+    <string name="labelArabic">அரபு</string>
+    <string name="labelTranslation">மொழிபெயர்ப்பு</string>
+    <string name="titleRemoveFromFavourites">பிடித்தவைகளிலிருந்து அகற்று</string>
+    <string name="msgNoFavouriteChapters">இங்கே காண பிடித்தவைகளில் ஒரு அத்தியாயத்தைச் சேர்க்கவும்.</string>
+    <string name="msgChapterAddedToFavourites">சூரா பிடித்தவைகளில் சேர்த்தார்.</string>
+    <string name="msgChapterRemovedFromFavourites">சூரா பிடித்தவைகளிலிருந்து நீக்கப்பட்டது.</string>
+    <string name="textNoLogsFound">பதிவுகள் எதுவும் கிடைக்கவில்லை</string>
+    <string name="strPreviewTextTransl">In the Name of Allâh, the Most Gracious, the Most Mercifu</string>
+    <string name="msgClearReadHistory">தெளிவான வாசிப்பு வரலாறு</string>
+    <string name="msgClearSearchHistory">தேடல் வரலாற்றை அழிக்கவும்</string>
+    <string name="titleResourceDownloadSource">வள பதிவிறக்க மூல</string>
+    <string name="msgResourceDownloadSource">ஒருவர் வேலை செய்யவில்லை என்றால் குர்ஆன் தரவை வேறு மூலத்திலிருந்து பதிவிறக்கம் செய்ய இந்த விருப்பத்தைப் பயன்படுத்தவும்</string>
+    <string name="titleArabicTextToggle">அரபு உரையாடல் உரையைக் காட்டு</string>
+    <string name="msgArabicTextToggle">இந்த அம்சத்தை முடக்குவது பயன்பாடு முழுவதிலிருந்தும் அரபு வசன உரையை மறைக்கும்.</string>
+    <string name="titleKeepScreenOnWhileReading">படிக்கும்போது திரையை இயக்கத்தில் வைக்கவும்</string>
+    <string name="msgKeepScreenOnWhileReading">ரீடர் திறந்திருக்கும்போது திரை அணையாது. பேட்டரியை சேமிக்க அணைக்கவும்.</string>
+    <string name="clear">அழி</string>
+    <string name="strLabelDownloaded">பதிவிறக்கம் செய்யப்பட்டது</string>
+    <string name="strTitleDeleteTafsir">விரிவுரையை நீக்கவா?</string>
+    <string name="strMsgDeleteTafsir" formatted="false">“%1$s”-ஐ நீக்க விரும்புகிறீர்களா? இது உங்கள் சாதனத்திலிருந்து பதிவிறக்கம் செய்யப்பட்ட விரிவுரைத் தரவை அகற்றும்.</string>
+    <string name="strLabelAll">அனைத்தும்</string>
+    <string name="strLabelPrevious">முந்தைய</string>
+    <string name="nextChapter">அடுத்த அத்தியாயம்</string>
+    <string name="previousChapter">முந்தைய அத்தியாயம்</string>
+    <string name="nextJuz">அடுத்த ஜூஸ்உ</string>
+    <string name="previousJuz">முந்தைய ஜூஸ்உ</string>
+    <string name="nextHizb">அடுத்த ஹிஸ்பு</string>
+    <string name="previousHizb">முந்தைய ஹிஸ்பு</string>
+    <string name="strLabelRukuNo" formatted="false">ருகூ %1$d</string>
+    <string name="endOfPageNo" formatted="false">பக்கம் %1$d-ன் முடிவு</string>
+    <string name="endOfRukuNo" formatted="false">ருகூ %1$d-ன் முடிவு</string>
+    <string name="endOfRubNo" formatted="false">ருபு %1$d-ன் முடிவு</string>
+    <string name="endOfManzilNo" formatted="false">மன்சில் %1$d-ன் முடிவு</string>
+    <string name="strTitleReaderHizb">ஹிஸ்பு</string>
+    <string name="labelHizbNo" formatted="false">ஹிஸ்பு %1$d</string>
+    <string name="tafsirForVerse" formatted="false">வசனம் %1$d:%2$d-க்கான விரிவுரை</string>
+    <string name="textSizes">எழுத்து அளவுகள்</string>
+    <string name="sajda">ஸஜ்தா</string>
+    <string name="filterSectionLength">அத்தியாய நீளம்</string>
+    <string name="any">ஏதேனும்</string>
+    <string name="withSajda">ஸஜ்தா உள்ளது</string>
+    <string name="withoutSajda">ஸஜ்தா இல்லை</string>
+    <string name="chapterFilterLengthShort">சிறியது (&lt;50 வசனங்கள்)</string>
+    <string name="chapterFilterLengthMedium">நடுத்தரம் (50–150 வசனங்கள்)</string>
+    <string name="chapterFilterLengthLong">பெரியது (150+ வசனங்கள்)</string>
+    <string name="clearFilters">வடிகட்டிகளை அழி</string>
+    <string name="chapterFilters">அத்தியாய வடிகட்டிகள்</string>
+    <string name="strMsgReciterDownloadHint">இணையம் இல்லாதபோது கேட்பதற்கும் தடையற்ற ஒளிபரப்பிற்கும் ஓதுதலைப் பதிவிறக்கவும்.</string>
+    <string name="recitationDownloadChaptersProgress" formatted="false">%1$d / %2$d அத்தியாயங்கள்</string>
+    <string name="recitationDownloadAllComplete">அனைத்து அத்தியாயங்களும் பதிவிறக்கம் செய்யப்பட்டன</string>
+    <string name="recitationDownloadConfirmTitle">பதிவிறக்கு</string>
+    <string name="recitationDownloadConfirmMessage">இந்த ஓதுகருக்கான அனைத்து அத்தியாயங்களையும் பதிவிறக்கவா? இதற்கு அதிக சேமிப்புத்திறனும் தரவுகளும் தேவைப்படலாம்.</string>
+    <string name="recitationDownloadSomeFailed">சில அத்தியாயங்கள் தோல்வியடைந்தன. மீண்டும் முயற்சி செய்து விடுபட்ட அத்தியாயங்களைப் பதிவிறக்கவும்.</string>
+    <string name="recitationDownloadWaitForOtherReciter">மற்றொரு ஓதுதலின் பதிவிறக்கம் நடைபெற்றுக் கொண்டிருக்கிறது. அது முடியும் வரை காத்திருக்கவும்.</string>
+    <string name="recitationBulkDownloadNotifProgress" formatted="false">%1$d / %2$d அத்தியாயங்கள் பதிவிறக்கம் செய்யப்பட்டன</string>
+    <string name="recitationBulkEnqueueNotifTitle">தயாராகிறது</string>
+    <string name="recitationBulkEnqueueNotifText" formatted="false">%1$s — %3$d-ல் %2$d வரிசையில் உள்ளது</string>
+    <string name="playbackCount">மீண்டும் ஒலிக்கும் எண்ணிக்கை</string>
+    <string name="titleRecitationGroupSize">குர்ஆன் வசனக் குழு அளவு</string>
+    <string name="msgRecitationGroupSize">மொழிபெயர்ப்பு தொடங்குவதற்கு முன் எத்தனை வசனங்கள் ஒலிக்க வேண்டும் என்பதைத் தேர்ந்தெடுக்கவும். உதாரணமாக: 3-ஐத் தேர்ந்தெடுத்தால், 3 அரபு வசனங்களுக்குப் பிறகு அவற்றின் மொழிபெயர்ப்பு ஒலிக்கும்.</string>
+    <string name="labelRecommended">பரிந்துரைக்கப்பட்டவை</string>
+    <string name="strTitleMajorSins">குர்ஆனில் பெரும் பாவங்கள்</string>
+    <string name="modeVerseByVerse">வசனம் வாரியாக</string>
+    <string name="modeMushaf">முஸஹஃப் முறை</string>
+    <string name="readingLayoutFlow">உருட்டு</string>
+    <string name="readingLayoutPage">முஸஹஃப் பக்கம்</string>
+    <string name="titleGlobalSearch">பொதுத் தேடல்</string>
+    <string name="searchIndexingInProgress">தேடல் தயாராகிறது. அட்டவணைப்படுத்தல் முடியும் வரை சில முடிவுகள் காட்டப்படாமல் இருக்கலாம்.</string>
+    <string name="search_match">பொருத்த வகை</string>
+    <string name="search_match_any_words">ஏதேனும் சொற்கள்</string>
+    <string name="search_match_any_words_desc">தேடல் சொற்களில் ஒன்று அல்லது அதற்கு மேற்பட்ட சொற்களைக் கொண்ட முடிவுகளைக் கண்டறியவும்.</string>
+    <string name="search_match_all_words">அனைத்துச் சொற்களும்</string>
+    <string name="search_match_all_words_desc">தேடல் சொற்கள் அனைத்தையும் கொண்ட முடிவுகளைக் கண்டறியவும்.</string>
+    <string name="search_match_exact_phrase">சரியான சொற்றொடர்</string>
+    <string name="search_match_exact_phrase_desc">“உயிர்த்தெழும் நாள்” போன்ற சொற்கள் அதே வரிசையில் உள்ள முடிவுகளைக் கண்டறியவும்.</string>
+    <string name="strHintSearchBy">ஜூஸ்உ அல்லது சூராவைத் தேடு</string>
+    <string name="strHintSearchHizb">ஹிஸ்பு அல்லது சூராவைத் தேடு</string>
+    <string name="strHintSearchPage">பக்கத்தைத் தேடு</string>
+    <string name="noNoteProvided">குறிப்புகள் எதுவும் இல்லை…</string>
+    <string name="dailyReminderMsg">தினசரி நினைவூட்டல் அறிவிப்புகளைப் பெறுக.</string>
+    <string name="strMsgNoVerseTiming">வசன ஒழுங்கமைப்பின்றி முழு அத்தியாயமும் ஒலிக்கிறது</string>
+    <string name="msgExtractingFonts">எழுத்துருக்களைப் பிரித்தெடுக்கிறது</string>
+    <string name="textPreparingAudio">ஒலி தயாராகிறது…</string>
+    <string name="notification_permission">அறிவிப்பு அனுமதி</string>
+    <string name="titleExportData">ஏற்றுமதி மற்றும் இறக்குமதி</string>
+    <string name="noResults">முடிவுகள் இல்லை</string>
+    <string name="onboardDescTafsir">வசனங்களுடன் விரிவுரைகளைப் படிக்க ஒன்றைத் தேர்ந்தெடுக்கவும். தப்சீர்களை அமைப்புகளில் பதிவிறக்கம் செய்து நிர்வகிக்கலாம்.</string>
+    <string name="labelTransliteration">ஒலிபெயர்ப்பு</string>
+    <string name="favourites">விருப்பமானவை</string>
+    <string name="strMsgSearchHistoryDeleteAll">அனைத்துத் தேடல் வரலாறுகளும் நீக்கப்படும்.</string>
+    <string name="labelExport">ஏற்றுமதி</string>
+    <string name="labelImport">இறக்குமதி</string>
+    <string name="warnImportSettings">அமைப்புகளை இறக்குமதி செய்தால் தற்போதைய அமைப்புகள் மாறும்.</string>
+    <string name="labelExportSelected" formatted="false">தேர்ந்தவற்றை ஏற்றுமதி செய் (%1$d)</string>
+    <string name="labelImportSelected" formatted="false">தேர்ந்தவற்றை இறக்குமதி செய் (%1$d)</string>
+    <string name="labelCollections">தொகுப்புகள்</string>
+    <string name="msgExportSettings">தீம், வாசிப்பு மற்றும் ஓதுதல் விருப்பங்கள்</string>
+    <string name="msgImportSettings">உங்கள் தீம், வாசிப்பு மற்றும் ஓதுதல் விருப்பங்களை மாற்றும்</string>
+    <string name="msgExportBookmarks">உங்கள் புக்மார்க்குகளும் குறிப்புகளும்</string>
+    <string name="msgImportBookmarks">புக்மார்க்குகளையும் குறிப்புகளையும் சேர்க்கும்</string>
+    <string name="msgExportCollections">உங்கள் தொகுப்புகள், வசனங்கள் மற்றும் குறிப்புகள்</string>
+    <string name="msgImportCollections">ஒரே பெயருள்ள தொகுப்புகளை இணைத்து, உள்ள வசனங்களையும் குறிப்புகளையும் வைத்திருக்கும்</string>
+    <string name="labelSelectFile">கோப்பைத் தேர்ந்தெடு</string>
+    <string name="titleConfirmImport">தேர்ந்தவற்றை இறக்குமதி செய்யவா?</string>
+    <string name="msgExportSuccess">வெற்றிகரமாக ஏற்றுமதி செய்யப்பட்டது</string>
+    <string name="autoBackup">தானியங்கி காப்பு</string>
+    <string name="autoBackupDetails">உங்கள் புத்தகக்குறிகள், தொகுப்புகள் மற்றும் அமைப்புகள் நீங்கள் தேர்ந்தெடுக்கும் கோப்பில் சேமிக்கப்படும். அந்தக் கோப்பு நாளொன்றுக்கு ஏறக்குறைய ஒரு முறை புதுப்பிக்கப்படும்.</string>
+    <string name="labelBackupFile">கோப்பு</string>
+    <string name="labelBackupSchedule">எப்போது</string>
+    <string name="autoBackupSchedule">நாளொன்றுக்கு ஏறக்குறைய ஒரு முறை</string>
+    <string name="autoBackupNoFile">கோப்பு தேர்ந்தெடுக்கப்படவில்லை</string>
+    <string name="viewFile">கோப்பைக் காட்டு</string>
+    <string name="changeFile">கோப்பை மாற்று</string>
+    <string name="autoBackupOpenFailed">கோப்பைத் திறக்க முடியவில்லை</string>
+    <string name="autoBackupSaved">காப்பு சேமிக்கப்பட்டது</string>
+    <string name="autoBackupFailed">காப்பைச் சேமிக்க முடியவில்லை</string>
+    <string name="autoBackupFileDeleted">தானியங்கி காப்புக்காக நீங்கள் தேர்ந்தெடுத்த கோப்பு நீக்கப்பட்டது. புதிய கோப்பைத் தேர்ந்தெடுக்கும் வரை புத்தகக்குறிகள், தொகுப்புகள் மற்றும் அமைப்புகள் சேமிக்கப்படாது.</string>
+    <string name="importSummary" formatted="false">இறக்குமதி முடிந்தது. %1$d சேர்க்கப்பட்டன, %2$d புதுப்பிக்கப்பட்டன, %3$d மாறவில்லை, %4$d தவிர்க்கப்பட்டன, %5$d முரண்பட்டன, %6$d அமைப்புகள் ஆதரிக்கப்படவில்லை.</string>
+    <string name="backupFailed">இந்தக் காப்பைப் படிக்க முடியவில்லை.</string>
+    <string name="backupUnsupportedVersion">இந்தக் காப்பு செயலியின் புதிய பதிப்பிலிருந்து வந்தது.</string>
+    <string name="backupTooLarge">இந்தக் காப்புக் கோப்பைத் திறக்க முடியாத அளவுக்குப் பெரியது.</string>
+    <string name="desc_votd_widget">தினமும் ஒரு புதிய வசனத்தைப் பெறுக</string>
+    <string name="autoScroll">தானியங்கி நகர்வு</string>
+    <string name="startAutoScroll">தானியங்கி நகர்வைத் தொடங்கு</string>
+    <string name="stopAutoScroll">தானியங்கி நகர்வை நிறுத்து</string>
+    <string name="autoScrollSpeed">வேகத்தை அமை</string>
+    <string name="titleCancelDownload">பதிவிறக்கத்தை ரத்து செய்யவா?</string>
+    <string name="yesCancelDownload">ஆம், ரத்து செய்</string>
+    <string name="noContinueDownload">இல்லை, தொடரவும்</string>
+    <string name="readingTafsirMultiVerses">பல வசனங்களுக்கான விரிவுரையைப் படிக்கவும்:</string>
+    <string name="donate">எங்களுக்கு நன்கொடை அளிக்கவும்</string>
+    <string name="quran_and_science">குர்ஆனும் அறிவியலும்</string>
+    <string name="topics">தலைப்புகள்</string>
+    <string name="about_this_page">இந்தப் பக்கத்தைப் பற்றி</string>
+    <string name="about_quran_science_msg">இந்தப் பக்கத்தின் உள்ளடக்கங்கள் டாக்டர் ஜாகிர் நாயக்கின் புத்தகத்திலிருந்து எடுக்கப்பட்டவை.\n\nகாட்டப்பட்டுள்ள படங்கள் விளக்கத்திற்காக மட்டுமே.</string>
+    <string name="strLabelScienceReferences" formatted="false">%1$d ஆதாரங்கள்</string>
+    <string name="once">ஒரு முறை</string>
+    <string name="twice">இரு முறை</string>
+    <string name="nTimes" formatted="false">%1$d முறைகள்</string>
+    <string name="msgRepeat">ஒரு வசனம் எத்தனை முறை ஒலிக்க வேண்டும் என்பதை அமைக்கவும். “குர்ஆன் மட்டும் ஒலிக்கவும்” என்பது அமைக்கப்பட்டிருந்தால் மட்டுமே இது செயல்படும்.</string>
+    <string name="notSupported">ஆதரவு இல்லை</string>
+    <string name="missingTimingData" formatted="false">Missing timing data for %1$s.</string>
+    <string name="expandedPlayerModeControls">கட்டுப்பாடுகள்</string>
+    <string name="expandedPlayerModeSpotlight">முக்கிய அம்சம்</string>
+    <string name="theme_default">இயல்பான</string>
+    <string name="theme_blue">நீலம்</string>
+    <string name="theme_red">சிவப்பு</string>
+    <string name="theme_purple">ஊதா</string>
+    <string name="theme_violet">கத்தரிப்பூ நிறம்</string>
+    <string name="theme_yellow">மஞ்சள்</string>
+    <string name="theme_mono">ஒற்றை நிறம்</string>
+    <string name="theme_amoled">அமோலெட்</string>
+    <string name="theme_colors">கருப்பொருள் நிறங்கள்</string>
+    <string name="theme_mode">கருப்பொருள் முறை</string>
+    <string name="dynamic_color">மாறும் நிறம்</string>
+    <string name="dynamic_color_description">கணினி நிறங்களுக்கு ஏற்ப கருப்பொருள் நிறத்தை மாற்று</string>
+    <string name="textSizeVerseByVerseOnly">இந்த அமைப்பானது முஸஹஃப் முறையில் செயல்படாது.</string>
+    <string name="sortBy">வரிசைப்படுத்து</string>
+    <string name="alphabetically">அகரவரிசை</string>
+    <string name="chronological">கால வரிசை</string>
+    <string name="translationHelp">உங்கள் மொழி இல்லையா? மொழிபெயர்க்க அல்லது மேம்படுத்த உதவுங்கள்!</string>
+    <string name="learnMore">மேலும் அறிய</string>
+    <string name="wordByWord">வார்த்தை வாரியாக</string>
+    <string name="selectWbwLanguage">மொழியைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="wbwShowTranslation">மொழிபெயர்ப்பைக் காட்டு</string>
+    <string name="wbwShowTransliteration">ஒலிபெயர்ப்பைக் காட்டு</string>
+    <string name="wbwShowTransliterationMgs">தேர்ந்தெடுக்கப்பட்ட மொழிக்குக் கிடைக்கும்போது</string>
+    <string name="wbwRecitation">ஓதுதல்</string>
+    <string name="wbwRecitationMsg">வார்த்தையைக் கிளிக் செய்யும்போது ஒலியை ஒலிக்கச் செய்</string>
+    <string name="wbwTextSize">எழுத்து அளவு</string>
+    <string name="noWbwAvailable">வார்த்தை வாரியான அம்சங்களுக்கு மொழிப் பதிப்புகளைப் பதிவிறக்கவும்.</string>
+    <string name="deleteData">தரவை நீக்கவா?</string>
+    <string name="wordNo" formatted="false">வார்த்தை %1$d</string>
+    <string name="playWord">வார்த்தையை ஒலி</string>
+    <string name="previousWord">முந்தைய வார்த்தை</string>
+    <string name="nextWord">அடுத்த வார்த்தை</string>
+    <string name="wbwSelectLanguage">வார்த்தைக்கு வார்த்தை மொழியைத் தேர்ந்தெடு</string>
+    <string name="results">முடிவுகள்</string>
+    <string name="titleRecentSearches">சமீபத்திய தேடல்கள்</string>
+    <string name="searchInQuran">குர்ஆனில் தேடு</string>
+    <string name="searchTipsTitle">தேடல் குறிப்புகள்</string>
+    <string name="searchTipDirectVerse">விரிவுரையை நேரடியாகப் படி</string>
+    <string name="searchTipChapter">அத்தியாயங்களைத் தேடு</string>
+    <string name="searchTipDirectJuz">“அத்தியாயம் 30” அல்லது “ஜூஸ்உ 30”-க்குச் செல்</string>
+    <string name="searchTipTranslation">மொழிபெயர்ப்புகளில் தேடு</string>
+    <string name="searchTipArabic">அரபு வசனங்களில் தேடு</string>
+    <string name="enterFullscreen">முழுத்திரை</string>
+    <string name="exitFullscreen">முழுத்திரையிலிருந்து வெளியேறு</string>
+    <string name="belowWord">சொல்லுக்குக் கீழே</string>
+    <string name="inTooltip">குறிப்புப் பெட்டியில்</string>
+    <string name="discord">டிஸ்கார்ட்</string>
+    <string name="strTitleDownloadSunnahApp">SunnahApp-ஐ பதிவிறக்கவும்</string>
+    <string name="tajweedColors">தஜ்வீதின் நிறங்கள்</string>
+    <string name="similarVerses">ஒத்த ஆயத்துகள்</string>
+    <string name="noSimilarVerses">இந்த ஆயத்துக்கு ஒத்த ஆயத்துகள் இல்லை.</string>
+    <string name="countSimilarVerses" formatted="false">%1$s-க்கு %2$d ஒத்த ஆயத்துகள் உள்ளன</string>
+    <string name="similarVerseRowMeta" formatted="false">%1$d%% பொருத்தம் · மதிப்பெண் %2$d</string>
+    <string name="moreOptions">மேலும் விருப்பங்கள்</string>
+    <string name="whenChapterEnds">ஸூரா முடியும் போது</string>
+    <string name="whenChapterEndsDesc">தற்போதைய ஸூரா ஒலிபரப்பு முடிந்த பின் என்ன நடக்க வேண்டும் என்பதை தேர்வு செய்யவும்.</string>
+    <string name="stopPlayback">இயக்கத்தை நிறுத்து</string>
+    <string name="playNextSurah">அடுத்த ஸூராவை இயக்கு</string>
+    <string name="repeatCurrentSurah">தற்போதைய ஸூராவை மீண்டும் இயக்கு</string>
+    <string name="reset">மீட்டமை</string>
+    <string name="selectAll">அனைத்தையும் தேர்ந்தெடு</string>
+    <string name="filterTranslationsDisabledNote">அரபு தேடல் இயக்கத்தில் இருக்கும்போது மொழிபெயர்ப்புகளில் தேடப்படாது.</string>
+    <string name="filterTranslationsEmpty">இதுவரை மொழிபெயர்ப்புகள் எதுவும் பதிவிறக்கப்படவில்லை.</string>
+    <string name="wbwAudioTimingsCouldNotLoad">சொல் நேர அட்டவணையை ஏற்ற முடியவில்லை. இணைப்பை சரிபார்த்து மீண்டும் முயற்சிக்கவும்.</string>
+    <string name="wbwAudioCouldNotPlay">சொல் ஒலியை இயக்க முடியவில்லை.</string>
+    <string name="wbwAudioDownloadHint">ஆஃப்லைனில் கேட்கவும் சீரான இயக்கத்திற்கும் சொல்-சொல்லாக ஒலியைப் பதிவிறக்கவும்.</string>
+    <string name="wbwAudio">சொல்-சொல்லாக ஒலி</string>
+    <string name="wbwAudioDownloadAll">அனைத்தையும் பதிவிறக்கவும்</string>
+    <string name="wbwAudioDownloadAllConfirm">அனைத்து ஸூராக்களுக்கும் சொல்-சொல்லாக திலாவத் ஒலியைப் பதிவிறக்கவா? இது அதிக சேமிப்பு மற்றும் மொபைல் டேட்டாவை பயன்படுத்தலாம்.</string>
+    <string name="wbwAudioBulkWaitForChapterDownloads">அனைத்தையும் பதிவிறக்குவதற்கு முன் தனித் ஸூராக்களின் பதிவிறக்கம் முடியும் வரை காத்திருக்கவும்.</string>
+    <string name="wbwAudioChapterWaitForBulk">ஒரு ஸூராவைப் பதிவிறக்குவதற்கு முன் முழு பதிவிறக்கம் முடியும் வரை காத்திருக்கவும்.</string>
+    <string name="ontologyExplorer">தலைப்பு ஆராய்ச்சி</string>
+    <string name="thematicTopics">கருப்பொருள் அடிப்படையிலான தலைப்புகள்</string>
+    <string name="englishContentOnly">இந்தப் பக்கத்தின் உள்ளடக்கம் ஆங்கில மொழியில் மட்டுமே கிடைக்கும்.</string>
+    <string name="estimatedSize" formatted="false">மதிப்பிடப்பட்ட அளவு: %1$s</string>
+    <string name="msgPreparingPrebuiltAtlas">குர்ஆன் உரை முதல் முறையாக தயார் செய்யப்படுகிறது. இதற்கு சில விநாடிகள் ஆகலாம்.</string>
+    <string name="create">உருவாக்கு</string>
+    <string name="strLabelManage">நிர்வகி</string>
+    <string name="update_note">குறிப்பைப் புதுப்பி</string>
+    <string name="updateAvailable">புதுப்பிப்பு உள்ளது</string>
+    <string name="recitationDownloadUpdateConfirmTitle">பாராயணத்தைப் புதுப்பி</string>
+    <string name="recitationDownloadUpdateConfirmMessage">இந்த ஓதுகருக்கு புதிய ஒலிக்கோப்பு உள்ளது. புதுப்பித்தால் பதிவிறக்கிய அத்தியாயங்கள் மாறும்.</string>
+    <string name="recitationDownloadBannerUpdateAvailable">பதிவிறக்கிய பாராயணத்திற்கு புதுப்பிப்பு உள்ளது.</string>
+    <string name="continue_reading">தொடர்ந்து படிக்க</string>
+    <string name="recitationPlayer">பாராயண இயக்கி</string>
+    <string name="desc_recitation_player_widget">முகப்புத் திரையிலிருந்து குர்ஆன் பாராயணத்தை இயக்குங்கள்</string>
+    <string name="my_collections">என் தொகுப்புகள்</string>
+    <string name="add_to_collection">தொகுப்பில் சேர்</string>
+    <string name="remove_from_collection">தொகுப்பிலிருந்து நீக்கு</string>
+    <string name="msg_remove_from_collection">இந்த உரையாடல் தொகுப்பிலிருந்து நீக்கப்படும். அதன் குறிப்பும் அழிக்கப்படும்.</string>
+    <string name="no_collections">இன்னும் தொகுப்புகள் இல்லை.</string>
+    <string name="no_collection_items">இந்த தொகுப்பில் உரையாடல்கள் இல்லை. விருப்பமானவற்றை தொகுப்பாகச் சேர்த்து எளிதாகத் திறக்கலாம்.</string>
+    <string name="create_collection">தொகுப்பை உருவாக்கு</string>
+    <string name="update_collection">தொகுப்பைத் திருத்து</string>
+    <string name="select_color">நிறத்தைத் தேர்ந்தெடு</string>
+    <string name="select_icon">ஐகானைத் தேர்ந்தெடு</string>
+    <string name="create_new_collection">புதிய தொகுப்பை உருவாக்கு</string>
+    <string name="collection_name">தொகுப்பின் பெயர்</string>
+    <string name="collection_name_hint">பெயரை உள்ளிடுக</string>
+    <string name="description">விளக்கம்</string>
+    <string name="collection_description_hint">விளக்கத்தை உள்ளிடுக</string>
+    <string name="msg_collection_deleted">தொகுப்பு நீக்கப்பட்டது.</string>
+    <string name="delete_collection">தொகுப்பை நீக்கு</string>
+    <string name="msg_delete_collection">தொகுப்பும் அதில் சேமித்த உரையாடல்களும் நீக்கப்படும். புக்மார்க்குகள் அப்படியே இருக்கும்.</string>
+    <string name="collection_note_hint">இந்த உரையாடலுக்கு கூடுதல் குறிப்பை இங்கே எழுதுங்கள்…</string>
+    <string name="collection_updated">தொகுப்புகள் புதுப்பிக்கப்பட்டன</string>
+    <string name="updated_just_now">இப்போதுதான் புதுப்பிக்கப்பட்டது</string>
+    <plurals name="verse_count">
+        <item quantity="one">%1$d உரையாடல்</item>
+        <item quantity="other">%1$d உரையாடல்கள்</item>
+    </plurals>
+    <plurals name="updated_minutes">
+        <item quantity="one">%1$d நிமிடத்திற்கு முன் புதுப்பிக்கப்பட்டது</item>
+        <item quantity="other">%1$d நிமிடங்களுக்கு முன் புதுப்பிக்கப்பட்டது</item>
+    </plurals>
+    <plurals name="updated_hours">
+        <item quantity="one">%1$d மணி நேரத்திற்கு முன் புதுப்பிக்கப்பட்டது</item>
+        <item quantity="other">%1$d மணி நேரத்திற்கு முன் புதுப்பிக்கப்பட்டது</item>
+    </plurals>
+    <plurals name="updated_days">
+        <item quantity="one">%1$d நாளுக்கு முன் புதுப்பிக்கப்பட்டது</item>
+        <item quantity="other">%1$d நாட்களுக்கு முன் புதுப்பிக்கப்பட்டது</item>
+    </plurals>
+    <plurals name="item_count">
+        <item quantity="one">%1$d உருப்படி</item>
+        <item quantity="other">%1$d உருப்படிகள்</item>
+    </plurals>
+    <plurals name="place_count">
+        <item quantity="one">%1$d இடம்</item>
+        <item quantity="other">%1$d இடங்கள்</item>
+    </plurals>
+    <string name="advanced_settings">மேம்பட்ட அமைப்புகள்</string>
+    <string name="recent_history">சமீபத்திய வரலாறு</string>
+    <string name="set_as_active">செயலில் உள்ளதாக அமை</string>
+    <string name="shareAsImage">படம் உருவாக்கு</string>
+    <string name="customize">தனிப்பயன்</string>
+    <string name="templates">வார்ப்பு</string>
+    <string name="image_saved">படம் சேமிக்கப்பட்டது</string>
+    <string name="image_save_failed">படத்தைச் சேமிக்க முடியவில்லை</string>
+    <string name="image_share_failed">படத்தைப் பகிர முடியவில்லை</string>
+    <string name="content">உள்ளடக்கம்</string>
+    <string name="arabic_only">அரபு மட்டும்</string>
+    <string name="translation_only">மொழிபெயர்ப்பு மட்டும்</string>
+    <string name="arabic_and_translation">அரபும் மொழிபெயர்ப்பும்</string>
+    <string name="shareImageFitRejected">இந்த வசனம் தேர்ந்தெடுத்த வார்ப்புருவுக்கு மிக நீளமானது. கொஞ்சம் குறைவான உள்ளடக்கத்தைக் காட்டுங்கள், அல்லது வேறு வார்ப்புருவைத் தேர்ந்தெடுங்கள்.</string>
+    <string name="tajweed_silent_letter">Silent letter</string>
+    <string name="tajweed_normal_madd">Normal madd (2)</string>
+    <string name="tajweed_separated_madd">Separated madd (2/4/6)</string>
+    <string name="tajweed_connected_madd">Connected madd (4/5)</string>
+    <string name="tajweed_necessary_madd">Necessary madd (6)</string>
+    <string name="tajweed_ghunna">Ghunna/ikhfa’</string>
+    <string name="tajweed_qalqala">Qalqala (echo)</string>
+    <string name="tajweed_tafkhim">Tafkhim (heavy)</string>
+</resources>

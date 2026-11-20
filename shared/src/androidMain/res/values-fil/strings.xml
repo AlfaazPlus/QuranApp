@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="strTitleFootnote">Talababa</string>
+    <string name="strTitleFootnotes">Mga Talababa</string>
+    <string name="strTitleVOTD">Taludtod ng Araw</string>
+    <string name="strHintSearch">Hanapin</string>
+    <string name="desc_votd_widget">Kumuha ng bagong taludtod araw-araw</string>
+    <string name="recitationPlayer">Player ng pagbigkas</string>
+    <string name="desc_recitation_player_widget">Kontrolin ang pagbigkas ng Quran mula sa home screen</string>
+</resources>

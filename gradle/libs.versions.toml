@@ -8,13 +8,16 @@ annotation = "1.11.0"
 legacySupport = "1.0.0"
 appcompat = "1.8.0"
 material = "1.14.0"
-guava = "33.7.2-jre"
+guava = "33.8.0-jre"
 webkit = "1.18.0"
-viewbinding = "9.4.1"
 browser = "1.10.0"
 media3 = "1.11.1"
 retrofit = "3.0.0"
-kotlinxSerialization = "1.4.1"
+ktor = "3.6.1"
+okio = "3.18.2"
+composeMultiplatform = "1.12.2"
+composeMaterial3 = "1.9.0"
+kotlinxSerialization = "1.13.0"
 kotlinxRetrofit = "1.0.0"
 commonsLang = "3.12.0"
 commonsCompress = "1.24.0"
@@ -32,17 +35,15 @@ navigation = "2.10.2"
 accompanist = "0.37.3"
 glance = "1.2.0"
 coil = "3.6.3"
+ksp = "2.3.6"
 
 
 [libraries]
 androidx-coreKtx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 
-gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
-kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinGradlePlugin" }
-kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlinGradlePlugin" }
-
 lifecycle-service = { group = "androidx.lifecycle", name = "lifecycle-service", version.ref = "lifecycle" }
 lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
@@ -52,7 +53,6 @@ androidx-webkit = { group = "androidx.webkit", name = "webkit", version.ref = "w
 desugaring = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugaring" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 guava = { group = "com.google.guava", name = "guava", version.ref = "guava" }
-viewbinding = { group = "com.android.databinding", name = "viewbinding", version.ref = "viewbinding" }
 androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "browser" }
 androidx-activityKtx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtx" }
 androidx-activityCompose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityKtx" }
@@ -68,6 +68,8 @@ media3UI = { module = "androidx.media3:media3-ui", version.ref = "media3" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 kotlinxSerialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 kotlinxRetrofit = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "kotlinxRetrofit" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 
 commons-lang = { group = "org.apache.commons", name = "commons-lang3", version.ref = "commonsLang" }
 commons-compress = { group = "org.apache.commons", name = "commons-compress", version.ref = "commonsCompress" }
@@ -76,6 +78,11 @@ workManager = { module = "androidx.work:work-runtime-ktx", version.ref = "workMa
 dataStore = { module = "androidx.datastore:datastore-preferences", version.ref = "dataStore" }
 
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+compose-multiplatform-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "composeMultiplatform" }
+compose-multiplatform-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "composeMultiplatform" }
+compose-multiplatform-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "composeMultiplatform" }
+compose-multiplatform-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "composeMaterial3" }
+compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "composeMultiplatform" }
 compose-runtime = { group = "androidx.compose.runtime", name = "runtime" }
 compose-ui = { group = "androidx.compose.ui", name = "ui" }
 compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
@@ -93,6 +100,10 @@ androidx-room3-paging = { module = "androidx.room3:room3-paging", version.ref = 
 androidx-sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
 
 paging = { module = "androidx.paging:paging-runtime-ktx", version.ref = "paging" }
+paging-common = { module = "androidx.paging:paging-common", version.ref = "paging" }
+okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
+datastore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "dataStore" }
+datastore-core-okio = { module = "androidx.datastore:datastore-core-okio", version.ref = "dataStore" }
 pagingCompose = { module = "androidx.paging:paging-compose", version.ref = "paging" }
 
 compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
@@ -102,9 +113,16 @@ navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
 glance = { module = "androidx.glance:glance", version.ref = "glance" }
 glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = "glance" }
+coil-core = { module = "io.coil-kt.coil3:coil-core", version.ref = "coil" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
 
 [plugins]
+android-application = { id = "com.android.application", version.ref = "gradle" }
+android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "gradle" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlinGradlePlugin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinGradlePlugin" }
 kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinGradlePlugin" }
+jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 androidx-room3 = { id = "androidx.room3", version.ref = "room3" }

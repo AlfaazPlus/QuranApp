@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="strTitleFootnote">അടിക്കുറിപ്പ്</string>
+    <string name="strTitleFootnotes">അടിക്കുറിപ്പുകൾ</string>
+    <string name="strTitleVOTD">ഇന്നത്തെ വാക്യം</string>
+    <string name="strHintSearch">തിരയുക</string>
+    <string name="desc_votd_widget">ദിവസവും ഓരോ പുതിയ വചനങ്ങൾ നേടുക</string>
+    <string name="recitationPlayer">പാരായണ പ്ലേയർ</string>
+    <string name="desc_recitation_player_widget">ഹോം സ്ക്രീനിൽ നിന്ന് ഖുർആൻ പാരായണം നിയന്ത്രിക്കുക</string>
+</resources>

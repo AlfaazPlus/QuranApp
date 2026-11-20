@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="strTitleFootnote">Шилтеме</string>
+    <string name="strTitleFootnotes">Шилтемелер</string>
+    <string name="strTitleVOTD">Күндүн аяты</string>
+    <string name="desc_votd_widget">Күндүн аятын күн сайын алыңыз</string>
+    <string name="strHintSearch">Издөө</string>
+    <string name="recitationPlayer">Кыраат ойноткуч</string>
+    <string name="desc_recitation_player_widget">Куран кыраатын башкы экрандан башкарыңыз</string>
+</resources>

@@ -1,0 +1,280 @@
+package com.quranapp.android.components.search
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.unit.dp
+import com.quranapp.android.components.common.RadioItem
+import com.quranapp.android.components.common.dialogs.BottomSheet
+import com.quranapp.android.generated.resources.Res
+import com.quranapp.android.generated.resources.clear
+import com.quranapp.android.generated.resources.dr_icon_filter
+import com.quranapp.android.generated.resources.filterTranslationsDisabledNote
+import com.quranapp.android.generated.resources.filterTranslationsEmpty
+import com.quranapp.android.generated.resources.reset
+import com.quranapp.android.generated.resources.search_match
+import com.quranapp.android.generated.resources.search_match_all_words
+import com.quranapp.android.generated.resources.search_match_all_words_desc
+import com.quranapp.android.generated.resources.search_match_any_words
+import com.quranapp.android.generated.resources.search_match_any_words_desc
+import com.quranapp.android.generated.resources.search_match_exact_phrase
+import com.quranapp.android.generated.resources.search_match_exact_phrase_desc
+import com.quranapp.android.generated.resources.selectAll
+import com.quranapp.android.generated.resources.strLabelApply
+import com.quranapp.android.generated.resources.strLabelSelectTranslations
+import com.quranapp.android.generated.resources.strTitleFilters
+import com.quranapp.android.search.SearchFilters
+import com.quranapp.android.search.SearchMatchingStrategy
+import com.quranapp.android.search.TranslationOption
+import com.quranapp.android.theme.alpha
+import org.jetbrains.compose.resources.stringResource
+
+@Composable
+fun SearchFiltersSheet(
+    isOpen: Boolean,
+    onDismiss: () -> Unit,
+    currentFilters: SearchFilters,
+    availableTranslations: List<TranslationOption>,
+    quranTextEnabled: Boolean,
+    onApplyFilters: (SearchFilters) -> Unit,
+) {
+    BottomSheet(
+        isOpen = isOpen,
+        onDismiss = onDismiss,
+        icon = Res.drawable.dr_icon_filter,
+        title = stringResource(Res.string.strTitleFilters),
+        headerArrangement = Arrangement.Start,
+    ) {
+        var draft by remember(currentFilters, isOpen) { mutableStateOf(currentFilters) }
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f, fill = false)
+                .verticalScroll(rememberScrollState())
+                .padding(top = 16.dp, bottom = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            MatchingStrategySection(
+                draft = draft,
+                onChange = { draft = it },
+            )
+
+            TranslationsSection(
+                available = availableTranslations,
+                draft = draft,
+                quranTextEnabled = quranTextEnabled,
+                onChange = { draft = it },
+            )
+        }
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(colorScheme.surfaceContainer)
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            OutlinedButton(
+                modifier = Modifier.weight(1f),
+                onClick = { draft = SearchFilters() },
+            ) {
+                Text(stringResource(Res.string.reset))
+            }
+
+            Button(
+                modifier = Modifier.weight(1f),
+                enabled = draft.isValid && draft != currentFilters,
+                onClick = { onApplyFilters(draft) },
+            ) {
+                Text(stringResource(Res.string.strLabelApply))
+            }
+        }
+    }
+}
+
+@Composable
+private fun SectionTitle(
+    title: String,
+    modifier: Modifier = Modifier,
+) {
+    Text(
+        text = title,
+        style = MaterialTheme.typography.titleSmall,
+        color = colorScheme.primary,
+        modifier = modifier
+            .padding(horizontal = 16.dp),
+    )
+}
+
+@Composable
+private fun MatchingStrategySection(
+    draft: SearchFilters,
+    onChange: (SearchFilters) -> Unit,
+) {
+    Column {
+        SectionTitle(
+            stringResource(Res.string.search_match),
+            modifier = Modifier.padding(bottom = 10.dp),
+        )
+
+        SearchMatchingStrategy.entries.forEach { strategy ->
+            RadioItem(
+                modifier = Modifier.padding(horizontal = 10.dp),
+                title = when (strategy) {
+                    SearchMatchingStrategy.ANY_WORD -> Res.string.search_match_any_words
+                    SearchMatchingStrategy.ALL_WORDS -> Res.string.search_match_all_words
+                    SearchMatchingStrategy.EXACT_PHRASE -> Res.string.search_match_exact_phrase
+                },
+                subtitle = when (strategy) {
+                    SearchMatchingStrategy.ANY_WORD -> Res.string.search_match_any_words_desc
+                    SearchMatchingStrategy.ALL_WORDS -> Res.string.search_match_all_words_desc
+                    SearchMatchingStrategy.EXACT_PHRASE -> Res.string.search_match_exact_phrase_desc
+                },
+                selected = draft.matchingStrategy == strategy,
+                onClick = {
+                    onChange(draft.copy(matchingStrategy = strategy))
+                },
+                contentPadding = PaddingValues(horizontal = 10.dp, vertical = 8.dp),
+            )
+        }
+    }
+}
+
+@Composable
+private fun TranslationsSection(
+    available: List<TranslationOption>,
+    draft: SearchFilters,
+    quranTextEnabled: Boolean,
+    onChange: (SearchFilters) -> Unit,
+) {
+    val effectiveSelected = remember(draft.selectedSlugs, available) {
+        draft.selectedSlugs ?: available.map { it.slug }.toSet()
+    }
+    val allSelected = effectiveSelected.size == available.size
+    val sectionAlpha = if (quranTextEnabled) 0.5f else 1f
+
+    Column(
+        modifier = Modifier.alpha(if (quranTextEnabled) 0.5f else 1f),
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(end = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Box(
+                modifier = Modifier.weight(1f)
+            ) {
+                SectionTitle(stringResource(Res.string.strLabelSelectTranslations))
+            }
+
+            if (available.isNotEmpty() && !quranTextEnabled) {
+                TextButton(
+                    onClick = {
+                        val newSlugs = if (allSelected) emptySet()
+                        else available.map { it.slug }.toSet()
+
+                        onChange(draft.copy(selectedSlugs = newSlugs))
+                    }
+                ) {
+                    Text(
+                        text = stringResource(
+                            if (allSelected) Res.string.clear
+                            else Res.string.selectAll
+                        ),
+                        style = MaterialTheme.typography.labelLarge,
+                    )
+                }
+            }
+        }
+
+        when {
+            quranTextEnabled -> {
+                Text(
+                    text = stringResource(Res.string.filterTranslationsDisabledNote),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = colorScheme.onSurfaceVariant.alpha(sectionAlpha),
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+
+            available.isEmpty() -> {
+                Text(
+                    text = stringResource(Res.string.filterTranslationsEmpty),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+
+            else -> {
+                Column(verticalArrangement = Arrangement.spacedBy(0.dp)) {
+                    for (option in available) {
+                        val checked = effectiveSelected.contains(option.slug)
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    val next = effectiveSelected.toMutableSet().apply {
+                                        if (checked) remove(option.slug) else add(option.slug)
+                                    }
+                                    val finalSelection: Set<String>? = when {
+                                        next.isEmpty() -> emptySet()
+                                        next.size == available.size -> null
+                                        else -> next.toSet()
+                                    }
+                                    onChange(draft.copy(selectedSlugs = finalSelection))
+                                }
+                                .padding(horizontal = 16.dp, vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(10.dp)
+                        ) {
+                            Checkbox(
+                                checked = checked,
+                                onCheckedChange = null,
+                                colors = CheckboxDefaults.colors(
+                                    checkedColor = colorScheme.primary,
+                                    uncheckedColor = colorScheme.onSurfaceVariant,
+                                ),
+                            )
+
+                            Text(
+                                text = option.displayName,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = colorScheme.onSurface,
+                                modifier = Modifier.weight(1f),
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

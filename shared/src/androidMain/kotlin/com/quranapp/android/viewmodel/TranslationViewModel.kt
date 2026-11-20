@@ -1,0 +1,336 @@
+package com.quranapp.android.viewmodel
+
+import androidx.lifecycle.viewModelScope
+import com.quranapp.android.AndroidAppContext
+import com.quranapp.android.api.models.translation.TranslationBookInfoModel
+import com.quranapp.android.db.DatabaseProvider
+import com.quranapp.android.extensions.canProceed
+import com.quranapp.android.models.DataLoadError
+import com.quranapp.android.models.transls.TranslModel
+import com.quranapp.android.models.transls.TranslationGroupModel
+import com.quranapp.android.platform.Platform
+import com.quranapp.android.preferences.ReaderPreferences
+import com.quranapp.android.search.SearchIndexScheduler
+import com.quranapp.android.task.TaskState
+import com.quranapp.android.utils.managers.TranslationDownloadManager
+import com.quranapp.android.utils.reader.TranslUtils
+import com.quranapp.android.utils.translation.TranslationVersionManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
+data class TranslationUiState(
+    val isLoading: Boolean = true,
+    val translationGroups: List<TranslationGroupModel> = emptyList(),
+    val selectedSlugs: Set<String> = emptySet(),
+    val saveTranslationChanges: Boolean = true,
+    val searchQuery: String = "",
+    val error: DataLoadError? = null,
+    val outdatedSlugs: Set<String> = emptySet(),
+    val updatingSlugs: Set<String> = emptySet(),
+)
+
+sealed interface TranslationUiEvent {
+    data object SelectionLimit : TranslationUiEvent
+}
+
+sealed interface TranslationEvent {
+    object Refresh : TranslationEvent
+    object RefreshQuiet : TranslationEvent
+    data class Initialize(
+        val initialSlugs: Set<String>,
+        val saveTranslationChanges: Boolean
+    ) : TranslationEvent
+
+    data class ToggleGroup(val langCode: String) : TranslationEvent
+    data class SelectionChanged(val translation: TranslModel, val isSelected: Boolean) :
+        TranslationEvent
+
+    data class Search(val query: String) : TranslationEvent
+    data class DeleteTranslation(val slug: String) : TranslationEvent
+    data class UpdateTranslation(val slug: String) : TranslationEvent
+}
+
+class TranslationViewModel() : AppViewModel() {
+
+    private val _uiState = MutableStateFlow(TranslationUiState())
+    val uiState: StateFlow<TranslationUiState> = _uiState.asStateFlow()
+
+    private val _events = MutableSharedFlow<TranslationUiEvent>(extraBufferCapacity = 1)
+    val events = _events.asSharedFlow()
+
+    private val context get() = AndroidAppContext.get()
+    private val versionManager = TranslationVersionManager.get()
+
+    init {
+        TranslationDownloadManager.initialize()
+
+        viewModelScope.launch {
+            val initialSlugs = ReaderPreferences.getTranslations()
+            _uiState.update { it.copy(selectedSlugs = initialSlugs) }
+
+            loadTranslations()
+        }
+
+        viewModelScope.launch {
+            versionManager.refreshOutdatedState()
+        }
+
+        viewModelScope.launch {
+            versionManager.updateUiState.collect { state ->
+                _uiState.update {
+                    it.copy(outdatedSlugs = state.outdatedSlugs)
+                }
+            }
+        }
+
+        viewModelScope.launch {
+            TranslationDownloadManager.observeDownloadsAsFlow().collect { (slug, status) ->
+                val isUpdating = _uiState.value.updatingSlugs.contains(slug)
+                if (!isUpdating) return@collect
+
+                when (status) {
+                    is TaskState.Succeeded -> {
+                        versionManager.markTranslationUpdated(slug)
+                        _uiState.update {
+                            it.copy(updatingSlugs = it.updatingSlugs - slug)
+                        }
+                        loadTranslations(silent = true)
+                    }
+
+                    is TaskState.Failed,
+                    TaskState.Cancelled -> {
+                        _uiState.update {
+                            it.copy(updatingSlugs = it.updatingSlugs - slug)
+                        }
+                    }
+
+                    else -> Unit
+                }
+            }
+        }
+    }
+
+    fun onEvent(event: TranslationEvent) {
+        when (event) {
+            is TranslationEvent.Refresh -> loadTranslations()
+            is TranslationEvent.RefreshQuiet -> loadTranslations(silent = true)
+            is TranslationEvent.Initialize -> _uiState.update {
+                it.copy(
+                    selectedSlugs = event.initialSlugs,
+                    saveTranslationChanges = event.saveTranslationChanges
+                )
+            }
+
+            is TranslationEvent.ToggleGroup -> toggleGroup(event.langCode)
+            is TranslationEvent.SelectionChanged -> onSelectionChanged(
+                event.translation,
+                event.isSelected
+            )
+
+            is TranslationEvent.Search -> _uiState.update { it.copy(searchQuery = event.query) }
+            is TranslationEvent.DeleteTranslation -> delete(event.slug)
+            is TranslationEvent.UpdateTranslation -> updateTranslation(event.slug)
+        }
+    }
+
+    private fun toggleGroup(langCode: String) {
+        _uiState.update { state ->
+            val updatedGroups = state.translationGroups.map { group ->
+                if (group.langCode == langCode) {
+                    group.copy(
+                        isExpanded = !group.isExpanded
+                    )
+                } else {
+                    group
+                }
+            }
+            state.copy(translationGroups = updatedGroups)
+        }
+    }
+
+    private fun onSelectionChanged(translation: TranslModel, isSelected: Boolean) {
+        val state = _uiState.value
+        val newSlugs = state.selectedSlugs.toMutableSet()
+        val succeed = TranslUtils.resolveSelectionChange(
+            newSlugs,
+            translation,
+            isSelected,
+        )
+        if (!succeed) {
+            _events.tryEmit(TranslationUiEvent.SelectionLimit)
+            return
+        }
+
+        if (state.saveTranslationChanges) {
+            viewModelScope.launch {
+                ReaderPreferences.setTranslations(newSlugs)
+            }
+        }
+
+        val selectedSlugs = newSlugs.toSet()
+        _uiState.update { current ->
+            current.copy(
+                selectedSlugs = selectedSlugs,
+                translationGroups = current.translationGroups.map { group ->
+                    group.copy(
+                        translations = ArrayList(
+                            group.translations.map { t ->
+                                t.apply { isChecked = selectedSlugs.contains(t.bookInfo.slug) }
+                            }
+                        )
+                    )
+                }
+            )
+        }
+    }
+
+    private fun delete(slug: String) {
+        viewModelScope.launch {
+            deleteTranslationNow(slug)
+        }
+    }
+
+    private suspend fun deleteTranslationNow(slug: String) {
+        if (TranslUtils.isPrebuilt(slug)) {
+            return
+        }
+
+        var updatedSelectedSlugs: Set<String> = emptySet()
+        DatabaseProvider.getTranslationRepository().let {
+            it.delete(slug)
+            SearchIndexScheduler.enqueueRemoveSlug(slug)
+
+            _uiState.update { current ->
+                val updatedGroups = current.translationGroups.map { group ->
+                    val filtered = group.translations.filterNot { it.bookInfo.slug == slug }
+
+                    group.copy(
+                        translations = ArrayList(filtered)
+                    )
+                }.filterNot { it.translations.isEmpty() }
+
+                updatedSelectedSlugs = current.selectedSlugs - slug
+                current.copy(
+                    translationGroups = updatedGroups,
+                    selectedSlugs = updatedSelectedSlugs
+                )
+            }
+        }
+
+        viewModelScope.launch {
+            ReaderPreferences.setTranslations(updatedSelectedSlugs)
+        }
+    }
+
+    private fun updateTranslation(slug: String) {
+        if (TranslUtils.isPrebuilt(slug)) return
+        if (!_uiState.value.outdatedSlugs.contains(slug)) return
+
+        viewModelScope.launch {
+            if (!Platform.networkMonitor.canProceed()) return@launch
+            val remoteInfo = versionManager.getRemoteBookInfo(slug)
+                ?: DatabaseProvider.getTranslationRepository()
+                    .let { factory ->
+                        factory.getBook(slug)
+                    }
+
+            if (remoteInfo.downloadPath.isBlank()) return@launch
+
+            _uiState.update {
+                it.copy(updatingSlugs = it.updatingSlugs + slug)
+            }
+
+            TranslationDownloadManager.startDownload(remoteInfo)
+        }
+    }
+
+    fun loadTranslations(
+        silent: Boolean = false
+    ) {
+        _uiState.update { it.copy(isLoading = !silent, error = null) }
+
+        viewModelScope.launch {
+            val currentSlugs = _uiState.value.selectedSlugs
+
+            try {
+                val translationGroups = withContext(Dispatchers.IO) {
+                    loadTranslationsFromDatabase(
+                        _uiState.value.translationGroups,
+                        currentSlugs
+                    )
+                }
+
+                if (translationGroups.isEmpty()) {
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            translationGroups = emptyList(),
+                            error = DataLoadError.NoData
+                        )
+                    }
+                } else {
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            translationGroups = translationGroups,
+                            error = null
+                        )
+                    }
+                }
+            } catch (e: Exception) {
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        translationGroups = emptyList(),
+                        error = DataLoadError.Failed
+                    )
+                }
+            }
+        }
+    }
+
+    private suspend fun loadTranslationsFromDatabase(
+        oldGroups: List<TranslationGroupModel>,
+        selectedSlugs: Set<String>
+    ): List<TranslationGroupModel> {
+        val translFactory = DatabaseProvider.getTranslationRepository()
+
+        // map old groups expanded state for better UX
+        val oldExpandedState = oldGroups.associate { it.langCode to it.isExpanded }
+
+        val translationGroups = mutableListOf<TranslationGroupModel>()
+        val languageAndInfo = mutableMapOf<String, MutableList<TranslationBookInfoModel>>()
+
+        for (bookInfo in translFactory.getBooks().values) {
+            val listOfLang = languageAndInfo.getOrPut(bookInfo.langCode) {
+                mutableListOf()
+            }
+            listOfLang.add(bookInfo)
+        }
+
+        languageAndInfo.forEach { (langCode, listOfBooks) ->
+            val groupModel = TranslationGroupModel(langCode)
+            groupModel.langName = listOfBooks.firstOrNull()?.langName ?: langCode
+
+            for (book in listOfBooks) {
+                val model = TranslModel(book)
+                model.isChecked = selectedSlugs.contains(book.slug)
+                groupModel.translations.add(model)
+
+                val wasExpanded = oldExpandedState[langCode] ?: false
+                groupModel.isExpanded = groupModel.isExpanded || wasExpanded || model.isChecked
+            }
+
+            translationGroups.add(groupModel)
+        }
+
+        return translationGroups
+    }
+}

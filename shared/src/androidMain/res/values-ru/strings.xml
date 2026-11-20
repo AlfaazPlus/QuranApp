@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="strTitleFootnote">Примечание</string>
+    <string name="strTitleFootnotes">Примечания</string>
+    <string name="strTitleVOTD">Аят Дня</string>
+    <string name="strHintSearch">Поиск</string>
+    <string name="desc_votd_widget">Получать новое стихотворение каждый день</string>
+    <string name="recitationPlayer">Плеер чтения</string>
+    <string name="desc_recitation_player_widget">Управляйте чтением Корана с главного экрана</string>
+</resources>

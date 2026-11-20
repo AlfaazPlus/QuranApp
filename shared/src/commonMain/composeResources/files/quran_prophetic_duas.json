@@ -1,0 +1,109 @@
+{
+  "prophets": [
+    {
+      "name": "prophetAdam",
+      "order": 1,
+      "drawable": "prophet_adam",
+      "thumbnail": "prophet_adam.webp",
+      "references": "7:23"
+    },
+    {
+      "name": "prophetAyyub",
+      "order": 13,
+      "drawable": "prophet_ayyub",
+      "thumbnail": "prophet_ayyub.webp",
+      "references": "21:83,38:41"
+    },
+    {
+      "name": "prophetDawud",
+      "order": 17,
+      "drawable": "prophet_dawud",
+      "thumbnail": "prophet_dawud.webp",
+      "references": "2:250"
+    },
+    {
+      "name": "prophetIbrahim",
+      "order": 7,
+      "drawable": "prophet_ibrahim",
+      "thumbnail": "prophet_abraham.webp",
+      "references": "2:126-129,14:35-41,26:83-89,37:99-100,60:4-5"
+    },
+    {
+      "name": "prophetIsa",
+      "order": 24,
+      "drawable": "prophet_isa",
+      "thumbnail": "prophet_isa.webp",
+      "references": "5:114"
+    },
+    {
+      "name": "prophetLut",
+      "order": 6,
+      "drawable": "prophet_lut",
+      "thumbnail": "prophet_lut.webp",
+      "references": "29:30,26:169"
+    },
+    {
+      "name": "prophetMuhammad",
+      "order": 25,
+      "drawable": "prophet_muhammad",
+      "thumbnail": "prophet_muhammad.webp",
+      "references": "3:26-27,4:75,6:162-163,9:59,17:24,17:80,20:114,21:112,23:93-94,23:97-98,23:109,23:118,39:46,46:15"
+    },
+    {
+      "name": "prophetMusa",
+      "order": 15,
+      "drawable": "prophet_musa",
+      "thumbnail": "prophet_musa.webp",
+      "references": "7:126,7:143,7:151,7:155-156,2:67,5:25,10:85-86,20:25-35,28:16-17,28:21,28:24"
+    },
+    {
+      "name": "prophetNuh",
+      "order": 3,
+      "drawable": "prophet_nuh",
+      "thumbnail": "prophet_nuh.webp",
+      "references": "11:45,11:47,23:26,23:29,26:117-118,54:10,71:26-28"
+    },
+    {
+      "name": "prophetSaleh",
+      "order": 5,
+      "drawable": "prophet_saleh",
+      "thumbnail": "prophet_saleh.webp",
+      "references": "23:39"
+    },
+    {
+      "name": "prophetShuaib",
+      "order": 12,
+      "drawable": "prophet_shuaib",
+      "thumbnail": "prophet_shuaib.webp",
+      "references": "7:89"
+    },
+    {
+      "name": "prophetSulayman",
+      "order": 18,
+      "drawable": "prophet_sulayman",
+      "thumbnail": "prophet_sulayman.webp",
+      "references": "27:19,38:35"
+    },
+    {
+      "name": "prophetYunus",
+      "order": 21,
+      "drawable": "prophet_yunus",
+      "thumbnail": "prophet_yunus.webp",
+      "references": "21:87"
+    },
+    {
+      "name": "prophetYusuf",
+      "order": 11,
+      "drawable": "prophet_yusuf",
+      "thumbnail": "prophet_yusuf.webp",
+      "references": "12:33,12:101"
+    },
+    {
+      "name": "prophetZakariyya",
+      "order": 22,
+      "drawable": "prophet_zakariyya",
+      "thumbnail": "prophet_zakariyya.webp",
+      "references": "3:38,19:4-6,21:89"
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+package com.quranapp.android.db.migrations
+
+import androidx.room3.migration.Migration
+import androidx.sqlite.SQLiteConnection
+import androidx.sqlite.execSQL
+import com.quranapp.android.preferences.ReaderPreferences
+import com.quranapp.android.utils.reader.QuranScriptUtils
+import com.quranapp.android.utils.reader.isQuranAtlasScript
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+
+object ExternalQuranDatabaseMigrations {
+    val MIGRATION_1_2 = object : Migration(1, 2) {
+        override suspend fun migrate(connection: SQLiteConnection) {
+            connection.execSQL(
+                """
+                    CREATE TABLE IF NOT EXISTS `atlas_bundles` (
+                        `bundle_key` TEXT NOT NULL,
+                        `meta_json` TEXT NOT NULL,
+                        `layer_json` TEXT NOT NULL,
+                        PRIMARY KEY(`bundle_key`)
+                    )
+                    """.trimIndent(),
+            )
+
+            connection.execSQL(
+                """
+                    CREATE TABLE IF NOT EXISTS `atlas_word_shapes` (
+                        `bundle_key` TEXT NOT NULL,
+                        `word` TEXT NOT NULL,
+                        `placements_json` TEXT NOT NULL,
+                        PRIMARY KEY(`bundle_key`, `word`)
+                    )
+                    """.trimIndent(),
+            )
+            connection.execSQL(
+                """
+                    CREATE INDEX IF NOT EXISTS `idx_atlas_word_shapes_bundle`
+                    ON `atlas_word_shapes` (`bundle_key`)
+                    """.trimIndent(),
+            )
+        }
+    }
+
+    val MIGRATION_2_3 = object : Migration(2, 3) {
+        override suspend fun migrate(connection: SQLiteConnection) {
+            connection.execSQL(
+                """
+                    CREATE TABLE IF NOT EXISTS `wbw_audio_timing` (
+                        `audio_id` TEXT NOT NULL,
+                        `ayah_id` INTEGER NOT NULL,
+                        `word_index` INTEGER NOT NULL,
+                        `start_millis` INTEGER NOT NULL,
+                        `end_millis` INTEGER NOT NULL,
+                        PRIMARY KEY(`audio_id`, `ayah_id`, `word_index`)
+                    )
+                    """.trimIndent(),
+            )
+            connection.execSQL(
+                """
+                    CREATE INDEX IF NOT EXISTS `idx_wbw_audio_timing_ayah_word_index`
+                    ON `wbw_audio_timing` (`ayah_id`, `word_index`)
+                    """.trimIndent(),
+            )
+        }
+    }
+
+    val MIGRATION_3_4 = object : Migration(3, 4) {
+        override suspend fun migrate(connection: SQLiteConnection) {
+            connection.execSQL("DELETE FROM `atlas_bundles`")
+            connection.execSQL("DROP TABLE IF EXISTS `atlas_word_shapes`")
+            connection.execSQL(
+                """
+                    CREATE TABLE IF NOT EXISTS `atlas_word_shapes` (
+                        `bundle_key` TEXT NOT NULL,
+                        `word` TEXT NOT NULL,
+                        `page` INTEGER NOT NULL,
+                        `placements_json` TEXT NOT NULL,
+                        PRIMARY KEY(`bundle_key`, `word`, `page`)
+                    )
+                    """.trimIndent(),
+            )
+            connection.execSQL(
+                """
+                    CREATE INDEX IF NOT EXISTS `idx_atlas_word_shapes_bundle`
+                    ON `atlas_word_shapes` (`bundle_key`)
+                    """.trimIndent(),
+            )
+
+            withContext(Dispatchers.IO) {
+                if (ReaderPreferences.getQuranScript().isQuranAtlasScript()) {
+                    ReaderPreferences.setQuranScript(QuranScriptUtils.SCRIPT_DEFAULT)
+                }
+            }
+        }
+    }
+
+    val MIGRATION_4_5 = object : Migration(4, 5) {
+        override suspend fun migrate(connection: SQLiteConnection) {
+            connection.execSQL(
+                """
+                CREATE TABLE IF NOT EXISTS `translation_books` (
+                    `slug` TEXT NOT NULL,
+                    `lang_code` TEXT NOT NULL,
+                    `lang_name` TEXT NOT NULL,
+                    `book_name` TEXT NOT NULL DEFAULT '',
+                    `author_name` TEXT NOT NULL DEFAULT '',
+                    `display_name` TEXT NOT NULL DEFAULT '',
+                    `version` INTEGER NOT NULL,
+                    PRIMARY KEY(`slug`)
+                )
+                """.trimIndent()
+            )
+            connection.execSQL(
+                """
+                CREATE TABLE IF NOT EXISTS `translation_verses` (
+                    `slug` TEXT NOT NULL,
+                    `ayah_id` INTEGER NOT NULL,
+                    `text` TEXT NOT NULL,
+                    PRIMARY KEY(`slug`, `ayah_id`)
+                )
+                """.trimIndent()
+            )
+            connection.execSQL(
+                """
+                CREATE TABLE IF NOT EXISTS `translation_footnotes` (
+                    `slug` TEXT NOT NULL,
+                    `ayah_id` INTEGER NOT NULL,
+                    `number` INTEGER NOT NULL,
+                    `text` TEXT NOT NULL,
+                    PRIMARY KEY(`slug`, `ayah_id`, `number`)
+                )
+                """.trimIndent()
+            )
+        }
+    }
+}

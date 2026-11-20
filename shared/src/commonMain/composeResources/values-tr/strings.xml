@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="honorificMuhammad">ﷺ</string>
+    <string name="honorificProphet">Alaihi Selam</string>
+    <string name="prophetAdam">Adem</string>
+    <string name="prophetAlyasaa">Elyesa</string>
+    <string name="prophetAyyub">Eyyub</string>
+    <string name="prophetDawud">Davud</string>
+    <string name="prophetDhulkifl">Zülkifl</string>
+    <string name="prophetHarun">Harun</string>
+    <string name="prophetHud">Hûd</string>
+    <string name="prophetIbrahim">İbrahim</string>
+    <string name="prophetIdrees">İdris</string>
+    <string name="prophetIliyas">İlyas</string>
+    <string name="prophetIsa">İsa</string>
+    <string name="prophetIshaq">İshak</string>
+    <string name="prophetIsmail">İsmail</string>
+    <string name="prophetLut">Lut</string>
+    <string name="prophetMuhammad">Muhammed</string>
+    <string name="prophetMusa">Musa</string>
+    <string name="prophetNuh">Nuh</string>
+    <string name="prophetSaleh">Salih</string>
+    <string name="prophetShuaib">Şuayb</string>
+    <string name="prophetSulayman">Süleyman</string>
+    <string name="prophetYahya">Yahya</string>
+    <string name="prophetYaqub">Yakub</string>
+    <string name="prophetYunus">Yunus</string>
+    <string name="prophetYusuf">Yusuf</string>
+    <string name="prophetZakariyya">Zekeriya</string>
+    <string name="strLabelRemove">Kaldır</string>
+    <string name="strLabelGotIt">Anladım</string>
+    <string name="strLabelDelete">Sil</string>
+    <string name="strTitleAppVersion">Uygulama sürümü</string>
+    <string name="strLabelRetry">Yeniden dene</string>
+    <string name="strLabelEdit">Düzenle</string>
+    <string name="strLabelDone">Bitti</string>
+    <string name="labelDownload">İndir</string>
+    <string name="strLabelOn">Açık</string>
+    <string name="strLabelThemeLight">Aydınlık</string>
+    <string name="strLabelSystemDefault">Sistem varsayılanı</string>
+    <string name="strLabelClose">Kapat</string>
+    <string name="strLabelCancel">İptal</string>
+    <string name="strLabelApply">Kaydet</string>
+    <string name="strLabelRemoveAll">Tümünü kaldır</string>
+    <string name="strLabelBack">Geri</string>
+    <string name="strLabelTop">Üst</string>
+    <string name="strLabelCopy">Kopyala</string>
+    <string name="strLabelOpenInReader">Okuyucuda aç</string>
+    <string name="strLabelSkip">Atla</string>
+    <string name="strLabelOff">Kapalı</string>
+    <string name="strLabelOpen">Aç</string>
+    <string name="strLabelViewAll">Tümünü görüntüle</string>
+    <string name="strLabelRead">Oku »</string>
+    <string name="strLabelStart">Başlat</string>
+    <string name="strLabelNext">Sonraki</string>
+    <string name="strLabelUpdate">Güncelle</string>
+    <string name="strLabelThemeDark">Karanlık</string>
+    <string name="strLabelSurah" formatted="false">%1$s suresi</string>
+    <string name="strLabelPageNo" formatted="false">%1$d. sayfa</string>
+    <string name="strLabelJuzNo" formatted="false">%1$d. cüz</string>
+    <string name="strLabelVerseNo" formatted="false">%1$d. ayet</string>
+    <string name="strLabelVerseNoWithColon" formatted="false">Ayet : %1$d</string>
+    <string name="strLabelVersesWithColon" formatted="false">Ayetler : %1$d–%2$d</string>
+    <string name="strLabelVerses" formatted="false">%1$d–%2$d. ayetler</string>
+    <string name="strLabelVerseWithChapNo" formatted="false">Ayet %1$d:%2$d</string>
+    <string name="strTitleHolyQuran">Kur\'an\'ı Kerim</string>
+    <string name="strTitleQuran">Kur\'an</string>
+    <string name="strTitleMakki">Mekki</string>
+    <string name="strTitleFootnote">Dipnot</string>
+    <string name="strTitleVerseOptions">Ayet seçenekleri</string>
+    <string name="strTitleVerseRecitation">Ayet tilaveti</string>
+    <string name="strTitleReaderTextSizeTransl">Meal metin boyutu</string>
+    <string name="strTitleBookmark">Yer imi</string>
+    <string name="strTitleSendFeedback">Geri bildirim gönder</string>
+    <string name="strTitleHelpSupport">Yardım &amp; Destek</string>
+    <string name="strTitleAddNote">Not ekle</string>
+    <string name="strTitleTafsir">Tefsir</string>
+    <string name="strTitleSelectTafsir">Tefsir seç</string>
+    <string name="strTitleAboutSurah">Sure hakkında</string>
+    <string name="strTitleTranslations">Mealler</string>
+    <string name="strTitleRecitations">Tilavet</string>
+    <string name="strTitleSelectReciter">Hafız seç</string>
+    <string name="strTitleGotoVerseNo" formatted="false">%1$d. ayete git</string>
+    <string name="strTitleReadVerseRange" formatted="false">%1$d - %2$d. ayetleri oku</string>
+    <string name="strTitleNote">Not</string>
+    <string name="strTitleFilters">Filtreler</string>
+    <string name="strTitleReaderTextSizeArabic">Arapça metin boyutu</string>
+    <string name="strTitleSettings">Ayarlar</string>
+    <string name="strTitleAboutUs">Hakkımızda</string>
+    <string name="strTitleBookmarks">Yer imleri</string>
+    <string name="strTitleShareApp">Uygulamayı paylaş</string>
+    <string name="strTitleRateApp">Uygulamayı değerlendir</string>
+    <string name="strTitleMenu">Menü</string>
+    <string name="strTitleDownloadTranslations">İndir</string>
+    <string name="strTitleScripts">Hatlar</string>
+    <string name="strTitleMadani">Medeni</string>
+    <string name="strLabelPreviousVerse">Önceki ayet</string>
+    <string name="strLabelVerseSerialWithChapter" formatted="false">%1$s %2$d:%3$d</string>
+    <string name="strLabelNextVerse">Sonraki ayet</string>
+    <string name="strLabelVerseSerial" formatted="false">%1$d:%2$d</string>
+    <string name="strLabelVerseWithChapNameWithBar" formatted="false">%1$s suresi│ %2$d. ayet</string>
+    <string name="strLabelFeatureQuranMiniInfo" formatted="false">Bölüm nu. %1$d │ Ayet %2$d–%3$d</string>
+    <string name="strTitleReaderChapters">Sureler</string>
+    <string name="strTitleFootnotes">Dipnotlar</string>
+    <string name="strTitleReaderJuz">Cüz (Bölümler)</string>
+    <string name="strLabelVerseWithChapNameAndNo" formatted="false">(%2$d) %1$s suresi: %3$d. ayet</string>
+    <string name="strTitleReaderVerseInformation" formatted="false">%1$s Suresi : %2$d</string>
+    <string name="strTitleBookmarkDeleteThis">Bu yer imi kaldırılsın mı\?</string>
+    <string name="strTitleBookmarkDeleteAll">Tüm yer imleri kaldırılsın mı\?</string>
+    <string name="strTitleBookmarkDeleteCount" formatted="false">%1$d yer imi kaldırılsın mı\?</string>
+    <string name="strTitleTranslDelete">Meal silinsin mi\?</string>
+    <string name="strTitleShareVerse">Ayeti paylaş</string>
+    <string name="strTitleFeaturedQuran">Öne çıkanlar</string>
+    <string name="strTitleVOTD">Günün ayeti</string>
+    <string name="strTitleProphets">Peygamberler</string>
+    <string name="strTitleFeaturedDuas">Kur\'an\'daki dualar</string>
+    <string name="strTitleFeaturedProphets">Kur\'an\'daki peygamberler</string>
+    <string name="strTitleFailed">Başarısız</string>
+    <string name="strTitleChapInfoJuzNo">Cüz Nu.</string>
+    <string name="strTitleChapInfoRukus">Bölümler</string>
+    <string name="strTitleChapInfoPages">Sayfalar</string>
+    <string name="strTitlePrivacyPolicy">Gizlilik politikası</string>
+    <string name="strTitleSuccess">Başarılı</string>
+    <string name="strChapInfoSeeMore">Daha fazla bilgi gör ›</string>
+    <string name="strTitleChapInfoChapterNo">Bölüm numarası</string>
+    <string name="verses">Ayet</string>
+    <string name="strTitleChapInfoRevOrder">Vahiy sırası</string>
+    <string name="strTitleChapInfoRevType">Vahiy türü</string>
+    <string name="strTitleAppSettings">Uygulama ayarları</string>
+    <string name="strTitleAppLanguage">Uygulama dili</string>
+    <string name="strTitleTheme">Tema</string>
+    <string name="strTitleNoInternet">İnternet yok</string>
+    <string name="strLabelPause">Duraklat</string>
+    <string name="strLabelBookmark">Yer imi</string>
+    <string name="strLabelRemoveBookmark">Yer imini Kaldır</string>
+    <string name="strLabelReport">Bildir</string>
+    <string name="continue_reading_2">Okumaya Devam Et »</string>
+    <string name="strLabelSelectedCount" formatted="false">%1$d tane seçildi</string>
+    <string name="strLabelMoreTranslations" formatted="false">+%1$d daha fazla meal</string>
+    <string name="strLabelSelectVerse">Ayet seç</string>
+    <string name="strLabelCurrentVerse">Geçerli ayet</string>
+    <string name="strLabelVerseRange">Ayet aralığı</string>
+    <string name="strLabelSelectTranslations">Mealleri seç</string>
+    <string name="strLabelSelectTranslation">Meal seç</string>
+    <string name="strLabelIncludeArabic">Arapça dahil</string>
+    <string name="strLabelIncludeFootnotes">Dipnotlar dahil</string>
+    <string name="includeBookmarkNote">Yer imi notunu ekle (varsa)</string>
+    <string name="strLabelLater">Daha sonra</string>
+    <string name="strHintSearch">Ara</string>
+    <string name="strHintSearchQuran">Bir terim yaz, örn. \"Hayat\"</string>
+    <string name="strLabelQuickLinks">Hızlı bağlantılar</string>
+    <string name="strHintSearchProphet">Peygamber ara</string>
+    <string name="strHintFromVerse">Ayetten</string>
+    <string name="strHintToVerse">Ayete</string>
+    <string name="strHintBookmarkViewerNote">Bu yer imi hakkında buraya ek bir not yaz…</string>
+    <string name="strMsgThemeDark">Karanlık tema güç tüketimini azaltır.</string>
+    <string name="strMsgThemeDefault">Sistem ayarlarına göre ayarla.</string>
+    <string name="strMsgInvalidChapterNo" formatted="false">%1$d geçerli bir Sure numarası değil.</string>
+    <string name="strMsgInvalidJuzNo" formatted="false">%1$d geçerli bir Cüz numarası değil.</string>
+    <string name="strMsgBookmarkRemoveFailed">Ayet, yer imlerinden kaldırılamadı</string>
+    <string name="strMsgBookmarkDeleteAll">Tüm yer imleri kaldırılacak.</string>
+    <string name="strMsgReadHistoryDeleteAll">Tüm okuma geçmişi kaldırılacak.</string>
+    <string name="strMsgBookmarkDate" formatted="false">%1$s ,%2$s\'de</string>
+    <string name="strMsgBookmarkDateToday" formatted="false">Bugün %1$s\'de</string>
+    <string name="strMsgHistoryRemove">Bu geçmişi kaldır\?</string>
+    <string name="strMsgHistoryRemoved" formatted="false">\"%1$s\" geçmişten kaldırıldı</string>
+    <string name="strMsgSearchOneResultFoundIn" formatted="false">%1$s\'de sadece 1 sonuç bulundu</string>
+    <string name="strMsgSearchNoResultsFoundAbsolute">Sonuç bulunamadı. Lütfen arama filtrelerini kontrol edin.</string>
+    <string name="strMsgSearchWordPart">Kelime içinde ara</string>
+    <string name="strMsgSearchWordPartExample">Örneğin: \'insanlık\'taki \'insan\'</string>
+    <string name="strMsgEnterValidRange">Lütfen geçerli bir aralık gir</string>
+    <string name="strMsgTranslDownloaded" formatted="false">İndirme başarılı: \"%1$s\".</string>
+    <string name="strDescAddToBookmarks">Yer imlerine ekle</string>
+    <string name="strDescGoBack">Geri git</string>
+    <string name="strMsgNoInternet">Lütfen internet bağlantısını kontrol edin.</string>
+    <string name="strMsgSomethingWrong">Bir şeyler ters gitti!</string>
+    <string name="strMsgTryLater">Lütfen daha sonra tekrar deneyin.</string>
+    <string name="strMsgCouldNotOpenPage">Sayfa açılamadı.</string>
+    <string name="strLabelNavHome">Ana ekran</string>
+    <string name="strLabelNavSearch">Ara</string>
+    <string name="library">Kütüphane</string>
+    <string name="strTextPleaseWait">Lütfen bekleyin…</string>
+    <string name="strAyatulKursi">Ayet-el Kürsi</string>
+    <string name="strTitleOops">Eyvah!</string>
+    <string name="strMsgUpdateAvailable">GÜNCELLEME MEVCUT! Lütfen en son özellikleri görmek için uygulamayı güncelleyin.</string>
+    <string name="strMsgUpdateAvailable4Dialog">GÜNCELLEME MEVCUT!
+    \nLütfen uygulamayı güncelleyin.</string>
+    <string name="strMsgUpdateAvailable2Continue">GÜNCELLEME GEREKLİ!
+    \nDevam etmek için lütfen uygulamayı güncelleyin.</string>
+    <string name="strLabelAllChapters">Tüm Bölümler</string>
+    <string name="strMsgReferenceFoundPlaces" formatted="false">%1$s ile ilgili ayetler toplamda %2$d yerde bulundu.</string>
+    <string name="titleDownloadScriptResources">Bu hat için gerekli kaynaklar indirilsin mi\?</string>
+    <string name="msgDownloadingFonts">Yazı tipleri indiriliyor</string>
+    <string name="textDownloading">İndiriliyor…</string>
+    <string name="lastCrashLog">Son çökme günlüğü</string>
+    <string name="createIssue">Sorun oluştur</string>
+    <string name="copiedToClipboard">Panoya kopyalandı.</string>
+    <string name="pasteCrashLogGithubIssue">Günlük panoya kopyalandı. Lütfen kopyalanan metni GitHub\'daki ilgili alana yapıştırın.</string>
+    <string name="titleStorageCleanup">Depolama temizleme</string>
+    <string name="storageCleanupMessage">İndirilmiş ama kullanılmayan kaynaklar silinerek yer açılabilir. Bu işlem yer imlerinizi veya ayarlarınızı etkilemez.
+    \n
+    \nAşağıdaki kaynaklar silinebilir:</string>
+    <string name="translationCanBeFreedUp" formatted="false">İndirilen %1$d meal silinebilir.</string>
+    <string name="recitationCanBeFreedUp" formatted="false">%2$d hafızdan depolanan %1$d tilavet dosyası silinebilir.</string>
+    <string name="scriptCanBeFreedUp" formatted="false">İndirilen %1$d hat ve hatta ait yazı tipleri silinebilir.</string>
+    <string name="tafseerCanBeFreedUp" formatted="false">Kaydedilen %1$d tefsir temizlenebilir.</string>
+    <string name="labelFreeUpSpace">Yer aç</string>
+    <string name="msgDeleteTranslation" formatted="false">%1$s
+    \n%2$s
+    \n
+    \nBunları tekrar indirmeniz gerekiyor.</string>
+    <string name="strPreviewTextTransl">Rahman ve Rahim olan Allah\'ın adıyla</string>
+    <string name="strMsgChapInfoFailedLoad">Sure bilgisi yüklenemedi. Lütfen daha sonra tekrar deneyin.</string>
+    <string name="strTitleReaderSettings">Okuyucu ayarları</string>
+    <string name="strLabelPlay">Oynat</string>
+    <string name="strLabelShare">Paylaş</string>
+    <string name="strLabelOrder">Sıra</string>
+    <string name="strLabelWhatsappStyling">Whatsapp biçimi</string>
+    <string name="strHintSearchChapter">Sure ara</string>
+    <string name="strMsgBookmarkNoItems">Yer imi yok</string>
+    <string name="strMsgBookmarkAdded">Ayet, yer imlerine başarıyla eklendi</string>
+    <string name="strMsgBookmarkAddFailed">Ayet, yer imlerine eklenemedi</string>
+    <string name="strMsgBookmarkAddedAlready">Ayet, yer imlerine zaten eklenmiş</string>
+    <string name="strMsgBookmarkRemoved">Ayet, yer imlerinden başarıyla kaldırıldı</string>
+    <string name="strMsgBookmarkDeleteSelected">Seçili yer imleri kaldırılacak.</string>
+    <string name="strTitleReadHistory">Okuma Geçmişi</string>
+    <string name="strMsgReadShowupHere">Okuma geçmişin burada gözükür.</string>
+    <string name="strMsgReadHistoryNoItems">Okuma geçmişi yok</string>
+    <string name="strMsgSearchMultResultsFound" formatted="false">%1$s\'de bulunan toplam sonuç: %2$d</string>
+    <string name="strMsgSearchNoResultsFound">Sonuç bulunamadı. Lütfen arama filtrelerini kontrol edin veya başka bir meal içinde arama yapın.</string>
+    <string name="strMsgSearchNoResultsFoundIn" formatted="false">%1$s\'de sonuç bulunamadı. Lütfen arama filtrelerini kontrol edin veya başka bir meal içinde arama yapın.</string>
+    <string name="strMsgShareRange" formatted="false">%1$d–%2$d arasında bir aralık gir</string>
+    <string name="strMsgTranslFailedToDownload" formatted="false">\"%1$s\" indirilemedi.</string>
+    <string name="strMsgTranslSelectionLimit" formatted="false">Tek seferde en fazla %1$d adet meal seçilebilir. Lütfen yeni bir tane seçmeden önce diğer seçimi kaldırın. Bu, performans kaybını önlemek içindir.</string>
+    <string name="strMsgTranslNoneSelected">Hiçbir meal seçilmedi. Ayarlardan meal kısmını bulun ve birini seçin.</string>
+    <string name="strDescClose">Kapat</string>
+    <string name="strDescVerseNoWithChapter" formatted="false">%1$s Suresi, %2$d. Ayet.</string>
+    <string name="strTitleInfo">Bilgi!</string>
+    <string name="strMsgNoInternetLong">İnternet bağlantısı yok. Wi-Fi veya mobil verinin açık olduğundan emin olun ve tekrar deneyin.</string>
+    <string name="strMsgReferenceInQuran" formatted="false">Kur\'an\'da %1$s</string>
+    <string name="strMsgReferenceDuas">Kur\'an\'dan bazı dualar bir araya getirildi.</string>
+    <string name="msgDownloadKFQPCResources">Bu hattı kullanabilmek için öncelikle gerekli olan şu kaynaklar indirilmeli:</string>
+    <string name="msgDownloadFontsSize" formatted="false">İndirme boyutu: ~%1$dMB\nİndirmeden sonra uygulama yaklaşık ~%2$dMB kullanacak.</string>
+    <string name="github">GitHub</string>
+    <string name="msgVerseReminderNotifPermission">Günlük ayet hatırlatıcıyı etkinleştirmek için bildirim izni gerekiyor.</string>
+    <string name="titleRecitationCleanup">Tilavet dosyası silinsin mi\?</string>
+    <string name="msgRecitationCleanup" formatted="false">%1$s\'e ait depolanmış tüm tilavet dosyaları silinecek. Tilavetleri sure bazında tek tek silmek için ayarlara gidin.</string>
+    <string name="nothingToCleanup">Temizlenecek bir şey yok.</string>
+    <string name="verseSyncOn">Ayet takibi : AÇIK</string>
+    <string name="verseSyncOff">Ayet takibi : KAPALI</string>
+    <string name="nFiles" formatted="false">%1$d dosya</string>
+    <string name="nScriptsAndFonts" formatted="false">%1$d hat ve %2$d yazı tipi</string>
+    <string name="titleScriptCleanup">Hat silinsin mi\?</string>
+    <string name="msgScriptCleanup" formatted="false">%1$s hattı ve beraberinde depolanmış bütün yazı tipleri silinecek. Bunları kullanmak isterseniz tekrar indirmeniz gerekecektir.</string>
+    <string name="inPlaces" formatted="false">%1$s içinde</string>
+    <string name="inPlacesMore" formatted="false">%1$s ve %2$d daha fazla</string>
+    <string name="onboardDescTheme">Bunu daha sonra istediğiniz zaman değiştirebilirsiniz.</string>
+    <string name="strTitleReadTafsirOfVerse" formatted="false">%1$d. ayetin tefsirini oku</string>
+    <string name="onboardDescLanguage">Uygulamayı kendi dilinize göre ayarlayın. Bunu daha sonra istediğiniz zaman değiştirebilirsiniz.</string>
+    <string name="noFootnotesForThisVerse">Bu ayetin dipnotu yok.</string>
+    <string name="onboardDescTranslations">Bunu daha sonra istediğiniz zaman değiştirebilirsiniz. Ayarlardan daha fazla meal indirebilirsiniz.</string>
+    <string name="msgChapterAddedToFavourites">Sure favorilere eklendi.</string>
+    <string name="titleRemoveFromFavourites">Favorilerden Kaldır</string>
+    <string name="msgNoFavouriteChapters">Burada gözükmesi için bir bölümü favorilere ekleyin.</string>
+    <string name="msgChapterRemovedFromFavourites">Sure favorilerden kaldırıldı.</string>
+    <string name="appLogs">Uygulama Günlükleri</string>
+    <string name="crashLogs">Çökme Günlükleri</string>
+    <string name="textNoLogsFound">Günlük Dosyası Bulunamadı</string>
+    <string name="playbackSpeed">Oynatma hızı</string>
+    <string name="audioOnlyTranslation">Sadece meal</string>
+    <string name="noItems">Öğe Yok</string>
+    <string name="titleReaderTextSizeTafsir">Tefsir metin boyutu</string>
+    <string name="downloadRecitations">Tilavet indir</string>
+    <string name="titleOtherSettings">Diğer ayarlar</string>
+    <string name="suppressedLogs">Gizli Günlükler</string>
+    <string name="audioOption">Ses ayarı</string>
+    <string name="audioOnlyArabic">Sadece Arapça</string>
+    <string name="audioBothArabicTranslation">Her ikisi</string>
+    <string name="logRemoved">Günlük Kaldırıldı</string>
+    <string name="labelArabic">Arapça</string>
+    <string name="labelTranslation">Meal</string>
+    <string name="strMsgDuaFor" formatted="false">%1$s için dua ediniz</string>
+    <string name="strMsgShareApp" formatted="false">QuranApp, Kur\'an-ı Kerim\'i meali ile okumak ve keşfetmek için ücretsiz ve açık kaynaklı bir uygulamadır. Bu uygulama, tefsir, tilavet, hatırlatma ve daha birçok özelliğiyle zarif ve sade bir arayüze sahiptir. \n \nŞİMDİ İNDİR: \n%1$s</string>
+    <string name="labelNextTafsir">Sonraki tefsir</string>
+    <string name="labelPreviousTafsir">Önceki tefsir</string>
+    <string name="titleSolutionVerses">Kur\'an\'dan çözümler</string>
+    <string name="titleEtiquetteVerses">Kur\'an\'daki görgü kuralları</string>
+    <string name="strMsgDuaOf" formatted="false">%1$s duası</string>
+    <string name="strMsgPropheticDuaInQuran" formatted="false">Kuran\'daki %1$s duası</string>
+    <string name="titleArabicTextToggle">Arapça Ayet Metnini Göster</string>
+    <string name="msgArabicTextToggle">Bu özelliğin devre dışı bırakılması, Arapça ayet metnini uygulamanın her yerinde gizleyecektir.</string>
+    <string name="titleKeepScreenOnWhileReading">Okurken ekranı açık tut</string>
+    <string name="msgKeepScreenOnWhileReading">Okuyucu açıkken ekranın kapanmasını engeller. Pil tasarrufu için kapatın.</string>
+    <string name="msgClearSearchHistory">Arama geçmişini temizle</string>
+    <string name="msgClearReadHistory">Okuma geçmişini temizle</string>
+    <string name="titleResourceDownloadSource">Kaynak indirme kaynağı</string>
+    <string name="msgResourceDownloadSource">Çalışmıyorsa Kuran verilerini farklı bir kaynaktan indirmek için bu seçeneği kullanın</string>
+    <string name="msgExtractingFonts">Yazı tiplerini çıkarma</string>
+    <string name="titleExportData">Dışa Aktar &amp; İçe Aktar</string>
+    <string name="labelExport">Dışa Aktar</string>
+    <string name="labelImport">İçe Aktar</string>
+    <string name="warnImportSettings">Ayarları içe aktarmak mevcut ayarlarınızın yerine geçer.</string>
+    <string name="labelExportSelected" formatted="false">Seçilenleri dışa aktar (%1$d)</string>
+    <string name="labelImportSelected" formatted="false">Seçilenleri içe aktar (%1$d)</string>
+    <string name="labelCollections">Koleksiyonlar</string>
+    <string name="msgExportSettings">Tema, okuyucu ve kıraat tercihleri</string>
+    <string name="msgImportSettings">Tema, okuyucu ve kıraat tercihlerinizin yerine geçer</string>
+    <string name="msgExportBookmarks">Yer imleriniz ve notları</string>
+    <string name="msgImportBookmarks">Yer imlerini ve notlarını ekler</string>
+    <string name="msgExportCollections">Koleksiyonlarınız, ayetler ve notlar</string>
+    <string name="msgImportCollections">Aynı adlı koleksiyonları birleştirir, mevcut ayet ve notları korur</string>
+    <string name="labelSelectFile">Dosya seç</string>
+    <string name="titleConfirmImport">Seçilenler içe aktarılsın mı?</string>
+    <string name="msgExportSuccess">Başarıyla dışa aktarıldı</string>
+    <string name="autoBackup">Otomatik yedekleme</string>
+    <string name="autoBackupDetails">Yer imleriniz, koleksiyonlarınız ve ayarlarınız seçtiğiniz dosyaya kaydedilir. Bu dosya günde yaklaşık bir kez güncellenir.</string>
+    <string name="labelBackupFile">Dosya</string>
+    <string name="labelBackupSchedule">Sıklık</string>
+    <string name="autoBackupSchedule">Günde yaklaşık bir kez</string>
+    <string name="autoBackupNoFile">Dosya seçilmedi</string>
+    <string name="viewFile">Dosyayı görüntüle</string>
+    <string name="changeFile">Dosyayı değiştir</string>
+    <string name="autoBackupOpenFailed">Dosya açılamadı</string>
+    <string name="autoBackupSaved">Yedek kaydedildi</string>
+    <string name="autoBackupFailed">Yedek kaydedilemedi</string>
+    <string name="autoBackupFileDeleted">Otomatik yedekleme için seçtiğiniz dosya silindi. Yeni bir dosya seçene kadar yer imleri, koleksiyonlar ve ayarlar kaydedilmeyecek.</string>
+    <string name="importSummary" formatted="false">İçe aktarma bitti. %1$d eklendi, %2$d güncellendi, %3$d aynı kaldı, %4$d atlandı, %5$d çakıştı ve %6$d ayar desteklenmiyor.</string>
+    <string name="backupFailed">Bu yedek okunamadı.</string>
+    <string name="backupUnsupportedVersion">Bu yedek uygulamanın daha yeni bir sürümünden.</string>
+    <string name="backupTooLarge">Bu yedek dosyası açmak için çok büyük.</string>
+    <string name="desc_votd_widget">Her gün yeni bir ayet alın</string>
+    <string name="autoScroll">Otomatik kaydırma</string>
+    <string name="startAutoScroll">Otomatik kaydırmayı başlat</string>
+    <string name="autoScrollSpeed">Hızı ayarla</string>
+    <string name="strTitleMajorSins">Kuran\'da Büyük Günahlar</string>
+    <string name="titleCancelDownload">İndirmeyi iptal etmek istiyor musunuz?</string>
+    <string name="yesCancelDownload">Evet, iptal et</string>
+    <string name="noContinueDownload">Hayır, devam et</string>
+    <string name="readingTafsirMultiVerses">Birden fazla ayet için tefsir okunuyor:</string>
+    <string name="strLabelDownloaded">İndirildi</string>
+    <string name="strTitleDeleteTafsir">Tefsiri Silmek istiyormusunuz?</string>
+    <string name="strMsgDeleteTafsir" formatted="false">\"%1$s\"\'i silmek istediğinize emin misiniz? Bu indirilen tefsir verilerini cihazınızdan kaldıracaktır.</string>
+    <string name="favourites">Favoriler</string>
+    <string name="donate">Bize bağış yapın</string>
+    <string name="quran_and_science">Kur\'an ve Bilim</string>
+    <string name="topics">Konular</string>
+    <string name="about_this_page">Bu sayfa hakkında</string>
+    <string name="about_quran_science_msg">Bu sayfadaki içerikler Dr. Zakir Naik\'in \'The Quran and Modern Science: Compatible or Incompatible\' adlı kitabından alınmıştır.\n\nGösterilen resimler yalnızca açıklama amaçlıdır.</string>
+    <string name="strLabelScienceReferences" formatted="false">%1$d referanslar</string>
+    <string name="clear">Temizle</string>
+    <string name="strLabelAll">Tümü</string>
+    <string name="strLabelPrevious">Önceki</string>
+    <string name="nextChapter">Sonraki sure</string>
+    <string name="previousChapter">Önceki sure</string>
+    <string name="nextJuz">Sonraki cüz</string>
+    <string name="previousJuz">Önceki cüz</string>
+    <string name="nextHizb">Sonraki hizb</string>
+    <string name="previousHizb">Önceki hizb</string>
+    <string name="strLabelRukuNo" formatted="false">Rükû %1$d</string>
+    <string name="endOfPageNo" formatted="false">Sayfa %1$d Sonu</string>
+    <string name="endOfRukuNo" formatted="false">Rükû %1$d Sonu</string>
+    <string name="endOfRubNo" formatted="false">Rub %1$d Sonu</string>
+    <string name="endOfManzilNo" formatted="false">Menzil %1$d Sonu</string>
+    <string name="strTitleReaderHizb">Hizb</string>
+    <string name="labelHizbNo" formatted="false">Hizb %1$d</string>
+    <string name="tafsirForVerse" formatted="false">%1$d:%2$d ayetinin tefsiri</string>
+    <string name="textSizes">Metin boyutları</string>
+    <string name="sajda">Secde</string>
+    <string name="filterSectionLength">Sure uzunluğu</string>
+    <string name="any">Herhangi</string>
+    <string name="withSajda">Secdeli</string>
+    <string name="withoutSajda">Secdesiz</string>
+    <string name="chapterFilterLengthShort">Kısa (&lt;50 ayet)</string>
+    <string name="chapterFilterLengthMedium">Orta (50–150 ayet)</string>
+    <string name="chapterFilterLengthLong">Uzun (150+ ayet)</string>
+    <string name="clearFilters">Filtreleri temizle</string>
+    <string name="chapterFilters">Sure filtreleri</string>
+    <string name="strMsgReciterDownloadHint">Çevrimdışı dinleme ve daha akıcı oynatma için kıraat sesini indirin.</string>
+    <string name="recitationDownloadChaptersProgress" formatted="false">%1$d / %2$d sure</string>
+    <string name="recitationDownloadAllComplete">Tüm sureler indirildi</string>
+    <string name="recitationDownloadConfirmTitle">Kıraatleri indir</string>
+    <string name="recitationDownloadConfirmMessage">Bu kâri için tüm sureler indirilsin mi? Bu işlem önemli miktarda depolama alanı ve veri kullanabilir.</string>
+    <string name="recitationDownloadSomeFailed">Bazı sureler başarısız oldu. Eksik sureleri tekrar sıraya koymak için yeniden dene\'ye dokunun.</string>
+    <string name="recitationDownloadWaitForOtherReciter">Başka bir kâri zaten indiriliyor. Yeni bir indirme başlatmadan önce bitmesini bekleyin veya iptal edin.</string>
+    <string name="recitationBulkDownloadNotifProgress" formatted="false">%1$d / %2$d sure indirildi</string>
+    <string name="recitationBulkEnqueueNotifTitle">Kıraat indirmeleri hazırlanıyor</string>
+    <string name="recitationBulkEnqueueNotifText" formatted="false">%1$s — %3$d sure içinden %2$d tanesi sıraya alındı</string>
+    <string name="playbackCount">Oynatma sayısı</string>
+    <string name="titleRecitationGroupSize">Kur\'an Ayet Grubu Boyutu</string>
+    <string name="msgRecitationGroupSize">Çeviri başlamadan önce kaç Kur\'an ayetinin oynatılacağını seçin. Örnek: Eğer 3\'ü seçerseniz, 3 Kur\'an ayetini ve ardından bunların çevirilerini oynatır.</string>
+    <string name="labelRecommended">Önerilen</string>
+    <string name="modeVerseByVerse">Ayet ayet modu</string>
+    <string name="modeMushaf">Mushaf modu</string>
+    <string name="readingLayoutFlow">Kaydırma</string>
+    <string name="readingLayoutPage">Mushaf sayfası</string>
+    <string name="titleGlobalSearch">Genel Arama</string>
+    <string name="searchIndexingInProgress">Arama hazırlanıyor. Dizine ekleme tamamlanana kadar bazı sonuçlar görünmeyebilir.</string>
+    <string name="search_match">Eşleşme türü</string>
+    <string name="search_match_any_words">Herhangi bir kelime</string>
+    <string name="search_match_any_words_desc">Arama kelimelerinden birini veya birkaçını içeren sonuçları bulun.</string>
+    <string name="search_match_all_words">Tüm kelimeler</string>
+    <string name="search_match_all_words_desc">Arama kelimelerinin tamamını içeren sonuçları bulun.</string>
+    <string name="search_match_exact_phrase">Tam ifade</string>
+    <string name="search_match_exact_phrase_desc">“Diriliş günü” gibi kelimeleri aynı sırayla içeren sonuçları bulun.</string>
+    <string name="strHintSearchBy">Cüz veya sure ara</string>
+    <string name="strHintSearchHizb">Hizb veya sure ara</string>
+    <string name="strHintSearchPage">Sayfa ara</string>
+    <string name="noNoteProvided">Not girilmedi…</string>
+    <string name="dailyReminderMsg">Günlük bir hatırlatıcı bildirimi alın.</string>
+    <string name="strMsgNoVerseTiming">Ayet senkronizasyonu olmadan tam sure sesi oynatılıyor</string>
+    <string name="textPreparingAudio">Ses hazırlanıyor…</string>
+    <string name="notification_permission">Bildirim İzni</string>
+    <string name="noResults">Sonuç yok</string>
+    <string name="onboardDescTafsir">Ayetlerin yanında okumak için bir tefsir seçin. Tefsirleri ayarlardan indirebilir ve yönetebilirsiniz.</string>
+    <string name="labelTransliteration">Transkripsiyon</string>
+    <string name="strMsgSearchHistoryDeleteAll">Tüm arama geçmişi kaldırılacak.</string>
+    <string name="stopAutoScroll">Otomatik kaydırmayı durdur</string>
+    <string name="once">Bir kez</string>
+    <string name="twice">İki kez</string>
+    <string name="nTimes" formatted="false">%1$d kez</string>
+    <string name="msgRepeat">Bir sonrakine geçmeden önce her ayetin kaç kez oynatılacağını ayarlayın. Yalnızca Ses Seçeneklerinde “Yalnızca Kur\'an oynat” etkinleştirildiğinde kullanılabilir.</string>
+    <string name="notSupported">Desteklenmiyor</string>
+    <string name="missingTimingData" formatted="false">Missing timing data for %1$s — cannot play.</string>
+    <string name="expandedPlayerModeControls">Kontroller</string>
+    <string name="expandedPlayerModeSpotlight">Spot ışığı</string>
+    <string name="theme_default">Varsayılan</string>
+    <string name="theme_blue">Mavi</string>
+    <string name="theme_red">Kırmızı</string>
+    <string name="theme_purple">Mor</string>
+    <string name="theme_violet">Menekşe</string>
+    <string name="theme_yellow">Sarı</string>
+    <string name="theme_mono">Mono</string>
+    <string name="theme_amoled">Amoled</string>
+    <string name="theme_colors">Tema Renkleri</string>
+    <string name="theme_mode">Tema Modu</string>
+    <string name="dynamic_color">Dinamik Renk</string>
+    <string name="dynamic_color_description">Tema rengini sistem renklerine göre değiştirin</string>
+    <string name="textSizeVerseByVerseOnly">Bu ayar mushaf modunda uygulanmaz.</string>
+    <string name="sortBy">Sırala</string>
+    <string name="alphabetically">Alfabetik</string>
+    <string name="chronological">Kronolojik Sıra</string>
+    <string name="translationHelp">Dilinizi görmüyor musunuz? Çeviriye veya geliştirmeye yardımcı olun ve daha fazla insanın erişebilmesini sağlayın!</string>
+    <string name="learnMore">Daha fazlasını öğrenin</string>
+    <string name="wordByWord">Kelime kelime</string>
+    <string name="selectWbwLanguage">Dil seçin</string>
+    <string name="wbwShowTranslation">Çeviriyi göster</string>
+    <string name="wbwShowTransliteration">Transkripsiyonu göster</string>
+    <string name="wbwShowTransliterationMgs">Seçilen dil için mevcut olduğunda</string>
+    <string name="wbwRecitation">Kıraat</string>
+    <string name="wbwRecitationMsg">Bir kelime tıklandığında ses oynat</string>
+    <string name="wbwTextSize">Metin boyutu</string>
+    <string name="noWbwAvailable">Kelime kelime özelliklerini açmak için aşağıdan bir dil paketi indirin.</string>
+    <string name="deleteData">Verileri sil?</string>
+    <string name="wordNo" formatted="false">Kelime %1$d</string>
+    <string name="playWord">Kelime oynat</string>
+    <string name="previousWord">Önceki kelime</string>
+    <string name="nextWord">Sonraki kelime</string>
+    <string name="wbwSelectLanguage">Kelime kelime dil seçin</string>
+    <string name="results">Sonuçlar</string>
+    <string name="titleRecentSearches">Son aramalar</string>
+    <string name="searchInQuran">Kur\'an\'da ara</string>
+    <string name="searchTipsTitle">Arama ipuçları</string>
+    <string name="searchTipDirectVerse">Bir ayeti veya tefsiri doğrudan okuyun</string>
+    <string name="searchTipChapter">Surelerde ara</string>
+    <string name="searchTipDirectJuz">“Sure 30”, “Cüz 30” veya “Hizb 30”a atlayın</string>
+    <string name="searchTipTranslation">Çevirilerde ara</string>
+    <string name="searchTipArabic">Kur\'an metninde ara</string>
+    <string name="enterFullscreen">Tam ekran</string>
+    <string name="exitFullscreen">Tam ekrandan çık</string>
+    <string name="belowWord">Kelimenin altında</string>
+    <string name="inTooltip">İpuçunda</string>
+    <string name="discord">Discord</string>
+    <string name="strTitleDownloadSunnahApp">SunnahApp İndir</string>
+    <string name="tajweedColors">Tecvid renkleri</string>
+    <string name="similarVerses">Benzer ayetler</string>
+    <string name="noSimilarVerses">Bu ayet için benzer ayet yok.</string>
+    <string name="countSimilarVerses" formatted="false">%1$s için %2$d benzer ayet var</string>
+    <string name="similarVerseRowMeta" formatted="false">%1$d%% eşleşme · skor %2$d</string>
+    <string name="moreOptions">Daha fazla seçenek</string>
+    <string name="whenChapterEnds">Sure bittiğinde</string>
+    <string name="whenChapterEndsDesc">Geçerli sure çalmayı bitirdikten sonra ne olacağını seçin.</string>
+    <string name="stopPlayback">Çalmayı durdur</string>
+    <string name="playNextSurah">Sonraki sureyi çal</string>
+    <string name="repeatCurrentSurah">Geçerli sureyi tekrarla</string>
+    <string name="reset">Sıfırla</string>
+    <string name="selectAll">Tümünü seç</string>
+    <string name="filterTranslationsDisabledNote">Arapça arama açıkken çevirilerde arama yapılmaz.</string>
+    <string name="filterTranslationsEmpty">Henüz indirilmiş çeviri yok.</string>
+    <string name="wbwAudioTimingsCouldNotLoad">Kelime zamanlamaları yüklenemedi. Bağlantınızı kontrol edip tekrar deneyin.</string>
+    <string name="wbwAudioCouldNotPlay">Kelime sesi oynatılamadı.</string>
+    <string name="wbwAudioDownloadHint">Çevrimdışı dinleme ve daha akıcı oynatma için kelime kelime sesi indirin.</string>
+    <string name="wbwAudio">Kelime kelime ses</string>
+    <string name="wbwAudioDownloadAll">Hepsini indir</string>
+    <string name="wbwAudioDownloadAllConfirm">Tüm sureler için kelime kelime tilavet sesini indirmek istiyor musunuz? Bu işlem önemli miktarda depolama ve mobil veri kullanabilir.</string>
+    <string name="wbwAudioBulkWaitForChapterDownloads">Hepsini indirmeden önce tek tek sure indirmelerinin bitmesini bekleyin.</string>
+    <string name="wbwAudioChapterWaitForBulk">Tek bir sure indirmeden önce toplu indirmenin tamamlanmasını bekleyin.</string>
+    <string name="ontologyExplorer">Konu Gezgini</string>
+    <string name="thematicTopics">Temaya göre konular</string>
+    <string name="englishContentOnly">Bu sayfadaki içerikler yalnızca İngilizce dilinde mevcuttur.</string>
+    <string name="estimatedSize" formatted="false">Tahmini boyut: %1$s</string>
+    <string name="msgPreparingPrebuiltAtlas">Kur\'an metni ilk kez hazırlanıyor. Bu işlem birkaç saniye sürebilir.</string>
+    <string name="create">Oluştur</string>
+    <string name="strLabelManage">Yönet</string>
+    <string name="update_note">Notu güncelle</string>
+    <string name="updateAvailable">Güncelleme var</string>
+    <string name="recitationDownloadUpdateConfirmTitle">Kıraatleri güncelle</string>
+    <string name="recitationDownloadUpdateConfirmMessage">Bu kâri için daha yeni bir ses kaydı var. Güncelleme, indirilen surelerin yerine yenisini koyar.</string>
+    <string name="recitationDownloadBannerUpdateAvailable">İndirilen kıraatler için güncelleme var.</string>
+    <string name="continue_reading">Okumaya devam et</string>
+    <string name="recitationPlayer">Kıraat oynatıcı</string>
+    <string name="desc_recitation_player_widget">Ana ekrandan Kur\'an kıraatini yönetin</string>
+    <string name="my_collections">Koleksiyonlarım</string>
+    <string name="add_to_collection">Koleksiyona ekle</string>
+    <string name="remove_from_collection">Koleksiyondan çıkar</string>
+    <string name="msg_remove_from_collection">Bu ayet koleksiyondan çıkarılacak. Ayetin notları da silinecek.</string>
+    <string name="no_collections">Henüz koleksiyon yok.</string>
+    <string name="no_collection_items">Bu koleksiyonda ayet yok. Sevdiğiniz ayetleri koleksiyonlarda toplayıp kolayca bulabilirsiniz.</string>
+    <string name="create_collection">Koleksiyon oluştur</string>
+    <string name="update_collection">Koleksiyonu düzenle</string>
+    <string name="select_color">Renk seç</string>
+    <string name="select_icon">Simge seç</string>
+    <string name="create_new_collection">Yeni koleksiyon oluştur</string>
+    <string name="collection_name">Koleksiyon adı</string>
+    <string name="collection_name_hint">Ad girin</string>
+    <string name="description">Açıklama</string>
+    <string name="collection_description_hint">Açıklama girin</string>
+    <string name="msg_collection_deleted">Koleksiyon silindi.</string>
+    <string name="delete_collection">Koleksiyonu sil</string>
+    <string name="msg_delete_collection">Koleksiyon ve içindeki ayetler kaldırılır. Yer imleriniz etkilenmez.</string>
+    <string name="collection_note_hint">Bu ayet için ek notunuzu buraya yazın…</string>
+    <string name="collection_updated">Koleksiyonlar güncellendi</string>
+    <string name="updated_just_now">Az önce güncellendi</string>
+    <plurals name="verse_count">
+        <item quantity="one">%1$d ayet</item>
+        <item quantity="other">%1$d ayet</item>
+    </plurals>
+    <plurals name="updated_minutes">
+        <item quantity="one">%1$d dakika önce güncellendi</item>
+        <item quantity="other">%1$d dakika önce güncellendi</item>
+    </plurals>
+    <plurals name="updated_hours">
+        <item quantity="one">%1$d saat önce güncellendi</item>
+        <item quantity="other">%1$d saat önce güncellendi</item>
+    </plurals>
+    <plurals name="updated_days">
+        <item quantity="one">%1$d gün önce güncellendi</item>
+        <item quantity="other">%1$d gün önce güncellendi</item>
+    </plurals>
+    <plurals name="item_count">
+        <item quantity="one">%1$d öğe</item>
+        <item quantity="other">%1$d öğe</item>
+    </plurals>
+    <plurals name="place_count">
+        <item quantity="one">%1$d yer</item>
+        <item quantity="other">%1$d yer</item>
+    </plurals>
+    <string name="advanced_settings">Gelişmiş ayarlar</string>
+    <string name="recent_history">Son geçmiş</string>
+    <string name="set_as_active">Aktif olarak ayarla</string>
+    <string name="shareAsImage">Görsel oluştur</string>
+    <string name="customize">Özelleştir</string>
+    <string name="templates">Şablonlar</string>
+    <string name="image_saved">Görsel kaydedildi</string>
+    <string name="image_save_failed">Görsel kaydedilemedi</string>
+    <string name="image_share_failed">Görsel paylaşılamadı</string>
+    <string name="content">İçerik</string>
+    <string name="arabic_only">Yalnızca Arapça</string>
+    <string name="translation_only">Yalnızca meal</string>
+    <string name="arabic_and_translation">Arapça ve meal</string>
+    <string name="shareImageFitRejected">Bu ayet seçilen şablon için çok uzun. Biraz daha az içerik gösterin veya başka bir şablon seçin.</string>
+    <string name="tajweed_silent_letter">İdğam</string>
+    <string name="tajweed_normal_madd">Med harfi (2 saniye bekle)</string>
+    <string name="tajweed_separated_madd">İzin verilen Med 2 veya 4 veya 6 saniye</string>
+    <string name="tajweed_connected_madd">Gerekli Med (4 veya 5 saniye)</string>
+    <string name="tajweed_necessary_madd">Gerekli Med (6 saniye)</string>
+    <string name="tajweed_ghunna">İhfa ve Ghunna</string>
+    <string name="tajweed_qalqala">Kalkala</string>
+    <string name="tajweed_tafkhim">Tefhim</string>
+</resources>

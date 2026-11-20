@@ -1,0 +1,103 @@
+package com.quranapp.android.screens.export
+
+import android.app.Activity
+import android.content.Intent
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.quranapp.android.backup.BackupImportService
+import com.quranapp.android.backup.showBackupFailure
+import com.quranapp.android.backup.writeExport
+import com.quranapp.android.generated.resources.Res
+import com.quranapp.android.generated.resources.ic_upload
+import com.quranapp.android.generated.resources.labelExportSelected
+import com.quranapp.android.utils.app.Logger
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.jetbrains.compose.resources.stringResource
+
+@Composable
+fun ExportPage() {
+    val scope = rememberCoroutineScope()
+    val exportBytes = remember { mutableStateOf(ByteArray(0)) }
+
+    val exportLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode != Activity.RESULT_OK) return@rememberLauncherForActivityResult
+        val location = result.data?.data?.toString() ?: return@rememberLauncherForActivityResult
+        scope.launch(Dispatchers.IO) {
+            writeExport(location, exportBytes.value)
+        }
+    }
+
+    var selectedItems by rememberSaveable(stateSaver = exportSelectionSaver) {
+        mutableStateOf(setOf<String>())
+    }
+    val selectedCount = selectedItems.size
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 20.dp),
+    ) {
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .verticalScroll(rememberScrollState()),
+        ) {
+            Spacer(modifier = Modifier.height(20.dp))
+            CategorySelection(
+                forExport = true,
+                selectedItems = selectedItems,
+                onSelectedItemsChange = { selectedItems = it },
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+        }
+
+        SelectedActionButton(
+            text = stringResource(Res.string.labelExportSelected, selectedCount),
+            icon = Res.drawable.ic_upload,
+            enabled = selectedCount > 0,
+            onClick = {
+                scope.launch(Dispatchers.IO) {
+                    try {
+                        exportBytes.value = BackupImportService().exportBytes(
+                            selectedScopes(selectedItems),
+                        )
+                        withContext(Dispatchers.Main) {
+                            exportLauncher.launch(
+                                Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                                    addCategory(Intent.CATEGORY_OPENABLE)
+                                    type = "application/gzip"
+                                    putExtra(Intent.EXTRA_TITLE, "quranapp-backup.json.gz")
+                                },
+                            )
+                        }
+                    } catch (error: Exception) {
+                        Logger.saveError(error, "exportData")
+                        withContext(Dispatchers.Main) {
+                            showBackupFailure(error)
+                        }
+                    }
+                }
+            },
+        )
+    }
+}

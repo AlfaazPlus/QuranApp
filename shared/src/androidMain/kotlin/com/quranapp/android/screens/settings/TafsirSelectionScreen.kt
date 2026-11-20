@@ -1,0 +1,620 @@
+package com.quranapp.android.screens.settings
+
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
+import androidx.compose.material3.ripple
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.quranapp.android.api.DocPage
+import com.quranapp.android.api.models.tafsir.TafsirInfoModel
+import com.quranapp.android.components.common.AppBar
+import com.quranapp.android.components.common.ErrorMessageCard
+import com.quranapp.android.components.common.IconButton
+import com.quranapp.android.components.common.dialogs.AlertDialog
+import com.quranapp.android.components.common.dialogs.AlertDialogAction
+import com.quranapp.android.components.common.dialogs.AlertDialogActionStyle
+import com.quranapp.android.components.common.dialogs.SimpleTooltip
+import com.quranapp.android.components.importing.ContentImportSheet
+import com.quranapp.android.components.importing.TafsirImportDetails
+import com.quranapp.android.components.importing.tafsirImportFields
+import com.quranapp.android.components.tafsir.TafsirGroupModel
+import com.quranapp.android.extensions.appViewModel
+import com.quranapp.android.generated.resources.Res
+import com.quranapp.android.generated.resources.dr_icon_check
+import com.quranapp.android.generated.resources.dr_icon_chevron_right
+import com.quranapp.android.generated.resources.dr_icon_close
+import com.quranapp.android.generated.resources.dr_icon_delete
+import com.quranapp.android.generated.resources.dr_icon_download
+import com.quranapp.android.generated.resources.dr_icon_refresh
+import com.quranapp.android.generated.resources.ic_upload
+import com.quranapp.android.generated.resources.item_count
+import com.quranapp.android.generated.resources.labelDownload
+import com.quranapp.android.generated.resources.noContinueDownload
+import com.quranapp.android.generated.resources.strLabelCancel
+import com.quranapp.android.generated.resources.strLabelDelete
+import com.quranapp.android.generated.resources.strLabelDownloaded
+import com.quranapp.android.generated.resources.strLabelRetry
+import com.quranapp.android.generated.resources.strMsgDeleteTafsir
+import com.quranapp.android.generated.resources.strTitleDeleteTafsir
+import com.quranapp.android.generated.resources.strTitleTafsir
+import com.quranapp.android.generated.resources.textDownloading
+import com.quranapp.android.generated.resources.titleCancelDownload
+import com.quranapp.android.generated.resources.yesCancelDownload
+import com.quranapp.android.locale.LocalAppLocale
+import com.quranapp.android.preferences.AppPreferences
+import com.quranapp.android.task.TaskState
+import com.quranapp.android.utils.importing.ImportFieldId
+import com.quranapp.android.utils.tafsir.CustomTafsirImporter
+import com.quranapp.android.utils.translation.toTranslationManifest
+import com.quranapp.android.utils.translation.translationSlug
+import com.quranapp.android.viewmodel.TafsirEvent
+import com.quranapp.android.viewmodel.TafsirViewModel
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.pluralStringResource
+import org.jetbrains.compose.resources.stringResource
+
+@Composable
+fun TafsirSelectionScreen() {
+    val viewModel = appViewModel<TafsirViewModel>()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val isDeveloperModeEnabled = AppPreferences.observeDeveloperModeEnabled()
+    var importSheetOpen by rememberSaveable { mutableStateOf(false) }
+
+    Scaffold(
+        topBar = {
+            AppBar(
+                stringResource(Res.string.strTitleTafsir),
+                actions = {
+                    if (isDeveloperModeEnabled) {
+                        SimpleTooltip(text = "Import") {
+                            IconButton(
+                                painter = painterResource(Res.drawable.ic_upload),
+                                contentDescription = "Import",
+                            ) {
+                                importSheetOpen = true
+                            }
+                        }
+                    }
+
+                    IconButton(
+                        painterResource(Res.drawable.dr_icon_refresh)
+                    ) {
+                        viewModel.onEvent(TafsirEvent.Refresh)
+                    }
+                }
+            )
+        }
+    ) {
+        Box(
+            modifier = Modifier
+                .padding(it)
+        ) {
+            when {
+                uiState.isLoading -> LoadingState()
+                uiState.error != null -> ErrorMessageCard(
+                    error = uiState.error!!,
+                    onRetry = { viewModel.onEvent(TafsirEvent.Refresh) }
+                )
+
+                else -> TafsirContent(
+                    groups = uiState.tafsirGroups,
+                    selectedKey = uiState.selectedTafsirKey,
+                    downloadStates = uiState.downloadStates,
+                    downloadedTafsirKeys = uiState.downloadedTafsirKeys
+                )
+            }
+        }
+    }
+
+    val importFields = remember { tafsirImportFields() }
+    val existingKeys = remember(uiState.tafsirGroups) {
+        uiState.tafsirGroups.flatMap { group -> group.tafsirs.map { it.key } }.toSet()
+    }
+
+    ContentImportSheet(
+        isOpen = importSheetOpen,
+        onDismiss = { importSheetOpen = false },
+        title = "Import",
+        fields = importFields,
+        doc = DocPage.CUSTOM_TAFSIR,
+        successMessage = "Tafsir added",
+        onImported = { viewModel.onEvent(TafsirEvent.RefreshQuiet) },
+        details = { TafsirImportDetails(it, existingKeys) },
+        canSubmit = { values ->
+            translationSlug(
+                values[ImportFieldId.LANG_CODE].orEmpty(),
+                values[ImportFieldId.BOOK].orEmpty(),
+            ) != null
+        },
+        buildManifest = { values -> values.toTranslationManifest() },
+        onImport = { manifest, file ->
+            CustomTafsirImporter.import(manifest, file)
+        },
+    )
+}
+
+@Composable
+private fun LoadingState() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator(
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.size(36.dp),
+            strokeWidth = 3.dp
+        )
+    }
+}
+
+@Composable
+private fun TafsirContent(
+    groups: List<TafsirGroupModel>,
+    selectedKey: String?,
+    downloadStates: Map<String, TaskState>,
+    downloadedTafsirKeys: Set<String>
+) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 48.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp)
+    ) {
+        items(groups, key = { it.langCode }) { group ->
+            LanguageGroupCard(
+                group = group,
+                selectedKey = selectedKey,
+                downloadStates = downloadStates,
+                downloadedTafsirKeys = downloadedTafsirKeys
+            )
+        }
+
+        item { Spacer(modifier = Modifier.height(60.dp)) }
+    }
+}
+
+@Composable
+private fun LanguageGroupCard(
+    group: TafsirGroupModel,
+    selectedKey: String?,
+    downloadStates: Map<String, TaskState>,
+    downloadedTafsirKeys: Set<String>
+) {
+    val viewModel = appViewModel<TafsirViewModel>()
+    val isAnyDownloading = downloadStates.values.any {
+        it.isEnqueued || it.isRunning
+    }
+
+    val hasSelection = remember(group.tafsirs, selectedKey) {
+        group.tafsirs.any { it.key == selectedKey }
+    }
+
+    val chevronRotation by animateFloatAsState(
+        targetValue = if (group.isExpanded) 90f else 0f,
+        animationSpec = tween(250),
+        label = "chevron"
+    )
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.4f),
+                shape = RoundedCornerShape(12.dp)
+            ),
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+    ) {
+        Column {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(onClick = { viewModel.onEvent(TafsirEvent.ToggleGroup(group.langCode)) })
+                    .padding(horizontal = 16.dp, vertical = 14.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Column {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(
+                                text = group.langName,
+                                style = MaterialTheme.typography.labelLarge,
+                                color = colorScheme.primary,
+                                fontWeight = FontWeight.SemiBold,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+
+                            if (hasSelection) {
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Box(
+                                    modifier = Modifier
+                                        .size(6.dp)
+                                        .clip(CircleShape)
+                                        .background(MaterialTheme.colorScheme.primary)
+                                )
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(2.dp))
+
+                        Text(
+                            text = pluralStringResource(
+                                Res.plurals.item_count,
+                                group.tafsirs.size,
+                                group.tafsirs.size,
+                            ),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+
+                Icon(
+                    painter = painterResource(Res.drawable.dr_icon_chevron_right),
+                    contentDescription = if (group.isExpanded) "Collapse" else "Expand",
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier
+                        .size(20.dp)
+                        .rotate(chevronRotation)
+                )
+            }
+
+            AnimatedVisibility(
+                visible = group.isExpanded,
+                enter = expandVertically(tween(250)) + fadeIn(tween(200)),
+                exit = shrinkVertically(tween(200)) + fadeOut(tween(150))
+            ) {
+                Column {
+                    HorizontalDivider(
+                        color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.4f),
+                        thickness = 0.5.dp
+                    )
+
+                    group.tafsirs.forEachIndexed { index, tafsir ->
+                        val downloadState = downloadStates[tafsir.key]
+                        val isDownloaded = downloadedTafsirKeys.contains(tafsir.key)
+
+                        TafsirRow(
+                            tafsir = tafsir,
+                            isSelected = tafsir.key == selectedKey,
+                            isDownloaded = isDownloaded,
+                            isAnyDownloading = isAnyDownloading,
+                            downloadState = downloadState,
+                            onSelect = { viewModel.onEvent(TafsirEvent.SelectTafsir(tafsir.key)) },
+                            onDownload = {
+                                if (!isAnyDownloading) {
+                                    viewModel.onEvent(TafsirEvent.DownloadTafsir(tafsir.key))
+                                }
+                            },
+                            onCancelDownload = { viewModel.onEvent(TafsirEvent.CancelDownload(tafsir.key)) },
+                            onDelete = { viewModel.onEvent(TafsirEvent.DeleteTafsir(tafsir.key)) }
+                        )
+
+                        if (index < group.tafsirs.lastIndex) {
+                            HorizontalDivider(
+                                modifier = Modifier.padding(start = 52.dp, end = 16.dp),
+                                color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f),
+                                thickness = 0.5.dp
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun TafsirRow(
+    tafsir: TafsirInfoModel,
+    isSelected: Boolean,
+    isDownloaded: Boolean,
+    isAnyDownloading: Boolean,
+    downloadState: TaskState?,
+    onSelect: () -> Unit,
+    onDownload: () -> Unit,
+    onCancelDownload: () -> Unit,
+    onDelete: () -> Unit
+) {
+    val appLocale = LocalAppLocale.current
+    var confirmCancel by remember { mutableStateOf(false) }
+    var confirmDelete by remember { mutableStateOf(false) }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Row(
+            modifier = Modifier
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = ripple(color = MaterialTheme.colorScheme.primary),
+                    onClick = onSelect
+                )
+                .padding(start = 4.dp, end = 8.dp, top = 6.dp, bottom = 6.dp)
+                .weight(1f),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            RadioButton(
+                selected = isSelected,
+                onClick = onSelect,
+                colors = RadioButtonDefaults.colors(
+                    selectedColor = MaterialTheme.colorScheme.primary,
+                    unselectedColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
+                )
+            )
+
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(vertical = 6.dp)
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = tafsir.name,
+                        style = MaterialTheme.typography.labelLarge,
+                        color = if (isSelected)
+                            MaterialTheme.colorScheme.primary
+                        else
+                            MaterialTheme.colorScheme.onSurface,
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f, fill = false)
+                    )
+
+                    // Downloaded indicator
+                    if (isDownloaded && downloadState == null) {
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Icon(
+                            painter = painterResource(Res.drawable.dr_icon_check),
+                            contentDescription = stringResource(Res.string.strLabelDownloaded),
+                            tint = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.size(14.dp)
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(2.dp))
+
+                when (downloadState) {
+                    is TaskState.Running -> {
+                        Text(
+                            text = appLocale.format(
+                                $$"%1$s %2$d%%",
+                                stringResource(Res.string.textDownloading),
+                                downloadState.progress?.percentage ?: 0
+                            ),
+                            style = MaterialTheme.typography.labelMedium,
+                            fontWeight = FontWeight.Normal,
+                            color = MaterialTheme.colorScheme.primary,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+
+                    TaskState.Enqueued -> {
+                        Text(
+                            text = stringResource(Res.string.textDownloading),
+                            style = MaterialTheme.typography.labelMedium,
+                            fontWeight = FontWeight.Normal,
+                            color = MaterialTheme.colorScheme.primary,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+
+                    else -> {
+                        Text(
+                            text = tafsir.author,
+                            style = MaterialTheme.typography.labelMedium,
+                            fontWeight = FontWeight.Normal,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                }
+            }
+        }
+
+        VerticalDivider(
+            modifier = Modifier
+                .height(38.dp)
+                .width(1.dp),
+            color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.4f),
+            thickness = 1.dp
+        )
+
+        Box(
+            modifier = Modifier.size(48.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            when (downloadState) {
+                TaskState.Enqueued -> {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(20.dp),
+                        strokeWidth = 2.dp,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+
+                is TaskState.Running -> {
+                    Box(contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator(
+                            progress = { (downloadState.progress?.percentage ?: 0) / 100f },
+                            modifier = Modifier.size(24.dp),
+                            strokeWidth = 2.5.dp,
+                            color = MaterialTheme.colorScheme.primary,
+                            trackColor = MaterialTheme.colorScheme.surfaceVariant
+                        )
+
+                        IconButton(
+                            onClick = { confirmCancel = true },
+                            modifier = Modifier.size(40.dp)
+                        ) {
+                            Icon(
+                                painter = painterResource(Res.drawable.dr_icon_close),
+                                contentDescription = stringResource(Res.string.strLabelCancel),
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.size(12.dp)
+                            )
+                        }
+                    }
+                }
+
+                is TaskState.Failed -> {
+                    // Retry button
+                    IconButton(
+                        onClick = onDownload,
+                        modifier = Modifier.size(40.dp)
+                    ) {
+                        Icon(
+                            painter = painterResource(Res.drawable.dr_icon_refresh),
+                            contentDescription = stringResource(Res.string.strLabelRetry),
+                            tint = MaterialTheme.colorScheme.error,
+                            modifier = Modifier.size(20.dp)
+                        )
+                    }
+                }
+
+                else -> {
+                    if (isDownloaded) {
+                        IconButton(
+                            onClick = { confirmDelete = true },
+                            modifier = Modifier.size(40.dp)
+                        ) {
+                            Icon(
+                                painter = painterResource(Res.drawable.dr_icon_delete),
+                                contentDescription = stringResource(Res.string.strLabelDelete),
+                                tint = MaterialTheme.colorScheme.error,
+                                modifier = Modifier.size(20.dp)
+                            )
+                        }
+                    } else {
+                        IconButton(
+                            onClick = onDownload,
+                            modifier = Modifier.size(40.dp),
+                            enabled = !isAnyDownloading
+                        ) {
+                            Icon(
+                                painter = painterResource(Res.drawable.dr_icon_download),
+                                contentDescription = stringResource(Res.string.labelDownload),
+                                tint = if (isAnyDownloading) colorScheme.onSurfaceVariant.copy(alpha = 0.3f)
+                                else colorScheme.onSurfaceVariant,
+                                modifier = Modifier.size(20.dp)
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if (confirmCancel) {
+        AlertDialog(
+            isOpen = true,
+            onClose = { confirmCancel = false },
+            title = stringResource(Res.string.titleCancelDownload),
+            actions = listOf(
+                AlertDialogAction(
+                    text = stringResource(Res.string.noContinueDownload),
+                    onClick = { confirmCancel = false },
+                ),
+                AlertDialogAction(
+                    text = stringResource(Res.string.yesCancelDownload),
+                    style = AlertDialogActionStyle.Danger,
+                    onClick = {
+                        confirmCancel = false
+                        onCancelDownload()
+                    },
+                ),
+            ),
+        )
+    }
+
+    if (confirmDelete) {
+        AlertDialog(
+            isOpen = true,
+            onClose = { confirmDelete = false },
+            title = stringResource(Res.string.strTitleDeleteTafsir),
+            actions = listOf(
+                AlertDialogAction(
+                    text = stringResource(Res.string.strLabelCancel),
+                    onClick = { confirmDelete = false },
+                ),
+                AlertDialogAction(
+                    text = stringResource(Res.string.strLabelDelete),
+                    style = AlertDialogActionStyle.Danger,
+                    onClick = {
+                        confirmDelete = false
+                        onDelete()
+                    },
+                ),
+            ),
+        ) {
+            Text(
+                text = stringResource(Res.string.strMsgDeleteTafsir, tafsir.name),
+            )
+        }
+    }
+}
