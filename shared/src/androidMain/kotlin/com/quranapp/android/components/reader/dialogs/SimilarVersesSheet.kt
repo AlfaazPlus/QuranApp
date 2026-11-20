@@ -81,6 +81,8 @@ import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.stringResource
 import org.json.JSONArray
 import org.json.JSONException
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.platform.PlatformServices
 
 private data class SimilarVerseListRow(
     val entity: SimilarVerseEntity,
@@ -261,7 +263,7 @@ fun SimilarVersesSheet(
                             arabicStyle = quranTextStyle(row.pageNo),
                             translationStyle = translationTextStyle,
                             onOpenInReader = {
-                                ReaderFactory.startVerse(context, row.surahNo, row.verseNo)
+                                PlatformServices.navigator.navigate(AppRoute.Reader(ReaderFactory.verse(row.surahNo, row.verseNo)))
                                 onDismiss()
                             },
                         )

@@ -71,7 +71,6 @@ import com.quranapp.android.models.Translation
 import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.repository.TranslationRepository
 import com.quranapp.android.theme.alpha
-import com.quranapp.android.utils.extensions.copyToClipboard
 import com.quranapp.android.utils.miscellenous.HYPHEN
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import kotlinx.coroutines.launch
@@ -191,7 +190,7 @@ fun VerseShareSheet(
 
                             if (text.isNullOrEmpty()) return@launch
 
-                            context.copyToClipboard(text)
+                            PlatformServices.system.clipboardManager.copy(text)
 
                             PlatformServices.messages.showClipboard(clipboardMsg)
                         }

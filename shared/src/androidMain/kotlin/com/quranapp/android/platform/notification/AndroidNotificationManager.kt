@@ -13,6 +13,7 @@ import android.provider.Settings
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.quranapp.android.navigation.toIntent
 import com.quranapp.android.shared.R
 
 class AndroidNotificationManager(private val appContext: Context) : NotificationManager {
@@ -195,6 +196,11 @@ class AndroidNotificationManager(private val appContext: Context) : Notification
         val flags = PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
 
         return when (intent) {
+            is NotificationIntent.Route -> {
+                val androidIntent = intent.route.toIntent(appContext)
+                PendingIntent.getActivity(appContext, requestCode, androidIntent, flags)
+            }
+
             is NotificationIntent.Platform -> intent.nativePayload as? PendingIntent
 
             is NotificationIntent.Activity -> {

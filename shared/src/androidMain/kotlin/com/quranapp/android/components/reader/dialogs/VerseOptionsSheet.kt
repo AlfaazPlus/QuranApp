@@ -59,7 +59,7 @@ import com.quranapp.android.generated.resources.strTitleReaderVerseInformation
 import com.quranapp.android.locale.formattedStringResource
 import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.theme.alpha
-import com.quranapp.android.utils.app.AppDestinations
+import com.quranapp.android.navigation.AppRoute
 import com.quranapp.android.utils.miscellenous.Keys
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.DrawableResource
@@ -67,6 +67,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import com.quranapp.android.navigation.AppRoutes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -209,11 +210,14 @@ private fun VodSheetContent(
                 labelRes = Res.string.shareAsImage,
                 onClick = {
                     onDismiss()
-                    context.startActivity(
-                        AppDestinations.intent(context, AppDestinations.SHARE_AS_IMAGE).apply {
-                            putExtra(Keys.READER_KEY_CHAPTER_NO, verse.chapterNo)
-                            putExtra(Keys.READER_KEY_VERSE_NO, verse.verseNo)
-                        }
+                    PlatformServices.navigator.navigate(
+                        AppRoute.Screen(
+                            screen = AppRoutes.SHARE_AS_IMAGE,
+                            extras = mapOf(
+                                Keys.READER_KEY_CHAPTER_NO to verse.chapterNo,
+                                Keys.READER_KEY_VERSE_NO to verse.verseNo,
+                            )
+                        )
                     )
                 },
             )

@@ -11,7 +11,6 @@ import com.quranapp.android.generated.resources.copiedToClipboard
 import com.quranapp.android.generated.resources.pasteCrashLogGithubIssue
 import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.preferences.AppPreferences
-import com.quranapp.android.utils.extensions.copyToClipboard
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -31,7 +30,7 @@ class CrashReceiver : BroadcastReceiver() {
                 PlatformServices.system.notificationManager.cancel(NOTIFICATION_ID_CRASH)
 
                 if (intent?.action == CRASH_ACTION_COPY_LOG || intent?.action == CRASH_ACTION_CREATE_ISSUE) {
-                    context.copyToClipboard(intent.getStringExtra(Intent.EXTRA_TEXT)!!)
+                    PlatformServices.system.clipboardManager.copy(intent.getStringExtra(Intent.EXTRA_TEXT)!!)
                     AppPreferences.removeLastCrashLogFilename()
                 }
 

@@ -75,6 +75,8 @@ import com.quranapp.android.generated.resources.wbwSelectLanguage
 import com.quranapp.android.generated.resources.wordNo
 import com.quranapp.android.locale.LocalAppLocale
 import com.quranapp.android.locale.formattedStringResource
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.navigation.AppRoutes
 import com.quranapp.android.navigation.SettingRoutes
 import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.preferences.ReaderPreferences
@@ -82,8 +84,6 @@ import com.quranapp.android.reader.ReaderLayoutItem
 import com.quranapp.android.repository.QuranRepository
 import com.quranapp.android.repository.UserRepository
 import com.quranapp.android.theme.alpha
-import com.quranapp.android.utils.app.AppDestinations
-import com.quranapp.android.utils.extensions.copyToClipboard
 import com.quranapp.android.utils.miscellenous.Keys
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.ComposeUiConfig
@@ -331,7 +331,7 @@ private fun WordContent(
                         word,
                     )
 
-                    context.copyToClipboard(text)
+                    PlatformServices.system.clipboardManager.copy(text)
 
                     PlatformServices.messages.showClipboard(
                         getString(Res.string.copiedToClipboard),
@@ -520,11 +520,11 @@ private fun ArabicWordCard(
             } else {
                 TextButton(
                     onClick = {
-                        context.startActivity(
-                            AppDestinations.intent(context, AppDestinations.SETTINGS).apply {
-                                putExtra(Keys.NAV_DESTINATION, SettingRoutes.WWB)
-                            },
-                            null
+                        PlatformServices.navigator.navigate(
+                            AppRoute.Screen(
+                                screen = AppRoutes.SETTINGS,
+                                extras = mapOf(Keys.NAV_DESTINATION to SettingRoutes.WWB)
+                            )
                         )
                     }
                 ) {

@@ -1,6 +1,5 @@
 package com.quranapp.android.utils.workers
 
-import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
 import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.recitationDownloadChaptersProgress
 import com.quranapp.android.generated.resources.textDownloading
@@ -15,7 +14,7 @@ import com.quranapp.android.task.buildTaskParams
 import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.mediaplayer.RecitationAudioFileDownloader
-import com.quranapp.android.utils.mediaplayer.RecitationAudioRepository
+import com.quranapp.android.utils.mediaplayer.RecitationAudioKind
 import com.quranapp.android.utils.mediaplayer.RecitationDownloadProgressBus
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
 import com.quranapp.android.utils.quran.QuranMeta
@@ -42,7 +41,8 @@ class RecitationBulkDownloadWorker() : TaskWorker {
         }
 
         val urlTemplate = context.params.get<String>(KEY_URL_TEMPLATE)
-        val displayTitle = context.params.get<String>(KEY_DISPLAY_TITLE).orEmpty().ifBlank { "Recitation" }
+        val displayTitle =
+            context.params.get<String>(KEY_DISPLAY_TITLE).orEmpty().ifBlank { "Recitation" }
 
         if (reciterId == null || kind == null || urlTemplate == null) {
             return TaskResult.Failure()
@@ -56,7 +56,7 @@ class RecitationBulkDownloadWorker() : TaskWorker {
 
                 if (AppFiles.size(audioFile) > 0L) continue
 
-                val url = RecitationAudioRepository.prepareAudioUrl(urlTemplate, chapterNo)
+                val url = RecitationUtils.prepareAudioUrl(urlTemplate, chapterNo)
                     ?: continue
 
                 add(

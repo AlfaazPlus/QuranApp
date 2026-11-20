@@ -18,8 +18,8 @@ import androidx.media3.datasource.cache.LeastRecentlyUsedCacheEvictor
 import androidx.media3.datasource.cache.SimpleCache
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
-import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.utils.app.Logger
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -210,17 +210,17 @@ object WbwAudioPlayer {
 
             is WbwWordPlaybackSource.Chapter -> {
                 if (
-                    WbwAudioRepository.getTimingCount(context) == 0 &&
+                    WbwAudioRepository.getTimingCount() == 0 &&
                     !PlatformServices.networkMonitor.isConnected
                 ) {
                     return WbwAudioPlayResult.NoInternet
                 }
 
                 val timing =
-                    WbwAudioRepository.getWordTiming(context, chapterNo, verseNo, appWordIndex)
+                    WbwAudioRepository.getWordTiming(chapterNo, verseNo, appWordIndex)
 
                 if (timing == null) {
-                    val count = WbwAudioRepository.getTimingCount(context)
+                    val count = WbwAudioRepository.getTimingCount()
 
                     return when {
                         count == 0 && !PlatformServices.networkMonitor.isConnected ->
@@ -275,7 +275,7 @@ object WbwAudioPlayer {
 
     suspend fun warmUp(context: Context) {
         try {
-            WbwAudioRepository.ensureTimingsAvailable(context)
+            WbwAudioRepository.ensureTimingsAvailable()
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {

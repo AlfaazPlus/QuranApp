@@ -1,6 +1,5 @@
 package com.quranapp.android.components
 
-import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -45,7 +44,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.quranapp.android.components.common.dialogs.SimpleTooltip
@@ -72,9 +70,10 @@ import com.quranapp.android.generated.resources.strTitleShareApp
 import com.quranapp.android.generated.resources.sunnahapp_logo_icon
 import com.quranapp.android.generated.resources.titleExportData
 import com.quranapp.android.generated.resources.titleStorageCleanup
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.navigation.AppRoutes
 import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.theme.alpha
-import com.quranapp.android.utils.app.AppDestinations
 import com.quranapp.android.utils.app.UrlsManager
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.DrawableResource
@@ -93,7 +92,7 @@ private data class IndexMenuItem(
 
     val iconTint: Color? = null,
     val textColor: Color? = null,
-    val onClick: (ctx: Context) -> Unit,
+    val onClick: () -> Unit,
 )
 
 @Composable
@@ -107,26 +106,21 @@ private fun getItems(onDonate: () -> Unit): List<IndexMenuItemGroup> {
                     Res.drawable.dr_icon_settings,
                     Res.string.strTitleSettings,
                     onClick = {
-                        it.startActivity(AppDestinations.intent(it, AppDestinations.SETTINGS))
+                        PlatformServices.navigator.navigate(AppRoute.Screen(AppRoutes.SETTINGS))
                     }
                 ),
                 IndexMenuItem(
                     Res.drawable.icon_clean,
                     Res.string.titleStorageCleanup,
                     onClick = {
-                        it.startActivity(
-                            AppDestinations.intent(
-                                it,
-                                AppDestinations.STORAGE_CLEANUP
-                            )
-                        )
+                        PlatformServices.navigator.navigate(AppRoute.Screen(AppRoutes.STORAGE_CLEANUP))
                     }
                 ),
                 IndexMenuItem(
                     Res.drawable.icon_import_export,
                     Res.string.titleExportData,
                     onClick = {
-                        it.startActivity(AppDestinations.intent(it, AppDestinations.EXPORT_IMPORT))
+                        PlatformServices.navigator.navigate(AppRoute.Screen(AppRoutes.EXPORT_IMPORT))
                     }
                 ),
             )
@@ -137,7 +131,7 @@ private fun getItems(onDonate: () -> Unit): List<IndexMenuItemGroup> {
                     Res.drawable.dr_icon_info,
                     Res.string.strTitleAboutUs,
                     onClick = {
-                        it.startActivity(AppDestinations.intent(it, AppDestinations.ABOUT))
+                        PlatformServices.navigator.navigate(AppRoute.Screen(AppRoutes.ABOUT))
                     }
                 ),
                 IndexMenuItem(
@@ -151,7 +145,15 @@ private fun getItems(onDonate: () -> Unit): List<IndexMenuItemGroup> {
                     Res.drawable.dr_icon_share,
                     Res.string.strTitleShareApp,
                     onClick = {
-                        scope.launch { shareApp(it) }
+                        scope.launch {
+                            PlatformServices.links.shareText(
+                                text = getString(
+                                    Res.string.strMsgShareApp,
+                                    PlatformServices.links.storeWebLink(),
+                                ),
+                                chooserTitle = getString(Res.string.strTitleShareApp),
+                            )
+                        }
                     }
                 ),
                 IndexMenuItem(
@@ -320,13 +322,11 @@ private fun IndexMenuItemRow(
     item: IndexMenuItem,
     onClose: () -> Unit
 ) {
-    val context = LocalContext.current
-
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = {
-                item.onClick(context)
+                item.onClick()
                 onClose()
             })
             .padding(horizontal = 20.dp, vertical = 10.dp),
@@ -348,14 +348,4 @@ private fun IndexMenuItemRow(
             maxLines = 1
         )
     }
-}
-
-private suspend fun shareApp(ctx: Context) {
-    PlatformServices.links.shareText(
-        text = getString(
-            Res.string.strMsgShareApp,
-            PlatformServices.links.storeWebLink(),
-        ),
-        chooserTitle = getString(Res.string.strTitleShareApp),
-    )
 }

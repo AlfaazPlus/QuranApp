@@ -1,5 +1,7 @@
 package com.quranapp.android.platform.notification
 
+import com.quranapp.android.navigation.AppRoute
+
 data class AppNotification(
     val id: Int,
     val title: String,
@@ -48,6 +50,9 @@ enum class NotificationCategory {
 }
 
 sealed interface NotificationIntent {
+    /** Navigate to a typed app route when the notification is tapped. */
+    data class Route(val route: AppRoute) : NotificationIntent
+
     data class Activity(
         val destination: String? = null,
         val action: String? = null,

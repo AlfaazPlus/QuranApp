@@ -74,7 +74,7 @@ import com.quranapp.android.generated.resources.strTitleVOTD
 import com.quranapp.android.models.ChapterVersePair
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.tightTextStyle
-import com.quranapp.android.utils.app.AppDestinations
+import com.quranapp.android.navigation.AppRoute
 import com.quranapp.android.utils.mediaplayer.WbwAudioPlayer
 import com.quranapp.android.utils.miscellenous.Keys
 import com.quranapp.android.utils.reader.ComposeUiConfig
@@ -87,6 +87,8 @@ import com.quranapp.android.viewmodel.VotdViewModel
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.navigation.AppRoutes
 
 @Composable
 fun VerseOfTheDay(
@@ -292,11 +294,14 @@ internal fun VotdContent(
                 tint = iconTint,
                 small = true,
                 onClick = {
-                    context.startActivity(
-                        AppDestinations.intent(context, AppDestinations.SHARE_AS_IMAGE).apply {
-                            putExtra(Keys.READER_KEY_CHAPTER_NO, verse.chapterNo)
-                            putExtra(Keys.READER_KEY_VERSE_NO, verse.verseNo)
-                        }
+                    PlatformServices.navigator.navigate(
+                        AppRoute.Screen(
+                            screen = AppRoutes.SHARE_AS_IMAGE,
+                            extras = mapOf(
+                                Keys.READER_KEY_CHAPTER_NO to verse.chapterNo,
+                                Keys.READER_KEY_VERSE_NO to verse.verseNo,
+                            )
+                        )
                     )
                 }
             )
@@ -305,7 +310,7 @@ internal fun VotdContent(
 
             FilledTonalButton(
                 modifier = Modifier.height(28.dp),
-                onClick = { ReaderFactory.startVerse(context, verse.chapterNo, verse.verseNo) },
+                onClick = { PlatformServices.navigator.navigate(AppRoute.Reader(ReaderFactory.verse(verse.chapterNo, verse.verseNo))) },
                 contentPadding = PaddingValues(horizontal = 16.dp, vertical = 0.dp)
             ) {
                 Text(

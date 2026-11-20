@@ -25,7 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
 import com.quranapp.android.components.common.ErrorMessageCard
 import com.quranapp.android.components.common.dialogs.AlertDialog
 import com.quranapp.android.components.common.dialogs.AlertDialogAction
@@ -39,6 +38,7 @@ import com.quranapp.android.generated.resources.nothingToCleanup
 import com.quranapp.android.generated.resources.strLabelCancel
 import com.quranapp.android.generated.resources.strLabelDelete
 import com.quranapp.android.generated.resources.titleRecitationCleanup
+import com.quranapp.android.utils.mediaplayer.RecitationAudioKind
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
 import com.quranapp.android.viewmodel.RecitationDownloadEvent
 import com.quranapp.android.viewmodel.RecitationDownloadViewModel

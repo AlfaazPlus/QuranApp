@@ -3,16 +3,13 @@ package com.quranapp.android.utils.mediaplayer
 import android.content.Context
 import android.net.Uri
 import androidx.core.net.toUri
-import androidx.work.WorkManager
 import com.quranapp.android.api.JsonHelper
 import com.quranapp.android.api.downloadTo
 import com.quranapp.android.api.fetchInventoryStreamingResponse
 import com.quranapp.android.api.models.mediaplayer.ChapterTimingMetadata
-import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
 import com.quranapp.android.api.models.mediaplayer.RecitationAudioTrack
 import com.quranapp.android.api.models.mediaplayer.ResolvedAudioResult
 import com.quranapp.android.api.models.recitation2.RecitationModelBase
-import com.quranapp.android.locale.toFormatted
 import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.platform.toInputStream
 import com.quranapp.android.utils.app.AppFiles
@@ -20,7 +17,6 @@ import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.exceptions.HttpNotFoundException
 import com.quranapp.android.utils.exceptions.NoInternetException
 import com.quranapp.android.utils.miscellenous.isGzip
-import com.quranapp.android.utils.reader.recitation.RecitationUtils.URL_CHAPTER_PATTERN
 import com.quranapp.android.utils.workers.RecitationAudioDownloadWorker
 import com.quranapp.android.utils.workers.RecitationBulkDownloadWorker
 import kotlinx.coroutines.Dispatchers
@@ -41,33 +37,11 @@ import java.io.InputStream
 import java.util.zip.GZIPInputStream
 
 class RecitationAudioRepository(private val context: Context) {
-    companion object {
-        fun prepareAudioUrl(urlTemplate: String, chapterNo: Int): String? {
-            var url = urlTemplate
-            return try {
-                var matcher = URL_CHAPTER_PATTERN.matcher(url)
-                while (matcher.find()) {
-                    val group = matcher.group(1)
-                    if (group != null) {
-                        url = matcher.replaceFirst(group.toFormatted(null, chapterNo))
-                        matcher.reset(url)
-                    }
-                }
-
-                url
-            } catch (e: Exception) {
-                e.printStackTrace()
-                null
-            }
-        }
-    }
-
     private val modelManager = RecitationModelManager
-    private val workManager = WorkManager.getInstance(context)
 
     fun cancelAll() {
-        workManager.cancelAllWorkByTag(RecitationAudioDownloadWorker.TAG)
-        workManager.cancelAllWorkByTag(RecitationBulkDownloadWorker.TAG)
+        PlatformServices.system.taskManager.cancelByTag(RecitationAudioDownloadWorker.TAG)
+        PlatformServices.system.taskManager.cancelByTag(RecitationBulkDownloadWorker.TAG)
     }
 
     private sealed class TimingParseResult {
@@ -161,7 +135,7 @@ class RecitationAudioRepository(private val context: Context) {
                         return file.toFile().toUri()
                     }
 
-                    val url = prepareAudioUrl(urlTemplate, chapterNo)
+                    val url = RecitationUtils.prepareAudioUrl(urlTemplate, chapterNo)
                         ?: throw IllegalStateException("Failed to prepare audio URL")
 
                     return url.toUri()

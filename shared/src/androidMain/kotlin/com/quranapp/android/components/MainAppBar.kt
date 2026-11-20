@@ -25,9 +25,11 @@ import com.quranapp.android.generated.resources.app_name
 import com.quranapp.android.generated.resources.dr_icon_search
 import com.quranapp.android.generated.resources.dr_logo
 import com.quranapp.android.generated.resources.strLabelNavSearch
-import com.quranapp.android.utils.app.AppDestinations
+import com.quranapp.android.navigation.AppRoute
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.navigation.AppRoutes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,12 +64,7 @@ fun MainAppBar() {
                 IconButton(
                     modifier = Modifier.size(40.dp),
                     onClick = {
-                        context.startActivity(
-                            AppDestinations.intent(
-                                context,
-                                AppDestinations.SEARCH
-                            )
-                        )
+                        PlatformServices.navigator.navigate(AppRoute.Screen(AppRoutes.SEARCH))
                     }
                 ) {
                     Icon(

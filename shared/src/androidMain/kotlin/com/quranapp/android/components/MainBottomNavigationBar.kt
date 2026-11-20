@@ -42,11 +42,13 @@ import com.quranapp.android.generated.resources.strLabelNavHome
 import com.quranapp.android.generated.resources.strTitleQuran
 import com.quranapp.android.navigation.MainRoutes
 import com.quranapp.android.theme.alpha
-import com.quranapp.android.utils.app.AppDestinations
+import com.quranapp.android.navigation.AppRoute
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.navigation.AppRoutes
 
 val MainBottomNavBarHeight = 70.dp
 
@@ -101,12 +103,7 @@ fun MainBottomNavigationBar(navController: NavHostController) {
                     .clip(CircleShape)
                     .background(colorScheme.primary)
                     .clickable {
-                        context.startActivity(
-                            AppDestinations.intent(
-                                context,
-                                AppDestinations.READER_INDEX
-                            )
-                        )
+                        PlatformServices.navigator.navigate(AppRoute.Screen(AppRoutes.READER_INDEX))
                     }
                     .padding(4.dp),
                 contentAlignment = Alignment.Center

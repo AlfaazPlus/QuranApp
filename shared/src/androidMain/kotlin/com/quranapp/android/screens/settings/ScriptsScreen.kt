@@ -62,10 +62,10 @@ import com.quranapp.android.generated.resources.textDownloading
 import com.quranapp.android.generated.resources.titleDownloadScriptResources
 import com.quranapp.android.locale.LocalAppLocale
 import com.quranapp.android.preferences.ReaderPreferences
+import com.quranapp.android.task.TaskState
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.observeDarkTheme
-import com.quranapp.android.utils.managers.ResourceDownloadStatus
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.QuranScriptVariant
 import com.quranapp.android.utils.reader.getQuranScriptFontPackSizeMb
@@ -171,7 +171,7 @@ private fun ScriptItem(
     variants: List<QuranScriptVariant>,
     selectedScript: String,
     selectedVariant: QuranScriptVariant?,
-    downloadStates: Map<String, ResourceDownloadStatus>,
+    downloadStates: Map<String, TaskState>,
     onCancelDownload: (String) -> Unit,
     onSelect: (String, QuranScriptVariant?) -> Unit,
 ) {
@@ -179,9 +179,8 @@ private fun ScriptItem(
     val isDark = ThemeUtils.observeDarkTheme()
 
     val isSelected = script == selectedScript
-    val downloadState = downloadStates[script] ?: ResourceDownloadStatus.Idle
-    val isDownloading =
-        downloadState is ResourceDownloadStatus.Started || downloadState is ResourceDownloadStatus.InProgress
+    val downloadState = downloadStates[script]
+    val isDownloading = downloadState?.isEnqueued == true || downloadState?.isRunning == true
     val applyTint = script != QuranScriptUtils.SCRIPT_KFQPC_V4
 
     Surface(
@@ -254,20 +253,21 @@ private fun ScriptItem(
                     ) {
                         Text(
                             text = when (downloadState) {
-                                is ResourceDownloadStatus.InProgress -> if (downloadState.progress <= 100) {
-                                    appLocale.format(
-                                        "%1\$s (%2\$d%%)",
-                                        stringResource(
-                                            if (script.isQuranAtlasScript()) {
-                                                Res.string.textDownloading
-                                            } else {
-                                                Res.string.msgDownloadingFonts
-                                            },
-                                        ),
-                                        downloadState.progress
-                                    )
-                                } else {
-                                    if (script.isQuranAtlasScript()) {
+                                is TaskState.Running -> {
+                                    val pct = downloadState.progress?.percentage
+                                    if (pct != null) {
+                                        appLocale.format(
+                                            $$"%1$s (%2$d%%)",
+                                            stringResource(
+                                                if (script.isQuranAtlasScript()) {
+                                                    Res.string.textDownloading
+                                                } else {
+                                                    Res.string.msgDownloadingFonts
+                                                },
+                                            ),
+                                            pct
+                                        )
+                                    } else if (script.isQuranAtlasScript()) {
                                         stringResource(Res.string.textDownloading)
                                     } else {
                                         stringResource(Res.string.msgExtractingFonts)

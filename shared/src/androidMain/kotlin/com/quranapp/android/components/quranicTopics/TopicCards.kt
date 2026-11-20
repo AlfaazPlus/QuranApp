@@ -1,6 +1,5 @@
 package com.quranapp.android.components.quranicTopics
 
-import android.content.Context
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -24,24 +23,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.quranapp.android.components.ReferenceThumbnail
-import com.quranapp.android.components.ReferenceVerseModel
 import com.quranapp.android.db.entities.topics.RelationshipType
 import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.dr_icon_chevron_right
 import com.quranapp.android.generated.resources.strLabelVerseSerial
 import com.quranapp.android.generated.resources.strLabelViewAll
 import com.quranapp.android.locale.formattedStringResource
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.navigation.AppRoutes
+import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.repository.TopicVersePreview
 import com.quranapp.android.theme.alpha
-import com.quranapp.android.utils.extensions.copyToClipboard
 import com.quranapp.android.utils.miscellenous.stripHtmlTags
 import com.quranapp.android.utils.quran.parser.ParserUtils
-import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.viewmodel.TopicNode
 import com.quranapp.android.viewmodel.TopicRelationship
 import com.quranapp.android.viewmodel.TopicsTree
@@ -214,12 +211,7 @@ internal fun VerseRefsCard(
     verseRefs: List<String>,
     previews: List<TopicVersePreview>,
 ) {
-    val context = LocalContext.current
-
-    fun openTopicReference(
-        context: Context,
-        topic: TopicNode,
-    ) {
+    fun openTopicReference(topic: TopicNode) {
         val compressedRefs = ParserUtils.compressVerseRefsByChapter(verseRefs)
         val chapters = compressedRefs
             .mapNotNull { it.substringBefore(':').toIntOrNull() }
@@ -227,14 +219,16 @@ internal fun VerseRefsCard(
 
         val description = topic.shortDescription ?: ""
 
-        ReaderFactory.startReferenceVerse(
-            context,
-            ReferenceVerseModel(
-                title = topic.title,
-                desc = description.stripHtmlTags(true),
-                chapters = chapters,
-                verses = compressedRefs.toSet(),
-                thumbnail = topic.imageUrl?.let { ReferenceThumbnail.RemoteUrl(it) }
+        PlatformServices.navigator.navigate(
+            AppRoute.Screen(
+                screen = AppRoutes.REFERENCE,
+                extras = buildMap {
+                    put("title", topic.title)
+                    put("desc", description.stripHtmlTags(true))
+                    put("chapters", chapters)
+                    put("verses", compressedRefs.toSet())
+                    topic.imageUrl?.let { put("thumbnail_url", it) }
+                },
             )
         )
     }
@@ -247,7 +241,7 @@ internal fun VerseRefsCard(
             .background(colorScheme.surface)
             .border(1.dp, colorScheme.outlineVariant.copy(0.45f), shapes.medium)
             .clickable {
-                openTopicReference(context, topic)
+                openTopicReference(topic)
             }
             .padding(12.dp)
     ) {
@@ -297,7 +291,7 @@ internal fun VerseRefsCard(
                                 .background(colorScheme.surface)
                                 .clickable(
                                     onClick = {
-                                        context.copyToClipboard("${preview.chapterNo}:${preview.verseNo}")
+                                        PlatformServices.system.clipboardManager.copy("${preview.chapterNo}:${preview.verseNo}")
                                     },
                                 )
                                 .padding(horizontal = 8.dp, vertical = 4.dp),

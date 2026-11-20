@@ -6,19 +6,19 @@ import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.strLabelVerseSerialWithChapter
 import com.quranapp.android.generated.resources.strTitleVOTD
 import com.quranapp.android.models.ChapterVersePair
-import com.quranapp.android.notification.AndroidNotificationManager
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.platform.notification.AppNotification
 import com.quranapp.android.platform.notification.NotificationCategory
+import com.quranapp.android.platform.notification.NotificationChannels
 import com.quranapp.android.platform.notification.NotificationIntent
 import com.quranapp.android.platform.notification.NotificationPriority
-import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.preferences.VersePreferences
 import com.quranapp.android.task.TaskContext
 import com.quranapp.android.task.TaskResult
 import com.quranapp.android.task.TaskWorker
 import com.quranapp.android.utils.VerseUtils
-import com.quranapp.android.utils.app.AppDestinations
 import com.quranapp.android.utils.miscellenous.stripHtmlTags
 import com.quranapp.android.utils.reader.ReaderIntentData
 import com.quranapp.android.utils.reader.ReaderLaunchParams
@@ -68,19 +68,19 @@ class VerseOfTheDayWorker() : TaskWorker {
             votd.verseNo
         )
 
-        val readerIntent = ReaderLaunchParams(
-            data = ReaderIntentData.FullChapter(
-                votd.chapterNo,
-                ChapterVersePair(votd.chapterNo, votd.verseNo),
-            ),
-            slugs = slugs,
-        ).toIntent().apply {
-            setClassName("com.quranapp.android", AppDestinations.READER)
-        }
+        val readerRoute = AppRoute.Reader(
+            ReaderLaunchParams(
+                data = ReaderIntentData.FullChapter(
+                    votd.chapterNo,
+                    ChapterVersePair(votd.chapterNo, votd.verseNo),
+                ),
+                slugs = slugs,
+            )
+        )
 
         val notification = AppNotification(
             id = NOTIFICATION_ID,
-            channelId = AndroidNotificationManager.CHANNEL_ID_VOTD,
+            channelId = NotificationChannels.CHANNEL_ID_VOTD,
             title = getString(Res.string.strTitleVOTD),
             content = translationText,
             subText = verseReference,
@@ -88,7 +88,7 @@ class VerseOfTheDayWorker() : TaskWorker {
             category = NotificationCategory.REMINDER,
             priority = NotificationPriority.HIGH,
             autoCancel = true,
-            contentIntent = NotificationIntent.Platform(readerIntent),
+            contentIntent = NotificationIntent.Route(readerRoute),
         )
 
         PlatformServices.system.notificationManager.notify(NOTIFICATION_ID, notification)

@@ -94,6 +94,7 @@ import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import com.quranapp.android.navigation.AppRoute
 
 data class BookmarkViewerData(
     val chapterNo: Int,
@@ -297,7 +298,7 @@ private fun BookmarkViewerSheetContent(
             if (data.showOpenInReaderButton && !editing) {
                 Button(
                     onClick = {
-                        ReaderFactory.startVerseRange(context, chapterNo, fromVerseNo, toVerseNo)
+                        PlatformServices.navigator.navigate(AppRoute.Reader(ReaderFactory.verseRange(chapterNo, fromVerseNo, toVerseNo)))
                         onClose()
                     },
                     modifier = Modifier

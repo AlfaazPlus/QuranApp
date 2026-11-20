@@ -20,14 +20,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.quranapp.android.components.ReferenceVerseModel
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.dr_icon_chevron_right
 import com.quranapp.android.generated.resources.strLabelSurah
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.navigation.AppRoutes
+import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.reader.recommended.Recommendation
 import com.quranapp.android.utils.reader.recommended.RecommendationRef
@@ -54,8 +55,6 @@ fun HomeSectionRecommended(
 private fun RecommendationCard(
     recommendation: Recommendation
 ) {
-    val context = LocalContext.current
-
     val resolvedChapterName by produceState<String?>(initialValue = null) {
         val quranRepository = DatabaseProvider.getQuranRepository()
 
@@ -73,7 +72,9 @@ private fun RecommendationCard(
             .clickable {
                 when (val ref = recommendation.reference) {
                     is RecommendationRef.Chapter -> {
-                        ReaderFactory.startChapter(context, ref.number)
+                        PlatformServices.navigator.navigate(
+                            AppRoute.Reader(ReaderFactory.chapter(ref.number))
+                        )
                     }
 
                     is RecommendationRef.Verses -> {
@@ -90,13 +91,15 @@ private fun RecommendationCard(
                             verseSpecs.add(trimmed)
                         }
 
-                        ReaderFactory.startReferenceVerse(
-                            context = context,
-                            ReferenceVerseModel(
-                                title = recommendation.title,
-                                desc = recommendation.description,
-                                chapters = chapters,
-                                verses = verseSpecs
+                        PlatformServices.navigator.navigate(
+                            AppRoute.Screen(
+                                screen = AppRoutes.REFERENCE,
+                                extras = buildMap {
+                                    put("title", recommendation.title)
+                                    put("desc", recommendation.description)
+                                    put("chapters", chapters)
+                                    put("verses", verseSpecs)
+                                },
                             )
                         )
 

@@ -34,7 +34,7 @@ import com.quranapp.android.generated.resources.strLabelGotIt
 import com.quranapp.android.generated.resources.strLabelOff
 import com.quranapp.android.generated.resources.strLabelOn
 import com.quranapp.android.generated.resources.strTitleVOTD
-import com.quranapp.android.navigation.NavigationHelper
+import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.preferences.VersePreferences
 import com.quranapp.android.scheduling.RecommendedReminderScheduler
 import com.quranapp.android.scheduling.VerseOfTheDayScheduler
@@ -71,8 +71,8 @@ fun DailyReminderSheet(
     LaunchedEffect(permissionState) {
         if (permissionState != null && !permissionState.status.isGranted) {
             VersePreferences.setVOTDReminderEnabled(false)
-            VerseOfTheDayScheduler.cancelDailyNotification(context)
-            RecommendedReminderScheduler.cancel(context)
+            VerseOfTheDayScheduler.cancelDailyNotification()
+            RecommendedReminderScheduler.cancel()
         }
     }
 
@@ -111,11 +111,11 @@ fun DailyReminderSheet(
                                 VersePreferences.setVOTDReminderEnabled(key)
 
                                 if (key == true) {
-                                    VerseOfTheDayScheduler.scheduleDailyNotification(context)
-                                    RecommendedReminderScheduler.schedule(context)
+                                    VerseOfTheDayScheduler.scheduleDailyNotification()
+                                    RecommendedReminderScheduler.schedule()
                                 } else {
-                                    VerseOfTheDayScheduler.cancelDailyNotification(context)
-                                    RecommendedReminderScheduler.cancel(context)
+                                    VerseOfTheDayScheduler.cancelDailyNotification()
+                                    RecommendedReminderScheduler.cancel()
                                 }
                             }
                         }
@@ -141,7 +141,7 @@ fun DailyReminderSheet(
                 onClick = {
                     permissionState?.let {
                         if (showPermissionDialog.second == true) {
-                            NavigationHelper.openAppSettings(context)
+                            PlatformServices.links.openAppSettings()
                         } else {
                             it.launchPermissionRequest()
                         }

@@ -9,20 +9,14 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import android.widget.Toast
 import androidx.core.net.toUri
-import com.quranapp.android.api.models.tafsir.TafsirInfoModel
-import com.quranapp.android.api.models.translation.TranslationBookInfoModel
 import com.quranapp.android.db.QURAN_DATABASE_NAME
 import com.quranapp.android.models.ChapterVersePair
+import com.quranapp.android.navigation.AndroidAppNavigator
+import com.quranapp.android.platform.clipboard.AndroidClipboardManager
 import com.quranapp.android.platform.notification.AndroidNotificationManager
-import com.quranapp.android.platform.notification.NotificationManager
 import com.quranapp.android.platform.shortcut.AndroidShortcutManager
-import com.quranapp.android.platform.shortcut.ShortcutManager
 import com.quranapp.android.resources.ComposeResourceFiles
 import com.quranapp.android.task.AndroidTaskManager
-import com.quranapp.android.task.TaskManager
-import com.quranapp.android.utils.managers.ScriptFontsDownloadManager
-import com.quranapp.android.utils.managers.TafsirDownloadManager
-import com.quranapp.android.utils.managers.TranslationDownloadManager
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.reader.FontResolver
 import com.quranapp.platform.AppImageLoader
@@ -54,11 +48,11 @@ fun installAndroidPlatform(context: Context) {
         files = AndroidAppFileSystem(app),
         fonts = FontResolver.getInstance(app),
         audio = AndroidAudioPlayer(app),
-        downloads = AndroidDownloadScheduler(app),
         links = AndroidAppLinks(app),
         messages = AndroidAppMessages(app),
         networkMonitor = AndroidNetworkMonitor(app),
         system = AndroidSystemServices(app),
+        navigator = AndroidAppNavigator(app),
     )
 }
 
@@ -224,11 +218,22 @@ private class AndroidAppLinks(
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             fill()
         }
+
         val chooser = Intent.createChooser(send, chooserTitle).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
+
         start(chooser)
+    }
+
+    override fun openAppSettings() {
+        val intent = Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+            data = android.net.Uri.fromParts("package", context.packageName, null)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+
+        start(intent)
     }
 
     private fun storeLink(packageName: String?, market: Boolean): String {
@@ -260,22 +265,6 @@ private class AndroidAudioPlayer(
 
     override fun pause() {
         controller.pause()
-    }
-}
-
-private class AndroidDownloadScheduler(
-    private val context: Context,
-) : DownloadScheduler {
-    override fun downloadTranslation(bookInfo: TranslationBookInfoModel) {
-        TranslationDownloadManager.startDownload(context, bookInfo)
-    }
-
-    override fun downloadTafsir(bookInfo: TafsirInfoModel) {
-        TafsirDownloadManager.startDownload(context, bookInfo)
-    }
-
-    override fun downloadScriptFont(script: String) {
-        ScriptFontsDownloadManager.startDownload(context, script)
     }
 }
 
@@ -329,14 +318,15 @@ class AndroidNetworkMonitor(
 }
 
 class AndroidSystemServices(private val app: Context) : SystemServices {
-    override val taskManager: TaskManager
+    override val taskManager
         get() = AndroidTaskManager(app)
 
-    override val notificationManager: NotificationManager by lazy {
-        AndroidNotificationManager(app)
-    }
+    override val notificationManager
+        get() = AndroidNotificationManager(app)
 
-    override val shortcutManager: ShortcutManager by lazy {
-        AndroidShortcutManager(app)
-    }
+    override val shortcutManager
+        get() = AndroidShortcutManager(app)
+
+    override val clipboardManager
+        get() = AndroidClipboardManager(app)
 }

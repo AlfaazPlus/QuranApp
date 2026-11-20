@@ -41,7 +41,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontWeight
@@ -86,7 +85,8 @@ import com.quranapp.android.generated.resources.strTitleReadHistory
 import com.quranapp.android.locale.formattedStringResource
 import com.quranapp.android.reader.ReaderMode
 import com.quranapp.android.theme.alpha
-import com.quranapp.android.utils.app.AppDestinations
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.utils.reader.ReadType
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.reader.getQuranScriptName
@@ -103,7 +103,6 @@ private enum class SwipeRevealValue {
 
 @Composable
 fun ReadHistoryScreen(vm: ReadHistoryViewModel = appViewModel()) {
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
     val chapterNames by vm.chapterNames.collectAsStateWithLifecycle()
@@ -113,9 +112,8 @@ fun ReadHistoryScreen(vm: ReadHistoryViewModel = appViewModel()) {
     var clearAllRequested by remember { mutableStateOf(false) }
 
     val openHistory: (ReadHistoryEntity) -> Unit = { history ->
-        ReaderFactory.prepareHistoryIntent(history)?.let {
-            it.setClassName(context, AppDestinations.READER)
-            context.startActivity(it)
+        ReaderFactory.fromHistory(history)?.let {
+            PlatformServices.navigator.navigate(AppRoute.Reader(it))
         }
     }
 

@@ -27,11 +27,13 @@ import com.quranapp.android.generated.resources.dr_icon_close
 import com.quranapp.android.generated.resources.ic_auto_backup
 import com.quranapp.android.generated.resources.strLabelClose
 import com.quranapp.android.preferences.BackupPreferences
-import com.quranapp.android.utils.app.AppDestinations
+import com.quranapp.android.navigation.AppRoute
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.navigation.AppRoutes
 
 @Composable
 fun AutoBackupDeletedBanner() {
@@ -43,7 +45,7 @@ fun AutoBackupDeletedBanner() {
 
     Card(
         onClick = {
-            context.startActivity(AppDestinations.intent(context, AppDestinations.EXPORT_IMPORT))
+            PlatformServices.navigator.navigate(AppRoute.Screen(AppRoutes.EXPORT_IMPORT))
         },
         modifier = Modifier
             .fillMaxWidth()

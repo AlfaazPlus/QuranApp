@@ -1,6 +1,5 @@
 package com.quranapp.android.utils.workers
 
-import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
 import com.quranapp.android.task.ForegroundTaskInfo
 import com.quranapp.android.task.TaskConstraints
 import com.quranapp.android.task.TaskContext
@@ -12,6 +11,7 @@ import com.quranapp.android.task.buildTaskParams
 import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.mediaplayer.RecitationAudioFileDownloader
+import com.quranapp.android.utils.mediaplayer.RecitationAudioKind
 import com.quranapp.android.utils.mediaplayer.RecitationDownloadProgressBus
 import okio.Path.Companion.toPath
 
@@ -20,7 +20,8 @@ class RecitationAudioDownloadWorker() : TaskWorker {
     override suspend fun doWork(context: TaskContext): TaskResult {
         val downloadUrl = context.params.get<String>(KEY_URL)
         val outputPath = context.params.get<String>(KEY_OUTPUT_PATH)
-        val title = context.params.get<String>(KEY_TITLE).orEmpty().ifBlank { "Recitation download" }
+        val title =
+            context.params.get<String>(KEY_TITLE).orEmpty().ifBlank { "Recitation download" }
         val subtitle = context.params.get<String>(KEY_SUBTITLE)
         val reciterId = context.params.get<String>(KEY_RECITER_ID)
         val chapterNo = context.params.int(KEY_CHAPTER_NO, -1)
@@ -81,15 +82,9 @@ class RecitationAudioDownloadWorker() : TaskWorker {
                     }
 
                     context.setProgress(
-                        TaskProgress(
-                            current = pct,
-                            total = 100,
-                            indeterminate = false,
-                            extras = buildTaskParams {
-                                put(KEY_PROGRESS, pct)
-                                put(KEY_PROGRESS_BYTES, consumed)
-                                put(KEY_PROGRESS_TOTAL, total)
-                            },
+                        TaskProgress.of(
+                            current = consumed,
+                            total = total,
                         ),
                     )
 
@@ -163,10 +158,7 @@ class RecitationAudioDownloadWorker() : TaskWorker {
         private const val KEY_SUBTITLE = "subtitle"
         private const val KEY_RECITER_ID = "reciter_id"
         private const val KEY_CHAPTER_NO = "chapter_no"
-        private const val KEY_KIND = "audio_kind"
-        const val KEY_PROGRESS = "progress"
-        const val KEY_PROGRESS_BYTES = "progress_bytes"
-        const val KEY_PROGRESS_TOTAL = "progress_total"
+        private         const val KEY_KIND = "audio_kind"
 
         fun uniqueWorkName(reciterId: String, chapterNo: Int): String {
             return "recitation-audio:$reciterId:$chapterNo"

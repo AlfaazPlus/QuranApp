@@ -65,9 +65,10 @@ class WbwDownloadWorker() : TaskWorker {
                         }
 
                         context.setProgress(
-                            TaskProgress(
-                                progress ?: 0,
-                                indeterminate = progress == null
+                            TaskProgress.of(
+                                current = downloaded,
+                                total = totalBytes ?: 0L,
+                                indeterminate = progress == null,
                             )
                         )
 

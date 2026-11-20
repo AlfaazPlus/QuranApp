@@ -50,7 +50,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
 import com.quranapp.android.api.models.recitation2.RecitationModelBase
 import com.quranapp.android.api.models.recitation2.RecitationQuranModel
 import com.quranapp.android.api.models.recitation2.RecitationTranslationModel
@@ -100,6 +99,7 @@ import com.quranapp.android.generated.resources.titleRecitationCleanup
 import com.quranapp.android.generated.resources.updateAvailable
 import com.quranapp.android.generated.resources.yesCancelDownload
 import com.quranapp.android.theme.alpha
+import com.quranapp.android.utils.mediaplayer.RecitationAudioKind
 import com.quranapp.android.utils.mediaplayer.RecitationDownloadProgressBus
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.viewmodel.RecitationBatchDownloadState

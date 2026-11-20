@@ -123,6 +123,9 @@ import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.pluralStringResource
 import org.jetbrains.compose.resources.stringResource
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.navigation.AppRoutes
+import com.quranapp.android.utils.miscellenous.Keys
 
 private data class CollectionScrollAnchor(
     val itemId: Long,
@@ -642,13 +645,13 @@ private fun CollectionVerseActionBar(
                 painter = painterResource(Res.drawable.ic_book_open_text),
                 contentDescription = stringResource(Res.string.strTitleTafsir),
                 tint = iconTint,
-            ) { ReaderFactory.startTafsir(context, verse.chapterNo, verse.verseNo) }
+            ) { PlatformServices.navigator.navigate(AppRoute.Screen(screen = AppRoutes.TAFSIR, extras = mapOf(Keys.READER_KEY_CHAPTER_NO to verse.chapterNo, Keys.READER_KEY_VERSE_NO to verse.verseNo))) }
 
             VerseActionIconButton(
                 painter = painterResource(Res.drawable.dr_icon_open),
                 contentDescription = stringResource(Res.string.strLabelRead),
                 tint = iconTint,
-            ) { ReaderFactory.startVerse(context, verse.chapterNo, verse.verseNo) }
+            ) { PlatformServices.navigator.navigate(AppRoute.Reader(ReaderFactory.verse(verse.chapterNo, verse.verseNo))) }
 
         }
         Spacer(modifier = Modifier.width(10.dp))

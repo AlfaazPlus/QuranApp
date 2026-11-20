@@ -103,14 +103,14 @@ import com.quranapp.android.generated.resources.strMsgTranslNoneSelected
 import com.quranapp.android.locale.AppLocale
 import com.quranapp.android.locale.readAppLocale
 import com.quranapp.android.models.ChapterVersePair
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.preferences.AppPreferences
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.reader.ReaderLayoutItem
 import com.quranapp.android.theme.alpha
-import com.quranapp.android.utils.app.AppDestinations
 import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.extensions.isSingleValue
-import com.quranapp.android.utils.miscellenous.Keys
 import com.quranapp.android.utils.reader.ComposeUiConfig
 import com.quranapp.android.utils.reader.LocalVerseActions
 import com.quranapp.android.utils.reader.ReaderItemsBuilder
@@ -423,26 +423,18 @@ private fun ReferenceScreenContent(
                                                     ),
                                                 ),
                                                 onOpenInReader = { chapterNo, range ->
-                                                    val i =
-                                                        ReaderFactory.prepareVerseRangeIntent(
-                                                            chapterNo,
-                                                            range.first,
-                                                            range.last
-                                                        )
-                                                            .setClassName(
-                                                                context,
-                                                                AppDestinations.READER
-                                                            )
-                                                            .putExtra(
-                                                                Keys.READER_KEY_TRANSL_SLUGS,
-                                                                translationSlugs.toTypedArray()
-                                                            )
-                                                            .putExtra(
-                                                                Keys.READER_KEY_SAVE_TRANSL_CHANGES,
-                                                                false
-                                                            )
+                                                    val params = ReaderFactory.verseRange(
+                                                        chapterNo,
+                                                        range.first,
+                                                        range.last,
+                                                        slugs = translationSlugs,
+                                                    )
 
-                                                    context.startActivity(i)
+                                                    PlatformServices.navigator.navigate(
+                                                        AppRoute.Reader(
+                                                            params
+                                                        )
+                                                    )
                                                 },
                                             )
 

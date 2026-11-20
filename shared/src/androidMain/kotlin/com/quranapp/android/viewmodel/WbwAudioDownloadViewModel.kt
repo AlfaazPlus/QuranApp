@@ -1,20 +1,17 @@
 package com.quranapp.android.viewmodel
 
-import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
-import androidx.work.ExistingWorkPolicy
-import androidx.work.WorkInfo
-import androidx.work.WorkManager
-import com.quranapp.android.AndroidAppContext
+import com.quranapp.android.extensions.canProceed
 import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.wbwAudioBulkWaitForChapterDownloads
 import com.quranapp.android.generated.resources.wbwAudioChapterWaitForBulk
+import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.task.ExistingTaskPolicy
+import com.quranapp.android.task.TaskState
 import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.mediaplayer.WbwAudioDownloadProgressBus
 import com.quranapp.android.utils.mediaplayer.WbwAudioRepository
 import com.quranapp.android.utils.quran.QuranMeta
-import com.quranapp.android.extensions.canProceed
-import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.utils.workers.WbwAudioBulkDownloadWorker
 import com.quranapp.android.utils.workers.WbwAudioDownloadWorker
 import kotlinx.coroutines.Dispatchers
@@ -32,58 +29,35 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import org.jetbrains.compose.resources.getString
-import java.util.UUID
 import kotlin.time.Duration.Companion.milliseconds
 
 private val WORK_INFO_DEBOUNCE_MS = 300.milliseconds
 
-private val WORK_ACTIVE_STATES = setOf(
-    WorkInfo.State.RUNNING,
-    WorkInfo.State.ENQUEUED,
-    WorkInfo.State.BLOCKED,
-)
-
-private class ParsedWbwWorkState(val infos: List<WorkInfo>) {
+private class ParsedWbwWorkState {
     val activeSingleChapters = mutableMapOf<String, MutableSet<Int>>()
     val activeBulks = mutableSetOf<String>()
+}
 
-    init {
-        for (info in infos) {
-            if (info.state !in WORK_ACTIVE_STATES) continue
+private fun TaskState.isActive(): Boolean = isEnqueued || isRunning
 
-            var bulkBusId: String? = null
-            for (tag in info.tags) {
-                WbwAudioBulkDownloadWorker.parseBulkTag(tag)?.let { bulkBusId = it }
-            }
+private suspend fun loadParsedWbwWorkState(audioId: String): ParsedWbwWorkState {
+    val tm = PlatformServices.system.taskManager
+    val parsed = ParsedWbwWorkState()
 
-            if (bulkBusId != null) {
-                activeBulks.add(bulkBusId)
-                continue
-            }
+    val bulkActive = tm.infosByTag(WbwAudioBulkDownloadWorker.bulkTag(audioId)).first()
+        .any { it.state.isActive() }
+    if (bulkActive) {
+        parsed.activeBulks.add(audioId)
+    }
 
-            var busId: String? = null
-            var chapterNo: Int? = null
-
-            for (tag in info.tags) {
-                WbwAudioDownloadWorker.parseChapterWorkTag(tag)?.let { (bid, ch) ->
-                    busId = bid
-                    chapterNo = ch
-                }
-            }
-
-            if (busId == null || chapterNo == null) continue
-
-            activeSingleChapters.getOrPut(busId) { mutableSetOf() }.add(chapterNo)
-
-            val p = info.progress
-            val bytes = p.getLong(WbwAudioDownloadWorker.KEY_PROGRESS_BYTES, -1L)
-            val total = p.getLong(WbwAudioDownloadWorker.KEY_PROGRESS_TOTAL, -1L)
-
-            if (bytes >= 0L) {
-                WbwAudioDownloadProgressBus.set(busId, chapterNo, bytes, total)
-            }
+    WbwAudioDownloadProgressBus.state.value.keys.forEach { key ->
+        val (busId, chapterNo) = WbwAudioDownloadProgressBus.parseBusKey(key) ?: return@forEach
+        if (busId == audioId) {
+            parsed.activeSingleChapters.getOrPut(audioId) { mutableSetOf() }.add(chapterNo)
         }
     }
+
+    return parsed
 }
 
 data class WbwAudioDownloadUiState(
@@ -100,8 +74,7 @@ sealed interface WbwAudioDownloadUiEvent {
 @OptIn(FlowPreview::class)
 class WbwAudioDownloadViewModel() : AppViewModel() {
 
-    private val context get() = AndroidAppContext.get()
-    private val workManager = WorkManager.getInstance(context)
+    private val taskManager get() = PlatformServices.system.taskManager
 
     private val recomputeMutex = Mutex()
 
@@ -114,13 +87,13 @@ class WbwAudioDownloadViewModel() : AppViewModel() {
     init {
         viewModelScope.launch {
             combine(
-                workManager.getWorkInfosByTagLiveData(WbwAudioDownloadWorker.TAG).asFlow(),
-                workManager.getWorkInfosByTagLiveData(WbwAudioBulkDownloadWorker.TAG).asFlow(),
-                ::mergeWorkInfos,
-            )
+                taskManager.isRunningByTag(WbwAudioDownloadWorker.TAG),
+                taskManager.isRunningByTag(WbwAudioBulkDownloadWorker.TAG),
+                WbwAudioDownloadProgressBus.state,
+            ) { _, _, _ -> }
                 .debounce(WORK_INFO_DEBOUNCE_MS)
-                .collect { infos ->
-                    recomputeStates(infos)
+                .collect {
+                    triggerRecompute()
                 }
         }
 
@@ -141,8 +114,7 @@ class WbwAudioDownloadViewModel() : AppViewModel() {
 
             launch(Dispatchers.IO) {
                 try {
-                    val infos = getMergedWorkInfos()
-                    val parsed = ParsedWbwWorkState(infos)
+                    val parsed = loadParsedWbwWorkState(WbwAudioRepository.AUDIO_ID)
 
                     if (parsed.activeBulks.contains(audioId)) {
                         emitBlockedDuringBulk()
@@ -159,9 +131,9 @@ class WbwAudioDownloadViewModel() : AppViewModel() {
                         audioId = audioId,
                     )
 
-                    workManager.enqueueUniqueWork(
+                    taskManager.enqueueUnique(
                         WbwAudioDownloadWorker.uniqueWorkName(chapterNo),
-                        ExistingWorkPolicy.KEEP,
+                        ExistingTaskPolicy.KEEP,
                         request,
                     )
                 } catch (e: Exception) {
@@ -179,7 +151,7 @@ class WbwAudioDownloadViewModel() : AppViewModel() {
     fun cancelChapter(chapterNo: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                workManager.cancelUniqueWork(WbwAudioDownloadWorker.uniqueWorkName(chapterNo))
+                taskManager.cancelUnique(WbwAudioDownloadWorker.uniqueWorkName(chapterNo))
                 triggerRecompute()
             } catch (e: Exception) {
                 Logger.saveError(e, "WbwAudioDownloadViewModel.cancelChapter")
@@ -204,8 +176,7 @@ class WbwAudioDownloadViewModel() : AppViewModel() {
 
             launch(Dispatchers.IO) {
                 try {
-                    val infos = getMergedWorkInfos()
-                    val parsed = ParsedWbwWorkState(infos)
+                    val parsed = loadParsedWbwWorkState(WbwAudioRepository.AUDIO_ID)
 
                     if (parsed.activeBulks.contains(audioId)) {
                         return@launch
@@ -225,9 +196,9 @@ class WbwAudioDownloadViewModel() : AppViewModel() {
                         audioId = audioId,
                     )
 
-                    workManager.enqueueUniqueWork(
+                    taskManager.enqueueUnique(
                         WbwAudioBulkDownloadWorker.uniqueWorkName(),
-                        ExistingWorkPolicy.KEEP,
+                        ExistingTaskPolicy.KEEP,
                         request,
                     )
                 } catch (e: Exception) {
@@ -245,8 +216,8 @@ class WbwAudioDownloadViewModel() : AppViewModel() {
     fun cancelBulkDownload(audioId: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                workManager.cancelUniqueWork(WbwAudioBulkDownloadWorker.uniqueWorkName())
-                workManager.cancelAllWorkByTag(WbwAudioBulkDownloadWorker.bulkTag(audioId))
+                taskManager.cancelUnique(WbwAudioBulkDownloadWorker.uniqueWorkName())
+                taskManager.cancelByTag(WbwAudioBulkDownloadWorker.bulkTag(audioId))
                 triggerRecompute()
             } catch (e: Exception) {
                 Logger.saveError(e, "WbwAudioDownloadViewModel.cancelBulkDownload")
@@ -262,11 +233,11 @@ class WbwAudioDownloadViewModel() : AppViewModel() {
         )
     }
 
-    private fun recomputeStates(infos: List<WorkInfo>) {
+    private fun recomputeStates() {
         viewModelScope.launch(Dispatchers.IO) {
             recomputeMutex.withLock {
                 val audioId = WbwAudioRepository.AUDIO_ID
-                val parsed = ParsedWbwWorkState(infos)
+                val parsed = loadParsedWbwWorkState(audioId)
                 val downloaded = scanDownloadedChapters()
 
                 pruneWbwProgressStaleEntries(audioId, parsed, downloaded)
@@ -330,26 +301,7 @@ class WbwAudioDownloadViewModel() : AppViewModel() {
         return set
     }
 
-    private suspend fun getMergedWorkInfos(): List<WorkInfo> {
-        val audio = workManager.getWorkInfosByTagFlow(WbwAudioDownloadWorker.TAG).first()
-        val bulk = workManager.getWorkInfosByTagFlow(WbwAudioBulkDownloadWorker.TAG).first()
-
-        return mergeWorkInfos(audio, bulk)
-    }
-
     private suspend fun triggerRecompute() {
-        recomputeStates(getMergedWorkInfos())
+        recomputeStates()
     }
-}
-
-private fun mergeWorkInfos(
-    audio: List<WorkInfo>,
-    bulk: List<WorkInfo>,
-): List<WorkInfo> {
-    val byId = LinkedHashMap<UUID, WorkInfo>()
-
-    audio.forEach { byId[it.id] = it }
-    bulk.forEach { byId[it.id] = it }
-
-    return byId.values.toList()
 }

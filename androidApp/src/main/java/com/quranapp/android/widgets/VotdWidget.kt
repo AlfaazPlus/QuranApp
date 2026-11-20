@@ -82,6 +82,7 @@ import com.quranapp.android.utils.reader.FontResolver
 import com.quranapp.android.utils.reader.atlas.AtlasAyahRasterizer
 import com.quranapp.android.utils.reader.atlas.QuranAtlasLoader
 import com.quranapp.android.utils.reader.factory.ReaderFactory
+import com.quranapp.android.utils.reader.toIntent
 import com.quranapp.android.utils.reader.isQuranAtlasScript
 import com.quranapp.android.utils.VerseUtils
 import kotlinx.coroutines.CancellationException
@@ -414,7 +415,7 @@ private suspend fun buildVotdWidgetState(
         targetMaxHeight = translationHeightPx
     ) else null
 
-    val openIntent = ReaderFactory.prepareSingleVerseIntent(chapterNo, verseNo).apply {
+    val openIntent = ReaderFactory.verse(chapterNo, verseNo).toIntent().apply {
         setClass(context, ActivityReader::class.java)
     }
 

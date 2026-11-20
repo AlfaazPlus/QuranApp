@@ -92,7 +92,7 @@ import com.quranapp.android.generated.resources.titleCancelDownload
 import com.quranapp.android.generated.resources.yesCancelDownload
 import com.quranapp.android.locale.LocalAppLocale
 import com.quranapp.android.preferences.AppPreferences
-import com.quranapp.android.utils.managers.ResourceDownloadStatus
+import com.quranapp.android.task.TaskState
 import com.quranapp.android.utils.importing.ImportFieldId
 import com.quranapp.android.utils.tafsir.CustomTafsirImporter
 import com.quranapp.android.utils.translation.toTranslationManifest
@@ -201,7 +201,7 @@ private fun LoadingState() {
 private fun TafsirContent(
     groups: List<TafsirGroupModel>,
     selectedKey: String?,
-    downloadStates: Map<String, ResourceDownloadStatus>,
+    downloadStates: Map<String, TaskState>,
     downloadedTafsirKeys: Set<String>
 ) {
     LazyColumn(
@@ -226,12 +226,12 @@ private fun TafsirContent(
 private fun LanguageGroupCard(
     group: TafsirGroupModel,
     selectedKey: String?,
-    downloadStates: Map<String, ResourceDownloadStatus>,
+    downloadStates: Map<String, TaskState>,
     downloadedTafsirKeys: Set<String>
 ) {
     val viewModel = appViewModel<TafsirViewModel>()
     val isAnyDownloading = downloadStates.values.any {
-        it is ResourceDownloadStatus.Started || it is ResourceDownloadStatus.InProgress
+        it.isEnqueued || it.isRunning
     }
 
     val hasSelection = remember(group.tafsirs, selectedKey) {
@@ -329,8 +329,7 @@ private fun LanguageGroupCard(
                     )
 
                     group.tafsirs.forEachIndexed { index, tafsir ->
-                        val downloadState =
-                            downloadStates[tafsir.key] ?: ResourceDownloadStatus.Idle
+                        val downloadState = downloadStates[tafsir.key]
                         val isDownloaded = downloadedTafsirKeys.contains(tafsir.key)
 
                         TafsirRow(
@@ -369,7 +368,7 @@ private fun TafsirRow(
     isSelected: Boolean,
     isDownloaded: Boolean,
     isAnyDownloading: Boolean,
-    downloadState: ResourceDownloadStatus,
+    downloadState: TaskState?,
     onSelect: () -> Unit,
     onDownload: () -> Unit,
     onCancelDownload: () -> Unit,
@@ -424,7 +423,7 @@ private fun TafsirRow(
                     )
 
                     // Downloaded indicator
-                    if (isDownloaded && downloadState == ResourceDownloadStatus.Idle) {
+                    if (isDownloaded && downloadState == null) {
                         Spacer(modifier = Modifier.width(6.dp))
                         Icon(
                             painter = painterResource(Res.drawable.dr_icon_check),
@@ -438,12 +437,12 @@ private fun TafsirRow(
                 Spacer(modifier = Modifier.height(2.dp))
 
                 when (downloadState) {
-                    is ResourceDownloadStatus.InProgress -> {
+                    is TaskState.Running -> {
                         Text(
                             text = appLocale.format(
                                 $$"%1$s %2$d%%",
                                 stringResource(Res.string.textDownloading),
-                                downloadState.progress
+                                downloadState.progress?.percentage ?: 0
                             ),
                             style = MaterialTheme.typography.labelMedium,
                             fontWeight = FontWeight.Normal,
@@ -453,7 +452,7 @@ private fun TafsirRow(
                         )
                     }
 
-                    is ResourceDownloadStatus.Started -> {
+                    TaskState.Enqueued -> {
                         Text(
                             text = stringResource(Res.string.textDownloading),
                             style = MaterialTheme.typography.labelMedium,
@@ -491,7 +490,7 @@ private fun TafsirRow(
             contentAlignment = Alignment.Center
         ) {
             when (downloadState) {
-                is ResourceDownloadStatus.Started -> {
+                TaskState.Enqueued -> {
                     CircularProgressIndicator(
                         modifier = Modifier.size(20.dp),
                         strokeWidth = 2.dp,
@@ -499,10 +498,10 @@ private fun TafsirRow(
                     )
                 }
 
-                is ResourceDownloadStatus.InProgress -> {
+                is TaskState.Running -> {
                     Box(contentAlignment = Alignment.Center) {
                         CircularProgressIndicator(
-                            progress = { downloadState.progress / 100f },
+                            progress = { (downloadState.progress?.percentage ?: 0) / 100f },
                             modifier = Modifier.size(24.dp),
                             strokeWidth = 2.5.dp,
                             color = MaterialTheme.colorScheme.primary,
@@ -523,7 +522,7 @@ private fun TafsirRow(
                     }
                 }
 
-                is ResourceDownloadStatus.Failed -> {
+                is TaskState.Failed -> {
                     // Retry button
                     IconButton(
                         onClick = onDownload,

@@ -36,13 +36,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.quranapp.android.components.ReferenceThumbnail
-import com.quranapp.android.components.ReferenceVerseModel
 import com.quranapp.android.components.common.AppBar
 import com.quranapp.android.components.common.BottomSheetMenu
 import com.quranapp.android.components.common.BottomSheetMenuItem
@@ -64,7 +61,6 @@ import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.grayscaleColorFilter
 import com.quranapp.android.theme.observeIsMonoPalette
 import com.quranapp.android.utils.quran.parser.QuranProphetParser
-import com.quranapp.android.utils.reader.factory.ReaderFactory
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
@@ -73,6 +69,9 @@ import org.jetbrains.compose.resources.stringResource
 import java.text.MessageFormat
 import java.util.regex.Pattern
 import kotlin.time.Duration.Companion.milliseconds
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.navigation.AppRoutes
+import com.quranapp.android.platform.PlatformServices
 
 @Composable
 fun ProphetsScreen() {
@@ -196,7 +195,6 @@ fun ProphetsScreen() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ProphetListItem(prophet: Prophet) {
-    val context = LocalContext.current
     val isMono = ThemeUtils.observeIsMonoPalette()
     val grayscale = remember { grayscaleColorFilter() }
     val scope = rememberCoroutineScope()
@@ -214,14 +212,16 @@ private fun ProphetListItem(prophet: Prophet) {
                     prophet.verses.size,
                 )
 
-                ReaderFactory.startReferenceVerse(
-                    context,
-                    ReferenceVerseModel(
-                        title = title,
-                        desc = desc,
-                        chapters = prophet.chapters,
-                        verses = prophet.verses,
-                        thumbnail = prophet.thumbnail?.let { ReferenceThumbnail.RemoteUrl(it) }
+                PlatformServices.navigator.navigate(
+                    AppRoute.Screen(
+                        screen = AppRoutes.REFERENCE,
+                        extras = buildMap {
+                            put("title", title)
+                            put("desc", desc)
+                            put("chapters", prophet.chapters)
+                            put("verses", prophet.verses)
+                            prophet.thumbnail?.let { put("thumbnail_url", it) }
+                        },
                     )
                 )
             }

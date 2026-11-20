@@ -47,7 +47,7 @@ class TafsirDownloadWorker() : TaskWorker {
 
             Logger.d("Mock downloading ${bookInfo.key}: $progress%")
 
-            context.setProgress(TaskProgress(progress))
+            context.setProgress(TaskProgress.percent(progress))
             context.setForeground(createForegroundInfo(bookInfo, progress))
 
             delay(2000.milliseconds)
@@ -95,7 +95,7 @@ class TafsirDownloadWorker() : TaskWorker {
                 }
 
                 val progress = ((end * 100) / chapterRange.last)
-                context.setProgress(TaskProgress(progress))
+                context.setProgress(TaskProgress.percent(progress))
                 context.setForeground(createForegroundInfo(bookInfo, progress))
             }
 

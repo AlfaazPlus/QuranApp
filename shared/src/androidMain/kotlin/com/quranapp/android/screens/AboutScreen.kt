@@ -38,7 +38,6 @@ import com.quranapp.android.generated.resources.strTitleSendFeedback
 import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.utils.app.APP_VERSION_NAME
 import com.quranapp.android.utils.app.UrlsManager
-import com.quranapp.android.utils.extensions.copyToClipboard
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
@@ -139,7 +138,7 @@ private fun VersionCard() {
             )
         }
     ) {
-        context.copyToClipboard(APP_VERSION_NAME)
+        PlatformServices.system.clipboardManager.copy(APP_VERSION_NAME)
         PlatformServices.messages.showClipboard("Version name copied")
     }
 }

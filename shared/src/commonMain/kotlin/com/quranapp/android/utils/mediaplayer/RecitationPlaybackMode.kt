@@ -1,7 +1,14 @@
 package com.quranapp.android.utils.mediaplayer
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
 enum class PlaybackScopeType(val value: String) {
+    @SerialName("continuous")
     CONTINUOUS("continuous"),
+
+    @SerialName("range")
     RANGE("range");
 
     companion object {
@@ -10,6 +17,7 @@ enum class PlaybackScopeType(val value: String) {
     }
 }
 
+@Serializable
 sealed class RecitationPlaybackMode {
     val scopeType: PlaybackScopeType
         get() = when (this) {
@@ -17,14 +25,19 @@ sealed class RecitationPlaybackMode {
             is Range -> PlaybackScopeType.RANGE
         }
 
+    @Serializable
     data object Continuous : RecitationPlaybackMode()
 
+    @Serializable
     data class Range(
         val chapterNo: Int,
         val fromVerse: Int,
         val toVerse: Int,
     ) : RecitationPlaybackMode() {
-        val isValid: Boolean get() = chapterNo > 0 && fromVerse > 0 && toVerse >= fromVerse
+        val isValid: Boolean
+            get() = chapterNo > 0 &&
+                    fromVerse > 0 &&
+                    toVerse >= fromVerse
     }
 }
 

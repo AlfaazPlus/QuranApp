@@ -54,6 +54,8 @@ import com.quranapp.android.viewmodel.TopicsTree
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.StringReader
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.platform.PlatformServices
 
 @Composable
 internal fun TopicHeroCard(
@@ -188,7 +190,7 @@ internal fun TopicHeroCard(
             data = quickRefData,
             onOpenInReader = { chapterNo, range ->
                 quickRefData = null
-                ReaderFactory.startVerseRange(context, chapterNo, range.first, range.last)
+                PlatformServices.navigator.navigate(AppRoute.Reader(ReaderFactory.verseRange(chapterNo, range.first, range.last)))
             },
             onClose = { quickRefData = null },
         )

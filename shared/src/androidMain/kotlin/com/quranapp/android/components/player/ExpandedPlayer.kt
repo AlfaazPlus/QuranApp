@@ -128,6 +128,8 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import kotlin.math.abs
 import kotlin.time.Duration.Companion.milliseconds
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.platform.PlatformServices
 
 val PlayerBgColor = Color(0xFF000000)
 val PlayerContentColor = Color.White
@@ -230,7 +232,7 @@ fun ExpandedPlayer(
                     onCollapse = onCollapse,
                     onOpenInReader = {
                         if (onSyncRequest != null) onSyncRequest(true)
-                        else ReaderFactory.startVerse(context, verse.chapterNo, verse.verseNo)
+                        else PlatformServices.navigator.navigate(AppRoute.Reader(ReaderFactory.verse(verse.chapterNo, verse.verseNo)))
                     }
                 )
             }

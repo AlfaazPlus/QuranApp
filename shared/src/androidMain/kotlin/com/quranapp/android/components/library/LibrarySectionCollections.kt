@@ -45,12 +45,14 @@ import com.quranapp.android.generated.resources.my_collections
 import com.quranapp.android.generated.resources.no_collections
 import com.quranapp.android.generated.resources.verse_count
 import com.quranapp.android.theme.alpha
-import com.quranapp.android.utils.app.AppDestinations
+import com.quranapp.android.navigation.AppRoute
 import com.quranapp.android.utils.miscellenous.Keys
 import com.quranapp.android.viewmodel.CollectionsViewModel
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.pluralStringResource
 import org.jetbrains.compose.resources.stringResource
+import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.navigation.AppRoutes
 
 @Composable
 fun LibrarySectionCollections() {
@@ -75,12 +77,7 @@ fun LibrarySectionCollections() {
             headerRightContent = if (collections.isNotEmpty()) {
                 {
                     SectionHeaderViewAll {
-                        context.startActivity(
-                            AppDestinations.intent(
-                                context,
-                                AppDestinations.COLLECTIONS
-                            )
-                        )
+                        PlatformServices.navigator.navigate(AppRoute.Screen(AppRoutes.COLLECTIONS))
                     }
                 }
             } else null,
@@ -98,10 +95,11 @@ fun LibrarySectionCollections() {
             else -> {
                 LibraryPreviewList(items = collections) { item ->
                     CollectionCard(item = item) {
-                        context.startActivity(
-                            AppDestinations.intent(context, AppDestinations.COLLECTIONS).apply {
-                                putExtra(Keys.COLLECTION_ID, item.collection.id)
-                            }
+                        PlatformServices.navigator.navigate(
+                            AppRoute.Screen(
+                                screen = AppRoutes.COLLECTIONS,
+                                extras = mapOf(Keys.COLLECTION_ID to item.collection.id)
+                            )
                         )
                     }
                 }

@@ -41,7 +41,7 @@ object RecitationStreamCache {
         val cache = get(context)
 
         for (chapterNo in QuranMeta.chapterRange) {
-            val url = RecitationAudioRepository.prepareAudioUrl(urlTemplate, chapterNo) ?: continue
+            val url = RecitationUtils.prepareAudioUrl(urlTemplate, chapterNo) ?: continue
             runCatching { cache.removeResource(url) }
         }
     }

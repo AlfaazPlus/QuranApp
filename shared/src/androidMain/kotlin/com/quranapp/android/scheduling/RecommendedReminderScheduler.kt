@@ -1,32 +1,29 @@
 package com.quranapp.android.scheduling
 
-import android.content.Context
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
-import java.util.concurrent.TimeUnit
+import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.task.ExistingPeriodicTaskPolicy
+import com.quranapp.android.task.TaskConstraints
+import com.quranapp.android.task.TaskRequest
+import com.quranapp.android.task.TaskSchedule
+import com.quranapp.android.utils.workers.RecommendedReminderWorker
+import kotlin.time.Duration.Companion.hours
 
 object RecommendedReminderScheduler {
     private const val ID = "recommended_reminder"
 
-    fun schedule(context: Context) {
-        val workRequest = PeriodicWorkRequestBuilder<RecommendedReminderWorker>(
-            repeatInterval = 1,
-            repeatIntervalTimeUnit = TimeUnit.HOURS,
-        ).build()
-
-        WorkManager
-            .getInstance(context)
-            .enqueueUniquePeriodicWork(
-                ID,
-                ExistingPeriodicWorkPolicy.KEEP,
-                workRequest,
-            )
+    fun schedule() {
+        PlatformServices.system.taskManager.enqueuePeriodic(
+            uniqueName = ID,
+            policy = ExistingPeriodicTaskPolicy.KEEP,
+            request = TaskRequest(
+                workerClass = RecommendedReminderWorker::class,
+                constraints = TaskConstraints.NONE,
+                schedule = TaskSchedule.Periodic(1.hours),
+            ),
+        )
     }
 
-    fun cancel(context: Context) {
-        WorkManager
-            .getInstance(context)
-            .cancelUniqueWork(ID)
+    fun cancel() {
+        PlatformServices.system.taskManager.cancelUnique(ID)
     }
 }

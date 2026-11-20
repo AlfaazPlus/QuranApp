@@ -30,9 +30,11 @@ import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.dr_icon_search
 import com.quranapp.android.generated.resources.library
 import com.quranapp.android.generated.resources.strLabelNavSearch
-import com.quranapp.android.utils.app.AppDestinations
+import com.quranapp.android.navigation.AppRoute
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.navigation.AppRoutes
 
 private const val HOME_HISTORY_LIMIT = 10
 
@@ -54,9 +56,7 @@ fun LibraryScreen() {
                             IconButton(
                                 modifier = Modifier.size(40.dp),
                                 onClick = {
-                                    context.startActivity(
-                                        AppDestinations.intent(context, AppDestinations.SEARCH)
-                                    )
+                                    PlatformServices.navigator.navigate(AppRoute.Screen(AppRoutes.SEARCH))
                                 }
                             ) {
                                 Icon(

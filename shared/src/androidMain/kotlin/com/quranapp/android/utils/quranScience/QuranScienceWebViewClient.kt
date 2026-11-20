@@ -9,7 +9,7 @@ import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.platform.toInputStream
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.isDarkTheme
-import com.quranapp.android.utils.app.AppDestinations
+import com.quranapp.android.navigation.AppRoute
 import com.quranapp.android.utils.reader.FontResolver
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import kotlinx.coroutines.runBlocking
@@ -142,14 +142,10 @@ open class QuranScienceWebViewClient(
             if (host == "quranapp.verse.ref") {
                 onOpenReference(chapterNo, fromVerse, toVerse)
             } else if (host == "quranapp.verse.reader") {
-                view.context.startActivity(
-                    ReaderFactory.prepareVerseRangeIntent(
-                        chapterNo,
-                        fromVerse,
-                        toVerse
-                    ).apply {
-                        setClassName(view.context, AppDestinations.READER)
-                    }
+                PlatformServices.navigator.navigate(
+                    AppRoute.Reader(
+                        ReaderFactory.verseRange(chapterNo, fromVerse, toVerse)
+                    )
                 )
             }
         }

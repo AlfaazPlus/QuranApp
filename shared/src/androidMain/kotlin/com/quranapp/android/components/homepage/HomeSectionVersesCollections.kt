@@ -47,12 +47,14 @@ import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.grayscaleColorFilter
 import com.quranapp.android.theme.observeIsMonoPalette
-import com.quranapp.android.utils.app.AppDestinations
+import com.quranapp.android.navigation.AppRoute
 import com.quranapp.android.utils.miscellenous.Keys
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.navigation.AppRoutes
 
 @Composable
 fun HomeSectionVersesCollections() {
@@ -64,10 +66,10 @@ fun HomeSectionVersesCollections() {
                 Res.string.strTitleFeaturedDuas,
                 Res.drawable.dr_icon_rabbana
             ) {
-                context.startActivity(
-                    AppDestinations.intent(context, AppDestinations.EXCLUSIVE_VERSES).putExtra(
-                        Keys.KEY_EXCLUSIVE_VERSES_KIND,
-                        ExclusiveVersesScreenKind.Dua.name,
+                PlatformServices.navigator.navigate(
+                    AppRoute.Screen(
+                        screen = AppRoutes.EXCLUSIVE_VERSES,
+                        extras = mapOf(Keys.KEY_EXCLUSIVE_VERSES_KIND to ExclusiveVersesScreenKind.Dua.name)
                     )
                 )
             },
@@ -75,10 +77,10 @@ fun HomeSectionVersesCollections() {
                 Res.string.titleSolutionVerses,
                 Res.drawable.dr_icon_read_quran
             ) {
-                context.startActivity(
-                    AppDestinations.intent(context, AppDestinations.EXCLUSIVE_VERSES).putExtra(
-                        Keys.KEY_EXCLUSIVE_VERSES_KIND,
-                        ExclusiveVersesScreenKind.Solution.name,
+                PlatformServices.navigator.navigate(
+                    AppRoute.Screen(
+                        screen = AppRoutes.EXCLUSIVE_VERSES,
+                        extras = mapOf(Keys.KEY_EXCLUSIVE_VERSES_KIND to ExclusiveVersesScreenKind.Solution.name)
                     )
                 )
             },
@@ -87,10 +89,10 @@ fun HomeSectionVersesCollections() {
                 Res.drawable.icon_veiled_muslim,
                 tint = false
             ) {
-                context.startActivity(
-                    AppDestinations.intent(context, AppDestinations.EXCLUSIVE_VERSES).putExtra(
-                        Keys.KEY_EXCLUSIVE_VERSES_KIND,
-                        ExclusiveVersesScreenKind.Etiquette.name,
+                PlatformServices.navigator.navigate(
+                    AppRoute.Screen(
+                        screen = AppRoutes.EXCLUSIVE_VERSES,
+                        extras = mapOf(Keys.KEY_EXCLUSIVE_VERSES_KIND to ExclusiveVersesScreenKind.Etiquette.name)
                     )
                 )
             },
@@ -99,10 +101,10 @@ fun HomeSectionVersesCollections() {
                 Res.drawable.icon_major_sins,
                 tint = false
             ) {
-                context.startActivity(
-                    AppDestinations.intent(context, AppDestinations.EXCLUSIVE_VERSES).putExtra(
-                        Keys.KEY_EXCLUSIVE_VERSES_KIND,
-                        ExclusiveVersesScreenKind.MajorSins.name,
+                PlatformServices.navigator.navigate(
+                    AppRoute.Screen(
+                        screen = AppRoutes.EXCLUSIVE_VERSES,
+                        extras = mapOf(Keys.KEY_EXCLUSIVE_VERSES_KIND to ExclusiveVersesScreenKind.MajorSins.name)
                     )
                 )
             },
@@ -111,26 +113,22 @@ fun HomeSectionVersesCollections() {
                 Res.drawable.prophets,
                 tint = false
             ) {
-                context.startActivity(
-                    AppDestinations.intent(context, AppDestinations.PROPHETS)
-                )
+                PlatformServices.navigator.navigate(AppRoute.Screen(AppRoutes.PROPHETS))
             },
             VersesCollectionCard(
                 Res.string.quran_and_science,
                 Res.drawable.ic_science_embryology,
             ) {
-                context.startActivity(
-                    AppDestinations.intent(context, AppDestinations.QURAN_SCIENCE)
-                )
+                PlatformServices.navigator.navigate(AppRoute.Screen(AppRoutes.QURAN_SCIENCE))
             },
             VersesCollectionCard(
                 Res.string.ontologyExplorer,
                 Res.drawable.hierarchy,
             ) {
-                context.startActivity(
-                    AppDestinations.intent(context, AppDestinations.QURANIC_TOPICS).putExtra(
-                        Keys.KEY_QURANIC_TOPICS_SCREEN_TYPE,
-                        QuranicTopicsStart.Ontology.name
+                PlatformServices.navigator.navigate(
+                    AppRoute.Screen(
+                        screen = AppRoutes.QURANIC_TOPICS,
+                        extras = mapOf(Keys.KEY_QURANIC_TOPICS_SCREEN_TYPE to QuranicTopicsStart.Ontology.name)
                     )
                 )
             },
@@ -138,10 +136,10 @@ fun HomeSectionVersesCollections() {
                 Res.string.thematicTopics,
                 Res.drawable.dr_icon_read_quran,
             ) {
-                context.startActivity(
-                    AppDestinations.intent(context, AppDestinations.QURANIC_TOPICS).putExtra(
-                        Keys.KEY_QURANIC_TOPICS_SCREEN_TYPE,
-                        QuranicTopicsStart.Thematic.name
+                PlatformServices.navigator.navigate(
+                    AppRoute.Screen(
+                        screen = AppRoutes.QURANIC_TOPICS,
+                        extras = mapOf(Keys.KEY_QURANIC_TOPICS_SCREEN_TYPE to QuranicTopicsStart.Thematic.name)
                     )
                 )
             },

@@ -1,29 +1,27 @@
 package com.quranapp.android.utils.workers
 
-import android.content.Intent
-import com.quranapp.android.components.ReferenceVerseModel
 import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.labelRecommended
-import com.quranapp.android.notification.AndroidNotificationManager
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.platform.notification.AppNotification
 import com.quranapp.android.platform.notification.NotificationCategory
+import com.quranapp.android.platform.notification.NotificationChannels
 import com.quranapp.android.platform.notification.NotificationIntent
 import com.quranapp.android.platform.notification.NotificationPriority
-import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.preferences.VersePreferences
 import com.quranapp.android.task.TaskContext
 import com.quranapp.android.task.TaskResult
 import com.quranapp.android.task.TaskWorker
-import com.quranapp.android.utils.app.AppDestinations
 import com.quranapp.android.utils.reader.ReaderIntentData
 import com.quranapp.android.utils.reader.ReaderLaunchParams
-import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.utils.reader.recommended.Recommendation
 import com.quranapp.android.utils.reader.recommended.RecommendationRef
 import com.quranapp.android.utils.reader.recommended.Recommended
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.getString
+import com.quranapp.android.navigation.AppRoutes
 
 class RecommendedReminderWorker() : TaskWorker {
     companion object {
@@ -51,7 +49,7 @@ class RecommendedReminderWorker() : TaskWorker {
             return@withContext TaskResult.Success()
         }
 
-        val intent = intentForRecommendation(first)
+        val route = routeForRecommendation(first)
             ?: return@withContext TaskResult.Success()
 
         val body = first.description.trim().ifBlank {
@@ -60,14 +58,14 @@ class RecommendedReminderWorker() : TaskWorker {
 
         val notification = AppNotification(
             id = NOTIFICATION_ID,
-            channelId = AndroidNotificationManager.CHANNEL_ID_RECOMMENDED_REMINDER,
+            channelId = NotificationChannels.CHANNEL_ID_RECOMMENDED_REMINDER,
             title = first.title,
             content = body,
             bigText = body,
             category = NotificationCategory.RECOMMENDATION,
             priority = NotificationPriority.HIGH,
             autoCancel = true,
-            contentIntent = NotificationIntent.Platform(intent),
+            contentIntent = NotificationIntent.Route(route),
         )
 
         PlatformServices.system.notificationManager.notify(NOTIFICATION_ID, notification)
@@ -86,22 +84,22 @@ class RecommendedReminderWorker() : TaskWorker {
         return "${recommendation.title}\u0000$ref"
     }
 
-    private fun intentForRecommendation(
+    private fun routeForRecommendation(
         recommendation: Recommendation,
-    ): Intent? {
+    ): AppRoute? {
         return when (val ref = recommendation.reference) {
             is RecommendationRef.Chapter -> {
-                ReaderLaunchParams(
-                    data = ReaderIntentData.FullChapter(ref.number),
-                ).toIntent().apply {
-                    setClassName("com.quranapp.android", AppDestinations.READER)
-                }
+                AppRoute.Reader(
+                    ReaderLaunchParams(
+                        data = ReaderIntentData.FullChapter(ref.number),
+                    )
+                )
             }
 
             is RecommendationRef.Verses -> {
                 val ranges = ref.spec.split(',')
-                val chapters = mutableSetOf<Int>()
-                val verseSpecs = mutableSetOf<String>()
+                val chapters = mutableListOf<Int>()
+                val verseSpecs = mutableListOf<String>()
 
                 for (rangeSpec in ranges) {
                     val trimmed = rangeSpec.trim()
@@ -113,17 +111,15 @@ class RecommendedReminderWorker() : TaskWorker {
 
                 val desc = recommendation.description.takeIf { it.isNotBlank() }
 
-                ReaderFactory.prepareReferenceVerseIntent(
-                    ReferenceVerseModel(
-                        recommendation.title,
-                        desc,
-                        emptySet(),
-                        chapters,
-                        verseSpecs,
-                    )
-                ).apply {
-                    setClassName("com.quranapp.android", AppDestinations.REFERENCE)
-                }
+                AppRoute.Screen(
+                    screen = AppRoutes.REFERENCE,
+                    extras = buildMap {
+                        put("title", recommendation.title)
+                        if (desc != null) put("desc", desc)
+                        put("chapters", chapters)
+                        put("verses", verseSpecs)
+                    }
+                )
             }
         }
     }

@@ -17,13 +17,13 @@ import com.quranapp.android.models.DataLoadError
 import com.quranapp.android.models.transls.TranslModel
 import com.quranapp.android.models.transls.TranslationGroupModel
 import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.preferences.AppActionsPreferences
 import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.app.Logger
-import com.quranapp.android.utils.managers.ResourceDownloadStatus
+import com.quranapp.android.task.TaskState
 import com.quranapp.android.utils.managers.TranslationDownloadManager
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.translation.TranslationVersionManager
-import com.quranapp.android.preferences.AppActionsPreferences
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -43,7 +43,7 @@ data class TranslationDownloadUiState(
     val isLoading: Boolean = true,
     val groups: List<TranslationGroupModel> = emptyList(),
     val error: DataLoadError? = null,
-    val downloadStates: Map<String, ResourceDownloadStatus> = emptyMap(),
+    val downloadStates: Map<String, TaskState> = emptyMap(),
     val isAnyDownloadCompleted: Boolean = false,
     val searchQuery: String = "",
 )
@@ -71,7 +71,7 @@ class TranslationDownloadViewModel() : AppViewModel() {
     private val versionManager = TranslationVersionManager.get()
 
     init {
-        TranslationDownloadManager.initialize(context)
+        TranslationDownloadManager.initialize()
         loadAvailableTranslations(force = AppActionsPreferences.getFetchTranslationsForce())
         observeDownloadStates()
         viewModelScope.launch {
@@ -227,13 +227,13 @@ class TranslationDownloadViewModel() : AppViewModel() {
         val bookInfo = model.bookInfo
 
         if (TranslationDownloadManager.isDownloading(bookInfo.slug)) {
-            updateDownloadStatus(bookInfo.slug, ResourceDownloadStatus.Started)
+            updateDownloadStatus(bookInfo.slug, TaskState.Enqueued)
             return
         }
 
         viewModelScope.launch {
             if (isDownloaded(bookInfo.slug)) {
-                updateDownloadStatus(bookInfo.slug, ResourceDownloadStatus.Completed)
+                updateDownloadStatus(bookInfo.slug, TaskState.Succeeded())
                 return@launch
             }
 
@@ -241,17 +241,17 @@ class TranslationDownloadViewModel() : AppViewModel() {
                 return@launch
             }
 
-            updateDownloadStatus(bookInfo.slug, ResourceDownloadStatus.Started)
-            PlatformServices.downloads.downloadTranslation(bookInfo)
+            updateDownloadStatus(bookInfo.slug, TaskState.Enqueued)
+            TranslationDownloadManager.startDownload(bookInfo)
         }
     }
 
     private fun cancelDownload(key: String) {
-        TranslationDownloadManager.stopDownload(context, key)
-        updateDownloadStatus(key, ResourceDownloadStatus.Cancelled)
+        TranslationDownloadManager.stopDownload(key)
+        updateDownloadStatus(key, TaskState.Cancelled)
     }
 
-    private fun updateDownloadStatus(slug: String, status: ResourceDownloadStatus) {
+    private fun updateDownloadStatus(slug: String, status: TaskState) {
         val bookInfo = findTranslationBySlug(slug)?.bookInfo ?: return
 
         _uiState.update { state ->
@@ -261,7 +261,7 @@ class TranslationDownloadViewModel() : AppViewModel() {
 
             // Remove completed/cancelled states, keep failed for retry UI
             when (status) {
-                is ResourceDownloadStatus.Failed -> {
+                is TaskState.Failed -> {
                     viewModelScope.launch {
                         _events.emit(
                             TranslationDownloadUiEvent.ShowMessage(
@@ -277,7 +277,7 @@ class TranslationDownloadViewModel() : AppViewModel() {
                     newDownloadStates.remove(slug)
                 }
 
-                is ResourceDownloadStatus.Completed -> {
+                is TaskState.Succeeded -> {
                     viewModelScope.launch {
                         _events.emit(
                             TranslationDownloadUiEvent.ShowMessage(
@@ -310,7 +310,7 @@ class TranslationDownloadViewModel() : AppViewModel() {
                     newState = newState.copy(isAnyDownloadCompleted = true)
                 }
 
-                is ResourceDownloadStatus.Cancelled -> {
+                TaskState.Cancelled -> {
                     newDownloadStates.remove(slug)
                 }
 

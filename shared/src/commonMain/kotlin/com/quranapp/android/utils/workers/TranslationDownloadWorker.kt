@@ -50,7 +50,7 @@ class TranslationDownloadWorker() : TaskWorker {
 
             Logger.d("Mock downloading ${bookInfo.slug}: $progress%")
 
-            context.setProgress(TaskProgress(progress))
+            context.setProgress(TaskProgress.percent(progress))
             context.setForeground(createForegroundInfo(bookInfo, progress))
 
             delay(1000.milliseconds)
@@ -83,9 +83,10 @@ class TranslationDownloadWorker() : TaskWorker {
                         }
 
                     context.setProgress(
-                        TaskProgress(
-                            progress ?: 0,
-                            indeterminate = progress == null
+                        TaskProgress.of(
+                            current = downloaded,
+                            total = totalBytes ?: 0L,
+                            indeterminate = progress == null,
                         )
                     )
                     context.setForeground(createForegroundInfo(bookInfo, progress))

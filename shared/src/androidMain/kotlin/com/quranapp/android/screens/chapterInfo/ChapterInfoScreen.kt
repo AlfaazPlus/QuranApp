@@ -69,6 +69,8 @@ import com.quranapp.android.viewmodel.ChapterInfoUiState
 import com.quranapp.android.viewmodel.ChapterInfoViewModel
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.platform.PlatformServices
 
 @Composable
 fun ChapterInfoScreen(
@@ -158,7 +160,7 @@ fun ChapterInfoScreen(
         data = quickRefData,
         onOpenInReader = { chapterNo, range ->
             quickRefData = null
-            ReaderFactory.startVerseRange(context as Activity, chapterNo, range.first, range.last)
+            PlatformServices.navigator.navigate(AppRoute.Reader(ReaderFactory.verseRange(chapterNo, range.first, range.last)))
         },
         onClose = { quickRefData = null },
     )

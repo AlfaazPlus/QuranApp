@@ -1,17 +1,17 @@
 package com.quranapp.android.utils.reader
 
 import android.content.Context
-import com.quranapp.android.components.ReferenceVerseModel
 import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.strMsgDuaFor
 import com.quranapp.android.generated.resources.strMsgReferenceFoundPlaces
 import com.quranapp.android.generated.resources.strMsgReferenceInQuran
 import com.quranapp.android.models.ExclusiveVerse
 import com.quranapp.android.models.ExclusiveVersesDataset
-import com.quranapp.android.utils.app.AppDestinations
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.navigation.AppRoutes
 import com.quranapp.android.utils.miscellenous.Keys
-import com.quranapp.android.utils.reader.factory.ReaderFactory
 import org.jetbrains.compose.resources.getString
+import com.quranapp.android.platform.PlatformServices
 
 object ExclusiveVerseNavigator {
     suspend fun open(context: Context, dataset: ExclusiveVersesDataset, verse: ExclusiveVerse) {
@@ -25,10 +25,11 @@ object ExclusiveVerseNavigator {
 
     private suspend fun openDua(context: Context, verse: ExclusiveVerse) {
         if (verse.id == 1) {
-            context.startActivity(
-                AppDestinations.intent(context, AppDestinations.PROPHETIC_DUAS).apply {
-                    putExtra(Keys.KEY_EXTRA_TITLE, verse.title)
-                },
+            PlatformServices.navigator.navigate(
+                AppRoute.Screen(
+                    screen = AppRoutes.PROPHETIC_DUAS,
+                    extras = mapOf(Keys.KEY_EXTRA_TITLE to verse.title)
+                )
             )
             return
         }
@@ -48,37 +49,43 @@ object ExclusiveVerseNavigator {
             verse.verses.size,
         )
 
-        ReaderFactory.startReferenceVerse(
-            context,
-            ReferenceVerseModel(
-                title = nameTitle,
-                desc = description,
-                chapters = verse.chapters,
-                verses = verse.versesRaw,
-            ),
+        PlatformServices.navigator.navigate(
+            AppRoute.Screen(
+                screen = AppRoutes.REFERENCE,
+                extras = mapOf(
+                    "title" to nameTitle,
+                    "desc" to description,
+                    "chapters" to verse.chapters,
+                    "verses" to verse.versesRaw,
+                ),
+            )
         )
     }
 
     private fun openEtiquette(context: Context, verse: ExclusiveVerse) {
-        ReaderFactory.startReferenceVerse(
-            context,
-            ReferenceVerseModel(
-                title = verse.title,
-                desc = verse.description,
-                chapters = verse.chapters,
-                verses = verse.versesRaw,
-            ),
+        PlatformServices.navigator.navigate(
+            AppRoute.Screen(
+                screen = AppRoutes.REFERENCE,
+                extras = mapOf(
+                    "title" to verse.title,
+                    "desc" to verse.description,
+                    "chapters" to verse.chapters,
+                    "verses" to verse.versesRaw,
+                ),
+            )
         )
     }
 
     private fun openMajorSins(context: Context, verse: ExclusiveVerse) {
-        ReaderFactory.startReferenceVerse(
-            context,
-            ReferenceVerseModel(
-                title = verse.title,
-                desc = verse.description,
-                chapters = verse.chapters,
-                verses = verse.versesRaw,
+        PlatformServices.navigator.navigate(
+            AppRoute.Screen(
+                screen = AppRoutes.REFERENCE,
+                extras = mapOf(
+                    "title" to verse.title,
+                    "desc" to verse.description,
+                    "chapters" to verse.chapters,
+                    "verses" to verse.versesRaw,
+                ),
             )
         )
     }
@@ -93,13 +100,15 @@ object ExclusiveVerseNavigator {
             "\"${verse.title}\"",
             verse.verses.size,
         )
-        ReaderFactory.startReferenceVerse(
-            context,
-            ReferenceVerseModel(
-                title = nameTitle,
-                desc = description,
-                chapters = verse.chapters,
-                verses = verse.versesRaw,
+        PlatformServices.navigator.navigate(
+            AppRoute.Screen(
+                screen = AppRoutes.REFERENCE,
+                extras = mapOf(
+                    "title" to nameTitle,
+                    "desc" to description,
+                    "chapters" to verse.chapters,
+                    "verses" to verse.versesRaw,
+                ),
             )
         )
     }

@@ -2,6 +2,7 @@ package com.quranapp.android.api.models.mediaplayer
 
 import android.net.Uri
 import androidx.media3.common.C
+import com.quranapp.android.utils.mediaplayer.RecitationAudioKind
 import com.quranapp.android.utils.mediaplayer.RecitationModelManager
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -183,11 +184,6 @@ data class AudioTimingMetadata(
     @SerialName("chapters")
     val chapters: List<ChapterTimingMetadata> = emptyList()
 ) {}
-
-enum class RecitationAudioKind(val type: String) {
-    QURAN("quran"),
-    TRANSLATION("transl"),
-}
 
 class RecitationAudioTrack(
     val kind: RecitationAudioKind,

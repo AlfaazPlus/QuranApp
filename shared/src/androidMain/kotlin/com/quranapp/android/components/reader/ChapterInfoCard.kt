@@ -51,12 +51,14 @@ import com.quranapp.android.generated.resources.strTitleMadani
 import com.quranapp.android.generated.resources.strTitleMakki
 import com.quranapp.android.generated.resources.verses
 import com.quranapp.android.locale.LocalAppLocale
-import com.quranapp.android.utils.app.AppDestinations
+import com.quranapp.android.navigation.AppRoute
 import com.quranapp.android.utils.miscellenous.Keys
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.navigation.AppRoutes
 
 @Composable
 fun ChapterInfoCard(chapterNo: Int) {
@@ -136,11 +138,12 @@ fun ChapterInfoCard(chapterNo: Int) {
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(bottomStart = 12.dp, bottomEnd = 12.dp))
                         .clickable {
-                            val intent =
-                                AppDestinations.intent(context, AppDestinations.CHAP_INFO).apply {
-                                    putExtra(Keys.READER_KEY_CHAPTER_NO, chapterNo)
-                                }
-                            context.startActivity(intent)
+                            PlatformServices.navigator.navigate(
+                                AppRoute.Screen(
+                                    screen = AppRoutes.CHAP_INFO,
+                                    extras = mapOf(Keys.READER_KEY_CHAPTER_NO to chapterNo)
+                                )
+                            )
                         }
                         .padding(horizontal = 15.dp, vertical = 12.dp),
                     verticalAlignment = Alignment.CenterVertically,

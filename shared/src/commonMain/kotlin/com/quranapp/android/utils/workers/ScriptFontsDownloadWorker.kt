@@ -12,7 +12,6 @@ import com.quranapp.android.task.TaskContext
 import com.quranapp.android.task.TaskProgress
 import com.quranapp.android.task.TaskResult
 import com.quranapp.android.task.TaskWorker
-import com.quranapp.android.task.buildTaskParams
 import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.reader.QuranScriptUtils
@@ -28,7 +27,6 @@ import kotlin.time.Duration.Companion.milliseconds
 class ScriptFontsDownloadWorker() : TaskWorker {
     companion object {
         const val KEY_SCRIPT = "script_key"
-        const val KEY_PROGRESS = "progress"
     }
 
     override suspend fun doWork(context: TaskContext): TaskResult {
@@ -156,12 +154,9 @@ class ScriptFontsDownloadWorker() : TaskWorker {
             )
         )
 
+        val extracting = progress > 100 || progress < 0
         context.setProgress(
-            TaskProgress(
-                current = progress.coerceIn(0, 100),
-                indeterminate = progress > 100 || progress < 0,
-                extras = buildTaskParams { put(KEY_PROGRESS, progress) }
-            )
+            if (extracting) TaskProgress.INDETERMINATE else TaskProgress.percent(progress)
         )
     }
 

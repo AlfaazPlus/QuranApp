@@ -56,12 +56,14 @@ import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.grayscaleColorFilter
 import com.quranapp.android.theme.observeIsMonoPalette
-import com.quranapp.android.utils.app.AppDestinations
+import com.quranapp.android.navigation.AppRoute
 import com.quranapp.android.utils.extensions.putKotlinSerializableExtra
 import com.quranapp.android.utils.miscellenous.Keys
 import com.quranapp.android.utils.quranScience.loadScienceItems
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.navigation.AppRoutes
 
 @Composable
 fun ScienceScreen() {
@@ -139,10 +141,11 @@ fun ItemCard(item: QuranScienceItem) {
 
     Card(
         onClick = {
-            context.startActivity(
-                AppDestinations.intent(context, AppDestinations.QURAN_SCIENCE_CONTENT).apply {
-                    putKotlinSerializableExtra(Keys.KEY_QURAN_SCIENCE_ITEM, item)
-                }
+            PlatformServices.navigator.navigate(
+                AppRoute.Screen(
+                    screen = AppRoutes.QURAN_SCIENCE_CONTENT,
+                    extras = mapOf(Keys.KEY_QURAN_SCIENCE_ITEM to item)
+                )
             )
         },
         modifier = Modifier.fillMaxWidth(),

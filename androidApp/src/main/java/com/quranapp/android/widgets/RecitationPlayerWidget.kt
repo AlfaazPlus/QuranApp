@@ -79,6 +79,7 @@ import com.quranapp.android.utils.mediaplayer.RecitationModelManager
 import com.quranapp.android.utils.mediaplayer.RecitationService
 import com.quranapp.android.utils.mediaplayer.RecitationServiceState
 import com.quranapp.android.utils.reader.factory.ReaderFactory
+import com.quranapp.android.utils.reader.toIntent
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -384,7 +385,7 @@ private suspend fun buildRecitationPlayerWidgetState(
     }
 
     val openReaderIntent =
-        ReaderFactory.prepareSingleVerseIntent(verse.chapterNo, verse.verseNo).apply {
+        ReaderFactory.verse(verse.chapterNo, verse.verseNo).toIntent().apply {
             setClass(context, ActivityReader::class.java)
         }
 

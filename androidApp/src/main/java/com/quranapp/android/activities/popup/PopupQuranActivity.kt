@@ -8,6 +8,8 @@ import androidx.activity.compose.setContent
 import com.quranapp.android.activities.base.BaseActivity
 import com.quranapp.android.components.reader.dialogs.QuickReference
 import com.quranapp.android.components.reader.dialogs.QuickReferenceData
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.theme.QuranAppTheme
 import com.quranapp.android.utils.quran.QuranMeta
 import com.quranapp.android.utils.reader.factory.ReaderFactory
@@ -34,11 +36,10 @@ class PopupQuranActivity : BaseActivity() {
                 QuickReference(
                     data = data,
                     onOpenInReader = { ch, range ->
-                        ReaderFactory.startVerseRange(
-                            this@PopupQuranActivity,
-                            ch,
-                            range.first,
-                            range.last,
+                        PlatformServices.navigator.navigate(
+                            AppRoute.Reader(
+                                ReaderFactory.verseRange(ch, range.first, range.last)
+                            )
                         )
 
                         finish()

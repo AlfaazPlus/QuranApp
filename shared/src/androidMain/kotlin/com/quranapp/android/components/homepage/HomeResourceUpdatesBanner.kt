@@ -36,14 +36,16 @@ import com.quranapp.android.generated.resources.strTitleRecitations
 import com.quranapp.android.generated.resources.strTitleTranslations
 import com.quranapp.android.generated.resources.updateAvailable
 import com.quranapp.android.generated.resources.wordByWord
+import com.quranapp.android.navigation.AppRoute
 import com.quranapp.android.navigation.SettingRoutes
-import com.quranapp.android.utils.app.AppDestinations
 import com.quranapp.android.utils.mediaplayer.RecitationVersionManager
 import com.quranapp.android.utils.miscellenous.Keys
 import com.quranapp.android.utils.translation.TranslationVersionManager
 import com.quranapp.android.utils.wbw.WbwVersionManager
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.navigation.AppRoutes
 
 @Composable
 fun HomeResourceUpdatesBanner() {
@@ -70,10 +72,11 @@ fun HomeResourceUpdatesBanner() {
     if (total <= 0) return
 
     val openRoute: (String) -> Unit = { targetRoute ->
-        context.startActivity(
-            AppDestinations.intent(context, AppDestinations.SETTINGS).apply {
-                putExtra(Keys.NAV_DESTINATION, targetRoute)
-            },
+        PlatformServices.navigator.navigate(
+            AppRoute.Screen(
+                screen = AppRoutes.SETTINGS,
+                extras = mapOf(Keys.NAV_DESTINATION to targetRoute)
+            )
         )
     }
 

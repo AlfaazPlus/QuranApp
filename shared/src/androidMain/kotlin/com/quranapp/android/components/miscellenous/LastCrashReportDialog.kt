@@ -25,7 +25,6 @@ import com.quranapp.android.generated.resources.strLabelCopy
 import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.preferences.AppPreferences
 import com.quranapp.android.utils.app.Logger
-import com.quranapp.android.utils.extensions.copyToClipboard
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -70,7 +69,7 @@ fun LastCrashReportDialog() {
                     val log = crashLog ?: return@AlertDialogAction
 
                     dismiss()
-                    context.copyToClipboard(log)
+                    PlatformServices.system.clipboardManager.copy(log)
                     scope.launch {
                         PlatformServices.messages.showClipboard(
                             getString(Res.string.copiedToClipboard),
@@ -86,7 +85,7 @@ fun LastCrashReportDialog() {
                     val log = crashLog ?: return@AlertDialogAction
 
                     dismiss()
-                    context.copyToClipboard(log)
+                    PlatformServices.system.clipboardManager.copy(log)
                     scope.launch {
                         PlatformServices.messages.show(
                             getString(Res.string.pasteCrashLogGithubIssue),

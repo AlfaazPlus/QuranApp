@@ -7,11 +7,11 @@ import android.content.Context
 import android.content.ContextWrapper
 import com.quranapp.android.backup.AutoBackup
 import com.quranapp.android.db.DatabaseProvider
-import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.preferences.BackupPreferences
 import com.quranapp.android.preferences.VersePreferences
 import com.quranapp.android.scheduling.RecommendedReminderScheduler
 import com.quranapp.android.scheduling.VerseOfTheDayScheduler
+import com.quranapp.android.utils.managers.TranslationDownloadManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -32,7 +32,7 @@ object AppActions {
 
                 // The slug could be empty. Check repo.getBook(slug) for more info.
                 if (bookInfo.slug.isNotEmpty()) {
-                    PlatformServices.downloads.downloadTranslation(bookInfo)
+                    TranslationDownloadManager.startDownload(bookInfo)
                 }
             }
         }
@@ -41,15 +41,15 @@ object AppActions {
     @JvmStatic
     fun scheduleActions(ctx: Context) {
         if (VersePreferences.getVOTDReminderEnabled()) {
-            VerseOfTheDayScheduler.scheduleDailyNotification(ctx)
-            RecommendedReminderScheduler.schedule(ctx)
+            VerseOfTheDayScheduler.scheduleDailyNotification()
+            RecommendedReminderScheduler.schedule()
         }
 
         CoroutineScope(Dispatchers.IO).launch {
             if (!BackupPreferences.isEnabled()) return@launch
 
-            AutoBackup.ensureAvailable(ctx)
-            AutoBackup.schedule(ctx)
+            AutoBackup.ensureAvailable()
+            AutoBackup.schedule()
         }
     }
 }

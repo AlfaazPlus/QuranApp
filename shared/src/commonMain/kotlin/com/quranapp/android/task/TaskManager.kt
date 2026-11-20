@@ -83,10 +83,10 @@ interface TaskManager {
     fun stateOf(id: TaskId): Flow<TaskState>
 
     /**
-     * Returns a [Flow] that emits a list of [TaskState]s for every task matching [tag].
+     * Returns a [Flow] that emits a list of [TaskInfo]s for every task matching [tag].
      * The list is empty when no matching tasks exist.
      */
-    fun stateByTag(tag: String): Flow<List<TaskState>>
+    fun infosByTag(tag: String): Flow<List<TaskInfo>>
 
     /**
      * Returns a [Flow] of the latest [TaskProgress] for [id], or null before any progress
@@ -111,6 +111,13 @@ interface TaskManager {
 value class TaskId(val value: String) {
     override fun toString(): String = value
 }
+
+/** One scheduled task matching a tag query. */
+data class TaskInfo(
+    val id: TaskId,
+    val tags: Set<String>,
+    val state: TaskState,
+)
 
 /** How to handle a [TaskManager.enqueuePeriodic] call when periodic work with the same name already exists. */
 enum class ExistingPeriodicTaskPolicy {
@@ -196,6 +203,9 @@ sealed class TaskState {
 /**
  * Progress snapshot emitted by a running worker via [TaskContext.setProgress].
  *
+ * [current] and [total] are the raw units (bytes, chapters, items). [percentage] is derived
+ * from them for UI.
+ *
  * @param current Current units of work completed. Ignored when [indeterminate] is true.
  * @param total   Total units of work. Ignored when [indeterminate] is true.
  * @param indeterminate True when progress cannot be measured (spinner-style).
@@ -203,8 +213,8 @@ sealed class TaskState {
  * @param extras  Additional platform-agnostic data attached by the worker.
  */
 data class TaskProgress(
-    val current: Int = 0,
-    val total: Int = 100,
+    val current: Long = 0,
+    val total: Long = 100,
     val indeterminate: Boolean = false,
     val message: String? = null,
     val extras: TaskParams = TaskParams.EMPTY,
@@ -212,15 +222,27 @@ data class TaskProgress(
     /** Progress as a 0–100 percentage, or null when [indeterminate]. */
     val percentage: Int?
         get() = if (indeterminate || total <= 0) null
-        else (current.coerceIn(0, total) * 100L / total).toInt()
+        else (current.coerceIn(0, total) * 100 / total).toInt()
 
     companion object {
         val INDETERMINATE = TaskProgress(indeterminate = true)
 
         fun percent(pct: Int, message: String? = null): TaskProgress =
-            TaskProgress(current = pct, total = 100, message = message)
+            TaskProgress(current = pct.toLong(), total = 100, message = message)
 
         fun of(current: Int, total: Int, message: String? = null): TaskProgress =
-            TaskProgress(current = current, total = total.coerceAtLeast(1), message = message)
+            of(current.toLong(), total.toLong(), message = message)
+
+        fun of(
+            current: Long,
+            total: Long,
+            indeterminate: Boolean = false,
+            message: String? = null,
+        ): TaskProgress = TaskProgress(
+            current = current,
+            total = total,
+            indeterminate = indeterminate || total <= 0L,
+            message = message,
+        )
     }
 }

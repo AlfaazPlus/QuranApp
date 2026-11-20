@@ -36,13 +36,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.quranapp.android.components.ReferenceThumbnail
-import com.quranapp.android.components.ReferenceVerseModel
 import com.quranapp.android.components.common.AppBar
 import com.quranapp.android.components.common.BottomSheetMenu
 import com.quranapp.android.components.common.BottomSheetMenuItem
@@ -65,7 +62,6 @@ import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.grayscaleColorFilter
 import com.quranapp.android.theme.observeIsMonoPalette
 import com.quranapp.android.utils.quran.parser.QuranPropheticDuasParser
-import com.quranapp.android.utils.reader.factory.ReaderFactory
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
@@ -74,6 +70,9 @@ import org.jetbrains.compose.resources.stringResource
 import java.text.MessageFormat
 import java.util.regex.Pattern
 import kotlin.time.Duration.Companion.milliseconds
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.navigation.AppRoutes
+import com.quranapp.android.platform.PlatformServices
 
 @Composable
 fun PropheticDuasScreen(title: String? = null) {
@@ -200,7 +199,6 @@ fun PropheticDuasScreen(title: String? = null) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun PropheticDuaListItem(prophet: PropheticDuaProphet) {
-    val context = LocalContext.current
     val isMono = ThemeUtils.observeIsMonoPalette()
     val grayscale = remember { grayscaleColorFilter() }
 
@@ -215,14 +213,16 @@ private fun PropheticDuaListItem(prophet: PropheticDuaProphet) {
                     MessageFormat.format("{0} ({1})", prophet.name, prophet.honorific),
                 )
 
-                ReaderFactory.startReferenceVerse(
-                    context,
-                    ReferenceVerseModel(
-                        title = refTitle,
-                        desc = getString(Res.string.strMsgReferenceDuas),
-                        chapters = prophet.chapters,
-                        verses = prophet.verses,
-                        thumbnail = prophet.thumbnail?.let { ReferenceThumbnail.RemoteUrl(it) }
+                PlatformServices.navigator.navigate(
+                    AppRoute.Screen(
+                        screen = AppRoutes.REFERENCE,
+                        extras = buildMap {
+                            put("title", refTitle)
+                            put("desc", getString(Res.string.strMsgReferenceDuas))
+                            put("chapters", prophet.chapters)
+                            put("verses", prophet.verses)
+                            prophet.thumbnail?.let { put("thumbnail_url", it) }
+                        },
                     )
                 )
             }

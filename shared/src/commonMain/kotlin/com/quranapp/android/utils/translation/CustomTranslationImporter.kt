@@ -5,6 +5,7 @@ import com.quranapp.android.api.safeInt
 import com.quranapp.android.api.safeJsonArray
 import com.quranapp.android.api.safeString
 import com.quranapp.android.db.DatabaseProvider
+import com.quranapp.android.search.SearchIndexScheduler
 import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.importing.ImportException
 import com.quranapp.android.utils.importing.ImportFailure
@@ -42,7 +43,7 @@ object CustomTranslationImporter {
 
             DatabaseProvider.getTranslationRepository()
                 .store(manifest.toBookInfo(), text)
-            SearchIndexScheduler.enqueueSlug(applicationContext, manifest.slug)
+            SearchIndexScheduler.enqueueSlug(manifest.slug)
         } catch (error: ImportException) {
             throw error
         } catch (error: Exception) {

@@ -66,7 +66,7 @@ class QuranSearchViewModel() : AppViewModel() {
     private val _availableTranslations = MutableStateFlow<List<TranslationOption>>(emptyList())
     val availableTranslations: StateFlow<List<TranslationOption>> = _availableTranslations
 
-    private val indexingFlow = SearchIndexMonitor.isIndexingFlow(context)
+    private val indexingFlow = SearchIndexMonitor.isIndexingFlow()
     val isSearchIndexing: StateFlow<Boolean> = indexingFlow.stateIn(
         viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),

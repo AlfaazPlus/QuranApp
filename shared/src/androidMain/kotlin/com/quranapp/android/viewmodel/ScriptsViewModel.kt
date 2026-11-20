@@ -5,11 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.extensions.canProceed
 import com.quranapp.android.platform.PlatformServices
-import com.quranapp.android.utils.managers.ResourceDownloadStatus
+import com.quranapp.android.task.TaskState
 import com.quranapp.android.utils.managers.ScriptFontsDownloadManager
 import com.quranapp.android.utils.reader.QuranScriptUtils
 import com.quranapp.android.utils.reader.QuranScriptVariant
-import com.quranapp.android.utils.reader.atlas.AtlasDownloadManager
+import com.quranapp.android.utils.managers.AtlasDownloadManager
 import com.quranapp.android.utils.reader.isPrebuiltAtlas
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,7 +21,7 @@ import kotlinx.coroutines.withContext
 
 data class ScriptsUiState(
     val scripts: Map<String, List<QuranScriptVariant>> = QuranScriptUtils.availableScripts(),
-    val downloadStates: Map<String, ResourceDownloadStatus> = emptyMap(),
+    val downloadStates: Map<String, TaskState> = emptyMap(),
 )
 
 sealed interface ScriptEvent {
@@ -37,8 +37,8 @@ class ScriptsViewModel() : AppViewModel() {
     val uiState: StateFlow<ScriptsUiState> = _uiState.asStateFlow()
 
     fun initialize(context: Context) {
-        ScriptFontsDownloadManager.initialize(context)
-        AtlasDownloadManager.initialize(context)
+        ScriptFontsDownloadManager.initialize()
+        AtlasDownloadManager.initialize()
         observeDownloadStates()
     }
 
@@ -80,8 +80,8 @@ class ScriptsViewModel() : AppViewModel() {
         viewModelScope.launch {
             if (!PlatformServices.networkMonitor.canProceed()) return@launch
 
-            PlatformServices.downloads.downloadScriptFont(key)
-            updateDownloadStatus(key, ResourceDownloadStatus.Started)
+            ScriptFontsDownloadManager.startDownload(key)
+            updateDownloadStatus(key, TaskState.Enqueued)
         }
     }
 
@@ -89,27 +89,27 @@ class ScriptsViewModel() : AppViewModel() {
         viewModelScope.launch {
             if (!PlatformServices.networkMonitor.canProceed()) return@launch
 
-            AtlasDownloadManager.startDownload(context, key, densityLevel)
-            updateDownloadStatus(key, ResourceDownloadStatus.Started)
+            AtlasDownloadManager.startDownload(key, densityLevel)
+            updateDownloadStatus(key, TaskState.Enqueued)
         }
     }
 
     private fun cancelDownload(context: Context, key: String) {
-        ScriptFontsDownloadManager.stopDownload(context, key)
-        AtlasDownloadManager.stopDownload(context, key)
-        updateDownloadStatus(key, ResourceDownloadStatus.Cancelled)
+        ScriptFontsDownloadManager.stopDownload(key)
+        AtlasDownloadManager.stopDownload(key)
+        updateDownloadStatus(key, TaskState.Cancelled)
     }
 
-    private fun updateDownloadStatus(key: String, status: ResourceDownloadStatus) {
+    private fun updateDownloadStatus(key: String, status: TaskState) {
         _uiState.update { state ->
             val newDownloadStates = state.downloadStates.toMutableMap()
 
             when (status) {
-                is ResourceDownloadStatus.Completed -> {
+                is TaskState.Succeeded -> {
                     newDownloadStates.remove(key)
                 }
 
-                is ResourceDownloadStatus.Cancelled -> {
+                TaskState.Cancelled -> {
                     newDownloadStates.remove(key)
                 }
 

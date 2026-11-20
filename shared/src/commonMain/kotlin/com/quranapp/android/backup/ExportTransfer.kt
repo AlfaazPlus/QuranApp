@@ -17,19 +17,20 @@ import com.quranapp.android.generated.resources.msgExportSuccess
 import com.quranapp.android.locale.NumeralSystem
 import com.quranapp.android.locale.appLocaleForLanguageChange
 import com.quranapp.android.locale.setAppLocale
+import com.quranapp.android.navigation.AppRoute
 import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.preferences.AppPreferences
 import com.quranapp.android.preferences.BackupPreferences
 import com.quranapp.android.preferences.DataStoreManager
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.resolveThemeModeForDelegate
-import com.quranapp.android.utils.app.AppDestinations
 import com.quranapp.android.utils.app.Logger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.withContext
 import okio.source
 import org.jetbrains.compose.resources.getString
+import com.quranapp.android.navigation.AppRoutes
 
 private const val PERSISTABLE_URI_FLAGS =
     Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
@@ -94,9 +95,7 @@ suspend fun importBackup(context: Context, uri: Uri, scopes: Map<String, Boolean
 }
 
 private fun restartMainActivity(context: Context) {
-    val intent = AppDestinations.intent(context, AppDestinations.MAIN)
-        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-    context.startActivity(intent)
+    PlatformServices.navigator.navigate(AppRoute.Screen(AppRoutes.MAIN))
 }
 
 suspend fun writeExport(context: Context, uri: Uri, bytes: ByteArray) {

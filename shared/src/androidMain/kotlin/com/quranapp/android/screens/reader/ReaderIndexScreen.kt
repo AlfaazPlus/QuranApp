@@ -131,7 +131,7 @@ import com.quranapp.android.generated.resources.titleRemoveFromFavourites
 import com.quranapp.android.generated.resources.withSajda
 import com.quranapp.android.generated.resources.withoutSajda
 import com.quranapp.android.theme.tightTextStyle
-import com.quranapp.android.utils.app.AppDestinations
+import com.quranapp.android.navigation.AppRoute
 import com.quranapp.android.utils.reader.ReaderChapterIndexFilters
 import com.quranapp.android.utils.reader.ReaderChapterLengthFilter
 import com.quranapp.android.utils.reader.ReaderChapterRevelationFilter
@@ -142,6 +142,8 @@ import com.quranapp.android.viewmodel.ReaderIndexViewModel
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.navigation.AppRoutes
 
 private val ReaderIndexExpandedHeaderHeight = 220.dp
 private val ReaderIndexCollapsedHeaderHeight = 84.dp
@@ -359,9 +361,7 @@ private fun ReaderIndexTopBar(
 
             IconButton(
                 onClick = {
-                    context.startActivity(
-                        AppDestinations.intent(context, AppDestinations.SEARCH)
-                    )
+                    PlatformServices.navigator.navigate(AppRoute.Screen(AppRoutes.SEARCH))
                 },
                 modifier = Modifier
                     .size(40.dp)
@@ -571,7 +571,7 @@ private fun ReaderIndexChaptersList(
                         surah = surah,
                         isFavourite = isFav,
                         onClick = {
-                            ReaderFactory.startChapter(context, surah.surah.surahNo)
+                            PlatformServices.navigator.navigate(AppRoute.Reader(ReaderFactory.chapter(surah.surah.surahNo)))
                         },
                         onToggleFavourite = {
                             scope.launch {
@@ -812,7 +812,7 @@ private fun ReaderIndexJuzList(
                 JuzCard(
                     juz = juz,
                     onClick = {
-                        ReaderFactory.startJuz(context, juz.unitNo)
+                        PlatformServices.navigator.navigate(AppRoute.Reader(ReaderFactory.juz(juz.unitNo)))
                     },
                 )
             }
@@ -882,7 +882,7 @@ private fun ReaderIndexHizbList(
                 HizbCard(
                     hizb = hizb,
                     onClick = {
-                        ReaderFactory.startHizb(context, hizb.unitNo)
+                        PlatformServices.navigator.navigate(AppRoute.Reader(ReaderFactory.hizb(hizb.unitNo)))
                     }
                 )
             }
@@ -959,7 +959,7 @@ private fun ReaderIndexFavChaptersList(
                             surah = surah,
                             isFavourite = true,
                             onClick = {
-                                ReaderFactory.startChapter(context, surah.surah.surahNo)
+                                PlatformServices.navigator.navigate(AppRoute.Reader(ReaderFactory.chapter(surah.surah.surahNo)))
                             },
                             onToggleFavourite = { confirmRemove = true }
                         )

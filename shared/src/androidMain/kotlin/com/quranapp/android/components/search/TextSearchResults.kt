@@ -47,6 +47,8 @@ import com.quranapp.android.generated.resources.noResults
 import com.quranapp.android.generated.resources.strLabelVerseSerial
 import com.quranapp.android.generated.resources.strMsgSearchNoResultsFoundAbsolute
 import com.quranapp.android.locale.formattedStringResource
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.search.SearchResult
 import com.quranapp.android.search.SearchResultMatch
 import com.quranapp.android.search.SearchSnippet
@@ -54,7 +56,6 @@ import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.appFontFamily
 import com.quranapp.android.theme.fontArabic
 import com.quranapp.android.theme.fontUrdu
-import com.quranapp.android.utils.extensions.copyToClipboard
 import com.quranapp.android.utils.miscellenous.isRtlLanguageCode
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.reader.factory.ReaderFactory
@@ -130,7 +131,15 @@ fun TextSearchResults(
         data = quickRefData,
         onOpenInReader = { chapterNo, range ->
             quickRefData = null
-            ReaderFactory.startVerseRange(context, chapterNo, range.first, range.last)
+            PlatformServices.navigator.navigate(
+                AppRoute.Reader(
+                    ReaderFactory.verseRange(
+                        chapterNo,
+                        range.first,
+                        range.last
+                    )
+                )
+            )
         },
         onClose = { quickRefData = null },
     )
@@ -169,7 +178,7 @@ private fun TextSearchResultCard(result: SearchResult, onClick: (SearchResult) -
                         .background(colorScheme.background)
                         .clickable(
                             onClick = {
-                                context.copyToClipboard("${result.chapterNo}:${result.verseNo}")
+                                PlatformServices.system.clipboardManager.copy("${result.chapterNo}:${result.verseNo}")
                             },
                         )
                         .padding(horizontal = 8.dp, vertical = 4.dp),

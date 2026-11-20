@@ -1,6 +1,5 @@
 package com.quranapp.android.utils.mediaplayer
 
-import android.content.Context
 import android.net.Uri
 import android.util.JsonReader
 import androidx.core.net.toUri
@@ -15,7 +14,6 @@ import com.quranapp.android.platform.toInputStream
 import com.quranapp.android.utils.app.AppFiles
 import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.miscellenous.isGzip
-import com.quranapp.android.utils.reader.recitation.RecitationUtils
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -89,49 +87,14 @@ object WbwAudioRepository {
         }
 
     fun prepareChapterAudioUrl(chapterNo: Int): String? {
-        var url = AUDIO_URL_TEMPLATE
-
-        return try {
-            var matcher = RecitationUtils.URL_CHAPTER_PATTERN.matcher(url)
-
-            while (matcher.find()) {
-                val group = matcher.group(1)
-
-                if (group != null) {
-                    url = matcher.replaceFirst(group.toFormatted(chapterNo))
-                    matcher.reset(url)
-                }
-            }
-
-            url
-        } catch (e: Exception) {
-            Logger.saveError(e, "WbwAudioRepository.prepareChapterAudioUrl")
-            null
-        }
+        return RecitationUtils.prepareAudioUrl(AUDIO_URL_TEMPLATE, chapterNo)
     }
 
-    suspend fun getTimingCount(context: Context): Int =
+    suspend fun getTimingCount(): Int =
         withContext(Dispatchers.IO) {
             DatabaseProvider.getExternalQuranDatabase()
                 .wbwDao()
                 .getTimingCount(AUDIO_ID)
-        }
-
-    suspend fun resolveChapterAudioUri(chapterNo: Int): Uri? =
-        withContext(Dispatchers.IO) {
-            val local = getChapterAudioFile(chapterNo)
-
-            if (hasValidChapterAudioFile(local)) {
-                return@withContext local.toFile().toUri()
-            }
-
-            if (!PlatformServices.networkMonitor.isConnected) {
-                return@withContext null
-            }
-
-            val url = prepareChapterAudioUrl(chapterNo) ?: return@withContext null
-
-            url.toUri()
         }
 
     suspend fun resolveWordPlaybackSource(
@@ -156,12 +119,11 @@ object WbwAudioRepository {
     }
 
     suspend fun getWordTiming(
-        context: Context,
         chapterNo: Int,
         verseNo: Int,
         wordIndex: Int,
     ): WbwAudioTimingEntity? {
-        if (!ensureTimingsInDb(context.applicationContext)) {
+        if (!ensureTimingsInDb()) {
             return null
         }
 
@@ -172,25 +134,24 @@ object WbwAudioRepository {
             .getWordTiming(AUDIO_ID, ayahId, wordIndex)
     }
 
-    suspend fun ensureTimingsAvailable(context: Context) {
-        ensureTimingsInDb(context.applicationContext)
+    suspend fun ensureTimingsAvailable() {
+        ensureTimingsInDb()
     }
 
     /**
      * Intended when the published WBW audio timings version increases.
      */
-    suspend fun refreshTimingsFromRemote(context: Context) {
-        val app = context.applicationContext
+    suspend fun refreshTimingsFromRemote() {
         timingLoadMutex.withLock {
             if (!PlatformServices.networkMonitor.isConnected) return@withLock
-            downloadAndImportTimings(app)
+            downloadAndImportTimings()
         }
     }
 
     /**
      * @return true if timing rows exist for [AUDIO_ID] after any required download/import attempt.
      */
-    private suspend fun ensureTimingsInDb(appContext: Context): Boolean {
+    private suspend fun ensureTimingsInDb(): Boolean {
         val db = DatabaseProvider.getExternalQuranDatabase()
         val dao = db.wbwDao()
 
@@ -200,13 +161,13 @@ object WbwAudioRepository {
             if (db.wbwDao().getTimingCount(AUDIO_ID) > 0) return@withLock true
             if (!PlatformServices.networkMonitor.isConnected) return@withLock false
 
-            downloadAndImportTimings(appContext)
+            downloadAndImportTimings()
 
             db.wbwDao().getTimingCount(AUDIO_ID) > 0
         }
     }
 
-    private suspend fun downloadAndImportTimings(appContext: Context) {
+    private suspend fun downloadAndImportTimings() {
         val tmp = try {
             downloadTimingToTemp()
         } catch (e: CancellationException) {
@@ -217,7 +178,7 @@ object WbwAudioRepository {
         }
 
         try {
-            importTimingFromFile(appContext, tmp)
+            importTimingFromFile(tmp)
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
@@ -249,7 +210,7 @@ object WbwAudioRepository {
             }
         }
 
-    private suspend fun importTimingFromFile(appContext: Context, file: Path) =
+    private suspend fun importTimingFromFile(file: Path) =
         withContext(Dispatchers.IO) {
             val INSERT_CHUNK = 750
 

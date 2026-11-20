@@ -32,7 +32,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
 import com.quranapp.android.components.common.AlertCard
 import com.quranapp.android.components.common.IconButton
 import com.quranapp.android.components.common.Loader
@@ -48,10 +47,13 @@ import com.quranapp.android.generated.resources.labelTranslation
 import com.quranapp.android.generated.resources.strMsgReciterDownloadHint
 import com.quranapp.android.generated.resources.strTitleQuran
 import com.quranapp.android.generated.resources.strTitleSelectReciter
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.navigation.AppRoutes
 import com.quranapp.android.navigation.SettingRoutes
+import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.preferences.RecitationPreferences
 import com.quranapp.android.theme.alpha
-import com.quranapp.android.utils.app.AppDestinations
+import com.quranapp.android.utils.mediaplayer.RecitationAudioKind
 import com.quranapp.android.utils.mediaplayer.RecitationController
 import com.quranapp.android.utils.miscellenous.Keys
 import com.quranapp.android.viewmodel.ReciterSelectorViewModel
@@ -299,9 +301,10 @@ private fun TranslationReciters(
 }
 
 private fun openDownloadsScreen(context: Context) {
-    context.startActivity(
-        AppDestinations.intent(context, AppDestinations.SETTINGS).apply {
-            putExtra(Keys.NAV_DESTINATION, SettingRoutes.RECITATION_DOWNLOAD)
-        },
+    PlatformServices.navigator.navigate(
+        AppRoute.Screen(
+            screen = AppRoutes.SETTINGS,
+            extras = mapOf(Keys.NAV_DESTINATION to SettingRoutes.RECITATION_DOWNLOAD)
+        )
     )
 }

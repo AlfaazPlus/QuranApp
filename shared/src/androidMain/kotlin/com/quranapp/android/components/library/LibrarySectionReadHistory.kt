@@ -18,7 +18,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -30,6 +29,9 @@ import com.quranapp.android.generated.resources.continue_reading
 import com.quranapp.android.generated.resources.dr_icon_chevron_right
 import com.quranapp.android.generated.resources.dr_icon_history
 import com.quranapp.android.generated.resources.strMsgReadShowupHere
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.navigation.AppRoutes
+import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.reader.ReaderMode
 import com.quranapp.android.screens.accentColor
 import com.quranapp.android.screens.iconRes
@@ -37,7 +39,6 @@ import com.quranapp.android.screens.subtitleLabel
 import com.quranapp.android.screens.titleLabel
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.tightTextStyle
-import com.quranapp.android.utils.app.AppDestinations
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.viewmodel.ReadHistoryViewModel
 import org.jetbrains.compose.resources.painterResource
@@ -48,7 +49,6 @@ fun LibrarySectionReadHistory() {
     val viewModel = appViewModel<ReadHistoryViewModel>()
     val chapterNames by viewModel.chapterNames.collectAsStateWithLifecycle()
     val recentHistories by viewModel.recentHistories.collectAsStateWithLifecycle()
-    val context = LocalContext.current
 
     Column(
         verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -59,12 +59,7 @@ fun LibrarySectionReadHistory() {
             headerRightContent = if (recentHistories.isNotEmpty()) {
                 {
                     SectionHeaderViewAll {
-                        context.startActivity(
-                            AppDestinations.intent(
-                                context,
-                                AppDestinations.READ_HISTORY
-                            )
-                        )
+                        PlatformServices.navigator.navigate(AppRoute.Screen(AppRoutes.READ_HISTORY))
                     }
                 }
             } else null,
@@ -83,9 +78,8 @@ fun LibrarySectionReadHistory() {
                         history = history,
                         chapterName = chapterNames[history.chapterNo].orEmpty(),
                         onOpen = {
-                            ReaderFactory.prepareHistoryIntent(history)?.let {
-                                it.setClassName(context, AppDestinations.READER)
-                                context.startActivity(it)
+                            ReaderFactory.fromHistory(history)?.let {
+                                PlatformServices.navigator.navigate(AppRoute.Reader(it))
                             }
                         },
                     )

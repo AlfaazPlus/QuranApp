@@ -67,7 +67,6 @@ import com.quranapp.android.generated.resources.textNoLogsFound
 import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.utils.app.Logger
-import com.quranapp.android.utils.extensions.copyToClipboard
 import com.quranapp.android.utils.miscellenous.DateUtils
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
@@ -360,7 +359,7 @@ private fun AppLogItem(log: AppLogModel, isCrash: Boolean, handleDelete: (AppLog
                     IconButton(
                         painter = painterResource(Res.drawable.icon_copy),
                         onClick = {
-                            context.copyToClipboard(log.log)
+                            PlatformServices.system.clipboardManager.copy(log.log)
                             scope.launch {
                                 PlatformServices.messages.showClipboard(
                                     getString(Res.string.copiedToClipboard),
@@ -375,7 +374,7 @@ private fun AppLogItem(log: AppLogModel, isCrash: Boolean, handleDelete: (AppLog
                 SimpleTooltip(text = stringResource(Res.string.github)) {
                     Button(
                         onClick = {
-                            context.copyToClipboard(log.log)
+                            PlatformServices.system.clipboardManager.copy(log.log)
                             scope.launch {
                                 PlatformServices.messages.show(
                                     getString(Res.string.pasteCrashLogGithubIssue),

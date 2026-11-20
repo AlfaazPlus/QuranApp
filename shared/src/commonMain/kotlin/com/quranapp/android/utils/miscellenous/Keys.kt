@@ -13,7 +13,6 @@ object Keys {
     const val READER_KEY_READING_LAYOUT = "reader.reading_layout"
     const val READER_KEY_READ_TYPE = "reader.read_type"
     const val READER_KEY_TRANSL_SLUGS = "reader.translation_slugs"
-    const val READER_KEY_SAVE_TRANSL_CHANGES = "reader.save_translation_changes"
     const val READER_KEY_SETTING_IS_FROM_READER = "reader.setting_is_from_reader"
     const val READER_KEY_ARABIC_TEXT_ENABLED = "reader.arabic_text_enabled"
     const val READER_KEY_AUTO_SCROLL_SPEED = "reader.auto_scroll_speed"

@@ -100,7 +100,7 @@ import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.reader.ReaderMode
 import com.quranapp.android.reader.ReadingLayout
 import com.quranapp.android.theme.alpha
-import com.quranapp.android.utils.app.AppDestinations
+import com.quranapp.android.navigation.AppRoute
 import com.quranapp.android.utils.miscellenous.Keys
 import com.quranapp.android.utils.reader.toQuranMushafId
 import com.quranapp.android.viewmodel.ReaderUiState
@@ -111,6 +111,8 @@ import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import kotlin.math.roundToInt
+import com.quranapp.android.platform.PlatformServices
+import com.quranapp.android.navigation.AppRoutes
 
 internal data class ReaderAppBarDimensions(
     val statusBarHeight: Dp,
@@ -930,13 +932,15 @@ private fun ReadingLayoutSwitch(modifier: Modifier = Modifier) {
 }
 
 fun openReaderSetting(context: Context, destination: String?) {
-    context.startActivity(
-        AppDestinations.intent(context, AppDestinations.SETTINGS).apply {
-            if (destination != null) {
-                putExtra(Keys.NAV_DESTINATION, destination)
+    PlatformServices.navigator.navigate(
+        AppRoute.Screen(
+            screen = AppRoutes.SETTINGS,
+            extras = buildMap {
+                if (destination != null) {
+                    put(Keys.NAV_DESTINATION, destination)
+                }
+                put(Keys.SHOW_READER_SETTINGS_ONLY, true)
             }
-            putExtra(Keys.SHOW_READER_SETTINGS_ONLY, true)
-        },
-        null
+        )
     )
 }

@@ -54,12 +54,14 @@ import com.quranapp.android.generated.resources.strTitleVerseOptions
 import com.quranapp.android.generated.resources.strTitleVerseRecitation
 import com.quranapp.android.locale.formattedStringResource
 import com.quranapp.android.models.ChapterVersePair
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.navigation.AppRoutes
+import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.reader.ReaderLayoutItem
 import com.quranapp.android.theme.alpha
-import com.quranapp.android.utils.extensions.copyToClipboard
 import com.quranapp.android.utils.mediaplayer.RecitationController
+import com.quranapp.android.utils.miscellenous.Keys
 import com.quranapp.android.utils.reader.LocalVerseActions
-import com.quranapp.android.utils.reader.factory.ReaderFactory
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -173,7 +175,17 @@ private fun VerseActionBar(
                 painter = painterResource(Res.drawable.ic_book_open_text),
                 contentDescription = stringResource(Res.string.strTitleTafsir),
                 tint = iconTint,
-            ) { ReaderFactory.startTafsir(context, verse.chapterNo, verse.verseNo) }
+            ) {
+                PlatformServices.navigator.navigate(
+                    AppRoute.Screen(
+                        screen = AppRoutes.TAFSIR,
+                        extras = mapOf(
+                            Keys.READER_KEY_CHAPTER_NO to verse.chapterNo,
+                            Keys.READER_KEY_VERSE_NO to verse.verseNo
+                        )
+                    )
+                )
+            }
 
             if (actionBarMode == VerseActionBarMode.Full) {
                 VerseActionIconButton(
@@ -303,7 +315,7 @@ fun VerseSerial(
             .semantics { this.contentDescription = contentDescription }
             .clip(RoundedCornerShape(5.dp))
             .background(colorScheme.surfaceContainerLow)
-            .clickable { context.copyToClipboard(contentDescription) }
+            .clickable { PlatformServices.system.clipboardManager.copy(contentDescription) }
             .padding(horizontal = 8.dp, vertical = 4.dp),
         color = colorScheme.onSurface,
         style = typography.labelLarge,

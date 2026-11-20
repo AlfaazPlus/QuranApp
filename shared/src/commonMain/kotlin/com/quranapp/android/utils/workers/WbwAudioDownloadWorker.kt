@@ -71,15 +71,9 @@ class WbwAudioDownloadWorker() : TaskWorker {
                     }
 
                     context.setProgress(
-                        TaskProgress(
-                            current = pct,
-                            total = 100,
-                            indeterminate = false,
-                            extras = buildTaskParams {
-                                put(KEY_PROGRESS, pct)
-                                put(KEY_PROGRESS_BYTES, consumed)
-                                put(KEY_PROGRESS_TOTAL, total)
-                            },
+                        TaskProgress.of(
+                            current = consumed,
+                            total = total,
                         ),
                     )
 
@@ -146,11 +140,7 @@ class WbwAudioDownloadWorker() : TaskWorker {
         private const val KEY_URL = "url"
         private const val KEY_OUTPUT_PATH = "output_path"
         private const val KEY_CHAPTER_NO = "chapter_no"
-        private const val KEY_AUDIO_ID = "audio_id"
-
-        const val KEY_PROGRESS = "progress"
-        const val KEY_PROGRESS_BYTES = "progress_bytes"
-        const val KEY_PROGRESS_TOTAL = "progress_total"
+        private         const val KEY_AUDIO_ID = "audio_id"
 
         fun uniqueWorkName(chapterNo: Int): String = "wbw-audio-chapter:$chapterNo"
 

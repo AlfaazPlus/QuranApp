@@ -51,6 +51,7 @@ import com.quranapp.android.viewmodel.ReaderProviderViewModel
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
+import com.quranapp.android.navigation.AppRoute
 
 val LocalReaderViewModel = staticCompositionLocalOf<ReaderProviderViewModel> {
     error("ReaderProviderViewModel not provided")
@@ -297,7 +298,7 @@ fun ReaderProvider(
         data = quickReferenceData,
         onOpenInReader = { chapterNo, range ->
             quickReferenceData = null
-            ReaderFactory.startVerseRange(context, chapterNo, range.first, range.last)
+            PlatformServices.navigator.navigate(AppRoute.Reader(ReaderFactory.verseRange(chapterNo, range.first, range.last)))
         },
         onClose = {
             quickReferenceData = null

@@ -21,6 +21,8 @@ import com.quranapp.android.generated.resources.noResults
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import com.quranapp.android.viewmodel.QuranSearchViewModel
 import org.jetbrains.compose.resources.stringResource
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.platform.PlatformServices
 
 @Composable
 fun SurahSearchResults(
@@ -56,7 +58,7 @@ fun SurahSearchResults(
                 surah = it,
                 onClick = {
                     viewModel.commitOnIntentionalOutcome()
-                    ReaderFactory.startChapter(context, it.surah.surahNo)
+                    PlatformServices.navigator.navigate(AppRoute.Reader(ReaderFactory.chapter(it.surah.surahNo)))
                 },
             )
         }

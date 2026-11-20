@@ -1,7 +1,6 @@
 package com.quranapp.android.platform
 
-import com.quranapp.android.api.models.tafsir.TafsirInfoModel
-import com.quranapp.android.api.models.translation.TranslationBookInfoModel
+import com.quranapp.android.navigation.AppNavigator
 import com.quranapp.android.platform.notification.NotificationManager
 import com.quranapp.android.platform.shortcut.ShortcutManager
 import com.quranapp.android.task.TaskManager
@@ -56,6 +55,7 @@ interface AppLinks {
     fun storeWebLink(packageName: String? = null): String
     fun shareText(text: String, chooserTitle: String? = null)
     fun shareImage(uri: String, chooserTitle: String? = null)
+    fun openAppSettings()
 }
 
 interface FontLoader {
@@ -71,12 +71,6 @@ interface AudioPlayer {
     fun pause()
 }
 
-interface DownloadScheduler {
-    fun downloadTranslation(bookInfo: TranslationBookInfoModel)
-    fun downloadTafsir(bookInfo: TafsirInfoModel)
-    fun downloadScriptFont(script: String)
-}
-
 interface AppMessages {
     fun show(text: String, long: Boolean = false)
     fun showClipboard(text: String)
@@ -87,10 +81,15 @@ interface NetworkMonitor {
     val isConnected: Boolean
 }
 
+interface ClipboardManager {
+    fun copy(text: String, label: String? = null): Boolean
+}
+
 interface SystemServices {
     val taskManager: TaskManager
     val notificationManager: NotificationManager
     val shortcutManager: ShortcutManager
+    val clipboardManager: ClipboardManager
 }
 
 object PlatformServices {
@@ -102,8 +101,6 @@ object PlatformServices {
         private set
     lateinit var audio: AudioPlayer
         private set
-    lateinit var downloads: DownloadScheduler
-        private set
     lateinit var links: AppLinks
         private set
     lateinit var messages: AppMessages
@@ -111,6 +108,8 @@ object PlatformServices {
     lateinit var networkMonitor: NetworkMonitor
         private set
     lateinit var system: SystemServices
+        private set
+    lateinit var navigator: AppNavigator
         private set
 
     fun installFiles(files: AppFileSystem) {
@@ -122,20 +121,20 @@ object PlatformServices {
         files: AppFileSystem,
         fonts: FontLoader,
         audio: AudioPlayer,
-        downloads: DownloadScheduler,
         links: AppLinks,
         messages: AppMessages,
         networkMonitor: NetworkMonitor,
         system: SystemServices,
+        navigator: AppNavigator,
     ) {
         this.assets = assets
         this.files = files
         this.fonts = fonts
         this.audio = audio
-        this.downloads = downloads
         this.links = links
         this.messages = messages
         this.networkMonitor = networkMonitor
         this.system = system
+        this.navigator = navigator
     }
 }

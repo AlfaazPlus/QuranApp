@@ -225,13 +225,13 @@ private fun AutoBackupSheet(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val enabled = BackupPreferences.observeEnabled()
-    val documentUri = BackupPreferences.observeDocumentUri()
-    val fileName = remember(documentUri) {
-        documentUri.takeIf { it.isNotBlank() }?.let { AutoBackup.displayName(it.toPath()) }
+    val documentPath = BackupPreferences.observeDocumentPath()
+    val fileName = remember(documentPath) {
+        documentPath.takeIf { it.isNotBlank() }?.let { AutoBackup.displayName(it.toPath()) }
     }
 
-    LaunchedEffect(documentUri) {
-        if (documentUri.isBlank()) return@LaunchedEffect
+    LaunchedEffect(documentPath) {
+        if (documentPath.isBlank()) return@LaunchedEffect
         withContext(Dispatchers.IO) { AutoBackup.ensureAvailable() }
     }
 
@@ -266,7 +266,7 @@ private fun AutoBackupSheet(
     }
 
     val viewFile = {
-        val opened = documentUri.isNotBlank() && AutoBackup.openFile(documentUri.toPath())
+        val opened = documentPath.isNotBlank() && AutoBackup.openFile(documentPath.toPath())
 
         if (!opened) {
             scope.launch {

@@ -40,6 +40,11 @@ class AndroidTaskManager(private val appContext: Context) : TaskManager {
         policy: AppOneTimePolicy,
         request: TaskRequest,
     ): TaskId {
+        if (policy == AppOneTimePolicy.KEEP) {
+            val existing = unfinishedUniqueWork(uniqueName)
+            if (existing != null) return TaskId(existing.id.toString())
+        }
+
         val wmRequest = request.toOneTimeRequest()
         wm.enqueueUniqueWork(uniqueName, policy.toWm(), wmRequest)
         return TaskId(wmRequest.id.toString())
@@ -88,9 +93,17 @@ class AndroidTaskManager(private val appContext: Context) : TaskManager {
             .distinctUntilChanged()
     }
 
-    override fun stateByTag(tag: String): Flow<List<TaskState>> {
+    override fun infosByTag(tag: String): Flow<List<TaskInfo>> {
         return wm.getWorkInfosByTagFlow(tag)
-            .map { infos -> infos.map { fromWorkInfo(it) } }
+            .map { infos ->
+                infos.map { info ->
+                    TaskInfo(
+                        id = TaskId(info.id.toString()),
+                        tags = info.tags,
+                        state = fromWorkInfo(info),
+                    )
+                }
+            }
             .distinctUntilChanged()
     }
 
@@ -176,6 +189,12 @@ class AndroidTaskManager(private val appContext: Context) : TaskManager {
         return params.toWorkData(workerClassName = className)
     }
 
+    private fun unfinishedUniqueWork(uniqueName: String): WorkInfo? {
+        val infos = runCatching { wm.getWorkInfosForUniqueWork(uniqueName).get() }.getOrNull()
+            ?: return null
+        return infos.firstOrNull { !it.state.isFinished }
+    }
+
     private fun fromWorkInfo(info: WorkInfo): TaskState {
         return when (info.state) {
             WorkInfo.State.ENQUEUED -> TaskState.Enqueued
@@ -195,17 +214,16 @@ class AndroidTaskManager(private val appContext: Context) : TaskManager {
         if (data.keyValueMap.isEmpty()) return null
 
         val indeterminate = data.getBoolean(TaskProgressKeys.KEY_INDETERMINATE, false)
-        val current = data.getInt(TaskProgressKeys.KEY_PROGRESS_CURRENT, 0)
-        val total = data.getInt(TaskProgressKeys.KEY_PROGRESS_TOTAL, 100)
+        val current = data.progressNumber(TaskProgressKeys.KEY_PROGRESS_CURRENT)
+        val total = data.progressNumber(TaskProgressKeys.KEY_PROGRESS_TOTAL, 100L)
         val message = data.getString(TaskProgressKeys.KEY_PROGRESS_MESSAGE)
-        val extras = data.toTaskParams()
 
         return TaskProgress(
             current = current,
             total = total,
             indeterminate = indeterminate,
             message = message,
-            extras = extras,
+            extras = data.toTaskParams(),
         )
     }
 }
@@ -284,4 +302,13 @@ object TaskProgressKeys {
     const val KEY_INDETERMINATE = "__progress_indeterminate__"
     const val KEY_PROGRESS_MESSAGE = "__progress_message__"
     const val KEY_ERROR_MESSAGE = "__error_message__"
+}
+
+private fun androidx.work.Data.progressNumber(key: String, default: Long = 0L): Long {
+    return when (val value = keyValueMap[key]) {
+        is Long -> value
+        is Int -> value.toLong()
+        is Number -> value.toLong()
+        else -> default
+    }
 }

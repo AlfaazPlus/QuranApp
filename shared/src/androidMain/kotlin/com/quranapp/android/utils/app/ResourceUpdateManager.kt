@@ -167,7 +167,7 @@ class ResourceUpdateManager private constructor(private val ctx: Context) {
             launch {
                 if (force || local == null || remote.wbwAudioVersion > local.wbwAudioVersion) {
                     try {
-                        WbwAudioRepository.refreshTimingsFromRemote(ctx)
+                        WbwAudioRepository.refreshTimingsFromRemote()
                     } catch (e: Exception) {
                         Logger.saveError(e, "ResourceUpdateManager.updateWbwAudio")
                     }

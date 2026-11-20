@@ -33,7 +33,6 @@ import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.SettableFuture
 import com.quranapp.android.api.models.mediaplayer.ChapterTimingMetadata
-import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
 import com.quranapp.android.api.models.mediaplayer.RecitationAudioTrack
 import com.quranapp.android.api.models.mediaplayer.ResolvedAudioResult
 import com.quranapp.android.db.DatabaseProvider
@@ -48,8 +47,9 @@ import com.quranapp.android.locale.appLocale
 import com.quranapp.android.models.ChapterVersePair
 import com.quranapp.android.preferences.RecitationPreferences
 import com.quranapp.android.preferences.RecitationPreferences.RECITATION_MIN_REPEAT_COUNT
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.navigation.toIntent
 import com.quranapp.android.utils.app.Logger
-import com.quranapp.android.utils.app.AppDestinations
 import com.quranapp.android.utils.miscellenous.ErrorEvent
 import com.quranapp.android.utils.miscellenous.EventBus
 import com.quranapp.android.utils.quran.QuranMeta
@@ -71,6 +71,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.json.Json
 import org.jetbrains.compose.resources.getString
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -181,7 +182,14 @@ class RecitationService : MediaLibraryService() {
 
             launch {
                 state.collectLatest { newState ->
-                    mediaLibrarySession?.setSessionExtras(newState.toBundle())
+                    mediaLibrarySession?.setSessionExtras(
+                        Bundle().apply {
+                            putString(
+                                "state",
+                                Json.encodeToString(newState)
+                            )
+                        }
+                    )
                 }
             }
         }
@@ -287,13 +295,13 @@ class RecitationService : MediaLibraryService() {
     }
 
     private fun buildReaderPendingIntent(verse: ChapterVersePair): PendingIntent {
-        val launchIntent = if (verse.isValid) {
-            ReaderFactory.prepareSingleVerseIntent(verse.chapterNo, verse.verseNo)
-        } else {
-            ReaderFactory.prepareChapterIntent(1)
-        }.apply {
-            setClassName(this@RecitationService, AppDestinations.READER)
-        }
+        val launchIntent = AppRoute.Reader(
+            if (verse.isValid) {
+                ReaderFactory.verse(verse.chapterNo, verse.verseNo)
+            } else {
+                ReaderFactory.chapter(1)
+            }
+        ).toIntent(this@RecitationService)
 
         val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
@@ -1750,26 +1758,16 @@ class RecitationService : MediaLibraryService() {
 
     private fun dispatchCommand(action: String, args: Bundle) {
         when (action) {
-            StartCommand.ACTION -> StartCommand.fromBundle(args)?.let { reduce(it) }
-
-            SetAudioOptionCommand.ACTION -> SetAudioOptionCommand.fromBundle(args)
-                ?.let { reduce(it) }
-
-            SetVerseGroupSizeCommand.ACTION -> SetVerseGroupSizeCommand.fromBundle(args)
-                ?.let { reduce(it) }
-
-            SetPlaybackSpeedCommand.ACTION -> SetPlaybackSpeedCommand.fromBundle(args)
-                ?.let { reduce(it) }
-
-            SetRepeatCommand.ACTION -> SetRepeatCommand.fromBundle(args)?.let { reduce(it) }
-
-            SetAudioEndBehaviourCommand.ACTION -> SetAudioEndBehaviourCommand.fromBundle(args)
-                ?.let { reduce(it) }
-
-            SetReciterCommand.ACTION -> SetReciterCommand.fromBundle(args)?.let { reduce(it) }
-
-            SeekToPositionCommand.ACTION -> SeekToPositionCommand.fromBundle(args)
-                ?.let { reduce(it) }
+            StartCommand.ACTION,
+            SetAudioOptionCommand.ACTION,
+            SetVerseGroupSizeCommand.ACTION,
+            SetPlaybackSpeedCommand.ACTION,
+            SetRepeatCommand.ACTION,
+            SetAudioEndBehaviourCommand.ACTION,
+            SetReciterCommand.ACTION,
+            SeekToPositionCommand.ACTION -> {
+                args.toPlayerCommand()?.let(::reduce)
+            }
 
             StopCommand.ACTION -> reduce(StopCommand)
             PreviousVerseCommand.ACTION -> reduce(PreviousVerseCommand)

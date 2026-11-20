@@ -18,6 +18,7 @@ import com.quranapp.android.utils.app.Logger
 import com.quranapp.android.utils.reader.ReaderIntentData
 import com.quranapp.android.utils.reader.ReaderLaunchParams
 import com.quranapp.android.utils.reader.factory.ReaderFactory
+import com.quranapp.android.utils.reader.toIntent
 import com.quranapp.android.viewmodel.ReaderViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -111,7 +112,7 @@ class ActivityReader : BaseActivity() {
 
             if (firstSeg.equals("juz", ignoreCase = true)) {
                 val juzNo = secondSeg.toInt()
-                intent.putExtras(ReaderFactory.prepareJuzIntent(juzNo))
+                intent.putExtras(ReaderFactory.juz(juzNo).toIntent())
             } else {
                 val chapterNo = firstSeg.toInt()
 
@@ -124,7 +125,7 @@ class ActivityReader : BaseActivity() {
                     Pair(verseNo, verseNo)
                 }
 
-                intent.putExtras(ReaderFactory.prepareVerseRangeIntent(chapterNo, verseRange))
+                intent.putExtras(ReaderFactory.verseRange(chapterNo, verseRange).toIntent())
             }
         } else if (pathSegments.size == 1) {
             var splits = pathSegments[0].split(":")
@@ -140,9 +141,9 @@ class ActivityReader : BaseActivity() {
                     Pair(verseNo, verseNo)
                 }
 
-                intent.putExtras(ReaderFactory.prepareVerseRangeIntent(chapterNo, verseRange))
+                intent.putExtras(ReaderFactory.verseRange(chapterNo, verseRange).toIntent())
             } else {
-                intent.putExtras(ReaderFactory.prepareChapterIntent(chapterNo))
+                intent.putExtras(ReaderFactory.chapter(chapterNo).toIntent())
             }
         }
 
@@ -164,7 +165,7 @@ class ActivityReader : BaseActivity() {
 
         if (intent.getBooleanExtra("isJuz", false)) {
             val juzNo = intent.getIntExtra("juzNo", -1)
-            intent.putExtras(ReaderFactory.prepareJuzIntent(juzNo))
+            intent.putExtras(ReaderFactory.juz(juzNo).toIntent())
         } else {
             val chapterNo = intent.getIntExtra("chapterNo", -1)
             val verses = intent.getIntArrayExtra("verses")
@@ -173,23 +174,23 @@ class ActivityReader : BaseActivity() {
             when {
                 verses != null -> {
                     intent.putExtras(
-                        ReaderFactory.prepareVerseRangeIntent(
+                        ReaderFactory.verseRange(
                             chapterNo,
                             verses[0],
                             verses[1]
-                        )
+                        ).toIntent()
                     )
                 }
 
                 verseNo != -1 -> {
                     intent.putExtras(
-                        ReaderFactory.prepareSingleVerseIntent(chapterNo, verseNo)
+                        ReaderFactory.verse(chapterNo, verseNo).toIntent()
                     )
                 }
 
                 else -> {
                     intent.putExtras(
-                        ReaderFactory.prepareChapterIntent(chapterNo)
+                        ReaderFactory.chapter(chapterNo).toIntent()
                     )
                 }
             }

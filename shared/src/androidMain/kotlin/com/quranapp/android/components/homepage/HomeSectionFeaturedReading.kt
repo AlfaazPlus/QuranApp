@@ -38,6 +38,8 @@ import com.quranapp.android.generated.resources.Res
 import com.quranapp.android.generated.resources.dr_icon_feature
 import com.quranapp.android.generated.resources.dr_quran_wallpaper
 import com.quranapp.android.generated.resources.strTitleFeaturedQuran
+import com.quranapp.android.navigation.AppRoute
+import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.alpha
 import com.quranapp.android.theme.grayscaleColorFilter
@@ -97,7 +99,15 @@ private fun FeaturedQuranCard(
             .clip(shapes.medium)
             .background(Color.Black)
             .clickable {
-                ReaderFactory.startVerseRange(context, model.chapterNo, model.verseRange)
+                PlatformServices.navigator.navigate(
+                    AppRoute.Reader(
+                        ReaderFactory.verseRange(
+                            model.chapterNo,
+                            model.verseRange.first,
+                            model.verseRange.second
+                        )
+                    )
+                )
             },
     ) {
         Image(

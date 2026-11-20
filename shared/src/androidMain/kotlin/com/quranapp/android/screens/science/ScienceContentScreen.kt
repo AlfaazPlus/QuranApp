@@ -44,6 +44,7 @@ import com.quranapp.android.utils.quranScience.QuranScienceWebViewClient
 import com.quranapp.android.utils.reader.QuranVerseWebItem
 import com.quranapp.android.utils.reader.QuranVerseWebRequest
 import com.quranapp.android.utils.reader.buildQuranVerseWebAssets
+import com.quranapp.android.navigation.AppRoute
 import com.quranapp.android.utils.reader.factory.ReaderFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -55,7 +56,6 @@ fun ScienceContentScreen(
     item: QuranScienceItem?,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
     var quickRefData by remember { mutableStateOf<QuickReferenceData?>(null) }
     val translationSlugs = ReaderPreferences.observeTranslations()
 
@@ -92,11 +92,10 @@ fun ScienceContentScreen(
         onOpenInReader = { chapterNo, range ->
             quickRefData = null
 
-            ReaderFactory.startVerseRange(
-                context = context,
-                chapterNo = chapterNo,
-                fromVerse = range.first,
-                toVerse = range.last,
+            PlatformServices.navigator.navigate(
+                AppRoute.Reader(
+                    ReaderFactory.verseRange(chapterNo, range.first, range.last)
+                )
             )
         },
         onClose = { quickRefData = null },

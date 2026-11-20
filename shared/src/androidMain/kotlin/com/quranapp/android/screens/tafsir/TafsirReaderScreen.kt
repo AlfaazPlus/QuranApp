@@ -87,13 +87,13 @@ import com.quranapp.android.models.HtmlContentHandle
 import com.quranapp.android.models.HtmlContentHost
 import com.quranapp.android.models.HtmlPage
 import com.quranapp.android.models.htmlContentHandle
+import com.quranapp.android.navigation.AppRoute
 import com.quranapp.android.navigation.SettingRoutes
 import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.theme.ThemeUtils
 import com.quranapp.android.theme.observeDarkTheme
 import com.quranapp.android.theme.toCssVariables
-import com.quranapp.android.utils.app.AppDestinations
 import com.quranapp.android.utils.miscellenous.Keys
 import com.quranapp.android.utils.miscellenous.isRtlLanguageCode
 import com.quranapp.android.utils.quran.QuranMeta
@@ -110,6 +110,7 @@ import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import java.util.Locale
+import com.quranapp.android.navigation.AppRoutes
 
 @Composable
 fun TafsirReaderScreen(
@@ -275,11 +276,10 @@ fun TafsirReaderScreen(
         data = quickRefData,
         onOpenInReader = { chapterNo, range ->
             quickRefData = null
-            ReaderFactory.startVerseRange(
-                context = context,
-                chapterNo = chapterNo,
-                fromVerse = range.first,
-                toVerse = range.last,
+            PlatformServices.navigator.navigate(
+                AppRoute.Reader(
+                    ReaderFactory.verseRange(chapterNo, range.first, range.last)
+                )
             )
         },
         onClose = { quickRefData = null },
@@ -349,10 +349,12 @@ private fun TafsirTopBar(
             }
             IconButton(
                 onClick = {
-                    val intent = AppDestinations.intent(context, AppDestinations.SETTINGS).apply {
-                        putExtra(Keys.NAV_DESTINATION, SettingRoutes.TAFSIR)
-                    }
-                    context.startActivity(intent, null)
+                    PlatformServices.navigator.navigate(
+                        AppRoute.Screen(
+                            screen = AppRoutes.SETTINGS,
+                            extras = mapOf(Keys.NAV_DESTINATION to SettingRoutes.TAFSIR)
+                        )
+                    )
                 },
             ) {
                 Icon(

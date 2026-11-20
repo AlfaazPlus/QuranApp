@@ -65,7 +65,7 @@ import com.quranapp.android.generated.resources.textDownloading
 import com.quranapp.android.generated.resources.titleCancelDownload
 import com.quranapp.android.generated.resources.yesCancelDownload
 import com.quranapp.android.locale.LocalAppLocale
-import com.quranapp.android.utils.managers.ResourceDownloadStatus
+import com.quranapp.android.task.TaskState
 import com.quranapp.android.viewmodel.TranslationDownloadEvent
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.pluralStringResource
@@ -76,7 +76,7 @@ import java.util.regex.Pattern
 fun TranslationDownloadList(
     groups: List<TranslationGroupModel>,
     searchQuery: String,
-    downloadStates: Map<String, ResourceDownloadStatus>,
+    downloadStates: Map<String, TaskState>,
     onEvent: (TranslationDownloadEvent) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(
@@ -136,12 +136,12 @@ fun translationDownloadVisibleGroups(
 @Composable
 private fun LanguageGroupCard(
     group: TranslationGroupModel,
-    downloadStates: Map<String, ResourceDownloadStatus>,
+    downloadStates: Map<String, TaskState>,
     onEvent: (TranslationDownloadEvent) -> Unit,
 ) {
     var confirm by remember { mutableStateOf<TranslationDownloadConfirm?>(null) }
     val isAnyDownloading = downloadStates.values.any {
-        it is ResourceDownloadStatus.Started || it is ResourceDownloadStatus.InProgress
+        it.isEnqueued || it.isRunning
     }
 
     val chevronRotation by animateFloatAsState(
@@ -229,8 +229,7 @@ private fun LanguageGroupCard(
                     group.translations.forEachIndexed { index, model ->
                         val bookInfo = model.bookInfo
                         val slug = bookInfo.slug
-                        val downloadState =
-                            downloadStates[slug] ?: ResourceDownloadStatus.Idle
+                        val downloadState = downloadStates[slug]
 
                         ItemRow(
                             model = model,
@@ -342,7 +341,7 @@ private sealed interface TranslationDownloadConfirm {
 private fun ItemRow(
     model: TranslModel,
     isAnyDownloading: Boolean,
-    downloadState: ResourceDownloadStatus,
+    downloadState: TaskState?,
     onDownload: () -> Unit,
     onCancelDownload: () -> Unit,
 ) {
@@ -361,7 +360,7 @@ private fun ItemRow(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = ripple(color = colorScheme.primary),
                     onClick = {
-                        if (downloadState is ResourceDownloadStatus.Started || downloadState is ResourceDownloadStatus.InProgress) {
+                        if (downloadState?.isEnqueued == true || downloadState?.isRunning == true) {
                             onCancelDownload()
                         } else {
                             onDownload()
@@ -388,12 +387,12 @@ private fun ItemRow(
                 )
 
                 when (downloadState) {
-                    is ResourceDownloadStatus.InProgress -> {
+                    is TaskState.Running -> {
                         Text(
                             text = appLocale.format(
                                 "%1\$s %2\$d%%",
                                 stringResource(Res.string.textDownloading),
-                                downloadState.progress
+                                downloadState.progress?.percentage ?: 0
                             ),
                             style = MaterialTheme.typography.labelMedium,
                             fontWeight = FontWeight.Normal,
@@ -403,7 +402,7 @@ private fun ItemRow(
                         )
                     }
 
-                    is ResourceDownloadStatus.Started -> {
+                    TaskState.Enqueued -> {
                         Text(
                             text = stringResource(Res.string.textDownloading),
                             style = MaterialTheme.typography.labelMedium,
@@ -433,7 +432,7 @@ private fun ItemRow(
             contentAlignment = Alignment.Center
         ) {
             when (downloadState) {
-                is ResourceDownloadStatus.Started -> {
+                TaskState.Enqueued -> {
                     CircularProgressIndicator(
                         modifier = Modifier.size(20.dp),
                         strokeWidth = 2.dp,
@@ -441,10 +440,10 @@ private fun ItemRow(
                     )
                 }
 
-                is ResourceDownloadStatus.InProgress -> {
+                is TaskState.Running -> {
                     Box(contentAlignment = Alignment.Center) {
                         CircularProgressIndicator(
-                            progress = { downloadState.progress / 100f },
+                            progress = { (downloadState.progress?.percentage ?: 0) / 100f },
                             modifier = Modifier.size(24.dp),
                             strokeWidth = 2.5.dp,
                             color = colorScheme.primary,
@@ -467,7 +466,7 @@ private fun ItemRow(
                     }
                 }
 
-                is ResourceDownloadStatus.Failed -> {
+                is TaskState.Failed -> {
                     IconButton(
                         onClick = onDownload,
                         modifier = Modifier.size(40.dp)

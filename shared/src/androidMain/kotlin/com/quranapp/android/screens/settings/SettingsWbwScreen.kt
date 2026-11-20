@@ -79,7 +79,7 @@ import com.quranapp.android.locale.LocalAppLocale
 import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.preferences.DataStoreManager
 import com.quranapp.android.preferences.ReaderPreferences
-import com.quranapp.android.utils.managers.ResourceDownloadStatus
+import com.quranapp.android.task.TaskState
 import com.quranapp.android.utils.reader.ReaderTextSizeUtils
 import com.quranapp.android.viewmodel.WbwAudioDownloadUiEvent
 import com.quranapp.android.viewmodel.WbwAudioDownloadViewModel
@@ -153,7 +153,7 @@ private fun WbwRows(
     val rows = uiState.rows
 
     val isAnyDownloading = downloadStates.values.any {
-        it is ResourceDownloadStatus.Started || it is ResourceDownloadStatus.InProgress
+        it.isEnqueued || it.isRunning
     }
 
     LazyColumn(
@@ -189,7 +189,7 @@ private fun WbwRows(
 
             else -> {
                 items(rows, key = { it.info.id }) { row ->
-                    val status = downloadStates[row.info.id] ?: ResourceDownloadStatus.Idle
+                    val status = downloadStates[row.info.id]
 
                     WbwRow(
                         row,
@@ -236,7 +236,7 @@ private fun WbwRows(
 @Composable
 private fun WbwRow(
     row: WbwUiModel,
-    downloadStatus: ResourceDownloadStatus,
+    downloadStatus: TaskState?,
     viewModel: WbwSettingsViewModel,
     uiState: WbwSettingsUiState,
     isAnyDownloading: Boolean,
@@ -247,8 +247,7 @@ private fun WbwRow(
     val isSelected = row.info.id == uiState.selectedWbwId
 
     val canSelect = isDownloaded
-    val isDownloading = downloadStatus is ResourceDownloadStatus.Started ||
-            downloadStatus is ResourceDownloadStatus.InProgress
+    val isDownloading = downloadStatus?.isEnqueued == true || downloadStatus?.isRunning == true
 
     val onSelect = {
         viewModel.selectLanguage(row.info.id)
@@ -295,13 +294,13 @@ private fun WbwRow(
             Spacer(modifier = Modifier.height(2.dp))
 
             val subtitle = when {
-                downloadStatus is ResourceDownloadStatus.InProgress -> appLocale.format(
+                downloadStatus is TaskState.Running -> appLocale.format(
                     $$"%1$s %2$d%%",
                     stringResource(Res.string.textDownloading),
-                    downloadStatus.progress
+                    downloadStatus.progress?.percentage ?: 0
                 )
 
-                downloadStatus is ResourceDownloadStatus.Started -> stringResource(Res.string.textDownloading)
+                downloadStatus is TaskState.Enqueued -> stringResource(Res.string.textDownloading)
                 row.isUpdateAvailable -> stringResource(Res.string.updateAvailable)
                 isDownloaded -> stringResource(Res.string.strLabelDownloaded)
                 else -> null
@@ -311,7 +310,7 @@ private fun WbwRow(
                 Text(
                     text = subtitle,
                     style = MaterialTheme.typography.bodySmall,
-                    color = if (downloadStatus is ResourceDownloadStatus.Failed)
+                    color = if (downloadStatus is TaskState.Failed)
                         colorScheme.error
                     else if (row.isUpdateAvailable)
                         colorScheme.tertiary
@@ -324,13 +323,13 @@ private fun WbwRow(
         }
 
         when (downloadStatus) {
-            is ResourceDownloadStatus.InProgress -> {
+            is TaskState.Running -> {
                 Box(
                     modifier = Modifier.size(40.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator(
-                        progress = { downloadStatus.progress / 100f },
+                        progress = { (downloadStatus.progress?.percentage ?: 0) / 100f },
                         modifier = Modifier.size(22.dp),
                         strokeWidth = 2.dp
                     )
@@ -349,14 +348,14 @@ private fun WbwRow(
                 }
             }
 
-            is ResourceDownloadStatus.Started -> {
+            TaskState.Enqueued -> {
                 CircularProgressIndicator(
                     modifier = Modifier.size(20.dp),
                     strokeWidth = 2.dp
                 )
             }
 
-            is ResourceDownloadStatus.Failed -> {
+            is TaskState.Failed -> {
                 AppIconButton(
                     painterResource(Res.drawable.dr_icon_refresh),
                     onClick = onDownloadOrUpdate

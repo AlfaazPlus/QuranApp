@@ -11,7 +11,7 @@ import com.quranapp.android.models.transls.TranslationGroupModel
 import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.preferences.ReaderPreferences
 import com.quranapp.android.search.SearchIndexScheduler
-import com.quranapp.android.utils.managers.ResourceDownloadStatus
+import com.quranapp.android.task.TaskState
 import com.quranapp.android.utils.managers.TranslationDownloadManager
 import com.quranapp.android.utils.reader.TranslUtils
 import com.quranapp.android.utils.translation.TranslationVersionManager
@@ -69,7 +69,7 @@ class TranslationViewModel() : AppViewModel() {
     private val versionManager = TranslationVersionManager.get()
 
     init {
-        TranslationDownloadManager.initialize(context)
+        TranslationDownloadManager.initialize()
 
         viewModelScope.launch {
             val initialSlugs = ReaderPreferences.getTranslations()
@@ -96,7 +96,7 @@ class TranslationViewModel() : AppViewModel() {
                 if (!isUpdating) return@collect
 
                 when (status) {
-                    is ResourceDownloadStatus.Completed -> {
+                    is TaskState.Succeeded -> {
                         versionManager.markTranslationUpdated(slug)
                         _uiState.update {
                             it.copy(updatingSlugs = it.updatingSlugs - slug)
@@ -104,8 +104,8 @@ class TranslationViewModel() : AppViewModel() {
                         loadTranslations(silent = true)
                     }
 
-                    is ResourceDownloadStatus.Failed,
-                    is ResourceDownloadStatus.Cancelled -> {
+                    is TaskState.Failed,
+                    TaskState.Cancelled -> {
                         _uiState.update {
                             it.copy(updatingSlugs = it.updatingSlugs - slug)
                         }
@@ -205,7 +205,7 @@ class TranslationViewModel() : AppViewModel() {
         var updatedSelectedSlugs: Set<String> = emptySet()
         DatabaseProvider.getTranslationRepository().let {
             it.delete(slug)
-            SearchIndexScheduler.enqueueRemoveSlug(context, slug)
+            SearchIndexScheduler.enqueueRemoveSlug(slug)
 
             _uiState.update { current ->
                 val updatedGroups = current.translationGroups.map { group ->
@@ -247,7 +247,7 @@ class TranslationViewModel() : AppViewModel() {
                 it.copy(updatingSlugs = it.updatingSlugs + slug)
             }
 
-            PlatformServices.downloads.downloadTranslation(remoteInfo)
+            TranslationDownloadManager.startDownload(remoteInfo)
         }
     }
 

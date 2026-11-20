@@ -14,13 +14,13 @@ import androidx.media3.session.SessionResult
 import androidx.media3.session.SessionToken
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.MoreExecutors
-import com.quranapp.android.api.models.mediaplayer.RecitationAudioKind
 import com.quranapp.android.models.ChapterVersePair
 import com.quranapp.android.preferences.RecitationPreferences.RECITATION_MIN_REPEAT_COUNT
 import com.quranapp.android.utils.app.Logger
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.serialization.json.Json
 
 class RecitationController private constructor(private val appContext: Context) {
     private var controllerFuture: ListenableFuture<MediaController>? = null
@@ -107,7 +107,8 @@ class RecitationController private constructor(private val appContext: Context) 
                 }
 
                 override fun onExtrasChanged(controller: MediaController, extras: Bundle) {
-                    checkForNewEvents(RecitationServiceState.fromBundle(extras))
+                    val stateText = extras.getString("state") ?: return
+                    checkForNewEvents(Json.decodeFromString<RecitationServiceState>(stateText))
                 }
             })
             .buildAsync()
@@ -407,8 +408,13 @@ class RecitationController private constructor(private val appContext: Context) 
         onResult: ((SessionResult) -> Unit)? = null
     ) {
         val controller = mediaController ?: return
-        val command = SessionCommand(cmd.ACTION, Bundle.EMPTY)
-        val future = controller.sendCustomCommand(command, cmd.toBundle())
+
+        val command = SessionCommand(cmd.action, Bundle.EMPTY)
+        val args = Bundle().apply {
+            putCommand(cmd)
+        }
+
+        val future = controller.sendCustomCommand(command, args)
 
         if (onResult != null) {
             future.addListener({

@@ -6,8 +6,8 @@ import com.quranapp.android.api.models.wbw.WbwLanguageInfo
 import com.quranapp.android.db.DatabaseProvider
 import com.quranapp.android.models.DataLoadError
 import com.quranapp.android.preferences.ReaderPreferences
-import com.quranapp.android.utils.managers.ResourceDownloadStatus
-import com.quranapp.android.utils.reader.wbw.WbwDownloadManager
+import com.quranapp.android.task.TaskState
+import com.quranapp.android.utils.managers.WbwDownloadManager
 import com.quranapp.android.utils.wbw.WbwManager
 import com.quranapp.android.utils.wbw.WbwVersionManager
 import kotlinx.coroutines.Dispatchers
@@ -29,7 +29,7 @@ data class WbwSettingsUiState(
     val error: DataLoadError? = null,
     val selectedWbwId: String? = null,
     val rows: List<WbwUiModel> = emptyList(),
-    val downloadStates: Map<String, ResourceDownloadStatus> = emptyMap(),
+    val downloadStates: Map<String, TaskState> = emptyMap(),
     val hasAnyUpdates: Boolean = false,
 )
 
@@ -42,7 +42,7 @@ class WbwSettingsViewModel() : AppViewModel() {
     val uiState: StateFlow<WbwSettingsUiState> = _uiState.asStateFlow()
 
     init {
-        WbwDownloadManager.initialize(context)
+        WbwDownloadManager.initialize()
         observeSelection()
         observeDownloads()
         observeVersionState()
@@ -66,15 +66,15 @@ class WbwSettingsViewModel() : AppViewModel() {
                 _uiState.update { state ->
                     val next = state.downloadStates.toMutableMap()
                     when (status) {
-                        is ResourceDownloadStatus.Completed,
-                        is ResourceDownloadStatus.Cancelled -> next.remove(id)
+                        is TaskState.Succeeded,
+                        TaskState.Cancelled -> next.remove(id)
 
                         else -> next[id] = status
                     }
                     state.copy(downloadStates = next)
                 }
 
-                if (status is ResourceDownloadStatus.Completed) {
+                if (status is TaskState.Succeeded) {
                     versionManager.markResourceUpdated(id)
                     refreshRows()
                 }
@@ -194,14 +194,14 @@ class WbwSettingsViewModel() : AppViewModel() {
 
     fun startDownload(id: String) {
         val info = _uiState.value.rows.firstOrNull { it.info.id == id }?.info ?: return
-        WbwDownloadManager.startDownload(context, info)
+        WbwDownloadManager.startDownload(info)
         _uiState.update {
-            it.copy(downloadStates = it.downloadStates + (id to ResourceDownloadStatus.Started))
+            it.copy(downloadStates = it.downloadStates + (id to TaskState.Enqueued))
         }
     }
 
     fun cancelDownload(id: String) {
-        WbwDownloadManager.stopDownload(context, id)
+        WbwDownloadManager.stopDownload(id)
         _uiState.update {
             it.copy(downloadStates = it.downloadStates - id)
         }

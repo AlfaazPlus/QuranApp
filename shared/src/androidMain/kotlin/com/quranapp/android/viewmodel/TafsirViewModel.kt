@@ -9,7 +9,7 @@ import com.quranapp.android.models.DataLoadError
 import com.quranapp.android.platform.PlatformServices
 import com.quranapp.android.preferences.AppActionsPreferences
 import com.quranapp.android.preferences.ReaderPreferences
-import com.quranapp.android.utils.managers.ResourceDownloadStatus
+import com.quranapp.android.task.TaskState
 import com.quranapp.android.utils.managers.TafsirDownloadManager
 import com.quranapp.android.utils.tafsir.TafsirManager
 import com.quranapp.android.utils.translation.isCustomImportSlug
@@ -27,7 +27,7 @@ data class TafsirUiState(
     val tafsirGroups: List<TafsirGroupModel> = emptyList(),
     val selectedTafsirKey: String? = null,
     val error: DataLoadError? = null,
-    val downloadStates: Map<String, ResourceDownloadStatus> = emptyMap(),
+    val downloadStates: Map<String, TaskState> = emptyMap(),
     val downloadedTafsirKeys: Set<String> = emptySet(),
     val tafsirSelectionChanged: Boolean = false
 )
@@ -229,14 +229,14 @@ class TafsirViewModel() : AppViewModel() {
         viewModelScope.launch {
             if (!PlatformServices.networkMonitor.canProceed()) return@launch
 
-            PlatformServices.downloads.downloadTafsir(tafsirInfo)
-            updateDownloadStatus(key, ResourceDownloadStatus.Started)
+            TafsirDownloadManager.startDownload(tafsirInfo)
+            updateDownloadStatus(key, TaskState.Enqueued)
         }
     }
 
     private fun cancelDownload(key: String) {
         TafsirDownloadManager.stopDownload(key)
-        updateDownloadStatus(key, ResourceDownloadStatus.Cancelled)
+        updateDownloadStatus(key, TaskState.Cancelled)
     }
 
     private fun deleteTafsir(key: String) {
@@ -273,20 +273,20 @@ class TafsirViewModel() : AppViewModel() {
         }
     }
 
-    private fun updateDownloadStatus(key: String, status: ResourceDownloadStatus) {
+    private fun updateDownloadStatus(key: String, status: TaskState) {
         _uiState.update { state ->
             val newDownloadStates = state.downloadStates.toMutableMap()
             var newDownloadedKeys = state.downloadedTafsirKeys
 
             // Remove completed/cancelled states, keep failed for retry UI
             when (status) {
-                is ResourceDownloadStatus.Completed -> {
+                is TaskState.Succeeded -> {
                     newDownloadStates.remove(key)
                     // Add to downloaded keys
                     newDownloadedKeys = state.downloadedTafsirKeys + key
                 }
 
-                is ResourceDownloadStatus.Cancelled -> {
+                TaskState.Cancelled -> {
                     newDownloadStates.remove(key)
                 }
 
